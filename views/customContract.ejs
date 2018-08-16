@@ -1,0 +1,158 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+  <title>Node Authentication</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <style>
+    body {
+      padding-top: 80px;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="page-header text-center">
+      <h1>Custom Contract</h1>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+      <!-- LOCAL INFORMATION -->
+      <div class="col-sm-12">
+        <div class="well">
+          <h3 class="text-center">Smart Contract Details </h3>
+          <section class="text-center">
+                <div class="col-sm-12">				
+                    <div class="row">
+                        <div class="">
+                        <h4>Functionalities</h4>
+                        <p>
+                            <a href="#" class="">
+                                <span title="Ethereum’s token creation convention">ERC20</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Limits certain actions to the owner for e.g. To mint or pause / release the token.">Ownable</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Detects and addresses the “integer overflow” problem while performing a integer math.">Safemath</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Minimum functions required for a token to comply with ERC20 ">Standard</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Pausing token transfer during initial period (e.g. crowdsale) to enable pause/release transfers ">Releaseable</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Enable upgrade or migrate the token to a new address to comply with a new token standard.">Upgradeable</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Burn unsold tokens or to reduce the supply to  keeps the token’s “totalSupply” value up to date">Burnable</span>
+                            </a>
+                            <a href="#" class="">
+                                <span title="Building crowdsale logic directly into the token contract to establish the initial allocations.">Mintable</span>
+                            </a>
+                        </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="">
+                            <p class="">Your selected functions are :</p>
+                            <p class="">ERC20</p>
+                            <p class="">Ownable</p>
+                            <p class="">Safemath</p>
+                            <p class="">Standard</p>
+                        </div>
+                        <div class="">
+                            <div class="">							
+                                <div class="row">								
+                                    <div class="" style="z-index: 5;">
+    
+                                        <div class="text-center">
+                                            <h5>Enter the form details!</h5>
+                                        </div>
+    
+                                        <form class='form' id='token-form' method='post'>
+    
+                                            <input type='hidden' name='form-name' value='token-form' />
+    
+                                            <div class="messages"></div>
+    
+                                            <div class="controls">
+    
+                                                <div class="row">
+    
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="token_name" type="text" name="token_name" placeholder="Enter Token Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="token_symbol" type="text" name="token_symbol" placeholder="Enter Token Symbol">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="token_decimals" type="text" name="token_decimals" placeholder="Enter Token Decimals : 18 Recommended">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="token_supply" type="text" name="token_supply" placeholder="Enter Total Supply">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="token_sale" type="text" name="token_sale" placeholder="Enter on Sale Token">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input id="eth_tokens" type="text" name="eth_tokens" placeholder="1 eth = ? tokens">
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="col-sm-12 text-center padding-bottombutton">
+                                                        <button type="submit" class="ti-button ti-button-bg"><span>Submit</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <textarea id="message" type="textarea" cols="5" rows="5" name="message" placeholder="Display Contract"></textarea>
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-sm-12 text-center  padding-bottombutton">
+                                                        <button type="button" class="ti-button ti-button-bg"><span>Copy</span></button>
+                                                        <button type="button" class="ti-button ti-button-bg"><span>Compile</span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>                                    
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </section>
+
+        
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
