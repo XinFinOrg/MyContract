@@ -9,7 +9,7 @@ var burnableContract;
 var releaseableContract;
 var upgradeableContract;
 
-fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
+fs.readFile(path.resolve(__dirname, "./contracts/", "template.sol"), "utf8", function(
     err,
     data
   ) {
@@ -18,9 +18,9 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
     }
     templateCoin = data;
   });
-  
+
   fs.readFile(
-    path.resolve(__dirname, "..", "releaseTemplate.sol"),
+    path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"),
     "utf8",
     function(err, data) {
       if (err) {
@@ -29,7 +29,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       releaseableContract = data;
     }
   );
-  fs.readFile(path.resolve(__dirname, "..", "upgrade.sol"), "utf8", function(
+  fs.readFile(path.resolve(__dirname, "./contracts/", "upgrade.sol"), "utf8", function(
     err,
     data
   ) {
@@ -38,7 +38,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
     }
     upgradeableContract = data;
   });
-  fs.readFile(path.resolve(__dirname, "..", "mintable.sol"), "utf8", function(
+  fs.readFile(path.resolve(__dirname, "./contracts/", "mintable.sol"), "utf8", function(
     err,
     data
   ) {
@@ -47,7 +47,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
     }
     mintableContract = data;
   });
-  fs.readFile(path.resolve(__dirname, "..", "burnable.sol"), "utf8", function(
+  fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8", function(
     err,
     data
   ) {
@@ -66,7 +66,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
         req.user.emailID
       );
       var fs = require("fs");
-  
+
       if (!fs.existsSync(userDir)) {
         fs.mkdirSync(userDir);
       }
@@ -84,7 +84,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
               if (err) {
                 return console.log(err);
               }
-  
+
               const pricePerToken = Math.floor(
                 10 ** 18 / parseInt(req.body.ethToToken)
               );
@@ -120,7 +120,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   if (err) return console.log(err);
                 }
               );
-  
+
               var mailOptions = {
                 from: "smartplatformsc@gmail.com",
                 to: req.user.emailID,
@@ -129,7 +129,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   "this is an ERC20 complient smart contract automatically developed by the smart platform \n This smart contract is developed along the features that are considered important by XinFin",
                 attachments: [{ filename: "coin.sol", content: result }]
               };
-  
+
               transporter.sendMail(mailOptions, function(error, info) {
                 if (error) {
                   console.log(error);
@@ -138,7 +138,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   return;
                 }
               });
-  
+
               res.json({ contract: result });
               await User.update(
                 { googleId: req.user.googleId },
@@ -158,7 +158,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
           const pricePerToken = Math.floor(
             10 ** 18 / parseInt(req.body.ethToToken)
           );
-  
+
           console.log("inside custom");
           if (req.body.isR != "" || req.body.isU != "") {
             if (req.body.isR != "" && req.body.isU != "") {
@@ -176,7 +176,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   );
                 } else {
                   // not mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -187,15 +187,15 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                     pricePerToken,
                     res
                   );
-  
+
                   //
                 }
               } else {
                 // not burnable
-  
+
                 if (req.body.isM != "") {
                   //mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -208,7 +208,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   );
                 } else {
                   //not mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -236,7 +236,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                   );
                 } else {
                   // not mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -250,10 +250,10 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                 }
               } else {
                 // not burnable
-  
+
                 if (req.body.isM != "") {
                   //mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -305,10 +305,10 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
                 }
               } else {
                 // not burnable
-  
+
                 if (req.body.isM != "") {
                   //mintable
-  
+
                   generateCustomContract(
                     req.user,
                     req.body,
@@ -360,7 +360,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
             }
           } else if (req.body.isB != "") {
             console.log("inside isB");
-  
+
             generateCustomContract(
               req.user,
               req.body,
@@ -390,7 +390,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       }
     }
   };
-  
+
   async function generateCustomContract(
     user,
     body,
@@ -444,7 +444,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       if (mintable) {
         if (burnable) {
           // r,m,u
-  
+
           mintableContract = mintableContract.replace(
             /CMBUpgradeableToken/g,
             "StandardToken"
@@ -528,7 +528,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
     } else if (mintable) {
       if (burnable) {
         // b, m
-  
+
         mintableContract = mintableContract.replace(
           /ReleasableToken,CMBUpgradeableToken/g,
           "ERC20,Ownable,StandardToken"
@@ -551,7 +551,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       }
     } else if (burnable) {
       // b
-  
+
       burnableContract = burnableContract.replace(
         /ReleasableToken,CMBUpgradeableToken/g,
         "ERC20,Ownable,StandardToken"
@@ -562,7 +562,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       // no func seleted
       allContracts = "ERC20,Ownable,StandardToken";
     }
-  
+
     var mapObj = {
       upgradeableTokenRoady: upgrade,
       releaseableTokenRoady: release,
@@ -595,7 +595,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
         if (err) return console.log(err);
       }
     );
-  
+
     var mailOptions = {
       from: "smartplatformsc@gmail.com",
       to: user.emailID,
@@ -609,7 +609,7 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
         }
       ]
     };
-  
+
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
         console.log(error);
@@ -619,7 +619,6 @@ fs.readFile(path.resolve(__dirname, "..", "template.sol"), "utf8", function(
       }
     });
     res.json({ contract: result });
-  
+
     await User.update({ googleId: user.googleId }, { $set: { count: count } });
   }
-  

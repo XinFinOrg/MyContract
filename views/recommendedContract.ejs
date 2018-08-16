@@ -23,89 +23,49 @@
       <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
-    <div>
+    <div class="row">
 
-      <section className="ti-login bg-gray">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-12 caption mt-30 bg-img position-re">
-              <div className="ti-login-box">
-                <div className="row">
-                  <div className="offset-md-1 col-md-10 offset-lg-2 col-lg-8 ti-section-padding-login" style={{zIndex: 5}}>
-                    <div className="ti-heading text-center">
-                      <h5>Enter the form details!</h5>
-                    </div>
-                    <div className="form">
-                      <input type="hidden" name="form-name" defaultValue="token-form" />
-                      <div className="messages" />
-                      <div className="controls">
-                        <div className="row">
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="token_name" type="text" name="token_name" placeholder="Enter Token Name" required="true" />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="token_symbol" type="text" name="token_symbol" placeholder="Enter Token Symbol" required="true" />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="token_decimals" type="text" name="token_decimals" placeholder="Enter Token Decimals : 18 Recommended" required="true" />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="token_supply" type="text" name="token_supply" placeholder="Enter Total Supply" required="true" />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="token_sale" type="text" name="token_sale" placeholder="Enter on Sale Token" required="true" />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group">
-                              <input id="eth_tokens" type="text" name="eth_tokens" placeholder="1 eth = ? tokens" required="true" />
-                            </div>
-                          </div>
-                          <div class="info ">
-                            <p><strong>*</strong>Please fill all the fields in order to get desired result.</p>
-                          </div>
-                          <div className="col-md-12 text-center">
-                            <button className="ti-button ti-button-bg" onClick={this.createToken} disabled={this.state.isDisable}><span>Submit</span></button>
-                          </div>
-                          <div class="col-md-12">
-                            <div className="row">
-                              <div className="col-md-12">
-                                <div className="form-group">
-                                  <br />
-                                  <textarea id="message" type="textarea" cols={5} rows={5} name="message" placeholder="Display Contract" disabled value={this.state.contract}/>
-                                </div>
-                              </div>
-                              <div className="col-md-12 text-center  padding-bottombutton">
-                                <CopyToClipboard text={this.state.contract}>
-                                  <button type="button" className="ti-button ti-button-bg"><span>Copy</span></button>
-                                </CopyToClipboard>
-                                <Link to="/knowledge" className="ti-logo"><button type="button" className="ti-button ti-button-bg"><span>WHAT NEXT NOW?</span></button></Link>
+      <!-- LOCAL INFORMATION -->
+      <div class="col-sm-12">
+        <div class="well text-center">
+          <h2 class="text-center">Smart Contract Details </h2>
+          <form action="http://localhost:80" method="post">
+          <h4>Functionalities</h4>
 
-                              </div>
-
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="email"> Token Name:</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email">
                 </div>
-              </div>
-            </div>
-          </div>
+                <div class="form-group">
+                  <label for="pwd">Token Symbol:</label>
+                  <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                        <label for="pwd">Token Decimals:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                      </div>
+                <div class="form-group">
+                            <label for="pwd">Total Supply:</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                          </div>
+                <div class="form-group">
+                                <label for="pwd">Sale Token limit:</label>
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                              </div>
+                <div class="form-group">
+                                    <label for="pwd">1 eth = ? tokens:</label>
+                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                  </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+
+
         </div>
+      </div>
 
     </div>
+
+  </div>
 </body>
 
 </html>
