@@ -1,4 +1,7 @@
+const service = require("./impl");
+
 module.exports = function(app){
+
 
 
     app.get('/customContract', function(req, res) {
@@ -8,5 +11,7 @@ module.exports = function(app){
       app.get('/recommendedContract', function(req, res) {
         res.render('recommendedContract');
       });
+
+      app.post("/api/createContract",service.createContract);
 
 }
