@@ -8,5 +8,5 @@ module.exports = function(app){
       app.get('/recommendedContract', function(req, res) {
         res.render('recommendedContract');
       });
-  
+
 }

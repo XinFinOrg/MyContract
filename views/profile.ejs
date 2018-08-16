@@ -27,15 +27,13 @@
       <!-- LOCAL INFORMATION -->
       <div class="col-sm-6">
         <div class="well">
-          <h3><span class="fa fa-user"></span> Local</h3>
+          <h3><span class="fa fa-user"></span> User Details</h3>
 
           <p>
             <strong>id</strong>:
             <%= user._id %><br>
               <strong>email</strong>:
-              <%= user.google.email %><br>
-                <strong>password</strong>:
-                <%= user.google.password %>
+              <%= user.email %><br>
           </p>
 
         </div>
@@ -47,7 +45,7 @@
           <a href="/customContract" class="btn btn-default btn-sm">Custom Contract</a>
           <a href="/recommendedContract" class="btn btn-default btn-sm">Recommended Contract</a>
           </div>
-          
+
       </div>
 
     </div>

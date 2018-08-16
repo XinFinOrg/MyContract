@@ -3,6 +3,7 @@
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 
 var configAuth = require('./auth');
 
@@ -93,7 +94,7 @@ module.exports = function(passport) {
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
       User.findOne({
-        'local.email': email
+        'email': email
       }, function(err, user) {
         // if there are any errors, return the error before anything else
         if (err)
@@ -126,7 +127,7 @@ module.exports = function(passport) {
       process.nextTick(function() {
         // try to find the user based on their google id
         User.findOne({
-          'google.id': profile.id
+          'email': profile.emails[0].value
         }, function(err, user) {
           if (err)
             return done(err);
@@ -140,10 +141,9 @@ module.exports = function(passport) {
             var newUser = new User();
 
             // set all of the relevant information
-            newUser.google.id = profile.id;
-            newUser.google.token = token;
-            newUser.google.name = profile.displayName;
-            newUser.google.email = profile.emails[0].value; // pull the first email
+            newUser.google_id = profile.id;
+            newUser.name = profile.displayName;
+            newUser.email = profile.emails[0].value; // pull the first email
 
             // save the user
             newUser.save(function(err) {
@@ -156,4 +156,46 @@ module.exports = function(passport) {
       });
 
     }));
+  passport.use(new GitHubStrategy({
+      clientID: configAuth.githubAuth.clientID,
+      clientSecret: configAuth.githubAuth.clientSecret,
+      callbackURL: configAuth.githubAuth.callbackURL,
+      scope: 'user:email'
+    },
+    function(token, refreshToken, profile, done) {
+      // console.log(" in github 1.1",profile);
+      // make the code asynchronous
+      // User.findOne won't fire until we have all our data back from Google
+      process.nextTick(function() {
+        // try to find the user based on their google id
+        User.findOne({
+          'github.id': profile.id
+        }, function(err, user) {
+          if (err)
+            return done(err);
+
+          if (user) {
+
+            // if a user is found, log them in
+            return done(null, user);
+          } else {
+            // if the user isnt in our database, create a new user
+            var newUser = new User();
+
+            // set all of the relevant information
+            newUser.github_id = profile.id;
+            newUser.name = profile.displayName;
+            newUser.email = profile.emails[0].value; // pull the first email
+
+            // save the user
+            newUser.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, newUser);
+            });
+          }
+        });
+      });
+    }
+  ));
 }

@@ -1,3 +1,111 @@
+<!-- views/profile.ejs -->
+<!doctype html>
 <html>
-    <p>djdsjkfjhdfhj</p>
+
+<head>
+  <title>Node Authentication</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <style>
+    body {
+      padding-top: 80px;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="page-header text-center">
+      <h1>Recommended Contract</h1>
+      <a href="/profile" class="btn btn-default btn-sm">Back</a>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div>
+
+      <section className="ti-login bg-gray">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-12 caption mt-30 bg-img position-re">
+              <div className="ti-login-box">
+                <div className="row">
+                  <div className="offset-md-1 col-md-10 offset-lg-2 col-lg-8 ti-section-padding-login" style={{zIndex: 5}}>
+                    <div className="ti-heading text-center">
+                      <h5>Enter the form details!</h5>
+                    </div>
+                    <div className="form">
+                      <input type="hidden" name="form-name" defaultValue="token-form" />
+                      <div className="messages" />
+                      <div className="controls">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="token_name" type="text" name="token_name" placeholder="Enter Token Name" required="true" />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="token_symbol" type="text" name="token_symbol" placeholder="Enter Token Symbol" required="true" />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="token_decimals" type="text" name="token_decimals" placeholder="Enter Token Decimals : 18 Recommended" required="true" />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="token_supply" type="text" name="token_supply" placeholder="Enter Total Supply" required="true" />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="token_sale" type="text" name="token_sale" placeholder="Enter on Sale Token" required="true" />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <input id="eth_tokens" type="text" name="eth_tokens" placeholder="1 eth = ? tokens" required="true" />
+                            </div>
+                          </div>
+                          <div class="info ">
+                            <p><strong>*</strong>Please fill all the fields in order to get desired result.</p>
+                          </div>
+                          <div className="col-md-12 text-center">
+                            <button className="ti-button ti-button-bg" onClick={this.createToken} disabled={this.state.isDisable}><span>Submit</span></button>
+                          </div>
+                          <div class="col-md-12">
+                            <div className="row">
+                              <div className="col-md-12">
+                                <div className="form-group">
+                                  <br />
+                                  <textarea id="message" type="textarea" cols={5} rows={5} name="message" placeholder="Display Contract" disabled value={this.state.contract}/>
+                                </div>
+                              </div>
+                              <div className="col-md-12 text-center  padding-bottombutton">
+                                <CopyToClipboard text={this.state.contract}>
+                                  <button type="button" className="ti-button ti-button-bg"><span>Copy</span></button>
+                                </CopyToClipboard>
+                                <Link to="/knowledge" className="ti-logo"><button type="button" className="ti-button ti-button-bg"><span>WHAT NEXT NOW?</span></button></Link>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+</body>
+
 </html>
