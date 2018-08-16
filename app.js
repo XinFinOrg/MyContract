@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./routes')(app);
 require('./userlogin/routes')(app, passport);
 require('./contractcreator/routes')(app);
+require('./contractDeployer/routes')(app,express);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
