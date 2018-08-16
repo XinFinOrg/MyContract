@@ -1,17 +1,24 @@
-const service = require("./impl");
+const impl = require("./impl");
 
 module.exports = function(app){
 
-
-
-    app.get('/customContract', function(req, res) {
-        res.render('customContract');
+    app.get('/customContract', hasPackage1, function(req, res) {
+        res.render('customContract', {user: req.session.user});
       });
 
-      app.get('/recommendedContract', function(req, res) {
-        res.render('recommendedContract');
+      app.get('/recommendedContract', hasPackage1, function(req, res) {
+        res.render('recommendedContract', {user: req.session.user});
       });
 
-      app.post("/api/createContract",service.createContract);
+      app.post("/createContract",impl.createContract);
 
+}
+
+// route middleware to check package 1
+function hasPackage1(req, res, next) {
+  if(req.user.packages.package_1==true){
+    return next();
+  }else{
+    res.redirect('/profile');
+  }
 }

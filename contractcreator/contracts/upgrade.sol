@@ -43,7 +43,7 @@ contract UpgradeAgent {
  */
 
 
-contract CMBUpgradeableToken is StandardToken {
+contract UpgradeableToken is StandardToken {
 
   /** Contract / person who can set the upgrade path. This can be the same as team multisig wallet, as what it is with its default value. */
   address public upgradeMaster;
@@ -78,7 +78,7 @@ contract CMBUpgradeableToken is StandardToken {
   /**
    * Do not allow construction without upgrade master set.
    */
-  function CMBUpgradeableToken(address _upgradeMaster) {
+  function UpgradeableToken(address _upgradeMaster) {
     upgradeMaster = _upgradeMaster;
   }
 

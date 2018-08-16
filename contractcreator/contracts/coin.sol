@@ -403,19 +403,19 @@ contract Coin is ReleasableToken,CMBUpgradeableToken {
 
 
   /* name of the token */
-  string public name = "tokenNameRoady";
+  string public name = "tokenName";
 
   /* symbol of the token */
-  string public symbol = "tokenSymbolRoady";
+  string public symbol = "tokenSymbol";
 
   /* token decimals to handle fractions */
-  uint public decimals = tokenDecimalsRoady;
+  uint public decimals = tokenDecimals;
 
 /* initial token supply */
-  uint public totalSupply = tokenTotalSupplyRoady * (10 ** decimals);
-  uint public onSaleTokens = tokenOnSaleRoady * (10 ** decimals);
+  uint public totalSupply = tokenTotalSupply * (10 ** decimals);
+  uint public onSaleTokens = tokenOnSale * (10 ** decimals);
 
-  uint256 pricePerToken = tokenPricePerTokenRoady;
+  uint256 pricePerToken = tokenPricePerToken;
 
 
 // minEther  = (o.2/currentETHtoUSD) * 2500

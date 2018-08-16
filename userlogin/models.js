@@ -9,7 +9,12 @@ var userSchema = mongoose.Schema({
   email: String,
   password: String,
   github_id: String,
-  google_id: String
+  google_id: String,
+  packages: {
+    package_1: {type: Boolean, default: false},
+    package_2: {type: Boolean, default: false},
+    package_3: {type: Boolean, default: false}
+  }
 });
 
 // methods ======================

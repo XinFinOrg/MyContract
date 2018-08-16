@@ -17,6 +17,7 @@
     "http-errors": "~1.6.2",
     "mongoose": "^5.2.7",
     "morgan": "~1.9.0",
+    "nodemailer": "^4.6.8",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "passport-google-oauth": "^1.0.0",

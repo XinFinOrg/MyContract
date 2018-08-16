@@ -199,7 +199,7 @@ contract Coin is allContractsRoady {
 
 // minEther  = (o.2/currentETHtoUSD) * 2500
 // maxEther = (0.2/currentETHtoUSD) * (to be specified)
-// 1 eth = 3379.53998 CMB
+// 1 eth = 3379.53998
 // etherToUSD = 675.907996
   uint minETH = 0; //   etherToUSD = 675.907996  (2500 CMB)
   uint maxETH = 500 * 10**decimals; // 500 ether  (1689769.99 CMB)
@@ -255,7 +255,7 @@ contract Coin is allContractsRoady {
 
 
 
-  /* A dispense feature to allocate some addresses with CMB tokens
+  /* A dispense feature to allocate some addresses with tokens
   * calculation done using token count
   *  Can be called only by owner
   */

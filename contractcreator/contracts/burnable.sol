@@ -1,4 +1,4 @@
-contract Burnable is ReleasableToken,CMBUpgradeableToken {
+contract Burnable is ReleasableToken,UpgradeableToken {
 
     function burn(uint _amount) onlyOwner {
         address contractAddr = address(this);

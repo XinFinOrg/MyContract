@@ -1,4 +1,4 @@
-contract Mintable is ReleasableToken,CMBUpgradeableToken{
+contract Mintable is ReleasableToken,UpgradeableToken{
     function mint(uint _amount) onlyOwner {
         address contractAddr = address(this);
         require(_amount > 0 );
