@@ -19,6 +19,7 @@
 
     <div class="page-header text-center">
       <h1>Custom Contract</h1>
+      <a href="/profile" class="btn btn-default btn-sm">Back</a>
       <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
@@ -26,125 +27,63 @@
 
       <!-- LOCAL INFORMATION -->
       <div class="col-sm-12">
-        <div class="well">
-          <h3 class="text-center">Smart Contract Details </h3>
-          <section class="text-center">
-                <div class="col-sm-12">				
-                    <div class="row">
-                        <div class="">
-                        <h4>Functionalities</h4>
-                        <p>
-                            <a href="#" class="">
-                                <span title="Ethereum’s token creation convention">ERC20</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Limits certain actions to the owner for e.g. To mint or pause / release the token.">Ownable</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Detects and addresses the “integer overflow” problem while performing a integer math.">Safemath</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Minimum functions required for a token to comply with ERC20 ">Standard</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Pausing token transfer during initial period (e.g. crowdsale) to enable pause/release transfers ">Releaseable</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Enable upgrade or migrate the token to a new address to comply with a new token standard.">Upgradeable</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Burn unsold tokens or to reduce the supply to  keeps the token’s “totalSupply” value up to date">Burnable</span>
-                            </a>
-                            <a href="#" class="">
-                                <span title="Building crowdsale logic directly into the token contract to establish the initial allocations.">Mintable</span>
-                            </a>
-                        </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="">
-                            <p class="">Your selected functions are :</p>
-                            <p class="">ERC20</p>
-                            <p class="">Ownable</p>
-                            <p class="">Safemath</p>
-                            <p class="">Standard</p>
-                        </div>
-                        <div class="">
-                            <div class="">							
-                                <div class="row">								
-                                    <div class="" style="z-index: 5;">
-    
-                                        <div class="text-center">
-                                            <h5>Enter the form details!</h5>
-                                        </div>
-    
-                                        <form class='form' id='token-form' method='post'>
-    
-                                            <input type='hidden' name='form-name' value='token-form' />
-    
-                                            <div class="messages"></div>
-    
-                                            <div class="controls">
-    
-                                                <div class="row">
-    
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="token_name" type="text" name="token_name" placeholder="Enter Token Name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="token_symbol" type="text" name="token_symbol" placeholder="Enter Token Symbol">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="token_decimals" type="text" name="token_decimals" placeholder="Enter Token Decimals : 18 Recommended">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="token_supply" type="text" name="token_supply" placeholder="Enter Total Supply">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="token_sale" type="text" name="token_sale" placeholder="Enter on Sale Token">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <input id="eth_tokens" type="text" name="eth_tokens" placeholder="1 eth = ? tokens">
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="col-sm-12 text-center padding-bottombutton">
-                                                        <button type="submit" class="ti-button ti-button-bg"><span>Submit</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <textarea id="message" type="textarea" cols="5" rows="5" name="message" placeholder="Display Contract"></textarea>
-                                                        </div>
-                                                    </div>
-                                                     <div class="col-sm-12 text-center  padding-bottombutton">
-                                                        <button type="button" class="ti-button ti-button-bg"><span>Copy</span></button>
-                                                        <button type="button" class="ti-button ti-button-bg"><span>Compile</span></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>                                    
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
+        <div class="well text-center">
+          <h2 class="text-center">Smart Contract Details </h2>
+          <form>
+          <h4>Functionalities</h4>
+          <p>     
+                  <label class="checkbox-inline" >
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>ERC20
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Standard
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Safemath
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Ownable
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">Releaseable
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">Upgradeable
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">Burnable
+              </label>
+                  <label class="checkbox-inline">
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">Mintable
+              </label>    
+          </p>
+        
+                <div class="form-group">
+                  <label for="email"> Token Name:</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email">
                 </div>
-            </section>
+                <div class="form-group">
+                  <label for="pwd">Token Symbol:</label>
+                  <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                        <label for="pwd">Token Decimals:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                      </div>
+                <div class="form-group">
+                            <label for="pwd">Total Supply:</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                          </div>
+                <div class="form-group">
+                                <label for="pwd">Sale Token limit:</label>
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                              </div>
+                <div class="form-group">
+                                    <label for="pwd">1 eth = ? tokens:</label>
+                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                  </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
 
         
         </div>
