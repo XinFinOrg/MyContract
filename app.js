@@ -42,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Creating all app routes
 require('./routes')(app);
 require('./userlogin/routes')(app, passport);
+require('./contractcreator/routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
