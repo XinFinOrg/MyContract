@@ -1,6 +1,7 @@
 const fs = require("fs");
 const mongoose = require("mongoose");
 const path = require("path");
+const nodemailerAuth =require("../config/auth").nodemailerAuth;
 var templateCoin;
 var mintableContract;
 var burnableContract;
@@ -9,18 +10,16 @@ var upgradeableContract;
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: "gmail",
-    auth: {
-        user: "smartplatformsc@gmail.com",
-        pass: "QwertY))&"
-    }
+    auth: nodemailerAuth
 });
+var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
   createContract: async function(req, res) {
     console.log(req.body);
     var userDir = path.resolve(__dirname+ "/contractdirectory"+ req.user.email);
     var fs = require("fs");
-    console.log(userDir);
+    console.log("Email id is "+req.user.email);
 
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
@@ -29,8 +28,9 @@ module.exports = {
     const currentUser = req.user;
     console.log(currentUser);
 
-    if (req.body.tokenType == "recomm") {
-      fs.readFile(path.resolve(__dirname,"..", "coin.sol"), "utf8", async function(err, data) {
+    if (req.body.tokenType == "R") {
+      console.log(__dirname+"/contracts"+"coin.sol");
+      fs.readFile(path.resolve(__dirname+"/contracts/"+"coin.sol"), "utf8", async function(err, data) {
         if (err) {
         }
 
@@ -50,44 +50,34 @@ module.exports = {
             return mapObj[matched];
           }
         );
-        var count = currentUser.count + 1;
-        var name = count + ".sol";
-        var countLeft = currentUser.countLeft - 1;
-        console.log(name);
-        fs.writeFile(
-          path.resolve(
-            __dirname,
-            "..",
-            "allContracts",
-            req.user.emailID,
-            name
-          ),
-          result,
-          "utf8",
-          function(err) {
+
+        fs.writeFile(path.resolve(__dirname, "..", "allContracts", req.user.email+".sol"), result, "utf8", function(err) {
             if (err) return console.log(err);
-          }
-        );
-
-        var mailOptions = {
-          from: "smartplatformsc@gmail.com",
-          to: req.user.emailID,
-          subject: "ERC20 based SM",
-          text: "this is an ERC20 complient smart contract automatically developed by the smart platform \n This smart contract is developed along the features that are considered important by XinFin",
-          attachments: [{
-            filename: "coin.sol",
-            content: result
-          }]
-        };
-
-        transporter.sendMail(mailOptions, function(error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-            return;
-          }
         });
+
+        console.log("Sending mail");
+
+        nodemailerservice.sendContractEmail(req.user.email, result);
+
+        // var mailOptions = {
+        //   from: "smartplatformsc@gmail.com",
+        //   to: req.user.email,
+        //   subject: "ERC20 based SM",
+        //   text: "This is an ERC20 compliant smart contract automatically developed by AutoCoin \n This smart contract is developed along the features that are considered important by XinFin",
+        //   attachments: [{
+        //     filename: "coin.sol",
+        //     content: result
+        //   }]
+        // };
+        //
+        // transporter.sendMail(mailOptions, function(error, info) {
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
+        //     console.log("Email sent: " + info.response);
+        //     return;
+        //   }
+        // });
 
         res.json({
           contract: result
@@ -419,14 +409,14 @@ async function generateCustomContract(
         burn = burnableContract;
         upgrade = upgradeableContract;
         allContracts = "Burnable,Mintable";
-        upgradeCon = "CMBUpgradeableToken(msg.sender)";
+        upgradeCon = "UpgradeableToken(msg.sender)";
       } else {
         // r,u,m
         mint = mintableContract;
         release = releaseableContract;
         upgrade = upgradeableContract;
         allContracts = "Mintable";
-        upgradeCon = "CMBUpgradeableToken(msg.sender)";
+        upgradeCon = "UpgradeableToken(msg.sender)";
       }
     } else if (burnable) {
       // r,u,b
@@ -434,13 +424,13 @@ async function generateCustomContract(
       burn = burnableContract;
       upgrade = upgradeableContract;
       allContracts = "Burnable";
-      upgradeCon = "CMBUpgradeableToken(msg.sender)";
+      upgradeCon = "UpgradeableToken(msg.sender)";
     } else {
       // r & u
       mint = mintableContract;
       release = releaseableContract;
-      allContracts = "ReleasableToken,CMBUpgradeableToken";
-      upgradeCon = "CMBUpgradeableToken(msg.sender)";
+      allContracts = "ReleasableToken,UpgradeableToken";
+      upgradeCon = "UpgradeableToken(msg.sender)";
     }
   } else if (releaseable) {
     if (mintable) {
@@ -448,11 +438,11 @@ async function generateCustomContract(
         // r,m,u
 
         mintableContract = mintableContract.replace(
-          /CMBUpgradeableToken/g,
+          /UpgradeableToken/g,
           "StandardToken"
         );
         burnableContract = burnableContract.replace(
-          /CMBUpgradeableToken/g,
+          /UpgradeableToken/g,
           "StandardToken"
         );
         mint = mintableContract;
@@ -462,7 +452,7 @@ async function generateCustomContract(
       } else {
         // r,m
         mintableContract = mintableContract.replace(
-          /CMBUpgradeableToken/g,
+          /UpgradeableToken/g,
           "StandardToken"
         );
         mint = mintableContract;
@@ -472,7 +462,7 @@ async function generateCustomContract(
     } else if (burnable) {
       // r,b
       burnableContract = burnableContract.replace(
-        /CMBUpgradeableToken/g,
+        /UpgradeableToken/g,
         "StandardToken"
       );
       release = releaseableContract;
@@ -488,55 +478,55 @@ async function generateCustomContract(
       if (burnable) {
         // u,m,u
         mintableContract = mintableContract.replace(
-          /ReleasableToken,CMBUpgradeableToken/g,
-          "ERC20,Ownable,CMBUpgradeableToken"
+          /ReleasableToken,UpgradeableToken/g,
+          "ERC20,Ownable,UpgradeableToken"
         );
         burnableContract = burnableContract.replace(
-          /ReleasableToken,CMBUpgradeableToken/g,
-          "ERC20,Ownable,CMBUpgradeableToken"
+          /ReleasableToken,UpgradeableToken/g,
+          "ERC20,Ownable,UpgradeableToken"
         );
         mint = mintableContract;
         upgrade = upgradeableContract;
         burn = burnableContract;
-        upgradeCon = "CMBUpgradeableToken(msg.sender)";
+        upgradeCon = "UpgradeableToken(msg.sender)";
         allContracts = "Burnable,Mintable";
       } else {
         // u,m
         mintableContract = mintableContract.replace(
-          /ReleasableToken,CMBUpgradeableToken/g,
-          "ERC20,Ownable,CMBUpgradeableToken"
+          /ReleasableToken,UpgradeableToken/g,
+          "ERC20,Ownable,UpgradeableToken"
         );
         mint = mintableContract;
         upgrade = upgradeableContract;
-        upgradeCon = "CMBUpgradeableToken(msg.sender)";
+        upgradeCon = "UpgradeableToken(msg.sender)";
         allContracts = "Mintable";
       }
     } else if (burnable) {
       // u,b
       burnableContract = burnableContract.replace(
-        /ReleasableToken,CMBUpgradeableToken/g,
-        "ERC20,Ownable,CMBUpgradeableToken"
+        /ReleasableToken,UpgradeableToken/g,
+        "ERC20,Ownable,UpgradeableToken"
       );
       upgrade = upgradeableContract;
       burn = burnableContract;
-      upgradeCon = "CMBUpgradeableToken(msg.sender)";
+      upgradeCon = "UpgradeableToken(msg.sender)";
       allContracts = "Burnable";
     } else {
       // u
       upgrade = upgradeableContract;
-      upgradeCon = "CMBUpgradeableToken(msg.sender)";
-      allContracts = "ERC20,Ownable,CMBUpgradeableToken";
+      upgradeCon = "UpgradeableToken(msg.sender)";
+      allContracts = "ERC20,Ownable,UpgradeableToken";
     }
   } else if (mintable) {
     if (burnable) {
       // b, m
 
       mintableContract = mintableContract.replace(
-        /ReleasableToken,CMBUpgradeableToken/g,
+        /ReleasableToken,UpgradeableToken/g,
         "ERC20,Ownable,StandardToken"
       );
       burnableContract = burnableContract.replace(
-        /ReleasableToken,CMBUpgradeableToken/g,
+        /ReleasableToken,UpgradeableToken/g,
         "ERC20,Ownable,StandardToken"
       );
       mint = mintableContract;
@@ -545,7 +535,7 @@ async function generateCustomContract(
     } else {
       // m
       mintableContract = mintableContract.replace(
-        /ReleasableToken,CMBUpgradeableToken/g,
+        /ReleasableToken,UpgradeableToken/g,
         "ERC20,Ownable,StandardToken"
       );
       mint = mintableContract;
@@ -555,7 +545,7 @@ async function generateCustomContract(
     // b
 
     burnableContract = burnableContract.replace(
-      /ReleasableToken,CMBUpgradeableToken/g,
+      /ReleasableToken,UpgradeableToken/g,
       "ERC20,Ownable,StandardToken"
     );
     burn = burnableContract;
@@ -597,26 +587,27 @@ async function generateCustomContract(
       if (err) return console.log(err);
     }
   );
+  // nodemailerservice.sendContractEmail(req.user.email, result);
 
-  var mailOptions = {
-    from: "smartplatformsc@gmail.com",
-    to: user.email,
-    subject: "ERC20 based SM",
-    text: "this is an ERC20 complient smart contract automatically developed by the smart platform \n This smart contract is developed along the features that are considered important by XinFin",
-    attachments: [{
-      filename: "coin.sol",
-      content: result
-    }]
-  };
-
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-      return;
-    }
-  });
+  // var mailOptions = {
+  //   from: "smartplatformsc@gmail.com",
+  //   to: user.email,
+  //   subject: "ERC20 based SM",
+  //   text: "this is an ERC20 complient smart contract automatically developed by the smart platform \n This smart contract is developed along the features that are considered important by XinFin",
+  //   attachments: [{
+  //     filename: "coin.sol",
+  //     content: result
+  //   }]
+  // };
+  //
+  // transporter.sendMail(mailOptions, function(error, info) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("Email sent: " + info.response);
+  //     return;
+  //   }
+  // });
   res.json({
     contract: result
   });

@@ -10,6 +10,11 @@ module.exports = {
     'clientID': '606609265971-qd6d6ao6ndsv8aminmb40urbh3a38ihs.apps.googleusercontent.com',
     'clientSecret': 'a6DIUG6bg1E0G22Fm4f03IJ1',
     'callbackURL': '/auth/google/callback'
+  },
+
+  'nodemailerAuth': {
+    user: "smartplatformsc@gmail.com",
+    pass: "QwertY))&"
   }
 
 };
