@@ -2,6 +2,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const path = require("path");
 const nodemailerAuth = require("../config/auth").nodemailerAuth;
+const solc = require("solc");
 var templateCoin;
 var mintableContract;
 var burnableContract;
@@ -90,8 +91,7 @@ module.exports = {
         });
 
         nodemailerservice.sendContractEmail(req.user.email, result);
-        req.session.contract = result;
-        res.redirect('/deployedContract');
+        
         byteCode=solc.compile({
           sources: {
               'Contract' : result
