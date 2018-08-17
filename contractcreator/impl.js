@@ -1,38 +1,72 @@
 const fs = require("fs");
 const mongoose = require("mongoose");
 const path = require("path");
-const nodemailerAuth =require("../config/auth").nodemailerAuth;
+const nodemailerAuth = require("../config/auth").nodemailerAuth;
 var templateCoin;
 var mintableContract;
 var burnableContract;
 var releaseableContract;
 var upgradeableContract;
 var nodemailer = require('nodemailer');
+var filereaderservice = require('../filereader/impl');
 var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: nodemailerAuth
+  service: "gmail",
+  auth: nodemailerAuth
 });
+
+fs.readFile(path.resolve(__dirname, "./contracts/", "template.sol"), "utf8",
+  function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    templateCoin = data;
+  });
+console.log("Template data is " + templateCoin);
+
+fs.readFile(
+  path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
+  function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    releaseableContract = data;
+  });
+fs.readFile(path.resolve(__dirname, "./contracts/", "upgrade.sol"), "utf8",
+  function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    upgradeableContract = data;
+  });
+fs.readFile(path.resolve(__dirname, "./contracts/", "mintable.sol"), "utf8",
+  function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    mintableContract = data;
+  });
+fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8",
+function(err, data) {
+  if (err) {
+    return console.log(err);
+  }
+  burnableContract = data;
+});
+
 var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
   createContract: async function(req, res) {
-    console.log(req.body);
-    var userDir = path.resolve(__dirname+ "/contractdirectory"+ req.user.email);
+    var userDir = path.resolve(__dirname + "/contractdirectory/" + req.user.email);
     var fs = require("fs");
-    console.log("Email id is "+req.user.email);
 
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
     }
 
-    const currentUser = req.user;
-    console.log(currentUser);
-
     if (req.body.tokenType == "R") {
-      console.log(__dirname+"/contracts"+"coin.sol");
-      fs.readFile(path.resolve(__dirname+"/contracts/"+"coin.sol"), "utf8", async function(err, data) {
-        if (err) {
-        }
+      fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", async function(err, data) {
+        if (err) {}
 
         const pricePerToken = Math.floor(10 ** 18 / parseInt(req.body.eth_tokens));
 
@@ -51,45 +85,14 @@ module.exports = {
           }
         );
 
-        fs.writeFile(path.resolve(__dirname, "..", "allContracts", req.user.email+".sol"), result, "utf8", function(err) {
-            if (err) return console.log(err);
+        fs.writeFile(path.resolve(__dirname, "..", "allContracts", req.user.email + ".sol"), result, "utf8", function(err) {
+          if (err) return console.log(err);
         });
-
-        console.log("Sending mail");
 
         nodemailerservice.sendContractEmail(req.user.email, result);
+        req.session.contract = result;
+        res.redirect('/deployedContract');
 
-        // var mailOptions = {
-        //   from: "smartplatformsc@gmail.com",
-        //   to: req.user.email,
-        //   subject: "ERC20 based SM",
-        //   text: "This is an ERC20 compliant smart contract automatically developed by AutoCoin \n This smart contract is developed along the features that are considered important by XinFin",
-        //   attachments: [{
-        //     filename: "coin.sol",
-        //     content: result
-        //   }]
-        // };
-        //
-        // transporter.sendMail(mailOptions, function(error, info) {
-        //   if (error) {
-        //     console.log(error);
-        //   } else {
-        //     console.log("Email sent: " + info.response);
-        //     return;
-        //   }
-        // });
-
-        res.json({
-          contract: result
-        });
-        await User.update({
-          google_id: req.user.googleId
-        }, {
-          $set: {
-            count: count,
-            countLeft: countLeft
-          }
-        });
       });
     } else {
       // custom token
@@ -103,512 +106,224 @@ module.exports = {
         10 ** 18 / parseInt(req.body.eth_tokens)
       );
 
-      console.log(req.body.isR);
-      if (req.body.isR != "" || req.body.isU != "") {
-        if (req.body.isR != "" && req.body.isU != "") {
-          if (req.body.isB != "") {
-            if (req.body.isM != "") {
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                true,
-                true,
-                true,
-                pricePerToken,
-                res
-              );
-            } else {
-              // not mintable
+      var isReleasable = (req.body.isR == "on") ? true : false;
+      var isUpgradable = (req.body.isU == "on") ? true : false;
+      var isBurnable = (req.body.isB == "on") ? true : false;
+      var isMintable = (req.body.isM == "on") ? true : false;;
 
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                false,
-                true,
-                true,
-                pricePerToken,
-                res
-              );
+      generateCustomContract(
+        req.user,
+        req.body,
+        isBurnable,
+        isMintable,
+        isReleasable,
+        isUpgradable,
+        pricePerToken,
+        res
+      );
+    }
 
-              //
-            }
+    async function generateCustomContract(
+      user,
+      body,
+      burnable,
+      mintable,
+      releaseable,
+      upgradeable,
+      pricePerToken,
+      res
+    ) {
+      var mint = "";
+      var allContracts = "";
+      var release = "";
+      var upgrade = "";
+      var burn = "";
+      var upgradeCon = "";
+      template = templateCoin;
+      if (releaseable && upgradeable) {
+        if (mintable) {
+          if (burnable) {
+            // all funcs
+            mint = mintableContract;
+            release = releaseableContract;
+            burn = burnableContract;
+            upgrade = upgradeableContract;
+            allContracts = "Burnable,Mintable";
+            upgradeCon = body.token_symbol + "UpgradeableToken(msg.sender)";
           } else {
-            // not burnable
-
-            if (req.body.isM != "") {
-              //mintable
-
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                true,
-                true,
-                true,
-                pricePerToken,
-                res
-              );
-            } else {
-              //not mintable
-
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                false,
-                true,
-                true,
-                pricePerToken,
-                res
-              );
-            }
+            // r,u,m
+            mint = mintableContract;
+            release = releaseableContract;
+            upgrade = upgradeableContract;
+            allContracts = "Mintable";
+            upgradeCon = body.token_symbol + "UpgradeableToken(msg.sender)";
           }
-        } else if (req.body.isU != "") {
-          if (req.body.isB != "") {
-            if (req.body.isM != "") {
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                true,
-                false,
-                true,
-                pricePerToken,
-                res
-              );
-            } else {
-              // not mintable
-
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                false,
-                false,
-                true,
-                pricePerToken,
-                res
-              );
-            }
-          } else {
-            // not burnable
-
-            if (req.body.isM != "") {
-              //mintable
-
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                true,
-                false,
-                true,
-                pricePerToken,
-                res
-              );
-            } else {
-              //not mintable
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                false,
-                false,
-                true,
-                pricePerToken,
-                res
-              );
-            }
-          }
-        } else if (req.body.isR != "") {
-          if (req.body.isB != "") {
-            if (req.body.isM != "") {
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                true,
-                true,
-                false,
-                pricePerToken,
-                res
-              );
-            } else {
-              generateCustomContract(
-                req.user,
-                req.body,
-                true,
-                false,
-                true,
-                false,
-                pricePerToken,
-                res
-              );
-            }
-          } else {
-            // not burnable
-
-            if (req.body.isM != "") {
-              //mintable
-
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                true,
-                true,
-                false,
-                pricePerToken,
-                res
-              );
-            } else {
-              //not mintable
-              generateCustomContract(
-                req.user,
-                req.body,
-                false,
-                false,
-                true,
-                false,
-                pricePerToken,
-                res
-              );
-            }
-          }
-        }
-      } else if (req.body.isM != "") {
-        if (req.body.isB != "") {
-          generateCustomContract(
-            req.user,
-            req.body,
-            true,
-            true,
-            false,
-            false,
-            pricePerToken,
-            res
-          );
+        } else if (burnable) {
+          // r,u,b
+          release = releaseableContract;
+          burn = burnableContract;
+          upgrade = upgradeableContract;
+          allContracts = "Burnable";
+          upgradeCon = body.token_symbol + "UpgradeableToken(msg.sender)";
         } else {
-          generateCustomContract(
-            req.user,
-            req.body,
-            false,
-            true,
-            false,
-            false,
-            pricePerToken,
-            res
-          );
+          // r & u
+          mint = mintableContract;
+          release = releaseableContract;
+          allContracts = "ReleasableToken,UpgradeableToken";
+          upgradeCon = body.token_symbol + "UpgradeableToken(msg.sender)";
         }
-      } else if (req.body.isB != "") {
-        console.log("inside isB");
+      } else if (releaseable) {
+        if (mintable) {
+          if (burnable) {
+            // r,m,u
 
-        generateCustomContract(
-          req.user,
-          req.body,
-          true,
-          false,
-          false,
-          false,
-          pricePerToken,
-          res
-        );
-      } else {
-        // no function selected
-        generateCustomContract(
-          req.user,
-          req.body,
-          false,
-          false,
-          false,
-          false,
-          pricePerToken,
-          res
-        );
-      }
-    }
+            mintableContract = mintableContract.replace(
+              /UpgradeableToken/g,
+              "StandardToken"
+            );
+            burnableContract = burnableContract.replace(
+              /UpgradeableToken/g,
+              "StandardToken"
+            );
+            mint = mintableContract;
+            release = releaseableContract;
+            burn = burnableContract;
+            allContracts = "Burnable,Mintable";
+          } else {
+            // r,m
+            mintableContract = mintableContract.replace(
+              /UpgradeableToken/g,
+              "StandardToken"
+            );
+            mint = mintableContract;
+            release = releaseableContract;
+            allContracts = "Mintable";
+          }
+        } else if (burnable) {
+          // r,b
+          burnableContract = burnableContract.replace(
+            /UpgradeableToken/g,
+            "StandardToken"
+          );
+          release = releaseableContract;
+          burn = burnableContract;
+          allContracts = "Burnable";
+        } else {
+          // r
+          release = releaseable;
+          allContracts = "ReleasableToken,StandardToken";
+        }
+      } else if (upgradeable) {
+        if (mintable) {
+          if (burnable) {
+            // u,m,u
+            mintableContract = mintableContract.replace(
+              /ReleasableToken,UpgradeableToken/g,
+              "ERC20,Ownable,UpgradeableToken"
+            );
+            burnableContract = burnableContract.replace(
+              /ReleasableToken,UpgradeableToken/g,
+              "ERC20,Ownable,UpgradeableToken"
+            );
+            mint = mintableContract;
+            upgrade = upgradeableContract;
+            burn = burnableContract;
+            upgradeCon = "UpgradeableToken(msg.sender)";
+            allContracts = "Burnable,Mintable";
+          } else {
+            // u,m
+            mintableContract = mintableContract.replace(
+              /ReleasableToken,UpgradeableToken/g,
+              "ERC20,Ownable,UpgradeableToken"
+            );
+            mint = mintableContract;
+            upgrade = upgradeableContract;
+            upgradeCon = "UpgradeableToken(msg.sender)";
+            allContracts = "Mintable";
+          }
+        } else if (burnable) {
+          // u,b
+          burnableContract = burnableContract.replace(
+            /ReleasableToken,UpgradeableToken/g,
+            "ERC20,Ownable,UpgradeableToken"
+          );
+          upgrade = upgradeableContract;
+          burn = burnableContract;
+          upgradeCon = "UpgradeableToken(msg.sender)";
+          allContracts = "Burnable";
+        } else {
+          // u
+          upgrade = upgradeableContract;
+          upgradeCon = "UpgradeableToken(msg.sender)";
+          allContracts = "ERC20,Ownable,UpgradeableToken";
+        }
+      } else if (mintable) {
+        if (burnable) {
+          // b, m
 
-  }
-}
+          mintableContract = mintableContract.replace(
+            /ReleasableToken,UpgradeableToken/g,
+            "ERC20,Ownable,StandardToken"
+          );
+          burnableContract = burnableContract.replace(
+            /ReleasableToken,UpgradeableToken/g,
+            "ERC20,Ownable,StandardToken"
+          );
+          mint = mintableContract;
+          burn = burnableContract;
+          allContracts = "Mintable,Burnable";
+        } else {
+          // m
+          mintableContract = mintableContract.replace(
+            /ReleasableToken,UpgradeableToken/g,
+            "ERC20,Ownable,StandardToken"
+          );
+          mint = mintableContract;
+          allContracts = "Mintable";
+        }
+      } else if (burnable) {
+        // b
 
-fs.readFile(path.resolve(__dirname, "./contracts/", "template.sol"), "utf8", function(
-  err,
-  data
-) {
-  if (err) {
-    return console.log(err);
-  }
-  templateCoin = data;
-});
-
-fs.readFile(
-  path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"),
-  "utf8",
-  function(err, data) {
-    if (err) {
-      return console.log(err);
-    }
-    releaseableContract = data;
-  }
-);
-fs.readFile(path.resolve(__dirname, "./contracts/", "upgrade.sol"), "utf8", function(
-  err,
-  data
-) {
-  if (err) {
-    return console.log(err);
-  }
-  upgradeableContract = data;
-});
-fs.readFile(path.resolve(__dirname, "./contracts/", "mintable.sol"), "utf8", function(
-  err,
-  data
-) {
-  if (err) {
-    return console.log(err);
-  }
-  mintableContract = data;
-});
-fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8", function(
-  err,
-  data
-) {
-  if (err) {
-    return console.log(err);
-  }
-  burnableContract = data;
-});
-
-
-
-async function generateCustomContract(
-  user,
-  body,
-  burnable,
-  mintable,
-  releaseable,
-  upgradeable,
-  pricePerToken,
-  res
-) {
-  var mint = "";
-  var allContracts = "";
-  var release = "";
-  var upgrade = "";
-  var burn = "";
-  var upgradeCon = "";
-  template = templateCoin;
-  if (releaseable && upgradeable) {
-    if (mintable) {
-      if (burnable) {
-        // all funcs
-        mint = mintableContract;
-        release = releaseableContract;
-        burn = burnableContract;
-        upgrade = upgradeableContract;
-        allContracts = "Burnable,Mintable";
-        upgradeCon = "UpgradeableToken(msg.sender)";
-      } else {
-        // r,u,m
-        mint = mintableContract;
-        release = releaseableContract;
-        upgrade = upgradeableContract;
-        allContracts = "Mintable";
-        upgradeCon = "UpgradeableToken(msg.sender)";
-      }
-    } else if (burnable) {
-      // r,u,b
-      release = releaseableContract;
-      burn = burnableContract;
-      upgrade = upgradeableContract;
-      allContracts = "Burnable";
-      upgradeCon = "UpgradeableToken(msg.sender)";
-    } else {
-      // r & u
-      mint = mintableContract;
-      release = releaseableContract;
-      allContracts = "ReleasableToken,UpgradeableToken";
-      upgradeCon = "UpgradeableToken(msg.sender)";
-    }
-  } else if (releaseable) {
-    if (mintable) {
-      if (burnable) {
-        // r,m,u
-
-        mintableContract = mintableContract.replace(
-          /UpgradeableToken/g,
-          "StandardToken"
-        );
-        burnableContract = burnableContract.replace(
-          /UpgradeableToken/g,
-          "StandardToken"
-        );
-        mint = mintableContract;
-        release = releaseableContract;
-        burn = burnableContract;
-        allContracts = "Burnable,Mintable";
-      } else {
-        // r,m
-        mintableContract = mintableContract.replace(
-          /UpgradeableToken/g,
-          "StandardToken"
-        );
-        mint = mintableContract;
-        release = releaseableContract;
-        allContracts = "Mintable";
-      }
-    } else if (burnable) {
-      // r,b
-      burnableContract = burnableContract.replace(
-        /UpgradeableToken/g,
-        "StandardToken"
-      );
-      release = releaseableContract;
-      burn = burnableContract;
-      allContracts = "Burnable";
-    } else {
-      // r
-      release = releaseable;
-      allContracts = "ReleasableToken,StandardToken";
-    }
-  } else if (upgradeable) {
-    if (mintable) {
-      if (burnable) {
-        // u,m,u
-        mintableContract = mintableContract.replace(
-          /ReleasableToken,UpgradeableToken/g,
-          "ERC20,Ownable,UpgradeableToken"
-        );
         burnableContract = burnableContract.replace(
           /ReleasableToken,UpgradeableToken/g,
-          "ERC20,Ownable,UpgradeableToken"
+          "ERC20,Ownable,StandardToken"
         );
-        mint = mintableContract;
-        upgrade = upgradeableContract;
         burn = burnableContract;
-        upgradeCon = "UpgradeableToken(msg.sender)";
-        allContracts = "Burnable,Mintable";
+        allContracts = "Burnable";
       } else {
-        // u,m
-        mintableContract = mintableContract.replace(
-          /ReleasableToken,UpgradeableToken/g,
-          "ERC20,Ownable,UpgradeableToken"
-        );
-        mint = mintableContract;
-        upgrade = upgradeableContract;
-        upgradeCon = "UpgradeableToken(msg.sender)";
-        allContracts = "Mintable";
+        // no func seleted
+        allContracts = "ERC20,Ownable,StandardToken";
       }
-    } else if (burnable) {
-      // u,b
-      burnableContract = burnableContract.replace(
-        /ReleasableToken,UpgradeableToken/g,
-        "ERC20,Ownable,UpgradeableToken"
-      );
-      upgrade = upgradeableContract;
-      burn = burnableContract;
-      upgradeCon = "UpgradeableToken(msg.sender)";
-      allContracts = "Burnable";
-    } else {
-      // u
-      upgrade = upgradeableContract;
-      upgradeCon = "UpgradeableToken(msg.sender)";
-      allContracts = "ERC20,Ownable,UpgradeableToken";
-    }
-  } else if (mintable) {
-    if (burnable) {
-      // b, m
 
-      mintableContract = mintableContract.replace(
-        /ReleasableToken,UpgradeableToken/g,
-        "ERC20,Ownable,StandardToken"
+      var mapObj = {
+        upgradeableToken: upgrade,
+        releaseableToken: release,
+        mintableToken: mint,
+        burnableToken: burn,
+        allContracts: allContracts,
+        tokenName: body.token_name,
+        tokenSymbol: body.token_symbol,
+        tokenDecimals: body.token_decimals.toString(),
+        tokenTotalSupply: body.token_supply.toString(),
+        tokenOnSale: body.token_sale.toString(),
+        tokenPricePerToken: body.eth_tokens.toString(),
+        upgradeCon: upgradeCon
+      };
+      var result = template.replace(
+        /upgradeableToken|releaseableToken|mintableToken|burnableToken|allContracts|tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken|upgradeCon/gi,
+        function(matched) {
+          return mapObj[matched];
+        }
       );
-      burnableContract = burnableContract.replace(
-        /ReleasableToken,UpgradeableToken/g,
-        "ERC20,Ownable,StandardToken"
-      );
-      mint = mintableContract;
-      burn = burnableContract;
-      allContracts = "Mintable,Burnable";
-    } else {
-      // m
-      mintableContract = mintableContract.replace(
-        /ReleasableToken,UpgradeableToken/g,
-        "ERC20,Ownable,StandardToken"
-      );
-      mint = mintableContract;
-      allContracts = "Mintable";
-    }
-  } else if (burnable) {
-    // b
+      fs.writeFile(path.resolve(__dirname, "..", "allContracts", req.user.email + ".sol"), result, "utf8", function(err) {
+        if (err) return console.log(err);
+      });
 
-    burnableContract = burnableContract.replace(
-      /ReleasableToken,UpgradeableToken/g,
-      "ERC20,Ownable,StandardToken"
-    );
-    burn = burnableContract;
-    allContracts = "Burnable";
-  } else {
-    // no func seleted
-    allContracts = "ERC20,Ownable,StandardToken";
+      nodemailerservice.sendContractEmail(user.email, result);
+
+      res.json({
+        contract: result
+      });
+    }
   }
-
-  var mapObj = {
-    upgradeableToken: upgrade,
-    releaseableToken: release,
-    mintableToken: mint,
-    burnableToken: burn,
-    allContracts: allContracts,
-    tokenName: body.token_name,
-    tokenSymbol: body.token_symbol,
-    tokenDecimals: body.token_decimals.toString(),
-    tokenTotalSupply: body.token_supply.toString(),
-    tokenOnSale: body.token_sale.toString(),
-    tokenPricePerToken: body.eth_tokens.toString(),
-    upgradeCon: upgradeCon
-  };
-  var result = template.replace(
-    /upgradeableToken|releaseableToken|mintableToken|burnableToken|allContracts|tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken|upgradeCon/gi,
-    function(matched) {
-      return mapObj[matched];
-    }
-  );
-  var count = user.count + 1;
-  var name = count + ".sol";
-  var countLeft = user.countLeft - 1;
-  console.log(name);
-  fs.writeFile(
-    path.resolve(__dirname+ "/contractdirectory"+ user.email+ name),
-    result,
-    "utf8",
-    function(err) {
-      if (err) return console.log(err);
-    }
-  );
-  // nodemailerservice.sendContractEmail(req.user.email, result);
-
-  // var mailOptions = {
-  //   from: "smartplatformsc@gmail.com",
-  //   to: user.email,
-  //   subject: "ERC20 based SM",
-  //   text: "this is an ERC20 complient smart contract automatically developed by the smart platform \n This smart contract is developed along the features that are considered important by XinFin",
-  //   attachments: [{
-  //     filename: "coin.sol",
-  //     content: result
-  //   }]
-  // };
-  //
-  // transporter.sendMail(mailOptions, function(error, info) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Email sent: " + info.response);
-  //     return;
-  //   }
-  // });
-  res.json({
-    contract: result
-  });
 }

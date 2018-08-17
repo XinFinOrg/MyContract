@@ -11,7 +11,7 @@ module.exports = {
       from: "smartplatformsc@gmail.com",
       to: email,
       subject: "ERC20 based SM",
-      text: "This is an ERC20 compliant smart contract automatically developed by AutoCoin \n This smart contract is developed along the features that are considered important by XinFin",
+      text: "This is an ERC20 compliant smart contract automatically developed by AutoCoin. This smart contract is developed along the features that are considered important by XinFin",
       attachments: [{
         filename: "coin.sol",
         content: result

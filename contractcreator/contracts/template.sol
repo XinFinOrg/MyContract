@@ -158,22 +158,22 @@ contract StandardToken is ERC20, SafeMathLib {
 }
 
 
-upgradeableTokenRoady
+upgradeableToken
 
 
 
 
 
- releaseableTokenRoady
+ releaseableToken
 
 
- burnableTokenRoady
+ burnableToken
 
 
- mintableTokenRoady
+ mintableToken
 
 
-contract Coin is allContractsRoady {
+contract Coin is allContracts {
 
   event UpdatedTokenInformation(string newName, string newSymbol);
 
@@ -182,27 +182,27 @@ contract Coin is allContractsRoady {
 
 
   /* name of the token */
-  string public name = "tokenNameRoady";
+  string public name = "tokenName";
 
   /* symbol of the token */
-  string public symbol = "tokenSymbolRoady";
+  string public symbol = "tokenSymbol";
 
   /* token decimals to handle fractions */
-  uint public decimals = tokenDecimalsRoady;
+  uint public decimals = tokenDecimals;
 
 /* initial token supply */
 
-  uint public onSaleTokens = tokenOnSaleRoady * (10 ** decimals);
+  uint public onSaleTokens = tokenOnSale * (10 ** decimals);
 
-  uint256 pricePerToken = tokenPricePerTokenRoady;
+  uint256 pricePerToken = tokenPricePerToken;
 
 
 // minEther  = (o.2/currentETHtoUSD) * 2500
 // maxEther = (0.2/currentETHtoUSD) * (to be specified)
 // 1 eth = 3379.53998
 // etherToUSD = 675.907996
-  uint minETH = 0; //   etherToUSD = 675.907996  (2500 CMB)
-  uint maxETH = 500 * 10**decimals; // 500 ether  (1689769.99 CMB)
+  uint minETH = 0; //   etherToUSD = 675.907996  (2500 Token)
+  uint maxETH = 500 * 10**decimals; // 500 ether  (1689769.99 Token)
 
 
 
@@ -219,11 +219,11 @@ contract Coin is allContractsRoady {
 
   address contractAddress;
 
-  function Coin() upgradeConRoady {
+  function Coin() upgradeCon {
 
     owner = msg.sender;
     contractAddress = address(this);
-    totalSupply = tokenTotalSupplyRoady * (10 ** decimals);
+    totalSupply = tokenTotalSupply * (10 ** decimals);
     //tokens are kept in contract address rather than owner
     balances[contractAddress] = totalSupply;
   }
