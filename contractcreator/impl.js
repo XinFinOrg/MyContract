@@ -92,7 +92,23 @@ module.exports = {
         nodemailerservice.sendContractEmail(req.user.email, result);
         req.session.contract = result;
         res.redirect('/deployedContract');
-
+        byteCode=solc.compile({
+          sources: {
+              'Contract' : result
+          }
+      }, 1);
+        req.session.byteCode=byteCode.contracts['Contract:Coin'].runtimeBytecode;
+        req.session.contract= result;
+        res.redirect('/deployedContract');
+        
+        await User.update({
+          google_id: req.user.googleId
+        }, {
+          $set: {
+            count: count,
+            countLeft: countLeft
+          }
+        });
       });
     } else {
       // custom token
@@ -326,4 +342,9 @@ module.exports = {
       });
     }
   }
+  );
+  req.session.contract= result;
+  res.redirect('/deployedContract');
 }
+
+

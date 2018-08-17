@@ -1,0 +1,57 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+  <title>AutoCoin</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <style>
+    body {
+      padding-top: 80px;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="page-header">
+      <h1 class="text-center">Deployed Contract</h1>
+      <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
+      <a href="/profile" class="btn btn-default btn-sm pull-left"> Back</a>
+
+      <br><br>
+    </div>
+
+    <div class="row">
+
+
+      <!-- LOCAL INFORMATION -->
+      <div class="col-sm-12 text-center">
+        <div class="well">
+                <h3 class="text-center"> Solidity Code</h3>
+                <textarea class="form-control" rows="15" disabled><%= contract %></textarea>
+
+         
+        </div>
+      </div>
+      <div class="col-sm-12 text-center">
+        <div class="well">
+                <h3 class="text-center">Byte Code</h3>
+                <textarea class="form-control" rows="15" disabled><%= byteCode %></textarea><br>
+                <a href="/deployer" class="btn btn-default btn-lg text-center"> Deploy</a>
+
+
+
+         
+        </div>
+      </div>
+    
+    </div>
+
+  </div>
+</body>
+
+</html>

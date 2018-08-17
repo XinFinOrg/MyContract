@@ -14,7 +14,15 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/createContract", hasPackage1, impl.createContract);
+      app.get('/deployedContract', hasPackage1, function(req, res) {
+        // console.log(req.session.contract);
+        res.render('deployedContract', {user: req.session.user,contract:req.session.contract,byteCode:req.session.byteCode});
+      });
+
+      app.post("/createContract",impl.createContract);
+
+
+
 
 }
 

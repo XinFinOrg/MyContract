@@ -24,6 +24,7 @@
     "passport-github": "^1.1.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "solc": "^0.4.24"
   }
 }
