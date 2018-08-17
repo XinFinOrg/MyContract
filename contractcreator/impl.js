@@ -337,14 +337,12 @@ module.exports = {
 
       nodemailerservice.sendContractEmail(user.email, result);
 
-      res.json({
-        contract: result
-      });
+      req.session.contract= result;
+      res.redirect('/deployedContract');
     }
   }
-  );
-  req.session.contract= result;
-  res.redirect('/deployedContract');
+  
+
 }
 
 
