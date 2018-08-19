@@ -38,36 +38,45 @@
           </p>
 
         </div>
-        <br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br>
+        <% if (message.length >0) { %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+          <% } %>
       </div>
       <div class="col-sm-6 text-center">
-          <div class="row">
-              <div class="col-sm-12 text-center">
-          <div class="well">
-          <h3>Smart Contract Creation</h3>
-          <br>
-          <a href="/customContract" class="btn btn-default btn-sm">Custom Contract</a>
-          <a href="/recommendedContract" class="btn btn-default btn-sm">Recommended Contract</a>
-          </div>
-        </div>
-
-        <div class="col-sm-12 text-center">
+        <div class="row">
+          <div class="col-sm-12 text-center">
             <div class="well">
-            <h3>Smart Contract Deployment</h3>
-            <br>
-            <a href="/deployer" class="btn btn-default btn-sm">Deploy Contract</a>
-       
+              <h3>Smart Contract Creation</h3>
+              <br>
+              <span> ERC20 Standard Token</span>
+                  <a href="/customContract" class="btn btn-default btn-sm">Custom Contract</a>
+                  <a href="/recommendedContract" class="btn btn-default btn-sm">Recommended Contract</a>
+              <br>
+              <span> ERC721 Standard Token (Coming Soon)</span>
+            </div>
+          </div>
+
+          <div class="col-sm-12 text-center">
+            <div class="well">
+              <h3>Smart Contract Deployment</h3>
+              <br>
+              <a href="/deployer" class="btn btn-default btn-sm">Deploy Contract</a>
+
             </div>
           </div>
           <div class="col-sm-12 text-center">
-              <div class="well">
+            <div class="well">
               <h3>Smart Contract ICO platform</h3>
               <br>
               <a href="/customContract" class="btn btn-default btn-sm"> ICO setup</a>
-             
-              </div>
+
             </div>
-      </div>
+          </div>
+        </div>
       </div>
     </div>
 

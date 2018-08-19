@@ -1,6 +1,6 @@
 module.exports = function(app, passport) {
 
-  app.get('/userlogin', function(req, res, next) {
+  app.get('/login', function(req, res, next) {
 
     res.render('login', {
       message: req.flash('loginMessage')
@@ -32,7 +32,8 @@ module.exports = function(app, passport) {
   app.get('/profile', isLoggedIn, function(req, res) {
     req.session.user = req.user;
     res.render('profile.ejs', {
-      user: req.user // get the user out of session and pass to template
+      user: req.user,// get the user out of session and pass to template
+      message: req.flash('package_flash')
     });
   });
 

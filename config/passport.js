@@ -1,6 +1,3 @@
-// config/passport.js
-
-// load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
@@ -10,14 +7,10 @@ var configAuth = require('./auth');
 // load up the user model
 var User = require('../userlogin/models');
 
-// expose this function to our app using module.exports
+
 module.exports = function(passport) {
 
-  // =========================================================================
-  // passport session setup ==================================================
-  // =========================================================================
-  // required for persistent login sessions
-  // passport needs ability to serialize and unserialize users out of session
+
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -30,12 +23,7 @@ module.exports = function(passport) {
     });
   });
 
-  // =========================================================================
-  // LOCAL SIGNUP ============================================================
-  // =========================================================================
-  // we are using named strategies since we have one for login and one for signup
-  // by default, if there was no name, it would just be called 'local'
-
+  //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email
       usernameField: 'email',
@@ -83,6 +71,8 @@ module.exports = function(passport) {
       });
 
     }));
+
+  //local login strategy for passport
   passport.use('local-login', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email
       usernameField: 'email',
@@ -113,6 +103,7 @@ module.exports = function(passport) {
       });
     }));
 
+  // passport strategy for google login
   passport.use(new GoogleStrategy({
 
       clientID: configAuth.googleAuth.clientID,
@@ -135,7 +126,12 @@ module.exports = function(passport) {
           if (user) {
 
             // if a user is found, log them in
-            return done(null, user);
+            user.google_id = profile.id;
+            user.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, user);
+            });
           } else {
             // if the user isnt in our database, create a new user
             var newUser = new User();
@@ -156,6 +152,8 @@ module.exports = function(passport) {
       });
 
     }));
+
+  //passport strategy for github login
   passport.use(new GitHubStrategy({
       clientID: configAuth.githubAuth.clientID,
       clientSecret: configAuth.githubAuth.clientSecret,
@@ -169,7 +167,7 @@ module.exports = function(passport) {
       process.nextTick(function() {
         // try to find the user based on their google id
         User.findOne({
-          'github.id': profile.id
+          'email': profile.emails[0].value
         }, function(err, user) {
           if (err)
             return done(err);
@@ -177,7 +175,12 @@ module.exports = function(passport) {
           if (user) {
 
             // if a user is found, log them in
-            return done(null, user);
+            user.github_id = profile.id;
+            user.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, user);
+            });
           } else {
             // if the user isnt in our database, create a new user
             var newUser = new User();

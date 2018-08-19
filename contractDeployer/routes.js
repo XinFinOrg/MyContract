@@ -1,29 +1,33 @@
 // const service = require("./impl");
 var path = require('path');
 
-module.exports = function(app,express){
+module.exports = function(app, express) {
 
 
 
-    // app.get('/deployer', function(req, res) {
-    //     res.render('');
-    //   });
+  // app.get('/deployer', function(req, res) {
+  //     res.render('');
+  //   });
 
-    app.use(express.static(path.join(__dirname, './dist')));
+  app.use(express.static(path.join(__dirname, './dist')));
 
-    app.get('/deployer',hasPackage1,function (req, res) {
-      console.log("log",req.session.byteCode,req.session.user);
-    res.sendFile(path.join(__dirname, './','dist', 'index.html'),{user: req.session.user,byteCode:req.session.byteCode});
-});
+  app.get('/deployer', hasPackage2, function(req, res) {
+    console.log("log", req.session.byteCode, req.session.user);
+    res.sendFile(path.join(__dirname, './', 'dist', 'index.html'), {
+      user: req.session.user,
+      byteCode: req.session.byteCode
+    });
+  });
 
 
 }
 
 // route middleware to check package 1
-function hasPackage1(req, res, next) {
-    if(req.user.packages.package_2==true){
-      return next();
-    }else{
-      res.redirect('/profile');
-    }
+function hasPackage2(req, res, next) {
+  if (req.user.packages.package_2 == true) {
+    return next();
+  } else {
+    req.flash('package_flash', 'You need to buy Package 2');
+    res.redirect('/profile');
   }
+}

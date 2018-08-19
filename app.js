@@ -14,7 +14,10 @@ const session = require('express-session');
 app.use(session({
   secret: 'nishant', // session secret
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 30
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -42,8 +45,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Creating all app routes
 require('./routes')(app);
 require('./userlogin/routes')(app, passport);
-require('./contractcreator/routes')(app);
+require('./contractCreator/routes')(app);
 require('./contractDeployer/routes')(app,express);
+require('./packageCart/routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
