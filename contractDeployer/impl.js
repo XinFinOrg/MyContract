@@ -11,6 +11,15 @@ module.exports = {
             console.log("fetched");
             res.send({bytecode:doc.bytecode})
           });
+        },
 
+    saveDeploymentData:async function (req,res) {
+        console.log("deploy data",req.body);
+        User.findOneAndUpdate({email:req.session.user.email}, {$set:{contractAddress:req.body.contractAddress,contractTxHash:req.body.contractTxHash}}, {new: true}, function(err, doc){ 
+            if(err){
+                res.send("Something wrong when updating data!");
+            }
+                res.send("bytecode added");
+          });
     }
 }

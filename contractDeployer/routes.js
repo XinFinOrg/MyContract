@@ -12,9 +12,10 @@ module.exports = function(app, express) {
   });
 
   app.get('/getBytecode',impl.getBytecode);
+  app.post('/saveDeploymentData',impl.saveDeploymentData);
 }
 
-// route middleware to check package 1
+// route middleware to check package 2
 function hasPackage2(req, res, next) {
   if (req.user.packages.package_2 == true) {
     return next();
