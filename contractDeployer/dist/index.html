@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>MyEtherWallet.com</title>
+<title>Auto Coin</title>
 <meta property="og:title" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta property="og:site_name" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta name="twitter:title" content="MyEtherWallet.com: Your Key to Ethereum">
@@ -230,7 +230,7 @@
   <!-- / Title -->
 
   <!-- Interact Contracts -->
-  <article class="row block" ng-show="visibility=='interactView'">
+  <article class="row block" ng-show="visibility=='interactView'" ng-init="logged_in_user = {req.session.user}">
 
      
 <!-- Address -->
@@ -660,7 +660,7 @@
       class="form-control"
       rows="8"
       ng-model="tx.data"
-      ng-class="Validator.isValidHex(tx.data)&&tx.data!='' ? 'is-valid' : 'is-invalid'"></textarea>
+      ng-class="Validator.isValidHex(tx.data)&&tx.data!='' ? 'is-valid' : 'is-invalid'" placeholder={{tx.bytecode}}></textarea>
   </div>
 
   <!-- Gas -->

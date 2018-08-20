@@ -3909,7 +3909,7 @@
   <!-- / Title -->
 
   <!-- Interact Contracts -->
-  <article class="row block" ng-show="visibility=='interactView'">
+  <article class="row block" ng-show="visibility=='interactView'" ng-init="logged_in_user = {req.session.user}">
 
     
      
@@ -4340,7 +4340,7 @@
       class="form-control"
       rows="8"
       ng-model="tx.data"
-      ng-class="Validator.isValidHex(tx.data)&&tx.data!='' ? 'is-valid' : 'is-invalid'"><%= byteCode %></textarea>
+      ng-class="Validator.isValidHex(tx.data)&&tx.data!='' ? 'is-valid' : 'is-invalid'" placeholder={{tx.bytecode}}></textarea>
   </div>
 
   <!-- Gas -->

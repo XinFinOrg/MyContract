@@ -14,7 +14,8 @@ var userSchema = mongoose.Schema({
     package_1: {type: Boolean, default: false},
     package_2: {type: Boolean, default: false},
     package_3: {type: Boolean, default: false}
-  }
+  },
+  bytecode:String
 });
 
 // methods ======================

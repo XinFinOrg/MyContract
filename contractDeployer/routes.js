@@ -1,16 +1,8 @@
-// const service = require("./impl");
+const impl = require("./impl");
 var path = require('path');
 
 module.exports = function(app, express) {
-
-
-
-  // app.get('/deployer', function(req, res) {
-  //     res.render('');
-  //   });
-
   app.use(express.static(path.join(__dirname, './dist')));
-
   app.get('/deployer', hasPackage2, function(req, res) {
     console.log("log", req.session.byteCode, req.session.user);
     res.sendFile(path.join(__dirname, './', 'dist', 'index.html'), {
@@ -19,7 +11,7 @@ module.exports = function(app, express) {
     });
   });
 
-
+  app.get('/getBytecode',impl.getBytecode);
 }
 
 // route middleware to check package 1
