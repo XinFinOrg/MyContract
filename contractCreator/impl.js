@@ -102,11 +102,6 @@ module.exports = {
 
     nodemailerservice.sendContractEmail(req.user.email, result);
     byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];
-    User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){
-          if(err){
-              console.log("Something wrong when updating data!");
-          }
-        });
     //file read for contract bytecode
     fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.bytecode, {
       flag: 'w'
