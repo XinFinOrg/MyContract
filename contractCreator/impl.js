@@ -101,21 +101,19 @@ module.exports = {
     });
 
     nodemailerservice.sendContractEmail(req.user.email, result);
-    byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];      
-    User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){ 
+    byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];
+    User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){
           if(err){
               console.log("Something wrong when updating data!");
           }
-      
-          //console.log("bytecode added");
         });
     //file read for contract bytecode
-    // fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.contracts['Contract:Coin'].runtimeBytecode, {
-    //   flag: 'w'
-    // }, function(err) {
-    //   if (err) return console.log(err);
-    // });
-    req.session.byteCode=byteCode.bytecode; 
+    fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.bytecode, {
+      flag: 'w'
+    }, function(err) {
+      if (err) return console.log(err);
+    });
+    req.session.byteCode=byteCode.bytecode;
     req.session.contract = result;
     res.redirect('/deployedContract');
   }
