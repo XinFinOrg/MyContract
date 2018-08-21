@@ -10,6 +10,7 @@ module.exports = function(app) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
+  console.log(req.user);
   if (req.user.packages.package_1 == true) {
     return next();
   } else {
