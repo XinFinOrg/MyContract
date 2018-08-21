@@ -8,15 +8,17 @@ var coin, templateCoin, mintableContract, burnableContract, releaseableContract,
 var filereaderservice = require('../filereader/impl');
 var result, bytecode;
 
-fs.readFile(path.resolve(__dirname, "./contracts/", "template.sol"), "utf8",
-  function(err, data) {
-    if (err) {
-      return console.log(err);
-    }
+filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"), onReadContract);
+
+function onReadContract(err, data) {
+  if (err) {
+    console.log(err);
+  } else {
     templateCoin = data;
-  });
-fs.readFile(
-  path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
+  }
+}
+
+fs.readFile(path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
   function(err, data) {
     if (err) {
       return console.log(err);
@@ -110,7 +112,7 @@ module.exports = {
     });
 
     nodemailerservice.sendContractEmail(req.user.email, result);
-    byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];
+    byteCode = solc.compile(result.toString(), 1).contracts[':Coin'];
     // User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){
     //       if(err){
     //           console.log("Something wrong when updating data!");
@@ -122,9 +124,18 @@ module.exports = {
     }, function(err) {
       if (err) return console.log(err);
     });
-    req.session.byteCode=byteCode.bytecode;
+    req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
     res.redirect('/generatedContract');
+  },
+
+  getGeneratedContract: function(req, res) {
+    // console.log(req.session.contract);
+    res.render('deployedContract', {
+      user: req.sessionuser,
+      contract: req.session.contract,
+      byteCode: req.session.byteCode
+    });
   }
 }
 

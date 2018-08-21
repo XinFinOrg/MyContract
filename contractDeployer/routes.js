@@ -3,14 +3,7 @@ var path = require('path');
 
 module.exports = function(app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
-  app.get('/deployer', hasPackage2, function(req, res) {
-    console.log("log", req.session.byteCode, req.session.user);
-    res.sendFile(path.join(__dirname, './', 'dist', 'index.html'), {
-      user: req.session.user,
-      byteCode: req.session.byteCode
-    });
-  });
-
+  app.get('/deployer', hasPackage2, impl.getDeployer);
   app.get('/getBytecode',impl.getBytecode);
   app.post('/saveDeploymentData',impl.saveDeploymentData);
 }
