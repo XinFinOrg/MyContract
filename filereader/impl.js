@@ -1,8 +1,8 @@
 var fs = require('fs');
 
 module.exports = {
-  readContract: function(path, callback) {
-    fs.readFile(path, "utf8", callback);
+  readContract: function(path) {
+    return fs.readFileSync(path, "utf8");
   }
 
 }
