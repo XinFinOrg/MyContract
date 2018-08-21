@@ -13,8 +13,8 @@ module.exports = {
   },
 
   'nodemailerAuth': {
-    user: "smartplatformsc@gmail.com",
-    pass: "QwertY))&"
+    'user': 'AUTOICOSMTP@mail002.dakghar.in',
+    'pass': '@Ed2eQSxwd'
   }
 
 };
