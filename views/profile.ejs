@@ -27,6 +27,8 @@
 
       <!-- LOCAL INFORMATION -->
       <div class="col-sm-6 text-center">
+          <div class="row">
+          <div class="col-sm-12 text-center">
         <div class="well">
           <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
 
@@ -38,6 +40,22 @@
           </p>
 
         </div>
+      </div>
+      <% if(user.contractAddress) { %> 
+      <div class="col-sm-12 text-center">
+          <div class="well">
+              <p>
+                  <strong>Contract Address</strong>:<br>
+                  <%= user.contractAddress ? user.contractAddress : 'Not Deployed' %><br><br><hr size="5">
+                    <strong>Contract Tx Hash</strong>:
+                  <%= user.contractTxHash ? user.contractTxHash : 'Not Deployed' %><br><br>
+                </p>
+      
+  
+          </div>
+        </div>
+        <% } %>
+      </div>
         <br><br><br>
         <% if (message.length >0) { %>
           <div class="alert alert-danger">
@@ -50,13 +68,15 @@
         <div class="row">
           <div class="col-sm-12 text-center">
             <div class="well">
-              <h3>Smart Contract Creation</h3>
+              <h3>Smart Contract Creation</h3><hr size="10">
+
               <br>
               <span> ERC20 Standard Token</span><br><br>
                   <a href="/customContract" class="btn btn-default btn-sm">Custom Contract</a>
                   <a href="/recommendedContract" class="btn btn-default btn-sm">Recommended Contract</a>
-              <br><br>
-              <span> ERC721 Standard Token (Coming Soon)</span><br>
+              <br><hr size="5">
+              <br>
+              <span> ERC721 Standard Token (Coming Soon)</span><br><br>
               <a href="#" class="btn btn-default btn-sm" disabled>Create Contract</a>
             </div>
           </div>
@@ -71,10 +91,10 @@
           </div>
           <div class="col-sm-12 text-center">
             <div class="well">
-              <h3>Smart Contract ICO platform</h3>
+              <h3>Smart Contract ICO platform (Coming Soon)</h3>
               <br>
-              <a href="/icoDashboardSetup" class="btn btn-default btn-sm"> ICO setup</a>
 
+              <a href="/icoDashboardSetup" class="btn btn-default btn-sm"> ICO setup</a>
             </div>
           </div>
         </div>
