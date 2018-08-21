@@ -36,7 +36,7 @@
       <div class="col-sm-12 text-center">
         <div class="well">
           <h3 class="text-center"> Solidity Code</h3>
-          <textarea class="form-control" rows="25" disabled><%= contract %></textarea>
+          <textarea class="form-control" rows="15" disabled><%= contract %></textarea>
 
 
         </div>
