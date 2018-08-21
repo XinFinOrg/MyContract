@@ -16,7 +16,6 @@ var userSchema = mongoose.Schema({
     package_3: {type: Boolean, default: false}
   },
   //contract data
-  bytecode:String,
   contractAddress:String,
   contractTxHash:String
 });
