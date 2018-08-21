@@ -2,19 +2,11 @@ const impl = require("./impl");
 
 module.exports = function(app) {
 
-  app.get('/customContract', hasPackage1, function(req, res) {
-    res.render('customContract', {
-      user: req.session.user
-    });
-  });
+  app.get('/customContract', hasPackage1, impl.getCustomContractForm);
 
-  app.get('/recommendedContract', hasPackage1, function(req, res) {
-    res.render('recommendedContract', {
-      user: req.session.user
-    });
-  });
+  app.get('/recommendedContract', hasPackage1, impl.getRecommendedContractForm);
 
-  app.get('/deployedContract', hasPackage1, function(req, res) {
+  app.get('/generatedContract', hasPackage1, function(req, res) {
     // console.log(req.session.contract);
     res.render('deployedContract', {
       user: req.session.user,
@@ -24,10 +16,6 @@ module.exports = function(app) {
   });
 
   app.post("/createContract", impl.createContract);
-
-
-
-
 }
 
 // route middleware to check package 1

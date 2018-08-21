@@ -14,9 +14,9 @@ const session = require('express-session');
 app.use(session({
   secret: 'nishant', // session secret
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 30
+    maxAge: 1000 * 60
   }
 }));
 app.use(passport.initialize());
@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Creating all app routes
 require('./routes')(app);
-require('./userlogin/routes')(app, passport);
+require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);
 require('./contractDeployer/routes')(app,express);
 require('./packageCart/routes')(app);

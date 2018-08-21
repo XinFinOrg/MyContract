@@ -54,7 +54,16 @@ fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", functi
 var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
+  getCustomContractForm: function(req, res) {
+    res.render('customContract');
+  },
+
+  getRecommendedContractForm: function(req, res) {
+    res.render('recommendedContract');
+  },
+
   createContract: async function(req, res) {
+    console.log("Template data is ", templateCoin);
     var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
@@ -102,11 +111,11 @@ module.exports = {
 
     nodemailerservice.sendContractEmail(req.user.email, result);
     byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];
-    User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){
-          if(err){
-              console.log("Something wrong when updating data!");
-          }
-        });
+    // User.findOneAndUpdate({email:req.user.email }, {$set:{bytecode:byteCode.bytecode}}, {new: true}, function(err, doc){
+    //       if(err){
+    //           console.log("Something wrong when updating data!");
+    //       }
+    //     });
     //file read for contract bytecode
     fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.bytecode, {
       flag: 'w'
@@ -115,7 +124,7 @@ module.exports = {
     });
     req.session.byteCode=byteCode.bytecode;
     req.session.contract = result;
-    res.redirect('/deployedContract');
+    res.redirect('/generatedContract');
   }
 }
 
