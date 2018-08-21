@@ -8,9 +8,9 @@ var coin, templateCoin, mintableContract, burnableContract, releaseableContract,
 var filereaderservice = require('../filereader/impl');
 var result, bytecode;
 
-filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"), onReadContract);
+filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"), onReadTemplateCoinContract);
 
-function onReadContract(err, data) {
+function onReadTemplateCoinContract(err, data) {
   if (err) {
     console.log(err);
   } else {
