@@ -2,11 +2,17 @@
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
-
+var keythereum = require("keythereum");
+// var Web3 = require('web3');
+// var web3 = new Web3();
+// web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
 // define the schema for our user model
 var userSchema = mongoose.Schema({
   name: String,
   email: String,
+  ethereumAccount: String,
+  cipher: String,
+  balance: Number,
   password: String,
   github_id: String,
   google_id: String,
@@ -24,6 +30,16 @@ var userSchema = mongoose.Schema({
 // generating a hash
 userSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.generateNewAccount = function(password){
+  var params = { keyBytes: 32, ivBytes: 16 };
+  var dk = keythereum.create(params);
+  return keythereum.dump(password, dk.privateKey, dk.salt, dk.iv)
+};
+
+userSchema.methods.generateCipher = function(){
+  return cipher = bcrypt.hashSync(((Math.random()* (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
 };
 
 // checking if password is valid

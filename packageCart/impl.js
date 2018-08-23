@@ -1,5 +1,11 @@
-module.export = {
+var QRCode = require('qrcode')
+
+module.exports = {
   buyPackage: function(req, res) {
-    res.send("Package Card Page");
+    QRCode.toDataURL('Hello', function (err, url) {
+      console.log(url)
+    });
+    // res.send("Package Card Page");
+    res.render('qrCode.ejs');
   }
 }

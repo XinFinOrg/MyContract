@@ -60,10 +60,6 @@ module.exports = {
     res.render('customContract');
   },
 
-  getRecommendedContractForm: function(req, res) {
-    res.render('recommendedContract');
-  },
-
   createContract: async function(req, res) {
     console.log("Template data is ", templateCoin);
     var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
@@ -71,39 +67,36 @@ module.exports = {
       fs.mkdirSync(userDir);
     }
 
-    if (req.body.tokenType == "R") {
 
-      var mapObj = {
-        tokenName: req.body.token_name,
-        tokenSymbol: req.body.token_symbol,
-        tokenDecimals: req.body.token_decimals.toString(),
-        tokenTotalSupply: req.body.token_supply.toString(),
-        tokenOnSale: req.body.token_sale.toString(),
-        tokenPricePerToken: req.body.eth_tokens.toString()
-      };
-      result = coin.replace(
-        /tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken/gi,
-        function(matched) {
-          return mapObj[matched];
-        }
-      );
-    } else {
-      // custom token
-      var mint = "";
-      var allContracts = "";
-      var release = "";
-      var upgrade = "";
-      var burn = "";
-      var upgradeCon = "";
+    var mapObj = {
+      tokenName: req.body.token_name,
+      tokenSymbol: req.body.token_symbol,
+      tokenDecimals: req.body.token_decimals.toString(),
+      tokenTotalSupply: req.body.token_supply.toString(),
+      tokenOnSale: req.body.token_sale.toString(),
+      tokenPricePerToken: req.body.eth_tokens.toString()
+    };
+    result = coin.replace(
+      /tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken/gi,
+      function(matched) {
+        return mapObj[matched];
+      }
+    );
+    // custom token
+    var mint = "";
+    var allContracts = "";
+    var release = "";
+    var upgrade = "";
+    var burn = "";
+    var upgradeCon = "";
 
-      var isReleasable = (req.body.isR == "on") ? true : false;
-      var isUpgradable = (req.body.isU == "on") ? true : false;
-      var isBurnable = (req.body.isB == "on") ? true : false;
-      var isMintable = (req.body.isM == "on") ? true : false;;
+    var isReleasable = (req.body.isR == "on") ? true : false;
+    var isUpgradable = (req.body.isU == "on") ? true : false;
+    var isBurnable = (req.body.isB == "on") ? true : false;
+    var isMintable = (req.body.isM == "on") ? true : false;;
 
-      generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
+    generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
 
-    }
     fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".sol"), result, {
       flag: 'w'
     }, function(err) {
@@ -112,21 +105,27 @@ module.exports = {
     });
 
     nodemailerservice.sendContractEmail(req.user.email, result);
-    byteCode=solc.compile(result.toString(), 1).contracts[':Coin'];
+    byteCode = solc.compile(result.toString(), 1).contracts[':Coin'];
     //file read for contract bytecode
     fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.bytecode, {
       flag: 'w'
     }, function(err) {
       if (err) return console.log(err);
     });
-    req.session.byteCode=byteCode.bytecode;
+    req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
-    User.findOneAndUpdate({email:req.user.email}, {$set:{"packages.package_1":false}}, function(err, doc){ 
-      if(err){
-         res.send("Something wrong when updating packages!");
+    User.findOneAndUpdate({
+      email: req.user.email
+    }, {
+      $set: {
+        "packages.package_1": false
       }
-          console.log("packages updated");
-          res.redirect('/generatedContract');
+    }, function(err, doc) {
+      if (err) {
+        res.send("Something wrong when updating packages!");
+      }
+      console.log("packages updated");
+      res.redirect('/generatedContract');
 
     });
   },

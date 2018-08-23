@@ -3,7 +3,6 @@ const impl = require("./impl");
 module.exports = function(app) {
 
   app.get('/customContract', isLoggedIn, hasPackage1, impl.getCustomContractForm);
-  app.get('/recommendedContract', isLoggedIn, hasPackage1, impl.getRecommendedContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
   app.post("/createContract", isLoggedIn, impl.createContract);
 }

@@ -57,6 +57,10 @@ module.exports = function(passport) {
             // set the user's local credentials
             newUser.email = email;
             newUser.password = newUser.generateHash(password);
+            newUser.cipher = newUser.generateCipher();
+            var keyStore = newUser.generateNewAccount(newUser.cipher);
+            newUser.ethereumAccount = keyStore.address;
+            console.log(keyStore);;
 
             // save the user
             newUser.save(function(err) {
@@ -140,6 +144,10 @@ module.exports = function(passport) {
             newUser.google_id = profile.id;
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
+            newUser.cipher = newUser.generateCipher();
+            var keyStore = newUser.generateNewAccount(newUser.cipher);
+            newUser.ethereumAccount = keyStore.address;
+            console.log(keyStore);
 
             // save the user
             newUser.save(function(err) {
@@ -189,6 +197,10 @@ module.exports = function(passport) {
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
+            newUser.cipher = newUser.generateCipher();
+            var keyStore = newUser.generateNewAccount(newUser.cipher);
+            newUser.ethereumAccount = keyStore.Promise.address;
+            console.log(keyStore.Promise.address);
 
             // save the user
             newUser.save(function(err) {
