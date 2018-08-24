@@ -9,8 +9,7 @@ module.exports = {
 
   payment: function(req, res) {
     // res.send("Package Card Page");
-
-     res.render('payment');
+     res.render('payment',{user: req.user});
    },
 
    getQRcode: function(req, res){

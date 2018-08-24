@@ -28,8 +28,8 @@ module.exports = {
   }),
 
   getProfile: function(req, res) {
-    console.log(req.session.passport.user);
-    console.log(req.user);
+    // console.log(req.session.passport.user);
+    // console.log(req.user);
     res.render('profile.ejs', {
       user: req.user, // get the user out of session and pass to template
       message: req.flash('package_flash')
