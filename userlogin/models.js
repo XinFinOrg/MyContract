@@ -16,12 +16,7 @@ var userSchema = mongoose.Schema({
   password: String,
   github_id: String,
   google_id: String,
-  packages: {
-    package_1: {type: Boolean, default: false},
-    package_2: {type: Boolean, default: false},
-    package_3: {type: Boolean, default: false}
-  },
-  //contract data
+  packages:Boolean,
   contractAddress:String,
   contractTxHash:String
 });

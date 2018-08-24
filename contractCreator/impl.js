@@ -7,6 +7,8 @@ var User = require('../userlogin/models');
 var coin, templateCoin, mintableContract, burnableContract, releaseableContract, upgradeableContract;
 var filereaderservice = require('../filereader/impl');
 var result, bytecode;
+var Client = require('../database/config');
+
 
 templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
 
@@ -57,15 +59,18 @@ var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
   getCustomContractForm: function(req, res) {
-    res.render('customContract');
+    res.render('customContract'); 
   },
 
   createContract: async function(req, res) {
     console.log("Template data is ", templateCoin);
+    if (!fs.existsSync(__dirname + "/contractDirectory")){
+      fs.mkdirSync(__dirname + "/contractDirectory");
+    }
     var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
-    }
+  }
 
 
     var mapObj = {
@@ -97,7 +102,7 @@ module.exports = {
 
     generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
 
-    fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".sol"), result, {
+    fs.writeFile(path.resolve(userDir + "/" + req.body.token_name + ".sol"), result, {
       flag: 'w'
     }, function(err) {
       if (err)
@@ -114,20 +119,15 @@ module.exports = {
     });
     req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
-    User.findOneAndUpdate({
-      email: req.user.email
-    }, {
-      $set: {
-        "packages.package_1": false
-      }
-    }, function(err, doc) {
-      if (err) {
-        res.send("Something wrong when updating packages!");
-      }
+    Client.update({"packages":false},{ 
+      where: {'email':req.user.email}
+    }).then(function(result) {
+      if (!result)
+      res.send("Something wrong when updating packages!");
+
       console.log("packages updated");
       res.redirect('/generatedContract');
-
-    });
+  })
   },
 
   getGeneratedContract: function(req, res) {

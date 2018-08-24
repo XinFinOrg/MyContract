@@ -28,7 +28,10 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
     "qrcode": "^1.2.2",
+    "sequelize": "^4.38.0",
     "solc": "^0.4.24",
     "w": "^1.1.0",
     "web3": "^0.20.0"
