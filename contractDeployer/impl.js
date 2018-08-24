@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-var User = require('../userlogin/models');
 var fs = require('fs');
 var path = require('path');
+var Client = require('../database/config');
+
 
 module.exports = {
 
@@ -16,12 +16,15 @@ module.exports = {
         },
 
     saveDeploymentData:async function (req,res) {
-        User.findOneAndUpdate({email:req.user.email}, {$set:{contractAddress:req.body.contractAddress,contractTxHash:req.body.contractTxHash,"packages.package_2":false}}, function(err, doc){ 
-            if(err){
-                res.send("Something wrong when updating data!");
-            }
-                res.send("bytecode added");
-          });
+        Client.update({'contractAddress':req.body.contractAddress,'contractTxHash':req.body.contractTxHash,'package2':false},{ 
+            where: {'email':req.user.email}
+          }).then(function(result) {
+            if (!result)
+            res.send("Something wrong when updating packages!");
+      
+            console.log("packages updated");
+            res.redirect('/generatedContract');
+        })
     },
 
     getDeployer: function(req, res) {

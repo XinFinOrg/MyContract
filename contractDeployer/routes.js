@@ -1,5 +1,7 @@
 const impl = require("./impl");
 var path = require('path');
+var Client = require('../database/config');
+
 
 module.exports = function(app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
@@ -23,7 +25,7 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage2(req, res, next) {
-  if (req.user.packages.package_2 == true) {
+  if (req.user.package2 == true) {
     return next();
   } else {
     req.flash('package_flash', 'You need to buy Package 2');

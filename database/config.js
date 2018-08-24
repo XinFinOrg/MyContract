@@ -31,15 +31,21 @@ var Client = sequelize.define('client', {
     google_id: {
       type: Sequelize.STRING
     },
-    packages: {
-      type: Sequelize.BOOLEAN
-    },
     contractAddress: {
       type: Sequelize.STRING
     },
     contractTxHash: {
       type: Sequelize.STRING
-    }
+    }, 
+    package1: {
+      type: Sequelize.BOOLEAN
+    }, 
+    package2: {
+      type: Sequelize.BOOLEAN
+    }, 
+    package3: {
+      type: Sequelize.BOOLEAN
+    },
   });
 
 

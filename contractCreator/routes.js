@@ -1,4 +1,6 @@
 const impl = require("./impl");
+var Client = require('../database/config');
+
 
 module.exports = function(app) {
 
@@ -21,7 +23,7 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
-  if (req.user.packages == true) {
+  if (req.user.package1 == true) {
     return next();
   } else {
     req.flash('package_flash', 'You need to buy Package 1');

@@ -112,14 +112,14 @@ module.exports = {
     nodemailerservice.sendContractEmail(req.user.email, result);
     byteCode = solc.compile(result.toString(), 1).contracts[':Coin'];
     //file read for contract bytecode
-    fs.writeFile(path.resolve(userDir + "/" + req.user.email + ".bytecode"), byteCode.bytecode, {
+    fs.writeFile(path.resolve(userDir + "/" + req.body.token_name + ".bytecode"), byteCode.bytecode, {
       flag: 'w'
     }, function(err) {
       if (err) return console.log(err);
     });
     req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
-    Client.update({"packages":false},{ 
+    Client.update({"package1":false},{ 
       where: {'email':req.user.email}
     }).then(function(result) {
       if (!result)
