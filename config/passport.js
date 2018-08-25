@@ -26,12 +26,17 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-    done(null, user.email);
+    console.log("here6",user);
+    done(null, user);
   });
 
   // used to deserialize the user
   passport.deserializeUser(function(id, done) {
-    Client.find(id.email).then(client =>{
+    Client.find({
+      where:{
+      'email': id.email
+      }
+    }).then(client =>{
       done(null,client.dataValues);
   });
 });
@@ -44,9 +49,11 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
+      console.log("here1");
       // asynchronous
       // User.findOne wont fire unless data is sent back
       process.nextTick(function() {
+        console.log("here2");
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         Client.find({
@@ -54,16 +61,18 @@ module.exports = function(passport) {
           'email': email
           }
         }).then (client =>{
+          console.log("here3");
           // if there are any errors, return the error
           // if (err)
           //   return done(err);
           // check to see if theres already a user with that email
           if (client) {
+            console.log("here4");
             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
             // if there is no user with that email
             // create the user
-
+            console.log("here5");
             var newUser  = new Object();
 
             // set the user's local credentials
@@ -99,29 +108,29 @@ module.exports = function(passport) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
+      console.log("here1");
       Client.find({
         where:{
         'email': email
         }
       }).then (client =>{
+        console.log("here2");
         // if there are any errors, return the error before anything else
         // if (!client)
-          return done(client);
+          // return done(client);
 
         // if no user is found, return the message
         if (!client)
           return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-
+          console.log("here4");
         // if the user is found but the password is wrong
-        if (!client.dataValues.validPassword(password))
+        if (!bcrypt.compareSync(password,client.dataValues.password))
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-
+          console.log("here5");
         // all is well, return successful user
         return done(null, client.dataValues);
       });
     }));
-
-
 
   // passport strategy for google login
   passport.use(new GoogleStrategy({

@@ -6,7 +6,7 @@ var Client = require('../database/config');
 module.exports = {
 
     getBytecode: async function(req, res) {
-        fs.readFile(path.resolve(__dirname, "..","./contractCreator/contractDirectory", req.user.email, req.user.email+".bytecode"), "utf8",
+        fs.readFile(path.resolve(__dirname, "..","./contractCreator/contractDirectory", req.user.email, req.session.token_name+".bytecode"), "utf8",
           function(err, doc) {
             if (err) {
               return console.log(err);

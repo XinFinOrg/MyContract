@@ -119,6 +119,7 @@ module.exports = {
     });
     req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
+    req.session.token_name= req.body.token_name;
     Client.update({"package1":false},{ 
       where: {'email':req.user.email}
     }).then(function(result) {
