@@ -1,17 +1,28 @@
 var fs = require('fs');
 var path = require('path');
 var Client = require('../database/config');
+const solc = require("solc");
+var byteCode;
 
 
 module.exports = {
 
     getBytecode: async function(req, res) {
-        fs.readFile(path.resolve(__dirname, "..","./contractCreator/contractDirectory", req.user.email, req.session.token_name+".bytecode"), "utf8",
+        fs.readFile(path.resolve(__dirname, "..","./contractCreator/contractDirectory",req.user.email,req.session.token_name+".SOL"), "utf8",
           function(err, doc) {
             if (err) {
               return console.log(err);
             }
-            res.send({bytecode:doc})
+           byteCode=solc.compile(doc.toString(), 1).contracts[':Coin'];
+            //file read for contract bytecode
+            fs.writeFile(path.resolve(__dirname, "..","./contractCreator/contractDirectory/"+req.user.email+ "/" + req.session.token_name + ".bytecode"), byteCode.bytecode, {
+              flag: 'w'
+            }, function(err) {
+              if (err) return console.log(err);
+            });
+
+
+            res.send({bytecode:byteCode.bytecode})
           });
         },
 
