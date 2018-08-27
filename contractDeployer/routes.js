@@ -1,6 +1,5 @@
 const impl = require("./impl");
 var path = require('path');
-var Client = require('../database/config');
 
 
 module.exports = function(app, express) {

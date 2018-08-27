@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var Client = require('../database/config');
+var Client = require('../database/models/index').Client;
 const solc = require("solc");
 var byteCode;
 
@@ -27,12 +27,12 @@ module.exports = {
         },
 
     saveDeploymentData:async function (req,res) {
-        Client.update({'contractAddress':req.body.contractAddress,'contractTxHash':req.body.contractTxHash,'package2':false},{ 
+        Client.update({'contractAddress':req.body.contractAddress,'contractTxHash':req.body.contractTxHash,'package2':false},{
             where: {'email':req.user.email}
           }).then(function(result) {
             if (!result)
             res.send("Something wrong when updating packages!");
-      
+
             console.log("packages updated");
             res.redirect('/generatedContract');
         })

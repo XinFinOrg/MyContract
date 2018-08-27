@@ -7,7 +7,7 @@ var User = require('../userlogin/models');
 var coin, templateCoin, mintableContract, burnableContract, releaseableContract, upgradeableContract;
 var filereaderservice = require('../filereader/impl');
 var result, bytecode;
-var Client = require('../database/config');
+var Client = require('../database/models/index').Client;
 
 
 templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
@@ -59,7 +59,7 @@ var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
   getCustomContractForm: function(req, res) {
-    res.render('customContract'); 
+    res.render('customContract');
   },
 
   createContract: async function(req, res) {
@@ -120,7 +120,7 @@ module.exports = {
     // req.session.byteCode = byteCode.bytecode;
     req.session.contract = result;
     req.session.token_name= req.body.token_name;
-    Client.update({"package1":false},{ 
+    Client.update({"package1":false},{
       where: {'email':req.user.email}
     }).then(function(result) {
       if (!result)

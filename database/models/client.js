@@ -1,13 +1,7 @@
-var bcrypt = require('bcrypt-nodejs');
-var keythereum = require("keythereum");
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('autoCoin', 'Akshay', '123', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
-
-var Client = sequelize.define('client', {
-    Name: {
+'use strict';
+module.exports = (sequelize, Sequelize) => {
+  const Client = sequelize.define('Client', {
+    name: {
       type: Sequelize.STRING
     },
     email: {
@@ -36,27 +30,22 @@ var Client = sequelize.define('client', {
     },
     contractTxHash: {
       type: Sequelize.STRING
-    }, 
+    },
     package1: {
       type: Sequelize.BOOLEAN
-    }, 
+    },
     package2: {
       type: Sequelize.BOOLEAN
-    }, 
+    },
     package3: {
       type: Sequelize.BOOLEAN
     },
-  });
-
-
-  module.exports=Client
-
-  // force: true will drop the table if it already exists
-// Client.sync({force: true}).then(() => {
-//     console.log("Table created");
-//     // return Client.create({
-//     //   Name: 'John',
-//     //   email: 'Hancock'
-//     // });
-//   });
-
+    project: {
+      type: Sequelize.STRING
+    }
+  }, {});
+  Client.associate = function(models) {
+    // associations can be defined here
+  };
+  return Client;
+};

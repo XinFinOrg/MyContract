@@ -1,7 +1,4 @@
 const impl = require("./impl");
-var Client = require('../database/config');
-
-
 module.exports = function(app) {
 
   app.get('/customContract', isLoggedIn, hasPackage1, impl.getCustomContractForm);

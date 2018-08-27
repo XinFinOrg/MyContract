@@ -2,23 +2,26 @@ var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 var configAuth = require('./auth');
-var Client = require('../database/config');
+var Client = require('../database/models/index').Client;
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
 
-  // methods ======================
+// methods ======================
 function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
- function generateNewAccount(password){
-  var params = { keyBytes: 32, ivBytes: 16 };
+function generateNewAccount(password) {
+  var params = {
+    keyBytes: 32,
+    ivBytes: 16
+  };
   var dk = keythereum.create(params);
   return keythereum.dump(password, dk.privateKey, dk.salt, dk.iv)
 };
 
-function generateCipher(){
-  return cipher = bcrypt.hashSync(((Math.random()* (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
+function generateCipher() {
+  return cipher = bcrypt.hashSync(((Math.random() * (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
 };
 
 module.exports = function(passport) {
@@ -26,20 +29,20 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-    console.log("here6",user);
-    done(null, user);
+    console.log("here6", user);
+    done(null, user.email);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function(id, done) {
+  passport.deserializeUser(function(email, done) {
     Client.find({
-      where:{
-      'email': id.email
+      where: {
+        'email': email
       }
-    }).then(client =>{
-      done(null,client.dataValues);
+    }).then(client => {
+      done(null, client.dataValues);
+    });
   });
-});
 
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
@@ -53,15 +56,13 @@ module.exports = function(passport) {
       // asynchronous
       // User.findOne wont fire unless data is sent back
       process.nextTick(function() {
-        console.log("here2");
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         Client.find({
-          where:{
-          'email': email
+          where: {
+            'email': email
           }
-        }).then (client =>{
-          console.log("here3");
+        }).then(client => {
           // if there are any errors, return the error
           // if (err)
           //   return done(err);
@@ -73,7 +74,7 @@ module.exports = function(passport) {
             // if there is no user with that email
             // create the user
             console.log("here5");
-            var newUser  = new Object();
+            var newUser = new Object();
 
             // set the user's local credentials
             newUser.email = email;
@@ -81,15 +82,17 @@ module.exports = function(passport) {
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = keyStore.address;
-            Client.sync({force: false}).then(() => {
+            Client.sync({
+              force: false
+            }).then(() => {
               // Table created
-              return Client.create(newUser); 
+              return Client.create(newUser);
             }).then(function(result) {
-            if (!result)
+              if (!result)
                 console.log("null");
               return done(null, newUser);
-          })
-        }
+            })
+          }
 
         });
 
@@ -104,29 +107,29 @@ module.exports = function(passport) {
       passwordField: 'password',
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
-    function(req, email, password, done) { 
+    function(req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
       console.log("here1");
       Client.find({
-        where:{
-        'email': email
+        where: {
+          'email': email
         }
-      }).then (client =>{
+      }).then(client => {
         console.log("here2");
         // if there are any errors, return the error before anything else
         // if (!client)
-          // return done(client);
+        // return done(client);
 
         // if no user is found, return the message
         if (!client)
           return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-          console.log("here4");
+        console.log("here4");
         // if the user is found but the password is wrong
-        if (!bcrypt.compareSync(password,client.dataValues.password))
+        if (!bcrypt.compareSync(password, client.password))
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-          console.log("here5");
+        console.log("here5");
         // all is well, return successful user
         return done(null, client.dataValues);
       });
@@ -149,21 +152,25 @@ module.exports = function(passport) {
 
         // try to find the user based on their google id
         Client.find({
-          where:{
-          'email': profile.emails[0].value
+          where: {
+            'email': profile.emails[0].value
           }
-        }).then (client =>{
-          if(client){
+        }).then(client => {
+          if (client) {
             newUser.google_id = profile.id;
             // if a user is found, log them in
-            Client.update({"google_id":profile.id}, { 
-              where: {'email': profile.emails[0].value }
+            Client.update({
+              "google_id": profile.id
+            }, {
+              where: {
+                'email': profile.emails[0].value
+              }
             }).then(function(result) {
               if (!result)
-                  console.log("null");
+                console.log("null");
               return done(null, client.dataValues);
-          })
-            
+            })
+
           } else {
             // if the user isnt in our database, create a new user
 
@@ -177,14 +184,16 @@ module.exports = function(passport) {
             console.log(keyStore);
 
             // save the user
-            Client.sync({force: false}).then(() => {
+            Client.sync({
+              force: false
+            }).then(() => {
               // Table created
-              return Client.create(newUser); 
+              return Client.create(newUser);
             }).then(function(result) {
-            if (!result)
+              if (!result)
                 console.log("null");
               return done(null, newUser);
-          })
+            })
           }
         });
       });
@@ -205,19 +214,25 @@ module.exports = function(passport) {
       process.nextTick(function() {
         // try to find the user based on their google id
         Client.find({
-          where:{
-          'email': profile.emails[0].value
+          where: {
+            'email': profile.emails[0].value
           }
-        }).then (client =>{
+        }).then(client => {
           var newUser = new Object();
           newUser.github_id = profile.id;
 
-          if(client){
-            Client.update({"github_id":profile.id},{where:{  'email': profile.emails[0].value }}).then(function(result) {
-            if (!result)
+          if (client) {
+            Client.update({
+              "github_id": profile.id
+            }, {
+              where: {
+                'email': profile.emails[0].value
+              }
+            }).then(function(result) {
+              if (!result)
                 console.log("null");
-              return done(null, client.dataValues);
-          })
+              return done(null, client);
+            })
           } else {
             // if the user isnt in our database, create a new user
             // set all of the relevant information
@@ -228,15 +243,17 @@ module.exports = function(passport) {
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = keyStore.address;
 
-             // save the user
-             Client.sync({force: false}).then(() => {
+            // save the user
+            Client.sync({
+              force: false
+            }).then(() => {
               // Table created
-              return Client.create(newUser); 
+              return Client.create(newUser);
             }).then(function(result) {
-            if (!result)
+              if (!result)
                 console.log("null");
-              return done(null, newUser);
-          })
+              return done(null, newUser.dataValues);
+            })
           }
         });
       });

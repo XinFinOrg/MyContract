@@ -2,9 +2,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "nishant",
-    "database": "autocoin",
-    "host": "127.0.0.1",
+    "password": "123",
+    "database": "postgres",
+    "host": "78.129.212.204",
     "port": 5432,
     "dialect": "postgres"
   },
