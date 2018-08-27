@@ -25,10 +25,10 @@ require('./config/passport')(passport);
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 //MongoDB config
-var mongoose = require('mongoose');
-mongoose.connect(config.mongoURI, {
-  useNewUrlParser: true
-});
+// var mongoose = require('mongoose');
+// mongoose.connect(config.mongoURI, {
+//   useNewUrlParser: true
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -2,7 +2,9 @@ const impl = require("./impl");
 module.exports = function(app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/userLogin', impl.userLogin);
+  app.get('/userSign', impl.userSign);
   app.post('/registerUser', impl.registerUser);
+  app.post('/signUser', impl.registerUserJWT);
 }
 
 // route middleware to make sure a user is logged in
