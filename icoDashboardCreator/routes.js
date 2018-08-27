@@ -1,10 +1,14 @@
 const impl = require("./impl");
 module.exports = function(app, sequelize, DataTypes) {
-  app.get('/icoDashboardSetup', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
+  app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/userLogin', impl.userLogin);
   app.get('/userSign', impl.userSign);
+  app.get('/icoDashboardSetup//client/:clientEmail/getSiteConfiguration',isLoggedIn,impl.getSiteConfiguration)
+
   app.post('/registerUser', impl.registerUser);
   app.post('/signUser', impl.registerUserJWT);
+  app.post('/icoDashboardSetup//client/:clientEmail/updateSiteConfiguration',isLoggedIn,impl.updateSiteConfiguration)
+  
 }
 
 // route middleware to make sure a user is logged in
@@ -22,10 +26,11 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage3(req, res, next) {
-  if (req.user.packages.package_3 == true) {
+  if (req.user.package3 == true) {
     return next();
   } else {
     req.flash('package_flash', 'You need to buy Package 3');
     res.redirect('/profile');
   }
 }
+

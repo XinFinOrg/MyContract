@@ -1,11 +1,17 @@
 var passport = require('passport');
 module.exports = {
+  //client setup
   icoDashboardSetup: function(req, res) {
-
-    res.send("ICO dashboard setup coming soon !!");
+    res.render('adminDashboard', {
+    });
+  },
+  getSiteConfiguration:function(req,res){
 
   },
+  updateSiteConfiguration:function(req,res){
 
+  },
+//user login
   userLogin: function(req, res) {
     res.render("userLogin.ejs");
   },
