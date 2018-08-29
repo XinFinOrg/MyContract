@@ -19,6 +19,8 @@ app.use(session({
     maxAge: 1000 * 60 * 30
   }
 }));
+
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
@@ -43,6 +45,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Creating all app routes
+app.use('/user', passport.authenticate('jwt', { session : false }), require('./icoDashboardCreator/userAuthRoutes'));
 require('./routes')(app);
 require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);

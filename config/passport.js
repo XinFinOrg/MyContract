@@ -2,7 +2,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 const passportJWT = require("passport-jwt");
-const JWTStrategy   = passportJWT.Strategy;
+const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
 var Client = require('../database/models/index').Client;
@@ -33,7 +33,7 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-    console.log("here6", user);
+
     done(null, user.email);
   });
 
@@ -48,23 +48,123 @@ module.exports = function(passport) {
     });
   });
 
-  // JWT enabled login strategy for end user
-  passport.use('user-jwt-login', new JWTStrategy({
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey   : 'your_jwt_secret'
+  //user signup strategy for passport
+  passport.use('user-signup', new LocalStrategy({
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
     },
-    function (jwtPayload, cb) {
+    function(req, email, password, done) {
+      process.nextTick(function() {
+        // find a user whose email is the same as the forms email
+        User.find({
+          where: {
+            'email': email
+          }
+        }).then(user => {
+          // check to see if theres already a user with that email
+          if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          } else {
+            // if there is no user with that email
+            // create the user
+            var newUser = new Object();
 
-        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return User.findOneById(jwtPayload.id)
-            .then(user => {
-                return cb(null, user);
+            // set the user's local credentials
+            newUser.email = email;
+            newUser.password = generateHash(password);
+            newUser.cipher = generateCipher();
+            var keyStore = generateNewAccount(newUser.cipher);
+            newUser.firstName = req.body.first_name;
+            newUser.lastName = req.body.last_name;
+            newUser.country = req.body.country_id;
+            User.create(newUser).then(function(result) {
+              if (!result)
+                console.log("null");
+              return done(null, newUser);
             })
-            .catch(err => {
-                return cb(err);
-            });
+          }
+
+        });
+
+      });
+
+    }));
+
+  //local login strategy for passport
+  passport.use('user-login', new LocalStrategy({
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+      // callback with email and password from our form
+      // find a user whose email is the same as the forms email
+      User.find({
+        where: {
+          'email': email
+        }
+      }).then(user => {
+        console.log(user);
+
+        // if no user is found, return the message
+        if (!user) {
+          return done(null, false, 'No user found.');
+        }
+        // if the user is found but the password is wrong
+        if (!bcrypt.compareSync(password, user.password))
+          return done(null, false, 'Oops! Wrong password.');
+        // all is well, return successful user
+        return done(null, user.dataValues);
+      });
+    }));
+
+  //local login strategy for passport
+  passport.use('local-login', new LocalStrategy({
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+      // callback with email and password from our form
+      // find a user whose email is the same as the forms email
+      Client.find({
+        where: {
+          'email': email
+        }
+      }).then(client => {
+        // if there are any errors, return the error before anything else
+        // if (!client)
+        // return done(client);
+
+        // if no user is found, return the message
+        if (!client)
+          return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+        // if the user is found but the password is wrong
+        if (!bcrypt.compareSync(password, client.password))
+          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+        // all is well, return successful user
+        return done(null, client.dataValues);
+      });
+    }));
+
+  // JWT enabled login strategy for end user
+  passport.use(new JWTStrategy({
+    //secret we used to sign our JWT
+    secretOrKey: configAuth.jwtAuthKey.secret,
+    //we expect the user to send the token as a query paramater with the name 'secret_token'
+    jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
+  }, async (token, done) => {
+    try {
+      //Pass the user details to the next middleware
+      return done(null, token.user);
+    } catch (error) {
+      done(error);
     }
-));
+  }));
 
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
@@ -74,28 +174,19 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      console.log("here1");
-      // asynchronous
-      // User.findOne wont fire unless data is sent back
       process.nextTick(function() {
         // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
         Client.find({
           where: {
             'email': email
           }
         }).then(client => {
-          // if there are any errors, return the error
-          // if (err)
-          //   return done(err);
           // check to see if theres already a user with that email
           if (client) {
-            console.log("here4");
             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
             // if there is no user with that email
             // create the user
-            console.log("here5");
             var newUser = new Object();
 
             // set the user's local credentials
@@ -120,41 +211,6 @@ module.exports = function(passport) {
 
       });
 
-    }));
-
-  //local login strategy for passport
-  passport.use('local-login', new LocalStrategy({
-      // by default, local strategy uses username and password, we will override with email
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-    function(req, email, password, done) {
-      // callback with email and password from our form
-      // find a user whose email is the same as the forms email
-      // we are checking to see if the user trying to login already exists
-      console.log("here1");
-      Client.find({
-        where: {
-          'email': email
-        }
-      }).then(client => {
-        console.log("here2");
-        // if there are any errors, return the error before anything else
-        // if (!client)
-        // return done(client);
-
-        // if no user is found, return the message
-        if (!client)
-          return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-        console.log("here4");
-        // if the user is found but the password is wrong
-        if (!bcrypt.compareSync(password, client.password))
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-        console.log("here5");
-        // all is well, return successful user
-        return done(null, client.dataValues);
-      });
     }));
 
   // passport strategy for google login

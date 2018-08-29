@@ -2,24 +2,25 @@ const impl = require("./impl");
 
 module.exports = function(app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
-  app.get('/userLogin', impl.userLogin);
-  app.get('/userSign', impl.userSign);
-  app.get('/icoDashboardSetup/client/:clientEmail/getSiteConfiguration',isLoggedIn,impl.getSiteConfiguration)
+  app.get('/icoDashboardSetup/client/:clientEmail/getSiteConfiguration',isLoggedIn,impl.getSiteConfiguration);
 
   app.get('/test',function (req,res) {
 
     var b64string = __dirname + './download.png';
     var buf = Buffer.from(b64string, 'base64');
-    
+
     res.send({"buffer":buf});
-    
-  })
 
-
-  app.post('/registerUser', impl.registerUser);
-  app.post('/signUser', impl.registerUserJWT);
+  });
   app.post('/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration',isLoggedIn,impl.updateSiteConfiguration)
-  
+
+  app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
+  app.get('/userSignup', impl.getUserSignup);
+  app.get('/userLogin', impl.getUserLogin);
+  // app.get('/icoDashboardSetup//client/:clientEmail/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
+  app.post('/userSignup', impl.postUserSignup);
+  app.post('/userLogin', impl.postUserLogin);
+  // app.post('/icoDashboardSetup//client/:clientEmail/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration);
 }
 
 // route middleware to make sure a user is logged in
@@ -44,4 +45,3 @@ function hasPackage3(req, res, next) {
     res.redirect('/profile');
   }
 }
-

@@ -18,6 +18,7 @@
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "http-errors": "~1.6.2",
+    "jsonwebtoken": "^8.3.0",
     "keythereum": "^1.0.4",
     "localStorage": "^1.0.3",
     "mongoose": "^5.2.7",

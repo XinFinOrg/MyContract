@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     country: DataTypes.STRING,
     password: DataTypes.STRING,
     ethAddress: DataTypes.STRING,
-    btcAddress: DataTypes.STRING
+    btcAddress: DataTypes.STRING,
+    kycStatus: {
+      type: DataTypes.BOOLEAN,
+      default: false
+    }
   }, {});
   user.associate = function(models) {
     // associations can be defined here
