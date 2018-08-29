@@ -75,6 +75,22 @@
             </nav>
 
         </div>
+
+        <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var datetimeurl = document.getElementById('datetime').value;
+                var datetimeview = document.getElementById('dateid');
+                $.getJSON(datetimeurl, function (result) {
+                    datetimeview.innerText = result.date;
+                });
+                setInterval(function () {  // set Interval function to carry out same operation in the time specified
+                    $.getJSON(datetimeurl, function (result) {
+                        datetimeview.innerText = result.date;
+                    });
+                }, 6000);
+            });
+        </script>
         <!--END TOPBAR-->
         <div id="wrapper">
             <!--BEGIN SIDEBAR MENU-->
@@ -178,13 +194,13 @@
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left">
-                        <div class="page-title">Site Configuration</div>
+                        <div class="page-title">My Profile</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right">
                         <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
                                 class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                         <li class="hidden"><a href="#">Profile</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Site settings</li>
+                        <li class="active">Profile</li>
                     </ol>
                     <div class="clearfix"></div>
                 </div>
@@ -201,137 +217,49 @@
 
                                     <div id="generalTabContent" class="tab-content">
                                         <div id="tab-edit" class="tab-pane fade in active">
-                                            <form action="/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration" method="post" class="form-horizontal">
-                                                <h3>Site Settings</h3>
-                                                <div class="form-group"><label class="col-sm-3 control-label">Site Name</label>
-                                                    <input type="hidden" class="form-control" name="email" value="<%=user.email %>" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-9"><input type="text" class="form-control"
-                                                                    name="site_name" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Site Logo</label>
+                                            <form action="https://whatshalal.io/prashaasak/profile" method="post" class="form-horizontal">
+                                                <h3>Account Setting</h3>
+                                                <input type="hidden" name="_token" value="WmBomStXXmzilrkJS5GJyupA2ZtApKRuyWKcWFZT">
+                                                <div class="form-group"><label class="col-sm-3 control-label">Email *</label>
 
                                                     <div class="col-sm-9 controls">
                                                         <div class="row">
-                                                            <div class="col-xs-9"><input type="file" class="" name="site_logo"
+                                                            <div class="col-xs-9"><input type="email" placeholder="email@yourcompany.com"
+                                                                    class="form-control" name="admin_email" value="admin@whatshalal.io"
                                                                 /></div>
-                                                            <img src="https://whatshalal.io/uploads/logo/1533363196.png" style="width: 150px;" />
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Contact Mail</label>
+                                                <div class="form-group"><label class="col-sm-3 control-label">Username *</label>
 
                                                     <div class="col-sm-9 controls">
                                                         <div class="row">
-                                                            <div class="col-xs-9"><input type="text" name="contact_mail"
-                                                                    class="form-control" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Address</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-9">
-                                                                <textarea class="form-control" name="address"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">City</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="city" class="form-control"
+                                                            <div class="col-xs-9"><input type="text" placeholder="username"
+                                                                    name="admin_username" value="Admin" class="form-control"
                                                                 /></div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group"><label class="col-sm-3 control-label">Provience</label>
+
+                                                <div class="form-group"><label class="col-sm-3 control-label">Phone</label>
 
                                                     <div class="col-sm-9 controls">
                                                         <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="provience" class="form-control"
+                                                            <div class="col-xs-9"><input type="text" placeholder="9876543210"
+                                                                    name="" value="9821350870" class="form-control" disabled="disabled"
                                                                 /></div>
                                                         </div>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="form-group"><label class="col-sm-3 control-label">Country</label>
 
                                                     <div class="col-sm-9 controls">
                                                         <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="country" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Contact No</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="contact_no" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-
-
-                                                <hr/>
-
-                                                <h3>Social Links</h3>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Facebook Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" name="facebook_url" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Twitter Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" name="twitter_url" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">website Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" name="website_url" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">LinkedIn Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" name="linkedin_url" class="form-control"
+                                                            <div class="col-xs-9"><input type="text" placeholder="India"
+                                                                    name="admin_country" value="Singapore" class="form-control"
                                                                 /></div>
                                                         </div>
                                                     </div>
@@ -340,74 +268,41 @@
 
                                                 <hr/>
 
-                                                <h3>Admin Address</h3>
+                                                <h3>Change password</h3>
 
-                                                <div class="form-group"><label class="col-sm-3 control-label">ETH Address</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="eth_address" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">BTC Address</label>
+                                                <div class="form-group"><label class="col-sm-3 control-label">Current Password</label>
 
                                                     <div class="col-sm-9 controls">
                                                         <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="btc_address" class="form-control"
-                                                                /></div>
+                                                            <div class="col-xs-4"><input type="password" placeholder="Current Password"
+                                                                    name="curr_pass" class="form-control" /></div>
                                                         </div>
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group"><label class="col-sm-3 control-label">New Password</label>
 
-                                                <!--  <h3>SMTP</h3>
-
-
-                                              <div class="form-group"><label class="col-sm-3 control-label">SMTP Host</label>
-
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_host" value="eyJpdiI6Ik40dkRIdGZjQjY4VjkxM0YzQ2tMYmc9PSIsInZhbHVlIjoiTUZ2YXdOYW9mYTJiN1pWODd1NTAzUT09IiwibWFjIjoiODFiZmJjNjAyNDIwNDBjNjc1OGEyYmYwNmVkNTkzYmEyYjlmNjgxMmM1MTMwOGJiM2UwMDE2NzQ3YWY0Mjg4MSJ9" class="form-control"/></div>
+                                                    <div class="col-sm-9 controls">
+                                                        <div class="row">
+                                                            <div class="col-xs-4"><input type="password" placeholder="New Password"
+                                                                    name="password" class="form-control" /></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Port</label>
+                                                <div class="form-group"><label class="col-sm-3 control-label">Confirm New
+                                                        Password</label>
 
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_port" value="eyJpdiI6IktPOTNTS2FUQ0pNNE5qXC9veGtaSWRBPT0iLCJ2YWx1ZSI6IlNYYnBaTWxEaURTZVRWaE9Gc2I3Nnc9PSIsIm1hYyI6ImIzNDQ2NGQyODM1MjUyZjU5OTMzNzcxYzQ0MDE5ZGFjMGE3NGIzYWUxNzUzZTIxMzhlNjBkZDg4Y2JkOTE2M2QifQ==" class="form-control"/></div>
+                                                    <div class="col-sm-9 controls">
+                                                        <div class="row">
+                                                            <div class="col-xs-4"><input type="password" placeholder="Confirm New Password"
+                                                                    name="password_confirmation" class="form-control" /></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Username</label>
-
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_email" value="eyJpdiI6ImV6UVFCY0wrVWNlMVdkYjE3Y1UwSkE9PSIsInZhbHVlIjoiYm5UbUZiSUNsRUlSSmtPd1pZXC9qVFE9PSIsIm1hYyI6ImU1MjczODQ2ZDA5NzA2NjliYTdjMTM2ZDgzYzU1ZWRhMjlhZTUwZjRkNzIyYjNiOWZmOWIxMzQyY2YwYjMyZDQifQ==" class="form-control"/></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Password</label>
-
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_password" value="eyJpdiI6ImVzUjV4RmVXQkZVbFYwVnRJK1dDQ1E9PSIsInZhbHVlIjoiWFJJR1RLeXpRb21Cd1RVV0dqTmIrZz09IiwibWFjIjoiZTdiZWZkM2ZjNDlkZTVlNGI5MTdiNjNkOWI3OWNkYzdlNzU5YWIzMmQyY2ZiNWI3YTlmNGQ2NGE3ZTE2NDVkNSJ9" class="form-control"/></div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
 
 
                                                 <hr/>
-
-
-
-
                                                 <button type="submit" class="btn btn-green btn-block">Update</button>
                                             </form>
                                         </div>
@@ -417,7 +312,7 @@
                             </div>
                         </div>
                     </div>
-     SS           </div>
+                </div>
 
 
 
@@ -431,51 +326,6 @@
             <!--END PAGE WRAPPER-->
         </div>
     </div>
-
-
-    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/js/axios.min.js"></script>
-    <script>
-        axios.get('/icoDashboardSetup/client/<%=user.email%>/getSiteConfiguration')
-            .then(function (response) {
-                console.log(response.data, document.getElementsByName("linkedin_url")[0].value);
-
-                document.getElementsByName('site_name')[0].value = response.data.data.siteName;
-                document.getElementsByName('site_logo')[0].value = response.data.data.siteLogo;
-                document.getElementsByName('contact_mail')[0].value = response.data.data.contactMail;
-                document.getElementsByName('city')[0].value = response.data.data.city;
-                document.getElementsByName('provience')[0].value = response.data.data.provience;
-                document.getElementsByName('address')[0].value = response.data.data.address;
-                document.getElementsByName('country')[0].value = response.data.data.country;
-                document.getElementsByName("contact_no")[0].value = response.data.data.contactNo;
-                document.getElementsByName("facebook_url")[0].value = response.data.data.facebookUrl;
-                document.getElementsByName("twitter_url")[0].value = response.data.data.twitterUrl;
-                document.getElementsByName("linkedin_url")[0].value = response.data.data.linkedInUrl;
-                document.getElementsByName("website_url")[0].value = response.data.data.websiteUrl;
-                document.getElementsByName("eth_address")[0].value = response.data.data.ethAddress;
-                document.getElementsByName("btc_address")[0].value = response.data.data.btcAddress;
-
-            })
-            .catch(function (e) {
-                console.log(e);
-            });
-
-
-
-        $(document).ready(function () {
-            var datetimeurl = document.getelementsbyname('datetime').value;
-            var datetimeview = document.getelementsbyname('dateid');
-            $.getJSON(datetimeurl, function (result) {
-                datetimeview.innerText = result.date;
-            });
-            setInterval(function () {  // set Interval function to carry out same operation in the time specified
-                $.getJSON(datetimeurl, function (result) {
-                    datetimeview.innerText = result.date;
-                });
-            }, 6000);
-        });
-    </script>
     <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
     <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>

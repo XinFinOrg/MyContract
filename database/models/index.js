@@ -38,5 +38,6 @@ db.Sequelize = Sequelize;
 
 db.user= require('./user')(db.sequelize, db.Sequelize);
 db.Client= require('./client')(db.sequelize, db.Sequelize);
+db.ICOSiteConfig= require('./icositeconfig')(db.sequelize, db.Sequelize);
 
 module.exports = db;

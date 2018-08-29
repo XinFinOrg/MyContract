@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const ICOSiteConfig = sequelize.define('ICOSiteConfig', {
     clientEmail:DataTypes.STRING,
-    sitename: DataTypes.STRING,
+    siteName: DataTypes.STRING,
     siteLogo:DataTypes.STRING,
     contactMail:DataTypes.STRING,
     address:DataTypes.STRING,
@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     ethAddress:DataTypes.STRING,
     btcAddress:DataTypes.STRING,
 
-  }, {});
+  }, {
+    freezeTableName: true,
+    timestamps: false,
+
+  });
   ICOSiteConfig.associate = function(models) {
     // associations can be defined here
   };
