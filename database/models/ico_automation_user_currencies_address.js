@@ -43,6 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       }
     );
+
+    ico_automation_user_currencies_address.belongsTo(models.ico_automation_currencies,
+      {
+        foreignKey: 'currency_id',
+        allowNull:false,
+        onDelete: 'CASCADE',
+      }
+    );
   };
   return ico_automation_user_currencies_address;
 };

@@ -15,7 +15,8 @@ router.get('/logout', isAuthenticated, impl.logout);
 router.get('/dashboard', isAuthenticated, impl.getDashboard);
 
 
-function isAuthenticated(req, res, next){
+function isAuthenticated(req, res, next)
+{
   var token = req.cookies['token'];
   // JWT enabled login strategy for end user
   var decoded = jwt.verify(token, configAuth.jwtAuthKey.secret);
