@@ -124,7 +124,7 @@ module.exports = {
               expiresIn: configAuth.jwtAuthKey.tokenLife
             });
           //Send back the token to the user
-          res.cookie('token',token);
+          res.cookie('token',token, {expire: 360000 + Date.now()});
           return res.json({
             token
           });
@@ -155,6 +155,7 @@ module.exports = {
               expiresIn: configAuth.jwtAuthKey.tokenLife
             });
           //Send back the token to the user
+          res.cookie('token',token, {expire: 1800000 + Date.now()});
           return res.json({
             token
           });

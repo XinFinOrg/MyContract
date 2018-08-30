@@ -123,14 +123,14 @@
                                 <tr>
                                     <td class="title"><div class="item"><img src="https://www.whatshalal.io/front/assets1/images/bitcoin.png"> Bitcoin</div></th>
                                     <td><div class="item">8.91989940</div></td>
-                                    <td><div class="item deposit"><a onclick="depositmodal('BTC','3EgtucHLpf1qkKUgH2DLW5caWqQwrinsYQ')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
-                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('BTC','3EgtucHLpf1qkKUgH2DLW5caWqQwrinsYQ','8.91989940')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
+                                    <td><div class="item deposit"><a onclick="depositmodal('BTC','<%= user.btcAddress %>')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
+                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('BTC','<%= user.btcAddress %>','8.91989940')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
                                 </tr>
                                 <tr>
                                     <td class="title"><div class="item"><img src="https://www.whatshalal.io/front/assets1/images/ethereum.png"> Ethereum</div></th>
                                     <td><div class="item">0.39980000</div></td>
-                                    <td><div class="item deposit"><a onclick="depositmodal('ETH','0x2694a81d20484df62449a79e500b8904ff624755')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
-                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('ETH','0x2694a81d20484df62449a79e500b8904ff624755','0.39980000')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
+                                    <td><div class="item deposit"><a onclick="depositmodal('ETH','<%= user.ethAddress %>')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
+                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('ETH','<%= user.ethAddress %>','0.39980000')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
                                 </tr>
                                 <tr>
                                     <td class="title"><div class="item"><img src="https://www.whatshalal.io/front/assets1/images/WHT-Coin-green.png"> WHT</div></th>
@@ -173,7 +173,6 @@
         <h4>Note</h4>
         <p>Withdrawal request are being processed manually. Kindly expect a delay of 1-2 working days for its processing. Appreciate your patience.</p>
         <form id="fund_transfer" action="https://www.whatshalal.io/transferverify" method="post">
-            <input type="hidden" name="_token" value="GywByP2RQHhdkxiMKYrhRS9ryMNtM9bDLn9tHMog">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
@@ -238,27 +237,6 @@
     </div>
 
 <!-- / latest exchanges -->
-<!-- footer -->
-<!-- START FOOTER SECTION -->
-    <footer>
-
-        <div class="bottom_footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="copyright">Copyright &copy; 2018, WhatsHalal. All Rights Reserved.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list_none footer_menu">
-                            <li><a href="https://www.whatshalal.io/privacy" target="_blank">Privacy Policy</a></li>
-                            <li><a href="https://www.whatshalal.io/terms" target="_blank">Terms & Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- END FOOTER SECTION -->
 
 
 <!-- / footer -->
