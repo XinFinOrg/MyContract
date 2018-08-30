@@ -91,8 +91,6 @@
   <!-- END SECTION SIGN UP -->
   <!-- / latest exchanges -->
 
-  <!-- END FOOTER SECTION -->
-  <!-- / footer -->
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <a href="#" class="scrollup btn-default" style="display: none;"><i class="fa fa-angle-up"></i></a>
 
@@ -238,9 +236,6 @@
           } else {
             var res = JSON.parse(xhttp.responseText);
             window.location.assign('../user/dashboard');
-
-            $("#jwt_token").val(res.token);
-            $("#dashboard_form").submit();
           }
         }
       }

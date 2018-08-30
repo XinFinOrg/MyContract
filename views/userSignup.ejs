@@ -44,7 +44,7 @@
           var res = JSON.parse(xhttp.responseText);
           console.log("Status", res);
           localStorage.setItem("token", res.token);
-          window.location.assign('../user/dashboard?token='+localStorage.getItem("token"));
+          window.location.assign('../user/dashboard');
         }
       }
     }
@@ -369,10 +369,6 @@
     </div>
   </section>
   <!-- END SECTION SIGN UP -->
-  <!-- / latest exchanges -->
-
-  <!-- END FOOTER SECTION -->
-  <!-- / footer -->
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <a href="#" class="scrollup btn-default" style="display: none;"><i class="fa fa-angle-up"></i></a>
 
