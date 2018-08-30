@@ -36,8 +36,8 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.user= require('./user')(db.sequelize, db.Sequelize);
-db.Client= require('./client')(db.sequelize, db.Sequelize);
-db.ICOSiteConfig= require('./icositeconfig')(db.sequelize, db.Sequelize);
+db.user= require('./ico_automation_user')(db.sequelize, db.Sequelize);
+db.Client= require('./ico_automation_client')(db.sequelize, db.Sequelize);
+db.ICOSiteConfig= require('./ico_automation_client_sitesetting')(db.sequelize, db.Sequelize);
 
 module.exports = db;

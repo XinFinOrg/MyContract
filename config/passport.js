@@ -79,7 +79,7 @@ module.exports = function(passport) {
             newUser.ethAddress = "0x"+keyStore.address;
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
-            newUser.country = req.body.country_id;
+            // newUser.country = req.body.country_id;
             User.create(newUser).then(function(result) {
               if (!result)
                 console.log("null");
