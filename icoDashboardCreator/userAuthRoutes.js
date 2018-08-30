@@ -6,6 +6,11 @@ const router = express.Router();
   router.get('/wallets', impl.getWallets);
   router.get('/kyc', impl.getKYC);
   router.get('/logout', impl.logout);
-  router.get('/dashboard', impl.getDashboard);
+  router.post('/dashboard', impl.getDashboard);
+
+// router.post('/dashboard', (req, res,next) =>
+// {
+
+// });
 
 module.exports = router;

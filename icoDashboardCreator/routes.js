@@ -1,18 +1,25 @@
 const impl = require("./impl");
+const DataURI = require('datauri').promise;
 
-module.exports = function(app, sequelize, DataTypes) {
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'kycdump/')
+  },
+  filename: function (req, file, cb) {
+    console.log("files",file)
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({storage: storage})
+
+
+module.exports = function (app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
-  app.get('/icoDashboardSetup/client/:clientEmail/getSiteConfiguration',isLoggedIn,impl.getSiteConfiguration);
+  app.get('/icoDashboardSetup/client/:clientEmail/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
 
-  app.get('/test',function (req,res) {
+  app.post('/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration', isLoggedIn,upload.single('site_logo'), impl.updateSiteConfiguration)
 
-    var b64string = __dirname + './download.png';
-    var buf = Buffer.from(b64string, 'base64');
-
-    res.send({"buffer":buf});
-
-  });
-  app.post('/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration',isLoggedIn,impl.updateSiteConfiguration)
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/userSignup', impl.getUserSignup);
   app.get('/userLogin', impl.getUserLogin);

@@ -201,7 +201,7 @@
 
                                     <div id="generalTabContent" class="tab-content">
                                         <div id="tab-edit" class="tab-pane fade in active">
-                                            <form action="/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration" method="post" class="form-horizontal">
+                                            <form action="/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration" method="post"  enctype="multipart/form-data">
                                                 <h3>Site Settings</h3>
                                                 <div class="form-group"><label class="col-sm-3 control-label">Site Name</label>
                                                     <input type="hidden" class="form-control" name="email" value="<%=user.email %>" />

@@ -1,4 +1,4 @@
-keyStore.addressvar LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 const passportJWT = require("passport-jwt");
@@ -157,12 +157,11 @@ module.exports = function(passport) {
     //secret we used to sign our JWT
     secretOrKey: configAuth.jwtAuthKey.secret,
     //we expect the user to send the token as a query paramater with the name 'token'
-    jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
+    jwtFromRequest: ExtractJWT.fromBodyField('token')
   }, async (token, done) => {
     console.log(token);
     try {
       //Pass the user details to the next middleware
-      console.log("Try");
       return done(null, token.user);
     } catch (error) {
       done(error);
