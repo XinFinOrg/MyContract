@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     kycStatus: {
       type: DataTypes.BOOLEAN,
       default: false
-    }
+    },
+    cipher: DataTypes.STRING
   }, {});
   user.associate = function(models) {
     // associations can be defined here

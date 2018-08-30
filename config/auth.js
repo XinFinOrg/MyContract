@@ -19,7 +19,7 @@ module.exports = {
 
   'jwtAuthKey': {
     'secret': "nishant",
-    'tokenLife': 300
+    'tokenLife': 30*60
   }
 
 };

@@ -13,14 +13,11 @@ module.exports = function(app, sequelize, DataTypes) {
 
   });
   app.post('/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration',isLoggedIn,impl.updateSiteConfiguration)
-
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/userSignup', impl.getUserSignup);
   app.get('/userLogin', impl.getUserLogin);
-  // app.get('/icoDashboardSetup//client/:clientEmail/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
   app.post('/userSignup', impl.postUserSignup);
   app.post('/userLogin', impl.postUserLogin);
-  // app.post('/icoDashboardSetup//client/:clientEmail/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration);
 }
 
 // route middleware to make sure a user is logged in

@@ -76,6 +76,7 @@ module.exports = function(passport) {
             newUser.password = generateHash(password);
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
+            newUser.ethAddress = keyStore.address;
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
             newUser.country = req.body.country_id;
@@ -155,11 +156,13 @@ module.exports = function(passport) {
   passport.use(new JWTStrategy({
     //secret we used to sign our JWT
     secretOrKey: configAuth.jwtAuthKey.secret,
-    //we expect the user to send the token as a query paramater with the name 'secret_token'
+    //we expect the user to send the token as a query paramater with the name 'token'
     jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token')
   }, async (token, done) => {
+    console.log(token);
     try {
       //Pass the user details to the next middleware
+      console.log("Try");
       return done(null, token.user);
     } catch (error) {
       done(error);
