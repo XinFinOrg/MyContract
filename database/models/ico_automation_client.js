@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
       ico_automation_client.belongsTo(models.ico_automation_user_currencies_address,
         {
           foreignKey:'user_currencies_address_id',
-        });
+        });  
       
     // // associations can be defined here
     // ico_automation_client.belongsTo(models.ico_automation_client,
