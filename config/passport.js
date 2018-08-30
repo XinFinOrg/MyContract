@@ -152,22 +152,6 @@ module.exports = function(passport) {
       });
     }));
 
-  // JWT enabled login strategy for end user
-  passport.use(new JWTStrategy({
-    //secret we used to sign our JWT
-    secretOrKey: configAuth.jwtAuthKey.secret,
-    //we expect the user to send the token as a query paramater with the name 'token'
-    jwtFromRequest: ExtractJWT.fromBodyField('token')
-  }, async (token, done) => {
-    console.log(token);
-    try {
-      //Pass the user details to the next middleware
-      return done(null, token.user);
-    } catch (error) {
-      done(error);
-    }
-  }));
-
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
       // by default, local strategy uses username and password, we will override with email

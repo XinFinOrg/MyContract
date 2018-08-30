@@ -237,11 +237,7 @@
 
           } else {
             var res = JSON.parse(xhttp.responseText);
-            console.log("Status", res);
-            localStorage.setItem("token", res.token);
-
-
-            // window.location.assign('../user/dashboard?token='+localStorage.getItem("token"));
+            window.location.assign('../user/dashboard');
 
             $("#jwt_token").val(res.token);
             $("#dashboard_form").submit();

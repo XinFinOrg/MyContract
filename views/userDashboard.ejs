@@ -54,14 +54,14 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto">
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.1s"><a class="nav-link page-scroll nav_item active" onclick= goTo("/user/dashboard?token=")>Dashboard</a></li>
+                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.1s"><a class="nav-link page-scroll nav_item active" href = "/user/dashboard">Dashboard</a></li>
 
 
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><a class="nav-link page-scroll nav_item" onclick=goTo("/user/transactions?token=")>Transaction History</a></li>
+                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><a class="nav-link page-scroll nav_item" href = "/user/transactions">Transaction History</a></li>
 
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><a class="nav-link page-scroll nav_item" onclick=goTo("/user/wallets?token=")>Wallets</a></li>
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a class="nav-link page-scroll nav_item" onclick=goTo("/user/kyc?token=")>Kyc</a></li>
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.7s"><a class="nav-link page-scroll nav_item" onclick=goTo("/user/contact_us?token=")>Contact</a></li>
+                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><a class="nav-link page-scroll nav_item" href = "/user/wallets">Wallets</a></li>
+                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a class="nav-link page-scroll nav_item" href = "/user/kyc">Kyc</a></li>
+                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.7s"><a class="nav-link page-scroll nav_item" href = "/user/contact_us">Contact</a></li>
                 </ul>
                 <ul class="navbar-nav nav_btn align-items-center">
                 </ul>
@@ -85,27 +85,6 @@
 </header>
     <!-- END HEADER -->
 <div class="clearfix"> </div>
-
-
-<!-- latest exchanges -->
-    <!-- START SECTION BANNER -->
-    <section class="section_breadcrumb bg_green_dark" data-z-index="1" data-parallax="scroll" data-image-src="https://www.whatshalal.io/front/assets1/images/login_banner_bg.png">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="banner_text text-center">
-                        <h1 class="animation" data-animation="fadeInUp" data-animation-delay="1.1s">Dashboard</h1>
-
-
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- END SECTION BANNER -->
 
     <!-- START SECTION DASHBOARD -->
     <section class="section_token overflow_hide small_pt small_pb">
@@ -139,20 +118,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="row align-items-center large_space">
                 <div class="col-lg-6 col-md-12">
                     <div class="card mb-4">
@@ -298,14 +263,6 @@
                                 <p> BTC / ETH </p>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -425,7 +382,6 @@
 <script type="text/javascript">
   function goTo(baseurl) {
     token = window.localStorage.getItem('token');
-    console.log("HERE");
     window.location.assign(baseurl+token);
   }
 </script>
@@ -609,7 +565,6 @@
             var cnv;
             if(currency === 'ETH')
             {
-
                 cnv = eth_usd;
             }
             else
