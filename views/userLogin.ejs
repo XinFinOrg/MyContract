@@ -26,30 +26,7 @@
   <link href="https://www.whatshalal.io/front/assets1/popup/popup-styles.css" rel="stylesheet">
 
 </head>
-<script>
-function login() {
-  var xhttp = new XMLHttpRequest();
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var parameters = "email=" + email + "&password=" + password;
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if (xhttp.responseText == -1) {
 
-      } else {
-        var res = JSON.parse(xhttp.responseText);
-        console.log("Status", res);
-        localStorage.setItem("token", res.token);
-        window.location.assign('../user/dashboard?token='+localStorage.getItem("token"));
-      }
-    }
-  }
-
-  xhttp.open("POST", "/userLogin", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send(parameters);
-}
-</script>
 
 <body class="v_light_dark login page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white loaded" data-spy="scroll" data-offset="110">
   <div class="parallax-mirror" style="visibility: visible; z-index: 1; position: fixed; top: -146px; left: 0px; overflow: hidden; transform: translate3d(0px, 0px, 0px); height: 208px; width: 731px;"></div>
@@ -101,6 +78,15 @@ function login() {
         </div>
       </div>
     </div>
+
+    <!-- for post method of token send for dashboard -->
+    <div>
+      <form action="../user/dashboard" method="POST" id="dashboard_form" name="dashboard_form">
+        <input id="jwt_token" type="text" name="token" value="" hidden>  
+        <input id="sample" type="text" name="sample" value="ddd" hidden>
+      </form>
+    </div>
+
   </section>
   <!-- END SECTION SIGN UP -->
   <!-- / latest exchanges -->
@@ -239,3 +225,32 @@ function login() {
       return value.indexOf(" ") < 0 && value != "";
     }, "No space please and don't leave it empty");
   </script>
+  <script>
+    function login() {
+      var xhttp = new XMLHttpRequest();
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var parameters = "email=" + email + "&password=" + password;
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          if (xhttp.responseText == -1) {
+    
+          } else {
+            var res = JSON.parse(xhttp.responseText);
+            console.log("Status", res);
+            localStorage.setItem("token", res.token);
+            
+    
+            // window.location.assign('../user/dashboard?token='+localStorage.getItem("token"));
+
+            $("#jwt_token").val=res.token;
+            $("#dashboard_form").submit();
+          }
+        }
+      }
+    
+      xhttp.open("POST", "/userLogin", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(parameters);
+    }
+    </script>

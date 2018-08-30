@@ -61,8 +61,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
   }, {});
-  ico_automation_client.associate = function(models) {
+  ico_automation_client.associate = function(models) 
+  {
     // associations can be defined here
+    ico_automation_client.hasMany(ico_automation)
   };
   return ico_automation_client;
 };
