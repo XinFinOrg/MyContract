@@ -36,6 +36,19 @@ module.exports = {
 
   logout: (req, res, next) => {
 
+  },
+
+  getDashboard: (req, res, next) => {
+    console.log("req has come");
+    if (!req.user.kycStatus) {
+      res.render('userKYCPage', {
+        user: req.user
+      });
+    } else {
+      res.render('userDashboard', {
+        user: req.user
+      });
+    }
   }
 
 }

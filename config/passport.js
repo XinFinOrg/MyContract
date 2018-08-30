@@ -1,4 +1,4 @@
-var LocalStrategy = require('passport-local').Strategy;
+keyStore.addressvar LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 const passportJWT = require("passport-jwt");
@@ -76,7 +76,7 @@ module.exports = function(passport) {
             newUser.password = generateHash(password);
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethAddress = keyStore.address;
+            newUser.ethAddress = "0x"+keyStore.address;
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
             newUser.country = req.body.country_id;
@@ -197,7 +197,7 @@ module.exports = function(passport) {
             newUser.password = generateHash(password);
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = keyStore.address;
+            newUser.ethereumAccount = "0x"+keyStore.address;
             Client.sync({
               force: false
             }).then(() => {
@@ -261,7 +261,7 @@ module.exports = function(passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = keyStore.address;
+            newUser.ethereumAccount = "0x"+keyStore.address;
             console.log(keyStore);
 
             // save the user
@@ -322,7 +322,7 @@ module.exports = function(passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = keyStore.address;
+            newUser.ethereumAccount = "0x"+keyStore.address;
 
             // save the user
             Client.sync({
