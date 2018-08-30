@@ -28,6 +28,31 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    tokenSupply:
+    {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    softCap:
+    {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    hardCap:
+    {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    startDate:
+    {
+      type:DataTypes.DATE,
+      allowNull: false,
+    },
+    endDate:
+    {
+      type:DataTypes.DATE,
+      allowNull: false,
+    } , 
     homeURL: {
       type: DataTypes.STRING,
       allowNull: false,

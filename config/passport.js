@@ -6,7 +6,7 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
 var Client = require('../database/models/index').Client;
-var User = require('../database/models/index').user;
+var User = require('../database/models/index').ico_automation_user;
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
 
@@ -56,7 +56,8 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      process.nextTick(function() {
+      process.nextTick(function() 
+      {
         // find a user whose email is the same as the forms email
         User.find({
           where: {
