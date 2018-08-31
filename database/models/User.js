@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
         type:DataTypes.STRING,
         allowNull:false,
       },
+      country:
+      {
+        type:DataTypes.INTEGER,
+        allowNull:true,
+      },
       isd_code:
       {
         type:DataTypes.INTEGER,
@@ -77,6 +82,13 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Client,
       {
         foreignKey: 'client_id',
+        onDelete: 'CASCADE',
+      }
+    );
+
+    User.hasMany(models.userCurrencyAddress,
+      {
+        foreignKey: 'user_id',
         onDelete: 'CASCADE',
       }
     );

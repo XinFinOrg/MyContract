@@ -25,25 +25,25 @@ if (config.use_env_variable) {
 //     const model = sequelize.import(path.join(__dirname, file));
 //     db[model.name] = model;
 //   });
-//
-// Object.keys(db).forEach(modelName => {
-//   if (db[modelName].associate) {
-//     db[modelName].associate(db);
-//   }
-// });
-//
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User= require('./user')(db.sequelize, db.Sequelize);
-db.Client= require('./client')(db.sequelize, db.Sequelize);
-db.ICOSiteConfig= require('./icoSiteConfig')(db.sequelize, db.Sequelize);
-db.Currency= require('./currency')(db.sequelize, db.Sequelize);
-db.UserCurrencyAddress= require('./userCurrencyAddress')(db.sequelize, db.Sequelize);
-db.UserCurrencyBalance= require('./userCurrencyBalance')(db.sequelize, db.Sequelize);
-db.UserType= require('./userType')(db.sequelize, db.Sequelize);
-db.Package= require('./package')(db.sequelize, db.Sequelize);
-db.ClientPackage=require('./clientPackage')(db.sequelize, db.Sequelize);
+db.User= require('./User')(db.sequelize, db.Sequelize);
+db.Client= require('./Client')(db.sequelize, db.Sequelize);
+db.ICOSiteConfig= require('./ICOSiteConfig')(db.sequelize, db.Sequelize);
+db.Currency= require('./Currency')(db.sequelize, db.Sequelize);
+db.UserCurrencyAddress= require('./UserCurrencyAddress')(db.sequelize, db.Sequelize);
+db.UserCurrencyBalance= require('./UserCurrencyBalance')(db.sequelize, db.Sequelize);
+db.UserType= require('./UserType')(db.sequelize, db.Sequelize);
+db.Package= require('./Package')(db.sequelize, db.Sequelize);
+db.ClientPackage=require('./ClientPackage')(db.sequelize, db.Sequelize);
 
 module.exports = db;

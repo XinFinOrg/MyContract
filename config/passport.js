@@ -8,14 +8,9 @@ var configAuth = require('./auth');
 var db = require('../database/models/index');
 var Client = db.Client;
 var User = db.User;
-var Address = db.CurrencyAddress;
+var Address = db.UserCurrencyAddress;
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
-
-//db
-var Client = require('../database/models/index').Client;
-var User = require('../database/models/index').ico_automation_user;
-
 
 // methods ======================
 function generateHash(password) {
@@ -35,17 +30,17 @@ function generateCipher() {
   return cipher = bcrypt.hashSync(((Math.random() * (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
 };
 
-module.exports = function (passport) {
+module.exports = function(passport) {
 
 
   // used to serialize the user for the session
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser(function(user, done) {
 
     done(null, user.email);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function (email, done) {
+  passport.deserializeUser(function(email, done) {
     Client.find({
       where: {
         'email': email
@@ -70,13 +65,19 @@ module.exports = function (passport) {
           where: {
             'email': email
           }
-        }).then(user => {
+        }).then(async user => {
           // check to see if theres already a user with that email
           if (user) {
             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
             // if there is no user with that email
             // create the user
+
+            var newEthAddress = new Object();
+            newEthAddress.cipher = generateCipher();
+            var keyStore = generateNewAccount(newEthAddress.cipher);
+            newEthAddress.address = "0x"+keyStore.address;
+            var createdEthAddress = await Address.create(newEthAddress);
             var newUser = new Object();
 
             // set the user's local credentials
@@ -84,18 +85,11 @@ module.exports = function (passport) {
             newUser.password = generateHash(password);
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
-
-            var newAddress = new Object();
-            newAddress.cipher = generateCipher();
-            var keyStore = generateNewAccount(newAddress.cipher);
-            newAddress.address = "0x"+keyStore.address;
-            // newUser.country = req.body.country_id;
-            User.create(newUser).then((user)=> {
-              if (!user)
-                console.log("null");
-              // Address.create(newAddress).then(function(createdAddress)
-              return done(null, user.dataValues);
-            })
+            newUser.country = req.body.country_id;
+            var createdUser = await User.create(newUser);
+            createdUser.setAddress(createdEthAddress);
+            console.log(createdUser);
+            return done(null, createdUser.dataValues);
           }
 
         });
@@ -106,12 +100,12 @@ module.exports = function (passport) {
 
   //local login strategy for passport
   passport.use('user-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true // allows us to pass back the entire request to the callback
-  },
-    function (req, email, password, done) {
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       User.find({
@@ -135,12 +129,12 @@ module.exports = function (passport) {
 
   //local login strategy for passport
   passport.use('local-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true // allows us to pass back the entire request to the callback
-  },
-    function (req, email, password, done) {
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       Client.find({
@@ -165,13 +159,13 @@ module.exports = function (passport) {
 
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true // allows us to pass back the entire request to the callback
-  },
-    function (req, email, password, done) {
-      process.nextTick(function () {
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+      process.nextTick(function() {
         // find a user whose email is the same as the forms email
         Client.find({
           where: {
@@ -214,16 +208,16 @@ module.exports = function (passport) {
   // passport strategy for google login
   passport.use(new GoogleStrategy({
 
-    clientID: configAuth.googleAuth.clientID,
-    clientSecret: configAuth.googleAuth.clientSecret,
-    callbackURL: configAuth.googleAuth.callbackURL,
+      clientID: configAuth.googleAuth.clientID,
+      clientSecret: configAuth.googleAuth.clientSecret,
+      callbackURL: configAuth.googleAuth.callbackURL,
 
-  },
-    function (token, refreshToken, profile, done) {
+    },
+    function(token, refreshToken, profile, done) {
 
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
-      process.nextTick(function () {
+      process.nextTick(function() {
         var newUser = new Object();
 
         // try to find the user based on their google id
@@ -238,14 +232,14 @@ module.exports = function (passport) {
             Client.update({
               "google_id": profile.id
             }, {
-                where: {
-                  'email': profile.emails[0].value
-                }
-              }).then(function (result) {
-                if (!result)
-                  console.log("null");
-                return done(null, client.dataValues);
-              })
+              where: {
+                'email': profile.emails[0].value
+              }
+            }).then(function(result) {
+              if (!result)
+                console.log("null");
+              return done(null, client.dataValues);
+            })
 
           } else {
             // if the user isnt in our database, create a new user
@@ -256,7 +250,7 @@ module.exports = function (passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = "0x" + keyStore.address;
+            newUser.ethereumAccount = "0x"+keyStore.address;
             console.log(keyStore);
 
             // save the user
@@ -265,7 +259,7 @@ module.exports = function (passport) {
             }).then(() => {
               // Table created
               return Client.create(newUser);
-            }).then(function (result) {
+            }).then(function(result) {
               if (!result)
                 console.log("null");
               return done(null, newUser);
@@ -278,16 +272,16 @@ module.exports = function (passport) {
 
   //passport strategy for github login
   passport.use(new GitHubStrategy({
-    clientID: configAuth.githubAuth.clientID,
-    clientSecret: configAuth.githubAuth.clientSecret,
-    callbackURL: configAuth.githubAuth.callbackURL,
-    scope: 'user:email'
-  },
-    function (token, refreshToken, profile, done) {
+      clientID: configAuth.githubAuth.clientID,
+      clientSecret: configAuth.githubAuth.clientSecret,
+      callbackURL: configAuth.githubAuth.callbackURL,
+      scope: 'user:email'
+    },
+    function(token, refreshToken, profile, done) {
       // console.log(" in github 1.1",profile);
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
-      process.nextTick(function () {
+      process.nextTick(function() {
         // try to find the user based on their google id
         Client.find({
           where: {
@@ -301,14 +295,14 @@ module.exports = function (passport) {
             Client.update({
               "github_id": profile.id
             }, {
-                where: {
-                  'email': profile.emails[0].value
-                }
-              }).then(function (result) {
-                if (!result)
-                  console.log("null");
-                return done(null, client);
-              })
+              where: {
+                'email': profile.emails[0].value
+              }
+            }).then(function(result) {
+              if (!result)
+                console.log("null");
+              return done(null, client);
+            })
           } else {
             // if the user isnt in our database, create a new user
             // set all of the relevant information
@@ -317,7 +311,7 @@ module.exports = function (passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = "0x" + keyStore.address;
+            newUser.ethereumAccount = "0x"+keyStore.address;
 
             // save the user
             Client.sync({
@@ -325,7 +319,7 @@ module.exports = function (passport) {
             }).then(() => {
               // Table created
               return Client.create(newUser);
-            }).then(function (result) {
+            }).then(function(result) {
               if (!result)
                 console.log("null");
               return done(null, newUser.dataValues);
