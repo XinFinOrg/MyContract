@@ -58,8 +58,7 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      process.nextTick(function()
-      {
+      process.nextTick(function() {
         // find a user whose email is the same as the forms email
         User.find({
           where: {
@@ -76,7 +75,7 @@ module.exports = function(passport) {
             var newEthAddress = new Object();
             newEthAddress.cipher = generateCipher();
             var keyStore = generateNewAccount(newEthAddress.cipher);
-            newEthAddress.address = "0x"+keyStore.address;
+            newEthAddress.address = "0x" + keyStore.address;
             var createdEthAddress = await Address.create(newEthAddress);
             var newUser = new Object();
 
@@ -87,9 +86,9 @@ module.exports = function(passport) {
             newUser.lastName = req.body.last_name;
             newUser.country = req.body.country_id;
             var createdUser = await User.create(newUser);
-            createdUser.setAddress(createdEthAddress);
-            console.log(createdUser);
+            createdUser.addUserCurrencyAddress(createdEthAddress);
             return done(null, createdUser.dataValues);
+
           }
 
         });
@@ -105,13 +104,14 @@ module.exports = function(passport) {
       passwordField: 'password',
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
-    function(req, email, password, done) {
+    async function(req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       User.find({
         where: {
           'email': email
-        }
+        },
+        include: [{model: db.Client, include: [db.ICOSiteConfig]}]
       }).then(user => {
         console.log(user);
 
@@ -185,7 +185,7 @@ module.exports = function(passport) {
             newUser.password = generateHash(password);
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = "0x"+keyStore.address;
+            newUser.ethereumAccount = "0x" + keyStore.address;
             Client.sync({
               force: false
             }).then(() => {
@@ -250,7 +250,7 @@ module.exports = function(passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = "0x"+keyStore.address;
+            newUser.ethereumAccount = "0x" + keyStore.address;
             console.log(keyStore);
 
             // save the user
@@ -311,7 +311,7 @@ module.exports = function(passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethereumAccount = "0x"+keyStore.address;
+            newUser.ethereumAccount = "0x" + keyStore.address;
 
             // save the user
             Client.sync({

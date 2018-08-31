@@ -7,11 +7,6 @@ const ImageDataURI = require('image-data-uri');
 var path = require('path');
 
 
-
-
-
-
-
 module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
@@ -19,7 +14,7 @@ module.exports = {
       user: req.user
     });
   },
-  
+
   siteConfiguration: function (req, res) {
     res.render('siteConfiguration', {
       user: req.user

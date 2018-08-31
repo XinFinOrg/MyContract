@@ -95,7 +95,7 @@
                     <div class="col-md-12 col-sm-12 mb-4 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
                         <div class="box text-center">
                             <div class="box-body">
-                                <span>1 BTC = 124912.000  WHT </span>
+                                <span>1 BTC = ? <%=icoSiteConfig.coinName %> </span>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     <div class="col-md-12 col-sm-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
                         <div class="box text-center">
                             <div class="box-body">
-                                <span>1 ETH = 8747.276  WHT </span>
+                                <span>1 ETH = ? <%=icoSiteConfig.coinName %> </span>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                     <div class="bg_green_light_dark radius-10 token_dt res_md_mt_30 res_xs_mt_20 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
                         <div class="tk_counter_inner text-center lg_pt_10 lg_pb_10">
                             <h4 class="mb-20 animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s">Pre-Sale Starts In</h4>
-                            <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="2018/09/01 00:00:00"></div>
+                            <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="<%=icoSiteConfig.endDate%>-<%=icoSiteConfig.startDate %>"></div>
 
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     <div class="card mb-4">
                         <div class="card-header">MINIMUM CONTRIBUTION : 100 USD</div>
                         <div class="col-md-12 pt-4">
-                            <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy WHT with</h6>
+                            <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= icoSiteConfig.coinName %> with</h6>
                         </div>
                         <div class="card-wrap">
                             <ul role="tablist" id="pills-tab" class="nav nav_tab animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
@@ -149,7 +149,7 @@
                                                     <div class="timeddss2">
                                                         <ul>
                                                             <input id="ETH_first_currency_price" name="first_currency_price"  style="display: none">
-                                                            <li class="d-flex align-items-center justify-content-between">WHT TOTAL
+                                                            <li class="d-flex align-items-center justify-content-between"><%= icoSiteConfig.coinName %> TOTAL
 
                                                                 <p id="ejcash_total" >25000.00</p>
                                                             </li>
@@ -191,7 +191,7 @@
                                                 <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
                                                     <div class="timeddss2">
                                                         <ul>
-                                                            <li class="d-flex align-items-center justify-content-between">WHT TOTAL
+                                                            <li class="d-flex align-items-center justify-content-between"><%= icoSiteConfig.coinName %> TOTAL
 
                                                                 <p id="bjcash_total" >25000.00</p>
                                                             </li>
@@ -227,15 +227,15 @@
                         <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
-                                <h5> WHT </h5>
-                                <p> 1 WHT = 0.05 USD </p>
+                                <h5> <%= icoSiteConfig.coinName %> </h5>
+                                <p> 1 <%= icoSiteConfig.coinName %> = 0.05 USD </p>
                             </div>
                         </div>
 
                         <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
-                                <h5> WHT SOLD </h5>
+                                <h5> <%= icoSiteConfig.coinName %> SOLD </h5>
                                 <p><span><img src="https://www.whatshalal.io/front/assets1/images/WHT-Coin-green.png" alt="" width="15" height="15" class="igm"> 61230.94/ <img src="https://www.whatshalal.io/front/assets1/images/WHT-Coin-green.png" alt="" width="15" height="15" class="igm"> 7,400,000,000</span></p>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
                                 <h5> Presale Start </h5>
-                                <p> September 1, 2018 </p>
+                                <p> <%=icoSiteConfig.startDate %></p>
                             </div>
                         </div>
 
@@ -252,7 +252,7 @@
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
                                 <h5> Presale End </h5>
-                                <p> December 11, 2018 </p>
+                                <p> <%=icoSiteConfig.endDate %></p>
                             </div>
                         </div>
 

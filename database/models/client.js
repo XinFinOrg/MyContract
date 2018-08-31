@@ -69,21 +69,25 @@ module.exports = (sequelize, DataTypes) => {
       },
     );
 
-    //currencies relation  which is one to one
-    Client.belongsTo(models.Currency,
-      {
-        foreignKey: 'currency_id',
-      });
+    // //currencies relation  which is one to one
+    // Client.belongsTo(models.Currency,
+    //   {
+    //     foreignKey: 'currency_id',
+    //   });
 
-    //user currencies address
-    Client.belongsTo(models.CurrencyAddress,
-      {
-        foreignKey: 'user_currency_address_id',
-      });
-    
+    // //user currencies address
+    // Client.belongsTo(models.CurrencyAddress,
+    //   {
+    //     foreignKey: 'user_currency_address_id',
+    //   });
+
     Client.hasMany(models.ClientPackage,{
       foreignKey: 'client_id',
       as: 'packages',
+    });
+
+    Client.hasMany(models.ICOSiteConfig,{
+      foreignKey: 'client_id'
     });
 
   };

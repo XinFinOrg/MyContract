@@ -3,7 +3,7 @@
   "development": {
     "username": "postgres",
     "password": "123",
-    "database": "postgres",
+    "database": "test2",
     "host": "78.129.212.204",
     "logging": false,
     "freezeTableName": true,
