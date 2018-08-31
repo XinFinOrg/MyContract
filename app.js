@@ -53,6 +53,10 @@ require('./contractDeployer/routes')(app,express);
 require('./packageCart/routes')(app);
 require('./icoDashboardCreator/routes')(app);
 
+var db = require("./database/models/index");
+db.sequelize.sync({
+}).then(function(){console.log("synced!")})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

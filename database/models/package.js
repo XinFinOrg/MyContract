@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
   Package.associate = function(models)
   {
     // associations can be defined here
-    Package.hasMany(models.ClientPackage,
+    Package.hasOne(models.ClientPackage,
       {
         foreignKey:'client_package_id',
 

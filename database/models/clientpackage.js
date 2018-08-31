@@ -25,20 +25,20 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   ClientPackage.associate = function(models)
   {
-    // associations can be defined here
-    ClientPackage.belongsTo(models.Package,
-      {
-        foreignKey:'client_package_id',
-        allowNull:'false',
-      });
+    // // associations can be defined here
+    // ClientPackage.belongsTo(models.Package,
+    //   {
+    //     foreignKey:'client_package_id',
+    //     allowNull:'false',
+    //   });
 
-    //client
-    ClientPackage.belongsTo(models.Client,
-      {
-        foreignKey:'client_id',
-        allowNull:'false',
-        onDelete:'CASCADE',
-      });
+    // //client
+    // ClientPackage.belongsTo(models.Client,
+    //   {
+    //     foreignKey:'client_id',
+    //     allowNull:'false',
+    //     onDelete:'CASCADE',
+    //   });
   };
   return ClientPackage;
 };

@@ -30,9 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Currency.belongsTo(models.Client,
       {
-        foreignKey: 'client_id',
-        allowNull:true,
-        onDelete: 'CASCADE',
+        foreignKey: 'client_id'
       }
     );
   };

@@ -1,5 +1,7 @@
 const impl = require("./impl");
 var path = require('path');
+var db = require('../database/models/index');
+var Client = db.Client;
 
 
 module.exports = function(app, express) {
@@ -24,6 +26,16 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage2(req, res, next) {
+
+  Client.findAll({
+    include: [ 'ClientPackages'],
+  }) 
+  
+  .then(res =>{
+    console.log(res[0].ClientPackages);
+  })
+
+
   if (req.user.package2 == true) {
     return next();
   } else {

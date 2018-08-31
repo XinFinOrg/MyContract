@@ -3,26 +3,26 @@
   "development": {
     "username": "postgres",
     "password": "123",
-    "database": "test2",
-    "host": "78.129.212.204",
-    "logging": false,
+    "database": "autoCoin",
+    "host": "localhost",
+    "logging": true,
     "freezeTableName": true,
     "operatorsAliases": false,
     "port": 5432,
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "postgres",
+    "password": 123,
+    "database": "autoCoin",
+    "host": "localhost",
+    "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "123",
     "database": "postgres",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }

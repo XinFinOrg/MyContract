@@ -1,4 +1,8 @@
 const impl = require("./impl");
+var db = require('../database/models/index');
+var Client = db.Client;
+
+
 module.exports = function(app) {
 
   app.get('/customContract', isLoggedIn, hasPackage1, impl.getCustomContractForm);
@@ -20,6 +24,18 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
+
+
+  Client.findAll({
+    include: [ 'ClientPackages'],
+  }) 
+  
+  .then(res =>{
+    console.log(res[0].ClientPackages);
+  })
+
+
+
   if (req.user.package1 == true) {
     return next();
   } else {

@@ -1,5 +1,8 @@
 const impl = require("./impl");
 const DataURI = require('datauri').promise;
+var db = require('../database/models/index');
+var Client = db.Client;
+
 
 const multer = require('multer')
 const storage = multer.diskStorage({
@@ -40,6 +43,15 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage3(req, res, next) {
+  Client.findAll({
+    include: [ 'ClientPackages'],
+  }) 
+  
+  .then(res =>{
+    console.log(res[0].ClientPackages);
+  })
+
+
   if (req.user.package3 == true) {
     return next();
   } else {
