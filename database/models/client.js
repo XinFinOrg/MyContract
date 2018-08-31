@@ -1,7 +1,7 @@
 // created by rahul (29/08/2018)
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_client = sequelize.define('ico_automation_client', {
+  const Client = sequelize.define('Client', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -61,37 +61,37 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
   }, {});
-  ico_automation_client.associate = function(models)
+  Client.associate = function(models)
   {
     // associations can be defined here
-    ico_automation_client.hasMany(models.ico_automation_user,
+    Client.hasMany(models.User,
     {
       foreignKey:'user_id',
     },
     );
 
-     //currencies relation  which is one to one 
-     ico_automation_client.belongsTo(models.ico_automation_currencies,
+     //currencies relation  which is one to one
+     Client.belongsTo(models.Currency,
       {
         foreignKey:'currency_id',
       });
 
       //user currencies address
-      ico_automation_client.belongsTo(models.ico_automation_user_currencies_address,
+      Client.belongsTo(models.CurrencyAddress,
         {
-          foreignKey:'user_currencies_address_id',
-        });  
-      
+          foreignKey:'user_currency_address_id',
+        });
+
     // // associations can be defined here
-    // ico_automation_client.belongsTo(models.ico_automation_client,
+    // Client.belongsTo(models.Client,
     // {
 
     //     foreignKey: 'client_id',
     //     allowNull:true,
     //     onDelete: 'CASCADE',
     // }
-    // );  
+    // );
 
   };
-  return ico_automation_client;
+  return Client;
 };

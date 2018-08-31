@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_client_packages = sequelize.define('ico_automation_client_packages', {
-   
+  const ClientPackage = sequelize.define('ClientPackage', {
+
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -23,22 +23,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_client_packages.associate = function(models) 
+  ClientPackage.associate = function(models)
   {
     // associations can be defined here
-    ico_automation_client_packages.belongsTo(models.ico_automation_packages,
+    ClientPackage.belongsTo(models.Package,
       {
         foreignKey:'package_id',
-        allowNull:'false', 
+        allowNull:'false',
       });
-    
-    //client   
-    ico_automation_client_packages.belongsTo(models.ico_automation_client,
+
+    //client
+    ClientPackage.belongsTo(models.Client,
       {
         foreignKey:'client_id',
         allowNull:'false',
-        onDelete:'CASCADE',          
-      });  
+        onDelete:'CASCADE',
+      });
   };
-  return ico_automation_client_packages;
+  return ClientPackage;
 };

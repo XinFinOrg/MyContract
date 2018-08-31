@@ -17,9 +17,7 @@ const upload = multer({storage: storage})
 module.exports = function (app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/icoDashboardSetup/client/:clientEmail/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
-
   app.post('/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration', isLoggedIn,upload.single('site_logo'), impl.updateSiteConfiguration)
-
   app.get('/icoDashboardSetup/client/:clientEmail', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   app.get('/userSignup', impl.getUserSignup);
   app.get('/userLogin', impl.getUserLogin);

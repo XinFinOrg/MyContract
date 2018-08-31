@@ -12,14 +12,6 @@ var Client = require('../database/models/index').Client;
 
 templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
 
-// function onReadTemplateCoinContract(err, data) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     templateCoin = data;
-//   }
-// }
-
 fs.readFile(path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
   function(err, data) {
     if (err) {

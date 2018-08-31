@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_user_currencies_balance = sequelize.define('ico_automation_user_currencies_balance', {
+  const UserCurrencyBalance = sequelize.define('UserCurrencyBalance', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_user_currencies_balance.associate = function(models)
+  UserCurrencyBalance.associate = function(models)
   {
     // associations can be defined here
-    ico_automation_user_currencies_balance.belongsTo(models.ico_automation_client,
+    UserCurrencyBalance.belongsTo(models.Client,
       {
         foreignKey: 'client_id',
         allowNull:true,
@@ -36,19 +36,19 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
 
-    ico_automation_user_currencies_balance.belongsTo(models.ico_automation_user,
+    UserCurrencyBalance.belongsTo(models.User,
       {
         foreignKey: 'user_id',
         allowNull:true,
         onDelete: 'CASCADE',
       }
     );
-    ico_automation_user_currencies_balance.belongsTo(models.ico_automation_currencies,
+    UserCurrencyBalance.belongsTo(models.Currency,
       {
         foreignKey:'currency_id',
         allowNull:false,
         onDelete:'CASCADE',
       });
   };
-  return ico_automation_user_currencies_balance;
+  return UserCurrencyBalance;
 };

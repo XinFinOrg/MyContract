@@ -15,29 +15,35 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file =>
-    (file.indexOf('.') !== 0) &&
-    (file !== basename) &&
-    (file.slice(-3) === '.js'))
-  .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
+// fs
+//   .readdirSync(__dirname)
+//   .filter(file =>
+//     (file.indexOf('.') !== 0) &&
+//     (file !== basename) &&
+//     (file.slice(-3) === '.js'))
+//   .forEach(file => {
+//     const model = sequelize.import(path.join(__dirname, file));
+//     db[model.name] = model;
+//   });
+//
+// Object.keys(db).forEach(modelName => {
+//   if (db[modelName].associate) {
+//     db[modelName].associate(db);
+//   }
+// });
+//
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.user= require('./ico_automation_user')(db.sequelize, db.Sequelize);
-db.Client= require('./ico_automation_client')(db.sequelize, db.Sequelize);
-db.ICOSiteConfig= require('./ico_automation_client_sitesetting')(db.sequelize, db.Sequelize);
+db.User= require('./user')(db.sequelize, db.Sequelize);
+db.Client= require('./client')(db.sequelize, db.Sequelize);
+db.ICOSiteConfig= require('./icoSiteConfig')(db.sequelize, db.Sequelize);
+db.Currency= require('./currency')(db.sequelize, db.Sequelize);
+db.UserCurrencyAddress= require('./userCurrencyAddress')(db.sequelize, db.Sequelize);
+db.UserCurrencyBalance= require('./userCurrencyBalance')(db.sequelize, db.Sequelize);
+db.UserType= require('./userType')(db.sequelize, db.Sequelize);
+db.Package= require('./package')(db.sequelize, db.Sequelize);
+db.ClientPackage=require('./clientPackage')(db.sequelize, db.Sequelize);
 
 module.exports = db;

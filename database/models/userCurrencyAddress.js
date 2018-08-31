@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_user_currencies_address = sequelize.define('ico_automation_user_currencies_address', {
+  const UserCurrencyAddress = sequelize.define('UserCurrencyAddress', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type:DataTypes.STRING
     },
+
+    cipher: {
+      type:DataTypes.STRING
+    },
+
     uniqueId:
     {
       allowNull:false,
@@ -25,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_user_currencies_address.associate = function(models) {
+  UserCurrencyAddress.associate = function(models) {
 
     // associations can be defined here
-    ico_automation_user_currencies_address.belongsTo(models.ico_automation_client,
+    UserCurrencyAddress.belongsTo(models.Client,
       {
         foreignKey: 'client_id',
         allowNull:true,
@@ -36,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
 
-    ico_automation_user_currencies_address.belongsTo(models.ico_automation_user,
+    UserCurrencyAddress.belongsTo(models.User,
       {
         foreignKey: 'user_id',
         allowNull:true,
@@ -44,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
 
-    ico_automation_user_currencies_address.belongsTo(models.ico_automation_currencies,
+    UserCurrencyAddress.belongsTo(models.Currency,
       {
         foreignKey: 'currency_id',
         allowNull:false,
@@ -52,5 +57,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
   };
-  return ico_automation_user_currencies_address;
+  return UserCurrencyAddress;
 };

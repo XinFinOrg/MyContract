@@ -1,26 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_packages = sequelize.define('ico_automation_packages', {
-    
+  const Package = sequelize.define('Package', {
+
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    name: 
+    name:
     {
       type:DataTypes.STRING,
       allowNull:false,
     },
     btc_price:
     {
-      type:DataType.Float,
+      type:DataTypes.FLOAT,
       allowNull:false,
     },
     eth_price:
     {
-      type:DataType.Float,
+      type:DataTypes.FLOAT,
       allowNull:false,
     },
     status:
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue:true,
       },
 
-    createdAt: 
+    createdAt:
     {
       allowNull: false,
       type: DataTypes.DATE,
@@ -39,14 +39,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_packages.associate = function(models) 
+  Package.associate = function(models)
   {
     // associations can be defined here
-    ico_automation_packages.hasMany(models.ico_automation_client_packages,
+    Package.hasMany(models.ClientPackage,
       {
         foreignKey:'client_package_id',
 
       });
   };
-  return ico_automation_packages;
+  return Package;
 };

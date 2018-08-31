@@ -5,8 +5,10 @@ const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
-var Client = require('../database/models/index').Client;
-var User = require('../database/models/index').ico_automation_user;
+var db = require('../database/models/index');
+var Client = db.Client;
+var User = db.User;
+var Address = db.CurrencyAddress;
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
 
@@ -56,7 +58,7 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      process.nextTick(function() 
+      process.nextTick(function()
       {
         // find a user whose email is the same as the forms email
         User.find({
@@ -75,16 +77,19 @@ module.exports = function(passport) {
             // set the user's local credentials
             newUser.email = email;
             newUser.password = generateHash(password);
-            newUser.cipher = generateCipher();
-            var keyStore = generateNewAccount(newUser.cipher);
-            newUser.ethAddress = "0x"+keyStore.address;
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
+
+            var newAddress = new Object();
+            newAddress.cipher = generateCipher();
+            var keyStore = generateNewAccount(newAddress.cipher);
+            newAddress.address = "0x"+keyStore.address;
             // newUser.country = req.body.country_id;
-            User.create(newUser).then(function(result) {
-              if (!result)
+            User.create(newUser).then((user)=> {
+              if (!user)
                 console.log("null");
-              return done(null, newUser);
+              // Address.create(newAddress).then(function(createdAddress)
+              return done(null, user.dataValues);
             })
           }
 
@@ -188,6 +193,7 @@ module.exports = function(passport) {
               // Table created
               return Client.create(newUser);
             }).then(function(result) {
+              console.log(result);
               if (!result)
                 console.log("null");
               return done(null, newUser);

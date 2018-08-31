@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_user = sequelize.define('ico_automation_user', {
+  const User = sequelize.define('User', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -64,17 +64,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
   }, {});
-  ico_automation_user.associate = function(models){
+  User.associate = function(models){
     // associations can be defined here
     // one to one relation with usertype
-    ico_automation_user.belongsTo(models.ico_automation_userType,
+    User.belongsTo(models.UserType,
       {
         foreignKey: 'userType_id',//add foreignKey to user
         onDelete: 'CASCADE',
       }
     );
 
-    ico_automation_user.belongsTo(models.ico_automation_client,
+    User.belongsTo(models.Client,
       {
         foreignKey: 'client_id',
         onDelete: 'CASCADE',
@@ -82,5 +82,5 @@ module.exports = (sequelize, DataTypes) => {
     );
 
   };
-  return ico_automation_user;
+  return User;
 };

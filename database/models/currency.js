@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_currencies = sequelize.define('ico_automation_currencies', {
+  const Currency = sequelize.define('Currency', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_currencies.associate = function(models) {
+  Currency.associate = function(models) {
     // associations can be defined here
     // associations can be defined here
-    ico_automation_currencies.belongsTo(models.ico_automation_client,
+    Currency.belongsTo(models.Client,
       {
         foreignKey: 'client_id',
         allowNull:true,
@@ -36,5 +36,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
   };
-  return ico_automation_currencies;
+  return Currency;
 };

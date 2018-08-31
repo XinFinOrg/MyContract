@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_userType = sequelize.define('ico_automation_userType', {
+  const UserType = sequelize.define('UserType', {
 
       id: {
           allowNull: false,
@@ -31,9 +31,9 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.DATE,
         },
   }, {});
-  ico_automation_userType.associate = function(models)
+  UserType.associate = function(models)
   {
     // associations can be defined here
   };
-  return ico_automation_userType;
+  return UserType;
 };

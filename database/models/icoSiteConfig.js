@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ico_automation_client_siteSetting = sequelize.define('ico_automation_client_siteSetting', {
+  const ICOSiteConfig = sequelize.define('ICOSiteConfig', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.DATE,
       allowNull: false,
-    } , 
+    } ,
     homeURL: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -72,10 +72,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ico_automation_client_siteSetting.associate = function(models)
+  ICOSiteConfig.associate = function(models)
   {
     // associations can be defined here
-    ico_automation_client_siteSetting.belongsTo(models.ico_automation_client,
+    ICOSiteConfig.belongsTo(models.Client,
       {
         foreignKey: 'client_id', // add foreignKey to client
         onDelete: 'CASCADE',
@@ -84,5 +84,5 @@ module.exports = (sequelize, DataTypes) => {
 
 
   };
-  return ico_automation_client_siteSetting;
+  return ICOSiteConfig;
 };
