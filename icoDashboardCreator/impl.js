@@ -15,36 +15,42 @@ var path = require('path');
 module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
-    res.render('adminDashboard', {
+    res.render('icoDashboard', {
+      user: req.user
+    });
+  },
+  
+  siteConfiguration: function (req, res) {
+    res.render('siteConfiguration', {
       user: req.user
     });
   },
   getSiteConfiguration: function (req, res) {
+    console.log( req.params.clientEmail,"hello");
     ICOSiteConfig.find({
       where: {
         'clientEmail': req.params.clientEmail
       }
     }).then(values => {
-      if(!values)
-      {
-      res.send({message: "null!"});
-      }else{
-      res.send({
-        data: values.dataValues,
-        message: "updated!"
-      })
-    }
+      if (!values) {
+        res.send({ message: "null!" });
+      } else {
+        res.send({
+          data: values.dataValues,
+          message: "updated!"
+        })
+      }
     });
   },
-  updateSiteConfiguration:function (req, res) {
-      console.log(req.file);
-      ImageDataURI.encodeFromFile("kycdump/"+req.file.originalname)
-      .then(imgurl =>{
-     ICOSiteConfig.findOne({
-      where: {
-        "clientEmail": req.body.email
-      }
-    }).then(function (foundItem) {
+  updateSiteConfiguration: function (req, res) {
+    console.log(req.file);
+    ImageDataURI.encodeFromFile("kycdump/" + req.file.originalname)
+      .then(imgurl => {
+        ICOSiteConfig.findOne({
+          where: {
+            "clientEmail": req.body.email
+          }
+        }).then(function (foundItem) {
           if (!foundItem) {
             // Item not found, create a new one
             ICOSiteConfig.create({
@@ -64,7 +70,7 @@ module.exports = {
               ethAddress: req.body.eth_address,
               btcAddress: req.body.btc_address,
             })
-              .then(res.redirect("/icoDashboardSetup/client/" + req.body.email))
+              .then(res.redirect("/siteConfiguration/client/" + req.body.email))
           } else {
             // Found an item, update it
             ICOSiteConfig.update({
@@ -87,10 +93,10 @@ module.exports = {
                   "clientEmail": req.body.email
                 }
               })
-              .then(res.redirect("/icoDashboardSetup/client/" + req.body.email));
+              .then(res.redirect("/siteConfiguration/client/" + req.body.email));
           }
         })
-    })
+      })
   },
   //user login
   userLogin: function (req, res) {

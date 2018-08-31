@@ -2,3 +2,4 @@ node_modules/
 contractCreator/contractDirectory
 *.bak
 database/migrations/
+kycdump/

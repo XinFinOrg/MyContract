@@ -201,7 +201,7 @@
 
                                     <div id="generalTabContent" class="tab-content">
                                         <div id="tab-edit" class="tab-pane fade in active">
-                                            <form action="/icoDashboardSetup/client/:clientEmail/updateSiteConfiguration" method="post"  enctype="multipart/form-data">
+                                            <form action="/siteConfiguration/client/<%=user.email %>/updateSiteConfiguration" method="post" class="form-horizontal" enctype="multipart/form-data">
                                                 <h3>Site Settings</h3>
                                                 <div class="form-group"><label class="col-sm-3 control-label">Site Name</label>
                                                     <input type="hidden" class="form-control" name="email" value="<%=user.email %>" />
@@ -219,7 +219,7 @@
                                                         <div class="row">
                                                             <div class="col-xs-9"><input type="file" class="" name="site_logo"
                                                                 /></div>
-                                                            <img src="https://whatshalal.io/uploads/logo/1533363196.png" style="width: 150px;" />
+                                                            <img id="imglogo" style="width: 150px;" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -363,38 +363,28 @@
 
 
                                                 <!--  <h3>SMTP</h3>
-
-
                                               <div class="form-group"><label class="col-sm-3 control-label">SMTP Host</label>
-
                                                 <div class="col-sm-9 controls">
                                                     <div class="row">
                                                         <div class="col-xs-6"><input type="text" name="smtp_host" value="eyJpdiI6Ik40dkRIdGZjQjY4VjkxM0YzQ2tMYmc9PSIsInZhbHVlIjoiTUZ2YXdOYW9mYTJiN1pWODd1NTAzUT09IiwibWFjIjoiODFiZmJjNjAyNDIwNDBjNjc1OGEyYmYwNmVkNTkzYmEyYjlmNjgxMmM1MTMwOGJiM2UwMDE2NzQ3YWY0Mjg4MSJ9" class="form-control"/></div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="form-group"><label class="col-sm-3 control-label">SMTP Port</label>
-
                                                 <div class="col-sm-9 controls">
                                                     <div class="row">
                                                         <div class="col-xs-6"><input type="text" name="smtp_port" value="eyJpdiI6IktPOTNTS2FUQ0pNNE5qXC9veGtaSWRBPT0iLCJ2YWx1ZSI6IlNYYnBaTWxEaURTZVRWaE9Gc2I3Nnc9PSIsIm1hYyI6ImIzNDQ2NGQyODM1MjUyZjU5OTMzNzcxYzQ0MDE5ZGFjMGE3NGIzYWUxNzUzZTIxMzhlNjBkZDg4Y2JkOTE2M2QifQ==" class="form-control"/></div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="form-group"><label class="col-sm-3 control-label">SMTP Username</label>
-
                                                 <div class="col-sm-9 controls">
                                                     <div class="row">
                                                         <div class="col-xs-6"><input type="text" name="smtp_email" value="eyJpdiI6ImV6UVFCY0wrVWNlMVdkYjE3Y1UwSkE9PSIsInZhbHVlIjoiYm5UbUZiSUNsRUlSSmtPd1pZXC9qVFE9PSIsIm1hYyI6ImU1MjczODQ2ZDA5NzA2NjliYTdjMTM2ZDgzYzU1ZWRhMjlhZTUwZjRkNzIyYjNiOWZmOWIxMzQyY2YwYjMyZDQifQ==" class="form-control"/></div>
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="form-group"><label class="col-sm-3 control-label">SMTP Password</label>
-
                                                 <div class="col-sm-9 controls">
                                                     <div class="row">
                                                         <div class="col-xs-6"><input type="text" name="smtp_password" value="eyJpdiI6ImVzUjV4RmVXQkZVbFYwVnRJK1dDQ1E9PSIsInZhbHVlIjoiWFJJR1RLeXpRb21Cd1RVV0dqTmIrZz09IiwibWFjIjoiZTdiZWZkM2ZjNDlkZTVlNGI5MTdiNjNkOWI3OWNkYzdlNzU5YWIzMmQyY2ZiNWI3YTlmNGQ2NGE3ZTE2NDVkNSJ9" class="form-control"/></div>
@@ -437,12 +427,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/axios.min.js"></script>
     <script>
-        axios.get('/icoDashboardSetup/client/<%=user.email%>/getSiteConfiguration')
+        axios.get('/siteConfiguration/client/<%=user.email%>/getSiteConfiguration')
             .then(function (response) {
-                console.log(response.data, document.getElementsByName("linkedin_url")[0].value);
-
+                console.log("hello ",response.data.data);
                 document.getElementsByName('site_name')[0].value = response.data.data.siteName;
-                document.getElementsByName('site_logo')[0].value = response.data.data.siteLogo;
                 document.getElementsByName('contact_mail')[0].value = response.data.data.contactMail;
                 document.getElementsByName('city')[0].value = response.data.data.city;
                 document.getElementsByName('provience')[0].value = response.data.data.provience;
@@ -455,14 +443,11 @@
                 document.getElementsByName("website_url")[0].value = response.data.data.websiteUrl;
                 document.getElementsByName("eth_address")[0].value = response.data.data.ethAddress;
                 document.getElementsByName("btc_address")[0].value = response.data.data.btcAddress;
-
+                document.getElementById("imglogo").src = response.data.data.siteLogo;
             })
             .catch(function (e) {
                 console.log(e);
             });
-
-
-
         $(document).ready(function () {
             var datetimeurl = document.getelementsbyname('datetime').value;
             var datetimeview = document.getelementsbyname('dateid');

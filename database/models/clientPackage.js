@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     ClientPackage.belongsTo(models.Package,
       {
-        foreignKey:'package_id',
+        foreignKey:'client_package_id',
         allowNull:'false',
       });
 
