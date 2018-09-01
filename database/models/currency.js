@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      primaryKey: true
     },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV1,
-      primaryKey: true
+      defaultValue: DataTypes.UUIDV1
     },
     createdAt: {
       allowNull: false,
@@ -27,8 +27,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Currency.associate = function(models) {
     // associations can be defined here
-    Currency.belongsTo(models.Client, {
-      foreignKey: 'client_id'
+    Currency.hasMany(models.UserCurrencyAddress, {
+      foreignKey: 'currency_id',
+      allowNull: false,
+      onDelete: 'CASCADE',
     });
   };
   return Currency;

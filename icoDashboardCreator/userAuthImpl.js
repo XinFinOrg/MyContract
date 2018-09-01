@@ -26,7 +26,8 @@ module.exports = {
       var icoSiteConfig = req.user.ICOSiteConfig;
       res.render('userWalletPage', {
         user: req.user,
-        icoSiteConfig: icoSiteConfig
+        icoSiteConfig: icoSiteConfig,
+        addresses: req.user.UserCurrencyAddresses
       });
     }
   },

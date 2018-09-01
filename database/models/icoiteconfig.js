@@ -74,13 +74,18 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   ICOSiteConfig.associate = function(models)
   {
-    // associations can be defined here
-    ICOSiteConfig.belongsTo(models.Client,
-      {
-        foreignKey: 'client_id', // add foreignKey to client
-        onDelete: 'CASCADE',
-      }
-    );
+    // // associations can be defined here
+    // ICOSiteConfig.belongsTo(models.Client,
+    //   {
+    //     foreignKey: 'client_id', // add foreignKey to client
+    //     onDelete: 'CASCADE',
+    //   }
+    // );
+    ICOSiteConfig.hasMany(models.User, {
+      foreignKey: 'project_id',
+      allowNull: false,
+      onDelete: 'CASCADE',
+    });
 
 
   };

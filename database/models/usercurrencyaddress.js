@@ -41,23 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
 
-    UserCurrencyAddress.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      allowNull: true,
-      onDelete: 'CASCADE'
-    });
-
-    UserCurrencyAddress.belongsTo(models.Currency, {
-      foreignKey: 'currency_id',
-      allowNull: false,
-      onDelete: 'CASCADE'
-    });
-
-    UserCurrencyAddress.belongsTo(models.ICOSiteConfig, {
-      foreignKey: 'project_id',
-      allowNull: false,
-      onDelete: 'CASCADE',
-    });
   };
   return UserCurrencyAddress;
 };
