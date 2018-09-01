@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     cipher: {
       type: DataTypes.STRING
     },
+    balance: {
+      type: DataTypes.FLOAT
+    },
 
     uniqueId: {
       allowNull: false,
@@ -44,11 +47,18 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    // UserCurrencyAddress.belongsTo(models.Currency, {
-    //   foreignKey: 'currency_id',
-    //   allowNull: false,
-    //   onDelete: 'CASCADE',
-    // });
+    UserCurrencyAddress.belongsTo(models.Currency, {
+      foreignKey: 'currency_name',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      targetKey: 'name'
+    });
+
+    UserCurrencyAddress.belongsTo(models.ICOSiteConfig, {
+      foreignKey: 'project_id',
+      allowNull: false,
+      onDelete: 'CASCADE',
+    });
   };
   return UserCurrencyAddress;
 };

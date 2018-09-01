@@ -8,8 +8,10 @@ module.exports = {
         user: req.user
       });
     } else {
+      var icoSiteConfig = req.user.ICOSiteConfig;
       res.render('userTransactionHistory', {
-        user: req.user
+        user: req.user,
+        icoSiteConfig: icoSiteConfig
       });
     }
   },
@@ -20,8 +22,11 @@ module.exports = {
         user: req.user
       });
     } else {
+      console.log(req.user.UserCurrencyAddresses)
+      var icoSiteConfig = req.user.ICOSiteConfig;
       res.render('userWalletPage', {
-        user: req.user
+        user: req.user,
+        icoSiteConfig: icoSiteConfig
       });
     }
   },
@@ -45,14 +50,13 @@ module.exports = {
     if (!req.user.kyc_verified) {
       res.render('userKYCPage', {
         user: req.user
-      });
+       });
     } else {
-      console.log("Inside get dashboard");
-      var icoSiteConfig = req.user.Client.ICOSiteConfigs[0];
+      console.log(req.user);
+      var icoSiteConfig = req.user.ICOSiteConfig;
       res.render('userDashboard', {
         user: req.user,
         icoSiteConfig: icoSiteConfig
-
       });
     }
   }

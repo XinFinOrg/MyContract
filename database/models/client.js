@@ -18,17 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'client_id'
       // onDelete: 'CASCADE',
     });
+    Client.hasMany(models.ICOSiteConfig,{
+      foreignKey: 'client_id'
+    });
+
   };
   return Client;
 };
 
-
-  // associations can be defined here
-    // Client.hasMany(models.User,
-    //   {
-    //     foreignKey: 'client_id',
-    //   },
-    // );
 
     // // //currencies relation  which is one to one
     // // Client.belongsTo(models.Currency,
@@ -45,8 +42,4 @@ module.exports = (sequelize, DataTypes) => {
     // Client.hasMany(models.ClientPackage,{
     //   foreignKey: 'client_id',
     //   as: 'packages',
-    // });
-
-    // Client.hasMany(models.ICOSiteConfig,{
-    //   foreignKey: 'client_id'
     // });

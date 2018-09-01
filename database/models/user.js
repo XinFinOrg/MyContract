@@ -67,14 +67,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userType_id', //add foreignKey to user
       onDelete: 'CASCADE',
     });
-    User.belongsTo(models.Client, {
-      foreignKey: 'client_id',
-      onDelete: 'CASCADE',
-    });
     //
     User.hasMany(models.UserCurrencyAddress, {
-      foreignKey: 'user_id'
-      // onDelete: 'CASCADE',
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
+    });
+    User.belongsTo(models.ICOSiteConfig, {
+      foreignKey: 'project_id',
+      onDelete: 'CASCADE',
     });
 
   };

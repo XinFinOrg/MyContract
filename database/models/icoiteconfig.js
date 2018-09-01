@@ -12,63 +12,63 @@ module.exports = (sequelize, DataTypes) => {
     },
     uniqueId:
     {
-      allowNull:false,
+      allowNull:true,
       type:DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
     },
     siteName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     coinName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     siteLogo: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     tokenSupply:
     {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     softCap:
     {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     hardCap:
     {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     startDate:
     {
       type:DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     endDate:
     {
       type:DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     } ,
     homeURL: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     aboutusURL: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
 
 
     createdAt: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.DATE,
     },
     updatedAt: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.DATE,
     },
   }, {});

@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
     name: {
-    type:  DataTypes.STRING
+    type:  DataTypes.STRING,
+    unique: true
     },
     uniqueId:
     {
@@ -26,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
   Currency.associate = function(models) {
-    // associations can be defined here
     // associations can be defined here
     Currency.belongsTo(models.Client,
       {

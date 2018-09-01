@@ -5,7 +5,7 @@
     "password": "123",
     "database": "autoCoin",
     "host": "localhost",
-    "logging": true,
+    "logging": false,
     "freezeTableName": true,
     "operatorsAliases": false,
     "port": 5432,
