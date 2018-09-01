@@ -2,20 +2,19 @@
 module.exports = (sequelize, DataTypes) => {
   const Currency = sequelize.define('Currency', {
     id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-    name: {
-    type:  DataTypes.STRING,
-    unique: true
+      allowNull: false,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
     },
-    uniqueId:
-    {
-      allowNull:false,
-      type:DataTypes.UUID,
+    name: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    uniqueId: {
+      allowNull: false,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
     },
     createdAt: {
       allowNull: false,
@@ -28,11 +27,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Currency.associate = function(models) {
     // associations can be defined here
-    Currency.belongsTo(models.Client,
-      {
-        foreignKey: 'client_id'
-      }
-    );
+    Currency.belongsTo(models.Client, {
+      foreignKey: 'client_id'
+    });
   };
   return Currency;
 };

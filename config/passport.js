@@ -75,7 +75,7 @@ module.exports = function(passport) {
             // create the user
             var ethCurrency = await db.Currency.findOrCreate({
               where: {
-                'name': 'Ethereum'
+                'name': "Ethereum"
               }
             });
             var newEthAddress = new Object();
@@ -85,6 +85,7 @@ module.exports = function(passport) {
             newEthAddress.balance = 0;
             var createdEthAddress = await Address.create(newEthAddress);
             createdEthAddress.setCurrency(ethCurrency);
+            // ethCurrency.addUserCurrencyAddress(createdEthAddress);
             var newUser = new Object();
 
             // set the user's local credentials
@@ -104,7 +105,7 @@ module.exports = function(passport) {
               }
             });
             console.log(project);
-            createdUser.setICOSiteConfig(project);
+            createdUser.setICOSiteConfig(project.dataValues);
             return done(null, createdUser.dataValues);
 
           }
