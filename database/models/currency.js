@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Currency = sequelize.define('Currency', {
+  const currency = sequelize.define('currency', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -25,11 +25,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  Currency.associate = function(models) {
-    // associations can be defined here
-    Currency.belongsTo(models.Client, {
-      foreignKey: 'client_id'
-    });
+  currency.associate = function(models) 
+  {
+    currency.hasMany(models.userCurrencyAddress,
+      {
+        foreignKey:'currency_id',
+        sourceKey:'name',
+        allowNull:'false',
+        onDelete:'CASCDE'
+      })
   };
-  return Currency;
+  return currency;
 };

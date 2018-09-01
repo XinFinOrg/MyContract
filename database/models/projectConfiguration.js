@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ICOSiteConfig = sequelize.define('ICOSiteConfig', {
+  const projectConfiguration = sequelize.define('projectConfiguration', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -72,17 +72,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  ICOSiteConfig.associate = function(models)
+  projectConfiguration.associate = function(models)
   {
     // associations can be defined here
-    ICOSiteConfig.belongsTo(models.Client,
+    
+    //currency define
+    projectConfiguration.hasOne(models.currency,
       {
-        foreignKey: 'client_id', // add foreignKey to client
-        onDelete: 'CASCADE',
-      }
-    );
-
-
+        foreignKey:project_id,
+        allowNull:true,
+      });
+    
+      projectConfiguration.hasMany(models.user,
+        {
+          foreignkey:project_id,
+          allowNull:false,
+          onDelete:'CASCADE'
+        })
   };
-  return ICOSiteConfig;
+  return projectConfiguration;
 };

@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    id: {
+  const user = sequelize.define('user', {
+    id: 
+    {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -60,23 +61,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  User.associate = function(models) {
+  user.associate = function(models) {
     // associations can be defined here
-    // one to one relation with usertype
-    User.belongsTo(models.UserType, {
-      foreignKey: 'userType_id', //add foreignKey to user
-      onDelete: 'CASCADE',
-    });
     //
-    User.hasMany(models.UserCurrencyAddress, {
+    user.hasMany(models.userCurrencyAddress, 
+      {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
     });
-    User.belongsTo(models.ICOSiteConfig, {
-      foreignKey: 'project_id',
-      onDelete: 'CASCADE',
-    });
+
+    //transaction relation
+    user.hasMany(models.transaction,
+      {
+        foreignKey:'transaction_id',
+        allowNull:true,
+
+      });
+
 
   };
-  return User;
+  return user;
 };

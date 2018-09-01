@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const UserType = sequelize.define('UserType', {
+  const userType = sequelize.define('userType', {
 
       id: {
           allowNull: false,
@@ -31,9 +31,14 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.DATE,
         },
   }, {});
-  UserType.associate = function(models)
+  userType.associate = function(models)
   {
     // associations can be defined here
+    userType.hasMany(models.user,
+      {
+        foreignKey:'usertype_id',
+        allowNull:false,
+      });
   };
-  return UserType;
+  return userType;
 };

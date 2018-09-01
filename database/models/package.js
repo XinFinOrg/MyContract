@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Package = sequelize.define('Package', {
+  const package = sequelize.define('package', {
 
     id: {
       allowNull: false,
@@ -39,14 +39,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  Package.associate = function(models)
+  package.associate = function(models)
   {
     // associations can be defined here
-    Package.hasOne(models.ClientPackage,
+    package.hasMany(models.client,
       {
-        foreignKey:'client_package_id',
+        foreignKey:'package_id',
+        allowNull:true,
 
       });
   };
-  return Package;
+  return package;
 };
