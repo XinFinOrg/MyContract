@@ -1,8 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
-    id: 
-    {
+    id: {
       allowNull: false,
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -67,19 +66,24 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = function(models) {
     // associations can be defined here
     //
-    user.hasMany(models.userCurrencyAddress, 
-      {
+    user.hasMany(models.userCurrencyAddress, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
     });
 
     //transaction relation
+<<<<<<< Updated upstream
     user.hasMany(models.icotransactions,
       {
         foreignKey:'user_id',
         allowNull:true,
+=======
+    user.hasMany(models.transaction, {
+      foreignKey: 'transaction_id',
+      allowNull: true,
+>>>>>>> Stashed changes
 
-      });
+    });
 
 
   };

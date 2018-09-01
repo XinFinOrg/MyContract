@@ -34,8 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue:DataTypes.NOW
     },
   }, {});
-  userCurrencyAddress.associate = function(models) 
-  {
-  };
+  userCurrencyAddress.associate = function(models) {};
   return userCurrencyAddress;
 };

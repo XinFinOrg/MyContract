@@ -2,15 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
   const projectConfiguration = sequelize.define('projectConfiguration', {
     id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-    uniqueId:
-    {
-      allowNull:true,
-      type:DataTypes.UUID,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    uniqueId: {
+      allowNull: true,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
     },
     siteName: {
@@ -21,31 +20,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    tokenSupply:
-    {
+    tokenSupply: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    softCap:
-    {
+    softCap: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    hardCap:
-    {
+    hardCap: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    startDate:
-    {
-      type:DataTypes.DATE,
+    startDate: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
-    endDate:
-    {
-      type:DataTypes.DATE,
+    endDate: {
+      type: DataTypes.DATE,
       allowNull: true,
-    } ,
+    },
     homeURL: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -59,31 +53,28 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: true,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       allowNull: true,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
   }, {});
-  projectConfiguration.associate = function(models)
-  {
+  projectConfiguration.associate = function(models) {
     // associations can be defined here
-    
+
     //currency define
-    projectConfiguration.hasOne(models.currency,
-      {
-        foreignKey: 'project_id',
-        allowNull:true,
-      });
-    
-      projectConfiguration.hasMany(models.user,
-        {
-          foreignkey: 'project_id',
-          allowNull:false,
-          onDelete:'CASCADE'
-        })
+    projectConfiguration.hasOne(models.currency, {
+      foreignKey: 'project_id',
+      allowNull: true,
+    });
+
+    projectConfiguration.hasMany(models.user, {
+      foreignkey: 'project_id',
+      allowNull: false,
+      onDelete: 'CASCADE'
+    })
   };
   return projectConfiguration;
 };

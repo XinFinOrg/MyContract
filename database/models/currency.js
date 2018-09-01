@@ -14,23 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.DATE
+      defaultValue: DataTypes.DATE
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.DATE
+      defaultValue: DataTypes.DATE
     },
   }, {});
-  currency.associate = function(models) 
-  {
-    currency.hasMany(models.userCurrencyAddress,
-      {
-        foreignKey:'currency_id',
-        sourceKey:'name',
-        allowNull:'false',
-        onDelete:'CASCADE',
-      })
+  currency.associate = function(models) {
+    currency.hasMany(models.userCurrencyAddress, {
+      foreignKey: 'currency_id',
+      sourceKey: 'name',
+      allowNull: 'false',
+      onDelete: 'CASCDE'
+    })
   };
   return currency;
 };

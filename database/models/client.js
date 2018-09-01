@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 }, {});
   client.associate = function (models) {
-    client.hasMany(models.user, 
+    client.hasMany(models.user,
       {
       foreignKey: 'client_id',
       onDelete: 'CASCADE',
@@ -92,21 +92,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return client;
 };
-
-
-    // // //currencies relation  which is one to one
-    // // client.belongsTo(models.Currency,
-    // //   {
-    // //     foreignKey: 'currency_id',
-    // //   });
-
-    // // //user currencies address
-    // // client.belongsTo(models.CurrencyAddress,
-    // //   {
-    // //     foreignKey: 'user_currency_address_id',
-    // //   });
-
-    // client.hasMany(models.clientPackage,{
-    //   foreignKey: 'client_id',
-    //   as: 'packages',
-    // });
