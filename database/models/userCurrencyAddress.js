@@ -17,13 +17,21 @@ module.exports = (sequelize, DataTypes) => {
     balance: {
       type: DataTypes.FLOAT
     },
+
+    uniqueId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
   }, {});
   userCurrencyAddress.associate = function(models) 

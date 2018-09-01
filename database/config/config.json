@@ -3,8 +3,8 @@
   "development": {
     "username": "postgres",
     "password": "123",
-    "database": "autoCoin",
-    "host": "localhost",
+    "database": "autoCoin2",
+    "host": "78.129.212.204",
     "logging": false,
     "freezeTableName": true,
     "operatorsAliases": false,

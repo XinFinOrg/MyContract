@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const transaction = sequelize.define('transaction', {
+  const icotransactions = sequelize.define('icotransactions', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:true,
     },
-    transaction_hash:
+    icotransactions_hash:
     {
       type:DataTypes.STRING,
       allowNull:true,
@@ -32,10 +32,18 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:true,
     },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
+    },
 
   }, {});
-  transaction.associate = function(models) {
-    // associations can be defined here
-  };
-  return transaction;
+  icotransactions.associate = function(models){};
+  return icotransactions;
 };

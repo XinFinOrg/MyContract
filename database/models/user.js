@@ -6,12 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       type: DataTypes.INTEGER,
+      primaryKey: true
     },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
-      primaryKey: true
+      
     },
     firstName: {
       type: DataTypes.STRING,
@@ -55,10 +56,12 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
   }, {});
   user.associate = function(models) {
@@ -71,9 +74,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     //transaction relation
-    user.hasMany(models.transaction,
+    user.hasMany(models.icotransactions,
       {
-        foreignKey:'transaction_id',
+        foreignKey:'user_id',
         allowNull:true,
 
       });

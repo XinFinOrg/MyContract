@@ -11,21 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       primaryKey: true
     },
-    uniqueId: {
-      allowNull: false,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV1
-    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.DATE
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.DATE
     },
   }, {});
-<<<<<<< HEAD
   currency.associate = function(models) 
   {
     currency.hasMany(models.userCurrencyAddress,
@@ -33,17 +29,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'currency_id',
         sourceKey:'name',
         allowNull:'false',
-        onDelete:'CASCDE'
+        onDelete:'CASCADE',
       })
-=======
-  Currency.associate = function(models) {
-    // associations can be defined here
-    Currency.hasMany(models.UserCurrencyAddress, {
-      foreignKey: 'currency_id',
-      allowNull: false,
-      onDelete: 'CASCADE',
-    });
->>>>>>> 9836cad0e6bec07dfc9e030583297226df0b0ca1
   };
   return currency;
 };

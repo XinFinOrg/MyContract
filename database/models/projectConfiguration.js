@@ -7,9 +7,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-    host: {
-      type:DataTypes.STRING
-    },
     uniqueId:
     {
       allowNull:true,
@@ -21,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     coinName: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    siteLogo: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -66,46 +59,31 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: true,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
     updatedAt: {
       allowNull: true,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
   }, {});
   projectConfiguration.associate = function(models)
   {
-<<<<<<< HEAD:database/models/projectConfiguration.js
     // associations can be defined here
     
     //currency define
     projectConfiguration.hasOne(models.currency,
       {
-        foreignKey:project_id,
+        foreignKey: 'project_id',
         allowNull:true,
       });
     
       projectConfiguration.hasMany(models.user,
         {
-          foreignkey:project_id,
+          foreignkey: 'project_id',
           allowNull:false,
           onDelete:'CASCADE'
         })
-=======
-    // // associations can be defined here
-    // ICOSiteConfig.belongsTo(models.Client,
-    //   {
-    //     foreignKey: 'client_id', // add foreignKey to client
-    //     onDelete: 'CASCADE',
-    //   }
-    // );
-    ICOSiteConfig.hasMany(models.User, {
-      foreignKey: 'project_id',
-      allowNull: false,
-      onDelete: 'CASCADE',
-    });
-
-
->>>>>>> 9836cad0e6bec07dfc9e030583297226df0b0ca1:database/models/icoiteconfig.js
   };
   return projectConfiguration;
 };

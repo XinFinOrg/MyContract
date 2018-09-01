@@ -54,10 +54,12 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
+      defaultValue:DataTypes.NOW
     },
 }, {});
   client.associate = function (models) {
@@ -73,11 +75,19 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     //transaction
-    client.hasMany(models.transaction,
+    client.hasMany(models.icotransactions,
       {
         foreignKey:'client_id',
-        onDelete:'CASCADE',
-      })
+        onDelete: 'CASCADE',
+      });
+
+    //currencyaddress
+    client.hasMany(models.userCurrencyAddress,
+      {
+        foreignKey:'client_id',
+        allowNull:true,
+        onDelete:'CASCADE'
+      })  
 
   };
   return client;
