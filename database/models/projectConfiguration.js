@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   projectConfiguration.associate = function(models)
   {
+<<<<<<< HEAD:database/models/projectConfiguration.js
     // associations can be defined here
     
     //currency define
@@ -89,6 +90,22 @@ module.exports = (sequelize, DataTypes) => {
           allowNull:false,
           onDelete:'CASCADE'
         })
+=======
+    // // associations can be defined here
+    // ICOSiteConfig.belongsTo(models.Client,
+    //   {
+    //     foreignKey: 'client_id', // add foreignKey to client
+    //     onDelete: 'CASCADE',
+    //   }
+    // );
+    ICOSiteConfig.hasMany(models.User, {
+      foreignKey: 'project_id',
+      allowNull: false,
+      onDelete: 'CASCADE',
+    });
+
+
+>>>>>>> 9836cad0e6bec07dfc9e030583297226df0b0ca1:database/models/icoiteconfig.js
   };
   return projectConfiguration;
 };

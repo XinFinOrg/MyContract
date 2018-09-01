@@ -69,7 +69,7 @@ app.use(function(err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({force: true}).then(()=> {
+db.sequelize.sync().then(()=> {
   console.log("Sync done");
 })
 

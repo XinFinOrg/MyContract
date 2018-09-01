@@ -84,8 +84,7 @@ module.exports = function(passport) {
             newEthAddress.address = "0x" + keyStore.address;
             newEthAddress.balance = 0;
             var createdEthAddress = await Address.create(newEthAddress);
-            createdEthAddress.setCurrency(ethCurrency);
-            // ethCurrency.addUserCurrencyAddress(createdEthAddress);
+            ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
             var newUser = new Object();
 
             // set the user's local credentials
@@ -98,14 +97,13 @@ module.exports = function(passport) {
             createdUser.addUserCurrencyAddress(createdEthAddress);
 
             //Find project details and map user
-            console.log(req.body.coinName);
             var project = await Project.findOrCreate({
               where: {
                 'coinName': req.body.coinName
               }
             });
             console.log(project);
-            createdUser.setICOSiteConfig(project.dataValues);
+            project[0].addUser(createdUser);
             return done(null, createdUser.dataValues);
 
           }

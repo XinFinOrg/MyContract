@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true,
       type: DataTypes.INTEGER,
     },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     lastName: {
       type: DataTypes.STRING,
