@@ -36,9 +36,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     },
   }, {});
-  package.associate = function(models) {
+  packages.associate = function(models) {
     // associations can be defined here
-    package.hasMany(models.client, {
+    packages.hasMany(models.client, {
       foreignKey: 'package_id',
       allowNull: true,
 

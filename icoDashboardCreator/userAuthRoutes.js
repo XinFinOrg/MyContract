@@ -13,6 +13,8 @@ router.get('/wallets', isAuthenticated, impl.getWallets);
 router.get('/kyc', isAuthenticated, impl.getKYC);
 router.get('/logout', isAuthenticated, impl.logout);
 router.get('/dashboard', isAuthenticated, impl.getDashboard);
+router.get('/contact_us', isAuthenticated, impl.getContactPage);
+router.get('/profile', isAuthenticated, impl.getProfileEditPage);
 
 
 function isAuthenticated(req, res, next)

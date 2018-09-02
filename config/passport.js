@@ -6,11 +6,12 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
 var db = require('../database/models/index');
-var Client = db.Client;
-var User = db.User;
-var ClientPackage = db.ClientPackage
-var Address = db.UserCurrencyAddress;
-var Project = db.ICOSiteConfig;
+var Client = db.client;
+var User = db.user;
+var ClientPackage = db.clientPackage
+var Address = db.userCurrencyAddress;
+var Transactions = db.icotransactions;
+var Project = db.projectConfiguration;
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
 
@@ -67,13 +68,18 @@ module.exports = function(passport) {
             'email': email
           }
         }).then(async user => {
+          var project = await Project.find({
+            where: {
+              'coinName': req.body.coinName
+            }
+          });
           // check to see if theres already a user with that email
-          if (user) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          if (user && project) {
+              return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
             // if there is no user with that email
             // create the user
-            var ethCurrency = await db.Currency.findOrCreate({
+            var ethCurrency = await db.currency.findOrCreate({
               where: {
                 'name': "Ethereum"
               }
@@ -93,7 +99,13 @@ module.exports = function(passport) {
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
             newUser.country = req.body.country_id;
-            var createdUser = await User.create(newUser);
+            console.log("Hey1");
+            var createdUser;
+            if(user)
+              createdUser = await user.update(newUser);
+            else
+              createdUser = await User.create(newUser);
+
             createdUser.addUserCurrencyAddress(createdEthAddress);
 
             //Find project details and map user
@@ -103,6 +115,7 @@ module.exports = function(passport) {
               }
             });
             console.log(project);
+            project[0].addUserCurrencyAddress(createdEthAddress);
             project[0].addUser(createdUser);
             return done(null, createdUser.dataValues);
 
@@ -124,13 +137,31 @@ module.exports = function(passport) {
     async function(req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
+
       User.find({
         where: {
           'email': email
         },
-        include: [db.ICOSiteConfig, db.UserCurrencyAddress]
+        include: [{
+          model: Project,
+          where: {
+            'coinName': req.body.coinName
+          },
+          include: [{
+            model: Address,
+            where: {
+              'user_id': email
+            }
+          }, {
+            model: Transactions,
+            where: {
+              'user_id': email
+            },
+            required: false
+          }]
+        }]
       }).then(user => {
-        console.log(user);
+        console.log("Hey there", user);
 
         // if no user is found, return the message
         if (!user) {

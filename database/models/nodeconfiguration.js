@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const nodeConfiguration = sequelize.define('nodeConfiguration', {
-    id: 
+    id:
     {
       allowNull: false,
       autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    host: 
+    host:
     {
       type:DataTypes.STRING
     },
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.STRING,
 
-    }, 
+    },
     password:
     {
       type: DataTypes.STRING,
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE,
       defaultValue:DataTypes.NOW
-    },   
+    },
 
   }, {});
   nodeConfiguration.associate = function(models) {

@@ -53,43 +53,7 @@
 </div>
 <!-- Navigation -->
 <!-- START HEADER -->
-<header class="header_wrap fixed-top">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg">
-            <button class="navbar-toggler animation" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-animation="fadeInDown" data-animation-delay="1.1s">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav m-auto">
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.1s"><a class="nav-link page-scroll nav_item active" href = "/user/dashboard">Dashboard</a></li>
-
-
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.4s"><a class="nav-link page-scroll nav_item" href = "/user/transactions">Transaction History</a></li>
-
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.5s"><a class="nav-link page-scroll nav_item" href = "/user/wallets">Wallets</a></li>
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.6s"><a class="nav-link page-scroll nav_item" href = "/user/kyc">Kyc</a></li>
-                    <li class="animation" data-animation="fadeInDown" data-animation-delay="1.7s"><a class="nav-link page-scroll nav_item" href = "/user/contact_us">Contact</a></li>
-                </ul>
-                <ul class="navbar-nav nav_btn align-items-center">
-                </ul>
-
-                <ul class="navbar-nav nav_btn align-items-center">
-
-                    <li class="nav-item dropdown menu_user show animation" data-animation="fadeInDown" data-animation-delay="1.8s"><a class="btn btn-default nav_item nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                                <%= user.firstName%>
-                                                        </a>
-                        <div class="dropdown-menu dropdown-menu-right show" aria-labelledby="userDropdown">
-                            <ul class="menu-nav list_none">
-                                <li><a href="/user/profile"><i class="fa fa-address-card-o"></i><span>Edit Profile</span></a></li>
-                                <li><a href="/user/logout" ><i class="fa fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</header>
+<% include ./userHeader %>
 
     <!-- END HEADER -->
 <div class="clearfix"> </div>
@@ -124,10 +88,11 @@
                                 <tr>
                                     <td class="title"><div class="item"><img src="https://www.whatshalal.io/front/assets1/images/bitcoin.png"><%= addresses[i].currency_id %></div></th>
                                     <td><div class="item"><%= addresses[i].balance %></div></td>
-                                    <td><div class="item deposit"><a onclick="depositmodal(<%= addresses[i].currency_id %>,<%= addresses[i].address %>)"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
-                                    <td><div class="item withdraw"><a onclick="withdrawalmodal(<%= addresses[i].currency_id %>,<%= addresses[i].address %>,<%= addresses[i].balance %>)" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
+                                    <td><div class="item deposit"><a onclick="depositmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
+                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>','<%= addresses[i].balance %>')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
                                 </tr>
                                 <% } %>
+
                                 </tbody>
                             </table>
                         </div>

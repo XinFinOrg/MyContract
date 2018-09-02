@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue: DataTypes.DATE
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue: DataTypes.DATE
+      defaultValue: DataTypes.NOW
     },
   }, {});
   currency.associate = function(models) {
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'currency_id',
       sourceKey: 'name',
       allowNull: 'false',
-      onDelete: 'CASCDE'
+      onDelete: 'CASCADE'
     })
   };
   return currency;

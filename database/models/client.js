@@ -63,11 +63,11 @@ module.exports = (sequelize, DataTypes) => {
     },
 }, {});
   client.associate = function (models) {
-    client.hasMany(models.user,
-      {
-      foreignKey: 'client_id',
-      onDelete: 'CASCADE',
-    });
+    // client.hasMany(models.user,
+    //   {
+    //   foreignKey: 'client_id',
+    //   onDelete: 'CASCADE',
+    // });
     client.hasMany(models.projectConfiguration,
       {
       foreignKey: 'client_id',
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'client_id',
         allowNull:true,
         onDelete:'CASCADE'
-      })  
+      })
 
   };
   return client;

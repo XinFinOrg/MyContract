@@ -4,14 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       allowNull: false,
       autoIncrement: true,
-      type: DataTypes.INTEGER,
-      primaryKey: true
+      type: DataTypes.INTEGER
     },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
-      
+
     },
     firstName: {
       type: DataTypes.STRING,
@@ -26,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true, // checks for email format (foo@bar.com)
       },
+      primaryKey: true,
       allowNull: false,
     },
     password: {
@@ -55,12 +55,12 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
   }, {});
   user.associate = function(models) {
@@ -69,20 +69,20 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.userCurrencyAddress, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
+      sourceKey: 'email'
     });
 
     //transaction relation
-<<<<<<< Updated upstream
-    user.hasMany(models.icotransactions,
-      {
-        foreignKey:'user_id',
-        allowNull:true,
-=======
-    user.hasMany(models.transaction, {
-      foreignKey: 'transaction_id',
+    user.hasMany(models.icotransactions, {
+      foreignKey: 'user_id',
       allowNull: true,
->>>>>>> Stashed changes
+      sourceKey: 'email'
+    });
 
+    user.belongsToMany(models.projectConfiguration, {
+      foreignKey: 'userId',
+      allowNull: false,
+      through: 'UserProject'
     });
 
 
