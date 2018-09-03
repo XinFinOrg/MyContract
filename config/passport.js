@@ -65,7 +65,7 @@ module.exports = function (passport) {
         // find a user whose emailid is the same as the forms emailid
         User.find({
           where: {
-            'emailid': emailid
+            'email': email
           }
         }).then(async user => {
           // check to see if theres already a user with that emailid
@@ -133,7 +133,7 @@ module.exports = function (passport) {
       // find a user whose emailid is the same as the forms emailid
       User.find({
         where: {
-          'emailid': email
+          'email': email
         },
         include: [{
           model: Project,
