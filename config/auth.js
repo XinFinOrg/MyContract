@@ -19,7 +19,12 @@ module.exports = {
 
   'jwtAuthKey': {
     'secret': "nishant",
-    'tokenLife': 30*60
+    'tokenLife': 60*30
+  },
+
+  'binanceKey': {
+    'apiKey': 'NOyC5fjJ8StEWnwcKN8BOIvkRLyGO6ESpZSkgdt1XzP8il34gWrP7KtDmEtZPzuc',
+    'apiSecret': 'kOozwAkqmHap9XVqzrviTAjFxXm7MqVoKPYgqEhHIzjYkiAvRT37jtk61omHQZbD'
   }
 
 };

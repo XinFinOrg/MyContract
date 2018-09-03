@@ -1,5 +1,7 @@
 var db = require('../database/models/index');
 var User = db.User;
+var configAuth = require('../config/auth');
+const Binance = require('node-binance-api');
 module.exports = {
 
   getTransactions: (req, res, next) => {
@@ -81,11 +83,23 @@ module.exports = {
         user: req.user
        });
     } else {
-      console.log(req.user);
+      const binance = require('node-binance-api')().options({
+        APIKEY: configAuth.binanceKey.apiKey,
+        APISECRET: configAuth.binanceKey.apiSecret,
+        useServerTime: true, // If you get timestamp errors, synchronize to server time at startup
+        test: true // If you want to use sandbox mode where orders are simulated
+      });
+
+      binance.prices('BTCUSDT', (error, ticker) => {
+        console.log("Price of BTC: ", ticker.BTCUSDT);
+      });
+      binance.prices('ETHUSDT', (error, ticker) => {
+        console.log("Price of ETH: ", ticker.ETHUSDT);
+      });
       var projectConfiguration = req.user.projectConfigurations[0];
       res.render('userDashboard', {
         user: req.user,
-        projectConfiguration: projectConfiguration
+        projectConfiguration: projectConfiguration,
       });
     }
   }

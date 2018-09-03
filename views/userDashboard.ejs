@@ -44,7 +44,7 @@
             <div class="row align-items-center large_space">
                 <div class="col-lg-6 col-md-12">
                     <div class="card mb-4">
-                        <div class="card-header">MINIMUM CONTRIBUTION : 100 USD</div>
+                        <div class="card-header">MINIMUM CONTRIBUTION : <%= projectConfiguration.minimumContribution %> USD</div>
                         <div class="col-md-12 pt-4">
                             <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= projectConfiguration.coinName %> with</h6>
                         </div>
@@ -65,7 +65,7 @@
                                                     <label>ETH</label>
 
                                                     <input id="second_currency" name="second_currency" value="ETH" style="display: none">
-                                                    <input id="first_currency" name="first_currency" value="WHT" style="display: none">
+                                                    <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
                                                     <input id="ETH_second_currency_price"  type="number"  name="second_currency_price"  value="0.2286" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
@@ -106,7 +106,7 @@
 
                                                 <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
                                                     <input id="second_currency" name="second_currency" value="BTC" style="display: none">
-                                                    <input id="first_currency" name="first_currency" value="WHT" style="display: none">
+                                                    <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
                                                     <label>BTC</label>
 
                                                     <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="0.016011" onkeyup="convert_price(this.value,'BTC')"  class="form-control input-lg">
@@ -269,16 +269,6 @@
     toastr.info("Welcome to AUTOCOIN");
 
 
-    function change_captcha()
-    {
-        $("#capimg").html('Loading....');
-        $.post('https://jcash.jiojio.io/ajax/refresh_capcha',function(data,result)
-        {
-            $("#capimg").html(data);
-        });
-    }
-
-
 </script>
 
 <script type="text/javascript">
@@ -286,19 +276,6 @@
     token = window.localStorage.getItem('token');
     window.location.assign(baseurl+token);
   }
-</script>
-
-<script>
-    function change_captcha()
-    {
-        $("#capimg").html('Loading....');
-        $.post('https://jcash.jiojio.io/ajax/refresh_capcha',function(data,result)
-        {
-            $("#capimg").html(data);
-        });
-    }
-
-
 </script>
 <script type="text/javascript">
     $('body').addClass('login');
@@ -313,16 +290,6 @@
 <script>
     $('body').addClass('page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white');
     $('#root-view').addClass('page-wrapper');
-    $(function () {
-        //$.getScript('assets/bower_components/metronic/global/scripts/app.js').then(function () {
-        //$.getScript('assets/bower_components/metronic/pages/scripts/dashboard.js');
-        //$.getScript('assets/bower_components/metronic/layouts/layout/scripts/layout.js');
-        //$.getScript('assets/bower_components/metronic/layouts/layout/scripts/demo.js');
-        //$.getScript('assets/bower_components/metronic/layouts/global/scripts/quick-sidebar.js');
-        //$.getScript('assets/bower_components/metronic/layouts/global/scripts/quick-nav.js');
-        //})
-
-    });
 </script>
 
 <script type="text/javascript">

@@ -21,9 +21,16 @@ function isAuthenticated(req, res, next)
 {
   var token = req.cookies['token'];
   // JWT enabled login strategy for end user
-  var decoded = jwt.verify(token, configAuth.jwtAuthKey.secret);
-  req.user = decoded.user;
-  next();
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded){
+    if(err){
+      console.log(err);
+      return res.redirect('/userLogin');
+    } else{
+      req.user = decoded.user;
+      next();
+    }
+  });
+
 }
 
 

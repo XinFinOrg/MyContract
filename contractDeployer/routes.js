@@ -7,8 +7,8 @@ var Client = db.Client;
 module.exports = function(app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
   app.get('/deployer', hasPackage2, impl.getDeployer);
-  app.get('/getBytecode',impl.getBytecode);
-  app.post('/saveDeploymentData',impl.saveDeploymentData);
+  app.get('/getBytecode', impl.getBytecode);
+  app.post('/saveDeploymentData', impl.saveDeploymentData);
 }
 
 
@@ -28,10 +28,8 @@ function isLoggedIn(req, res, next) {
 function hasPackage2(req, res, next) {
 
   Client.findAll({
-    include: [ 'ClientPackages'],
-  }) 
-  
-  .then(res =>{
+    include: ['ClientPackages'],
+  }).then(res => {
     console.log(res[0].ClientPackages);
   })
 

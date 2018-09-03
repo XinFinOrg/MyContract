@@ -32,6 +32,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+
+    usdConversionRate: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+
+    minimumContribution: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+
     startDate: {
       type: DataTypes.DATE,
       allowNull: true,

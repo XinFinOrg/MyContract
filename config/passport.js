@@ -99,7 +99,6 @@ module.exports = function(passport) {
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
             newUser.country = req.body.country_id;
-            console.log("Hey1");
             var createdUser;
             if(user)
               createdUser = await user.update(newUser);
@@ -162,6 +161,7 @@ module.exports = function(passport) {
         }]
       }).then(user => {
         console.log("Hey there", user);
+        console.log(req.body.coinName);
 
         // if no user is found, return the message
         if (!user) {
