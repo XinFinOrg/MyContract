@@ -1,98 +1,79 @@
 var passport = require('passport');
-var ICOSiteConfig = require('../database/models/index').ICOSiteConfig;
-var User = require("../database/models/index").user;
 const jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 const ImageDataURI = require('image-data-uri');
 var path = require('path');
+var db = require('../database/models/index');
+var client = db.client;
+var ProjectConfiguration = db.projectConfiguration;
 
 
 module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
-    res.render('icoDashboard', {
-      user: req.user
+    console.log(req.params,"project")
+    res.render('siteConfiguration', {
+      user: req.user,
+      projectName:req.params.projectName
     });
   },
 
-  siteConfiguration: function (req, res) {
-    res.render('siteConfiguration', {
-      user: req.user
-    });
-  },
+  // siteConfiguration: function (req, res) {
+  //   res.render('siteConfiguration', {
+  //     user: req.user
+  //   });
+  // },
   getSiteConfiguration: function (req, res) {
-    console.log( req.params.clientEmail,"hello");
-    ICOSiteConfig.find({
+    client.findAll({
       where: {
-        'clientEmail': req.params.clientEmail
-      }
+        'emailid': req.user.emailid,
+      },
+      include: [{
+        model: ProjectConfiguration,
+        where: {coinName:req.params.projectName }
+      }],
     }).then(values => {
       if (!values) {
         res.send({ message: "null!" });
       } else {
         res.send({
-          data: values.dataValues,
+          data: values[0].projectConfigurations[0].dataValues,
           message: "updated!"
         })
       }
     });
   },
   updateSiteConfiguration: function (req, res) {
-    console.log(req.file);
     ImageDataURI.encodeFromFile("kycdump/" + req.file.originalname)
-      .then(imgurl => {
-        ICOSiteConfig.findOne({
+      .then(async imgurl => {
+        var projectdata = await client.find({
           where: {
-            "clientEmail": req.body.email
-          }
-        }).then(function (foundItem) {
-          if (!foundItem) {
-            // Item not found, create a new one
-            ICOSiteConfig.create({
-              clientEmail: req.body.email,
-              siteName: req.body.site_name,
-              siteLogo: imgurl,
-              contactMail: req.body.contact_mail,
-              address: req.body.address,
-              city: req.body.city,
-              provience: req.body.provience,
-              country: req.body.country,
-              contactNo: req.body.contact_no,
-              facebookUrl: req.body.facebook_url,
-              twitterUrl: req.body.twitter_url,
-              linkedInUrl: req.body.linkedin_url,
-              websiteUrl: req.body.website_url,
-              ethAddress: req.body.eth_address,
-              btcAddress: req.body.btc_address,
-            })
-              .then(res.redirect("/siteConfiguration/client/" + req.body.email))
-          } else {
-            // Found an item, update it
-            ICOSiteConfig.update({
-              siteName: req.body.site_name,
-              siteLogo: imgurl,
-              contactMail: req.body.contact_mail,
-              address: req.body.address,
-              city: req.body.city,
-              provience: req.body.provience,
-              country: req.body.country,
-              contactNo: req.body.contact_no,
-              facebookUrl: req.body.facebook_url,
-              twitterUrl: req.body.twitter_url,
-              linkedInUrl: req.body.linkedin_url,
-              websiteUrl: req.body.website_url,
-              ethAddress: req.body.eth_address,
-              btcAddress: req.body.btc_address,
-            }, {
-                where: {
-                  "clientEmail": req.body.email
-                }
-              })
-              .then(res.redirect("/siteConfiguration/client/" + req.body.email));
-          }
+            'emailid': req.user.emailid
+          },
+          include: ['projectConfigurations'],
         })
+        await ProjectConfiguration.update(
+          {
+            siteName: req.body.site_name,
+            coinName: req.body.coin_name,
+            softCap: req.body.soft_cap,
+            hardCap: req.body.hard_cap,
+            startDate: req.body.start_date,
+            endDate: req.body.end_date,
+            homeURL: req.body.website_url,
+          },
+          { where: { client_id: projectdata.projectConfigurations[0].dataValues.client_id } }).then(updatedata => {
+            if (!updatedata)
+              console.log("Project update failed !");
+            console.log("Project updated successfully!");
+            req.flash('contractMessage', 'Contract mined successfully!');
+            res.redirect("/icoDashboardSetup/project/" +req.body.coin_name)
+          })
       })
   },
+
+
+
   //user login
   userLogin: function (req, res) {
     res.render("userLogin.ejs");
@@ -125,7 +106,7 @@ module.exports = {
               expiresIn: configAuth.jwtAuthKey.tokenLife
             });
           //Send back the token to the user
-          res.cookie('token',token, {expire: 360000 + Date.now()});
+          res.cookie('token', token, { expire: 360000 + Date.now() });
           return res.json({
             token
           });
@@ -156,7 +137,7 @@ module.exports = {
               expiresIn: configAuth.jwtAuthKey.tokenLife
             });
           //Send back the token to the user
-          res.cookie('token',token, {expire: 1800000 + Date.now()});
+          res.cookie('token', token, { expire: 1800000 + Date.now() });
           return res.json({
             token
           });

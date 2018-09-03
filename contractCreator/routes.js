@@ -1,9 +1,9 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
-var Client = db.Client;
+var client = db.client;
 
 
-module.exports = function(app) {
+module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, hasPackage1, impl.getCustomContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
@@ -24,22 +24,17 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
-
-
-  Client.findAll({
-    include: [ 'ClientPackages'],
-  }) 
-  
-  .then(res =>{
-    console.log(res[0].ClientPackages);
+  client.find({
+    where: {
+      'emailid': req.user.emailid
+    }
+  }).then(result => {
+    console.log(result.dataValues,"hello" );
+    if (result.dataValues.package_id == 1 || result.dataValues.package_id == 2 || result.dataValues.package_id == 3) {
+      return next();
+    } else {
+      req.flash('package_flash', 'You need to buy Package 1');
+      res.redirect('/profile');
+    }
   })
-
-
-
-  if (req.user.package1 == true) {
-    return next();
-  } else {
-    req.flash('package_flash', 'You need to buy Package 1');
-    res.redirect('/profile');
-  }
 }

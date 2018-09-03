@@ -49,6 +49,36 @@ module.exports = (sequelize, DataTypes) => {
     kyc_verified:
     {
       type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    },
+    kycDocName1:
+    {
+      type:DataTypes.STRING,
+      defaultValue:true,
+    }, 
+    kycDocUrl1:
+    {
+      type:DataTypes.STRING,
+      defaultValue:true,
+    },
+    kycDocName2:
+    {
+      type:DataTypes.STRING,
+      defaultValue:true,
+    }, 
+    kycDocUrl2:
+    {
+      type:DataTypes.STRING,
+      defaultValue:true,
+    },
+    kycDocName3:
+    {
+      type:DataTypes.STRING,
+      defaultValue:true,
+    }, 
+    kycDocUrl3:
+    {
+      type:DataTypes.STRING,
       defaultValue:true,
     },
     createdAt: {
