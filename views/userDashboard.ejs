@@ -397,16 +397,15 @@
         });
         var eth_usd;
         var btc_usd;
-        var jcash_usd;
+        var jcash_usd = <%= projectConfiguration.usdConversionRate %> ;
         var CAP;
         var Bonus;
         var eth_price = $('#ETH_second_currency_price').val();
         var btc_price = $('#BTC_second_currency_price').val();
         function get_usd_price()
         {
-            console.log('er');
             $.ajax({
-                url:'https://www.whatshalal.io/ajax/get_usd_price',
+                url:'/user/getUSDPrice',
                 type:'get',
                 success:function(data)
                 {
@@ -415,7 +414,6 @@
                     console.log(result);
                     eth_usd = result.ETH;
                     btc_usd = result.BTC;
-                    jcash_usd = result.JCASH;
                     CAP = result.CAP;
                     Bonus = result.Bonus;
                     minETH = result.minETH;
