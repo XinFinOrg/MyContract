@@ -1,10 +1,12 @@
 const impl = require("./impl");
 var path = require('path');
 var db = require('../database/models/index');
-var Client = db.Client;
+var client = db.client;
+var ProjectConfiguration = db.projectConfiguration;
 
 
-module.exports = function(app, express) {
+
+module.exports = function (app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
   app.get('/deployer', hasPackage2, impl.getDeployer);
   app.get('/getBytecode', impl.getBytecode);
@@ -27,17 +29,16 @@ function isLoggedIn(req, res, next) {
 // route middleware to check package 2
 function hasPackage2(req, res, next) {
 
-  Client.findAll({
-    include: ['ClientPackages'],
-  }).then(res => {
-    console.log(res[0].ClientPackages);
+  client.find({
+    where: {
+      'emailid': req.user.emailid
+    },
+  }).then(result => {
+    if (result.dataValues.package_id == 2  || result.dataValues.package_id == 3 ) {
+      return next();
+    } else {
+      req.flash('package_flash', 'You need to buy Package 2');
+      res.redirect('/profile');
+    }
   })
-
-
-  if (req.user.package2 == true) {
-    return next();
-  } else {
-    req.flash('package_flash', 'You need to buy Package 2');
-    res.redirect('/profile');
-  }
 }

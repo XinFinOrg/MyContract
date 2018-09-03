@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    uniqueId: {
+    uniqueId:
+    {
       allowNull: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
@@ -47,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    endDate: {
+    endDate:
+    {
       type: DataTypes.DATE,
       allowNull: true,
     },
@@ -59,8 +61,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-
-
+    contactEmail: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    contractAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    contractHash: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     createdAt: {
       allowNull: true,
       type: DataTypes.DATE,
@@ -72,32 +84,22 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     },
   }, {});
-  projectConfiguration.associate = function(models) {
+  projectConfiguration.associate = function (models) {
     // associations can be defined here
 
     //currency define
-    projectConfiguration.hasOne(models.currency, {
-      foreignKey: 'project_id',
-      allowNull: true,
-    });
+    projectConfiguration.hasOne(models.currency,
+      {
+        foreignKey: 'project_id',
+        allowNull: true,
+      });
 
-    projectConfiguration.belongsToMany(models.user, {
-      foreignkey: 'projectId',
-      allowNull: false,
-      through: 'UserProject',
-      onDelete: 'CASCADE',
-    });
-
-    projectConfiguration.hasMany(models.userCurrencyAddress, {
-      foreignKey: 'project_id',
-      onDelete: 'CASCADE',
-    });
-
-    projectConfiguration.hasMany(models.icotransactions, {
-      foreignKey: 'project_id',
-      allowNull: true,
-      onDelete: 'CASCADE'
-    });
+    projectConfiguration.hasMany(models.user,
+      {
+        foreignkey: 'project_id',
+        allowNull: false,
+        onDelete: 'CASCADE'
+      })
   };
   return projectConfiguration;
 };

@@ -1,46 +1,45 @@
 const fs = require("fs");
-const mongoose = require("mongoose");
 const path = require("path");
 const nodemailerAuth = require("../config/auth").nodemailerAuth;
-const solc = require("solc");
-var User = require('../userlogin/models');
+// var User = require('../userlogin/models');
 var coin, templateCoin, mintableContract, burnableContract, releaseableContract, upgradeableContract;
 var filereaderservice = require('../filereader/impl');
-var result, bytecode;
-var Client = require('../database/models/index').Client;
-
+var result;
+var db = require('../database/models/index');
+var ProjectConfiguration = db.projectConfiguration;
+var client = db.client;
 
 templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
 
 fs.readFile(path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
-  function(err, data) {
+  function (err, data) {
     if (err) {
       return console.log(err);
     }
     releaseableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "upgrade.sol"), "utf8",
-  function(err, data) {
+  function (err, data) {
     if (err) {
       return console.log(err);
     }
     upgradeableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "mintable.sol"), "utf8",
-  function(err, data) {
+  function (err, data) {
     if (err) {
       return console.log(err);
     }
     mintableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8",
-  function(err, data) {
+  function (err, data) {
     if (err) {
       return console.log(err);
     }
     burnableContract = data;
   });
-fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", function(err, data) {
+fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", function (err, data) {
   if (err) {
     return console.log(err);
   }
@@ -50,19 +49,19 @@ fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", functi
 var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
-  getCustomContractForm: function(req, res) {
+  getCustomContractForm: function (req, res) {
     res.render('customContract');
   },
 
-  createContract: async function(req, res) {
+  createContract: async function (req, res) {
     console.log("Template data is ", templateCoin);
-    if (!fs.existsSync(__dirname + "/contractDirectory")){
+    if (!fs.existsSync(__dirname + "/contractDirectory")) {
       fs.mkdirSync(__dirname + "/contractDirectory");
     }
-    var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
+    var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.emailid);
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
-  }
+    }
 
 
     var mapObj = {
@@ -75,7 +74,7 @@ module.exports = {
     };
     result = coin.replace(
       /tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken/gi,
-      function(matched) {
+      function (matched) {
         return mapObj[matched];
       }
     );
@@ -96,39 +95,34 @@ module.exports = {
 
     fs.writeFile(path.resolve(userDir + "/" + req.body.token_name + ".sol"), result, {
       flag: 'w'
-    }, function(err) {
+    }, function (err) {
       if (err)
         return console.log(err);
     });
 
-    nodemailerservice.sendContractEmail(req.user.email, result);
-    // byteCode = solc.compile(result.toString(), 1).contracts[':Coin'];
-    // //file read for contract bytecode
-    // fs.writeFile(path.resolve(userDir + "/" + req.body.token_name + ".bytecode"), byteCode.bytecode, {
-    //   flag: 'w'
-    // }, function(err) {
-    //   if (err) return console.log(err);
-    // });
-    // req.session.byteCode = byteCode.bytecode;
+    nodemailerservice.sendContractEmail(req.user.emailid, result);
     req.session.contract = result;
-    req.session.token_name= req.body.token_name;
-    Client.update({"package1":false},{
-      where: {'email':req.user.email}
-    }).then(function(result) {
-      if (!result)
-      res.send("Something wrong when updating packages!");
-
-      console.log("packages updated");
-      res.redirect('/generatedContract');
-  })
+    var clientdata = await client.find({
+      where: {
+        'emailid': req.user.emailid
+      }
+    })
+    var objdata = new Object();
+    objdata.coinName = req.body.token_name;
+    objdata.tokenSupply = req.body.token_supply;
+    objdata.hardCap = req.body.token_sale;
+    var projectData = await ProjectConfiguration.create(objdata)
+    clientdata.addProjectConfiguration(projectData);
+    //packageremoval will be added here
+    console.log("info updated");
+    res.redirect('/generatedContract');
   },
 
-  getGeneratedContract: function(req, res) {
+  getGeneratedContract: function (req, res) {
     // console.log(req.session.contract);
     res.render('deployedContract', {
       user: req.user,
       contract: req.session.contract,
-      byteCode: req.session.byteCode
     });
   }
 }
@@ -287,7 +281,7 @@ async function generateCustomContract(
   };
   result = template.replace(
     /upgradeableToken|releaseableToken|mintableToken|burnableToken|allContracts|tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken|upgradeCon/gi,
-    function(matched) {
+    function (matched) {
       return mapObj[matched];
     }
   );

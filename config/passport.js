@@ -6,9 +6,9 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
 var db = require('../database/models/index');
-var Client = db.client;
+var client = db.client;
 var User = db.user;
-var ClientPackage = db.clientPackage
+var Currency = db.currency;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
@@ -33,20 +33,20 @@ function generateCipher() {
   return cipher = bcrypt.hashSync(((Math.random() * (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
 };
 
-module.exports = function(passport) {
+module.exports = function (passport) {
 
 
   // used to serialize the user for the session
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
 
-    done(null, user.email);
+    done(null, user.emailid);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function(email, done) {
-    Client.find({
+  passport.deserializeUser(function (emailid, done) {
+    client.find({
       where: {
-        'email': email
+        'emailid': emailid
       }
     }).then(client => {
       done(null, client.dataValues);
@@ -55,29 +55,24 @@ module.exports = function(passport) {
 
   //user signup strategy for passport
   passport.use('user-signup', new LocalStrategy({
-      // by default, local strategy uses username and password, we will override with email
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-    function(req, email, password, done) {
-      process.nextTick(function() {
-        // find a user whose email is the same as the forms email
+    // by default, local strategy uses username and password, we will override with emailid
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, email, password, done) {
+      process.nextTick(function () {
+        // find a user whose emailid is the same as the forms emailid
         User.find({
           where: {
-            'email': email
+            'emailid': emailid
           }
         }).then(async user => {
-          var project = await Project.find({
-            where: {
-              'coinName': req.body.coinName
-            }
-          });
-          // check to see if theres already a user with that email
-          if (user && project) {
-              return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          // check to see if theres already a user with that emailid
+          if (user) {
+            return done(null, false, req.flash('signupMessage', 'That emailid is already taken.'));
           } else {
-            // if there is no user with that email
+            // if there is no user with that emailid
             // create the user
             var ethCurrency = await db.currency.findOrCreate({
               where: {
@@ -94,7 +89,7 @@ module.exports = function(passport) {
             var newUser = new Object();
 
             // set the user's local credentials
-            newUser.email = email;
+            newUser.emailid = email;
             newUser.password = generateHash(password);
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
@@ -128,18 +123,17 @@ module.exports = function(passport) {
 
   //local login strategy for passport
   passport.use('user-login', new LocalStrategy({
-      // by default, local strategy uses username and password, we will override with email
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-    async function(req, email, password, done) {
-      // callback with email and password from our form
-      // find a user whose email is the same as the forms email
-
+    // by default, local strategy uses username and password, we will override with emailid
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    async function (req, emailid, password, done) {
+      // callback with emailid and password from our form
+      // find a user whose emailid is the same as the forms emailid
       User.find({
         where: {
-          'email': email
+          'emailid': email
         },
         include: [{
           model: Project,
@@ -177,17 +171,17 @@ module.exports = function(passport) {
 
   //local login strategy for passport
   passport.use('local-login', new LocalStrategy({
-      // by default, local strategy uses username and password, we will override with email
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-    function(req, email, password, done) {
-      // callback with email and password from our form
-      // find a user whose email is the same as the forms email
-      Client.find({
+    // by default, local strategy uses username and password, we will override with emailid
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, email, password, done) {
+      // callback with emailid and password from our form
+      // find a user whose emailid is the same as the forms emailid
+      client.find({
         where: {
-          'email': email
+          'emailid': email
         }
       }).then(client => {
         // if there are any errors, return the error before anything else
@@ -207,49 +201,53 @@ module.exports = function(passport) {
 
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
-      // by default, local strategy uses username and password, we will override with email
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-    function(req, email, password, done) {
-      process.nextTick(function() {
-        // find a user whose email is the same as the forms email
-        Client.find({
+    // by default, local strategy uses username and password, we will override with emailid
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, email, password, done) {
+      process.nextTick(function () {
+        // find a user whose emailid is the same as the forms emailid
+        client.find({
           where: {
-            'email': email
+            'emailid': email
           }
-        }).then(async client => {
-          // check to see if theres already a user with that email
-          if (client) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        }).then(async result => {
+          // check to see if theres already a user with that emailid
+          if (result) {
+            return done(null, false, req.flash('signupMessage', 'That emailid is already taken.'));
           } else {
-            // if there is no user with that email
+            // if there is no user with that emailid
             // create the user
             var newUser = new Object();
 
             // set the user's local credentials
-            newUser.email = email;
+            newUser.emailid = email;
             newUser.password = generateHash(password);
-
+            var currencyname = await db.currency.findOrCreate({
+              where: {
+                'name': "Ethereum"
+              }
+            });
+            console.log(currencyname,"eth");
             var newEthAddress = new Object();
             newEthAddress.cipher = generateCipher();
             var keyStore = generateNewAccount(newEthAddress.cipher);
             newEthAddress.address = "0x" + keyStore.address;
             var createdEthAddress = await Address.create(newEthAddress);
-            var packages = await ClientPackage.create({
-              status: false
-            })
-            Client.create({
-              email: newUser.email,
+            currencyname[0].addUserCurrencyAddress(createdEthAddress);
+            client.create({
+              emailid: newUser.emailid,
               password: newUser.password,
-            }).then(function(result) {
+              isd_code:null,
+              mobile:null,
+            }).then(function (result) {
               console.log(result.dataValues);
               if (!result)
                 console.log("null");
-              result.addClientPackages(packages);
               result.addUserCurrencyAddress(createdEthAddress);
-              return done(null, newUser);
+              return done(null, result.dataValues);
             })
           }
 
@@ -262,38 +260,38 @@ module.exports = function(passport) {
   // passport strategy for google login
   passport.use(new GoogleStrategy({
 
-      clientID: configAuth.googleAuth.clientID,
-      clientSecret: configAuth.googleAuth.clientSecret,
-      callbackURL: configAuth.googleAuth.callbackURL,
+    clientID: configAuth.googleAuth.clientID,
+    clientSecret: configAuth.googleAuth.clientSecret,
+    callbackURL: configAuth.googleAuth.callbackURL,
 
-    },
-    function(token, refreshToken, profile, done) {
+  },
+    function (token, refreshToken, profile, done) {
 
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
-      process.nextTick(function() {
+      process.nextTick(function () {
         var newUser = new Object();
 
         // try to find the user based on their google id
-        Client.find({
+        client.find({
           where: {
-            'email': profile.emails[0].value
+            'emailid': profile.emails[0].value
           }
-        }).then(client => {
-          if (client) {
+        }).then(result => {
+          if (result) {
             newUser.google_id = profile.id;
             // if a user is found, log them in
-            Client.update({
+            client.update({
               "google_id": profile.id
             }, {
-              where: {
-                'email': profile.emails[0].value
-              }
-            }).then(function(result) {
-              if (!result)
-                console.log("null");
-              return done(null, client.dataValues);
-            })
+                where: {
+                  'emailid': profile.emails[0].value
+                }
+              }).then(function (result) {
+                if (!result)
+                  console.log("null");
+                return done(null, result.dataValues);
+              })
 
           } else {
             // if the user isnt in our database, create a new user
@@ -301,22 +299,22 @@ module.exports = function(passport) {
             // set all of the relevant information
             newUser.google_id = profile.id;
             newUser.name = profile.displayName;
-            newUser.email = profile.emails[0].value; // pull the first email
+            newUser.emailid = profile.emails[0].value; // pull the first emailid
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = "0x" + keyStore.address;
             console.log(keyStore);
 
             // save the user
-            Client.sync({
+            client.sync({
               force: false
             }).then(() => {
               // Table created
-              return Client.create(newUser);
-            }).then(function(result) {
+              return client.create(newUser);
+            }).then(function (result) {
               if (!result)
                 console.log("null");
-              return done(null, newUser);
+              return done(null, result.dataValues);
             })
           }
         });
@@ -326,57 +324,57 @@ module.exports = function(passport) {
 
   //passport strategy for github login
   passport.use(new GitHubStrategy({
-      clientID: configAuth.githubAuth.clientID,
-      clientSecret: configAuth.githubAuth.clientSecret,
-      callbackURL: configAuth.githubAuth.callbackURL,
-      scope: 'user:email'
-    },
-    function(token, refreshToken, profile, done) {
+    clientID: configAuth.githubAuth.clientID,
+    clientSecret: configAuth.githubAuth.clientSecret,
+    callbackURL: configAuth.githubAuth.callbackURL,
+    scope: 'user:email'
+  },
+    function (token, refreshToken, profile, done) {
       // console.log(" in github 1.1",profile);
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
-      process.nextTick(function() {
+      process.nextTick(function () {
         // try to find the user based on their google id
-        Client.find({
+        client.find({
           where: {
-            'email': profile.emails[0].value
+            'emailid': profile.emails[0].value
           }
-        }).then(client => {
+        }).then(result => {
           var newUser = new Object();
           newUser.github_id = profile.id;
 
-          if (client) {
-            Client.update({
+          if (result) {
+            client.update({
               "github_id": profile.id
             }, {
-              where: {
-                'email': profile.emails[0].value
-              }
-            }).then(function(result) {
-              if (!result)
-                console.log("null");
-              return done(null, client);
-            })
+                where: {
+                  'emailid': profile.emails[0].value
+                }
+              }).then(function (res) {
+                if (!res)
+                  console.log("null");
+                return done(null, result.dataValues);
+              })
           } else {
             // if the user isnt in our database, create a new user
             // set all of the relevant information
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;
-            newUser.email = profile.emails[0].value; // pull the first email
+            newUser.emailid = profile.emails[0].value; // pull the first emailid
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = "0x" + keyStore.address;
 
             // save the user
-            Client.sync({
+            client.sync({
               force: false
             }).then(() => {
               // Table created
-              return Client.create(newUser);
-            }).then(function(result) {
+              return client.create(newUser);
+            }).then(function (result) {
               if (!result)
                 console.log("null");
-              return done(null, newUser.dataValues);
+              return done(null, result.dataValues);
             })
           }
         });
