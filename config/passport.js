@@ -39,14 +39,14 @@ module.exports = function (passport) {
   // used to serialize the user for the session
   passport.serializeUser(function (user, done) {
 
-    done(null, user.emailid);
+    done(null, user.email);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function (emailid, done) {
+  passport.deserializeUser(function (email, done) {
     client.find({
       where: {
-        'emailid': emailid
+        'email': email
       }
     }).then(client => {
       done(null, client.dataValues);
@@ -55,24 +55,24 @@ module.exports = function (passport) {
 
   //user signup strategy for passport
   passport.use('user-signup', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with emailid
+    // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
       process.nextTick(function () {
-        // find a user whose emailid is the same as the forms emailid
+        // find a user whose email is the same as the forms email
         User.find({
           where: {
-            'emailid': emailid
+            'email': email
           }
         }).then(async user => {
-          // check to see if theres already a user with that emailid
+          // check to see if theres already a user with that email
           if (user) {
-            return done(null, false, req.flash('signupMessage', 'That emailid is already taken.'));
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
-            // if there is no user with that emailid
+            // if there is no user with that email
             // create the user
             var ethCurrency = await db.currency.findOrCreate({
               where: {
@@ -89,7 +89,7 @@ module.exports = function (passport) {
             var newUser = new Object();
 
             // set the user's local credentials
-            newUser.emailid = email;
+            newUser.email = email;
             newUser.password = generateHash(password);
             newUser.firstName = req.body.first_name;
             newUser.lastName = req.body.last_name;
@@ -105,7 +105,7 @@ module.exports = function (passport) {
             //Find project details and map user
             var project = await Project.findOrCreate({
               where: {
-                'coinName': req.body.coinName
+                'coinName': "NMC"
               }
             });
             console.log(project);
@@ -123,17 +123,17 @@ module.exports = function (passport) {
 
   //local login strategy for passport
   passport.use('user-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with emailid
+    // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
-    async function (req, emailid, password, done) {
-      // callback with emailid and password from our form
-      // find a user whose emailid is the same as the forms emailid
+    async function (req, email, password, done) {
+      // callback with email and password from our form
+      // find a user whose email is the same as the forms email
       User.find({
         where: {
-          'emailid': email
+          'email': email
         },
         include: [{
           model: Project,
@@ -171,17 +171,17 @@ module.exports = function (passport) {
 
   //local login strategy for passport
   passport.use('local-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with emailid
+    // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
-      // callback with emailid and password from our form
-      // find a user whose emailid is the same as the forms emailid
+      // callback with email and password from our form
+      // find a user whose email is the same as the forms email
       client.find({
         where: {
-          'emailid': email
+          'email': email
         }
       }).then(client => {
         // if there are any errors, return the error before anything else
@@ -201,29 +201,29 @@ module.exports = function (passport) {
 
   //local signup strategy for passport
   passport.use('local-signup', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with emailid
+    // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
       process.nextTick(function () {
-        // find a user whose emailid is the same as the forms emailid
+        // find a user whose email is the same as the forms email
         client.find({
           where: {
-            'emailid': email
+            'email': email
           }
         }).then(async result => {
-          // check to see if theres already a user with that emailid
+          // check to see if theres already a user with that email
           if (result) {
-            return done(null, false, req.flash('signupMessage', 'That emailid is already taken.'));
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
-            // if there is no user with that emailid
+            // if there is no user with that email
             // create the user
             var newUser = new Object();
 
             // set the user's local credentials
-            newUser.emailid = email;
+            newUser.email = email;
             newUser.password = generateHash(password);
             var currencyname = await db.currency.findOrCreate({
               where: {
@@ -238,7 +238,7 @@ module.exports = function (passport) {
             var createdEthAddress = await Address.create(newEthAddress);
             currencyname[0].addUserCurrencyAddress(createdEthAddress);
             client.create({
-              emailid: newUser.emailid,
+              email: newUser.email,
               password: newUser.password,
               isd_code:null,
               mobile:null,
@@ -275,7 +275,7 @@ module.exports = function (passport) {
         // try to find the user based on their google id
         client.find({
           where: {
-            'emailid': profile.emails[0].value
+            'email': profile.emails[0].value
           }
         }).then(result => {
           if (result) {
@@ -285,7 +285,7 @@ module.exports = function (passport) {
               "google_id": profile.id
             }, {
                 where: {
-                  'emailid': profile.emails[0].value
+                  'email': profile.emails[0].value
                 }
               }).then(function (result) {
                 if (!result)
@@ -299,7 +299,7 @@ module.exports = function (passport) {
             // set all of the relevant information
             newUser.google_id = profile.id;
             newUser.name = profile.displayName;
-            newUser.emailid = profile.emails[0].value; // pull the first emailid
+            newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = "0x" + keyStore.address;
@@ -337,7 +337,7 @@ module.exports = function (passport) {
         // try to find the user based on their google id
         client.find({
           where: {
-            'emailid': profile.emails[0].value
+            'email': profile.emails[0].value
           }
         }).then(result => {
           var newUser = new Object();
@@ -348,7 +348,7 @@ module.exports = function (passport) {
               "github_id": profile.id
             }, {
                 where: {
-                  'emailid': profile.emails[0].value
+                  'email': profile.emails[0].value
                 }
               }).then(function (res) {
                 if (!res)
@@ -360,7 +360,7 @@ module.exports = function (passport) {
             // set all of the relevant information
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;
-            newUser.emailid = profile.emails[0].value; // pull the first emailid
+            newUser.email = profile.emails[0].value; // pull the first email
             newUser.cipher = generateCipher();
             var keyStore = generateNewAccount(newUser.cipher);
             newUser.ethereumAccount = "0x" + keyStore.address;

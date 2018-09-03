@@ -34,7 +34,7 @@ module.exports = {
     var projectarray=[];
     client.findAll({
       where: {
-        'emailid': req.user.emailid,
+        'email': req.user.email,
       },
       include: [{
         model: ProjectConfiguration,

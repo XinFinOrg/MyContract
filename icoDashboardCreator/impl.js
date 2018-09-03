@@ -26,7 +26,7 @@ module.exports = {
   getSiteConfiguration: function (req, res) {
     client.findAll({
       where: {
-        'emailid': req.user.emailid,
+        'email': req.user.email,
       },
       include: [{
         model: ProjectConfiguration,
@@ -48,7 +48,7 @@ module.exports = {
       .then(async imgurl => {
         var projectdata = await client.find({
           where: {
-            'emailid': req.user.emailid
+            'email': req.user.email
           },
           include: ['projectConfigurations'],
         })

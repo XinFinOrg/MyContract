@@ -58,7 +58,7 @@ module.exports = {
     if (!fs.existsSync(__dirname + "/contractDirectory")) {
       fs.mkdirSync(__dirname + "/contractDirectory");
     }
-    var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.emailid);
+    var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
     }
@@ -100,11 +100,11 @@ module.exports = {
         return console.log(err);
     });
 
-    nodemailerservice.sendContractEmail(req.user.emailid, result);
+    nodemailerservice.sendContractEmail(req.user.email, result);
     req.session.contract = result;
     var clientdata = await client.find({
       where: {
-        'emailid': req.user.emailid
+        'email': req.user.email
       }
     })
     var objdata = new Object();

@@ -14,18 +14,18 @@ module.exports = {
   getBytecode: async function (req, res) {
     var projectdata = await client.find({
       where: {
-        'emailid': req.user.emailid
+        'email': req.user.email
       },
       include: ['projectConfigurations'],
     })
-    fs.readFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory", req.user.emailid + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".SOL"), "utf8",
+    fs.readFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory", req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".SOL"), "utf8",
       function (err, doc) {
         if (err) {
           return console.log(err);
         }
         byteCode = solc.compile(doc.toString(), 1).contracts[':Coin'];
         //file read for contract bytecode
-        fs.writeFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory/" + req.user.emailid + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".bytecode"), byteCode.bytecode, {
+        fs.writeFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory/" + req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".bytecode"), byteCode.bytecode, {
           flag: 'w'
         }, function (err) {
           if (err) return console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
   saveDeploymentData: async function (req, res) {
     var projectdata = await client.find({
       where: {
-        'emailid': req.user.emailid
+        'email': req.user.email
       },
       include: ['projectConfigurations'],
     })

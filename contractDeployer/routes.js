@@ -31,7 +31,7 @@ function hasPackage2(req, res, next) {
 
   client.find({
     where: {
-      'emailid': req.user.emailid
+      'email': req.user.email
     },
   }).then(result => {
     if (result.dataValues.package_id == 2  || result.dataValues.package_id == 3 ) {

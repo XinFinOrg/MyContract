@@ -100,6 +100,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         onDelete: 'CASCADE'
       })
+      projectConfiguration.hasMany(models.userCurrencyAddress, {
+        foreignKey: 'project_id',
+        onDelete: 'CASCADE',
+      });
+  
+      projectConfiguration.hasMany(models.icotransactions, {
+        foreignKey: 'project_id',
+        allowNull: true,
+        onDelete: 'CASCADE'
+      });
   };
   return projectConfiguration;
 };

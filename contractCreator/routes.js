@@ -26,7 +26,7 @@ function isLoggedIn(req, res, next) {
 function hasPackage1(req, res, next) {
   client.find({
     where: {
-      'emailid': req.user.emailid
+      'email': req.user.email
     }
   }).then(result => {
     console.log(result.dataValues,"hello" );

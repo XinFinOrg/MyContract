@@ -45,7 +45,7 @@ function isLoggedIn(req, res, next) {
 function hasPackage3(req, res, next) {
   client.find({
     where: {
-      'emailid': req.user.emailid
+      'email': req.user.email
     }
   }).then(result => {
     if (result.dataValues.package_id == 3) {
