@@ -127,7 +127,7 @@ module.exports = {
           //Send back the token to the user
           res.cookie('token',token, {expire: 360000 + Date.now()});
           return res.json({
-            token
+            'token': "success"
           });
         });
       } catch (error) {
@@ -158,7 +158,7 @@ module.exports = {
           //Send back the token to the user
           res.cookie('token',token, {expire: 1800000 + Date.now()});
           return res.json({
-            token
+            "token": "success"
           });
         });
       } catch (error) {

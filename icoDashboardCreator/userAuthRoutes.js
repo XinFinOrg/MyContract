@@ -15,6 +15,7 @@ router.get('/logout', isAuthenticated, impl.logout);
 router.get('/dashboard', isAuthenticated, impl.getDashboard);
 router.get('/contact_us', isAuthenticated, impl.getContactPage);
 router.get('/profile', isAuthenticated, impl.getProfileEditPage);
+router.get('/getUSDPrice', isAuthenticated, impl.getUSDPrice);
 
 
 function isAuthenticated(req, res, next)
