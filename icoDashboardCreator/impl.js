@@ -55,6 +55,7 @@ module.exports = {
         await ProjectConfiguration.update(
           {
             siteName: req.body.site_name,
+            siteLogo: imgurl,
             coinName: req.body.coin_name,
             softCap: req.body.soft_cap,
             hardCap: req.body.hard_cap,
@@ -66,7 +67,6 @@ module.exports = {
             if (!updatedata)
               console.log("Project update failed !");
             console.log("Project updated successfully!");
-            req.flash('contractMessage', 'Contract mined successfully!');
             res.redirect("/icoDashboardSetup/project/" +req.body.coin_name)
           })
       })

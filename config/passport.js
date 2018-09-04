@@ -209,7 +209,6 @@ module.exports = function(passport) {
                 'name': "Ethereum"
               }
             });
-            console.log(currencyname, "eth");
             var newEthAddress = new Object();
             newEthAddress.cipher = generateCipher();
             var keyStore = generateNewAccount(newEthAddress.cipher);
@@ -222,7 +221,6 @@ module.exports = function(passport) {
               isd_code: null,
               mobile: null,
             }).then(function(result) {
-              console.log(result.dataValues);
               if (!result)
                 console.log("null");
               result.addUserCurrencyAddress(createdEthAddress);
