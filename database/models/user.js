@@ -48,9 +48,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    kyc_verified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    kyc_verified:
+    {
+      type:DataTypes.ENUM,
+      values: ['notInitiated','active', 'pending', 'rejected'],
+      defaultValue:"notInitiated",
     },
     kycDocName1:
     {

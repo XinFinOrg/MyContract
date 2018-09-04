@@ -2,6 +2,8 @@ var passport = require('passport');
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
 
@@ -82,11 +84,26 @@ module.exports = {
   },
   KYCpagePending: function (req,res) {
     res.render('pendingAdminKYC.ejs', {
+      user: req.user,
     })
   },
   KYCdocUpload: function (req, res) {
     console.log("req.data",req.body);
-    console.log("req.data",req.files);
+    client.update({
+      "name":req.body.first_name+" "+req.body.last_name,
+      "isd_code":req.body.ISD_code,
+      "mobile":req.body.number,
+      'kycDoc1': fs.readFileSync(req.files[0].path),
+      'kycDoc2': fs.readFileSync(req.files[1].path),
+      'kycDoc3': fs.readFileSync(req.files[2].path),
+      "kyc_verified":"pending"
+    }, {
+      where: {
+        'email': req.user.email
+      }
+    }).then(() => {
+      res.redirect('/KYCpage/pending');
+    });
   },
 
 }

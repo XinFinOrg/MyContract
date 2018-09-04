@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     mobile:
     {
-      type:DataTypes.INTEGER,
+      type:DataTypes.NUMERIC,
       allowNull:true,
     },
     status:
@@ -56,25 +56,25 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.STRING,
     },
-    kycDocUrl1:
+    kycDoc1:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.BLOB
     },
     kycDocName2:
     {
       type:DataTypes.STRING,
     },
-    kycDocUrl2:
+    kycDoc2:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.BLOB
     },
     kycDocName3:
     {
       type:DataTypes.STRING,
     },
-    kycDocUrl3:
+    kycDoc3:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.BLOB
     },
     createdAt: {
       allowNull: false,

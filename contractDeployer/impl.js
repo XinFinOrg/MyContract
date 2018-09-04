@@ -51,7 +51,7 @@ module.exports = {
         req.session.contractAddress = req.body.contractAddress;
         req.session.contractTxHash = req.body.contractTxHash;
         console.log("Project updated successfully!");
-        req.flash('contractMessage', 'Contract mined successfully!');
+        req.flash('contract_flash', 'Contract mined successfully!');
         res.redirect('/generatedContract');
 
 

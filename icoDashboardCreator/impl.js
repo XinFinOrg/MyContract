@@ -6,15 +6,17 @@ var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
+var fs = require('fs');
+
 
 
 module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
-    console.log(req.params,"project")
+    console.log(req.params, "project")
     res.render('siteConfiguration', {
       user: req.user,
-      projectName:req.params.projectName
+      projectName: req.params.projectName
     });
   },
 
@@ -30,46 +32,74 @@ module.exports = {
       },
       include: [{
         model: ProjectConfiguration,
-        where: {coinName:req.params.projectName }
+        where: { coinName: req.params.projectName }
       }],
     }).then(values => {
       if (!values) {
         res.send({ message: "null!" });
       } else {
+        var dataobj = new Object();
+        dataobj= values[0].projectConfigurations[0].dataValues;
+        dataobj.siteLogo='data:image/bmp;base64,'+Buffer.from( values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
         res.send({
-          data: values[0].projectConfigurations[0].dataValues,
+          data: dataobj,
           message: "updated!"
         })
       }
     });
   },
-  updateSiteConfiguration: function (req, res) {
-    ImageDataURI.encodeFromFile("kycdump/" + req.file.originalname)
-      .then(async imgurl => {
-        var projectdata = await client.find({
-          where: {
-            'email': req.user.email
-          },
-          include: ['projectConfigurations'],
-        })
-        await ProjectConfiguration.update(
-          {
-            siteName: req.body.site_name,
-            siteLogo: imgurl,
-            coinName: req.body.coin_name,
-            softCap: req.body.soft_cap,
-            hardCap: req.body.hard_cap,
-            startDate: req.body.start_date,
-            endDate: req.body.end_date,
-            homeURL: req.body.website_url,
-          },
-          { where: { client_id: projectdata.projectConfigurations[0].dataValues.client_id } }).then(updatedata => {
-            if (!updatedata)
-              console.log("Project update failed !");
-            console.log("Project updated successfully!");
-            res.redirect("/icoDashboardSetup/project/" +req.body.coin_name)
+  updateSiteConfiguration: async function (req, res) {
+    // ImageDataURI.encodeFromFile("kycdump/" + req.file.originalname)
+    //   .then(async imgurl => {
+    //     var projectdata = await client.find({
+    //       where: {
+    //         'email': req.user.email
+    //       },
+    //       include: ['projectConfigurations'],
+    //     })
+    //     await ProjectConfiguration.update(
+    //       {
+    //         siteName: req.body.site_name,
+    //         siteLogo: imgurl,
+    //         coinName: req.body.coin_name,
+    //         softCap: req.body.soft_cap,
+    //         hardCap: req.body.hard_cap,
+    //         startDate: req.body.start_date,
+    //         endDate: req.body.end_date,
+    //         homeURL: req.body.website_url,
+    //       },
+    //       { where: { client_id: projectdata.projectConfigurations[0].dataValues.client_id } }).then(updatedata => {
+    //         if (!updatedata)
+    //           console.log("Project update failed !");
+    //         console.log("Project updated successfully!");
+    //         res.redirect("/icoDashboardSetup/project/" +req.body.coin_name)
+    //       })
+    //   })
+    var projectdata = await client.find({
+            where: {
+              'email': req.user.email
+            },
+            include: ['projectConfigurations'],
           })
-      })
+    ProjectConfiguration.update({
+      'siteLogo': fs.readFileSync(req.files[0].path),
+      "siteName": req.body.site_name,
+      "coinName": req.body.coin_name,
+      "softCap": req.body.soft_cap,
+      "hardCap": req.body.hard_cap,
+      "startDate": req.body.start_date,
+      "endDate": req.body.end_date,
+      "homeURL": req.body.website_url,
+    }, {
+        where: {
+          "client_id": projectdata.projectConfigurations[0].dataValues.client_id
+        }
+      }).then(updatedata => {
+        if (!updatedata)
+          console.log("Project update failed !");
+        console.log("Project updated successfully!");
+        res.redirect("/icoDashboardSetup/project/" + req.body.coin_name)
+      });
   },
 
 

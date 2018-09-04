@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     siteLogo: {
-      type: DataTypes.STRING,
+      type: DataTypes.BLOB,
       allowNull: true,
     },
     coinName: {

@@ -3,25 +3,11 @@ const DataURI = require('datauri').promise;
 var db = require('../database/models/index');
 var client = db.client;
 
-
-const multer = require('multer')
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'kycdump/')
-  },
-  filename: function (req, file, cb) {
-    console.log("files",file,req.body)
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({storage: storage})
-
-
 module.exports = function (app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
   // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
-  app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn,upload.single('site_logo'), impl.updateSiteConfiguration)
+  app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
   app.get('/userSignup', impl.getUserSignup);
   app.get('/userLogin', impl.getUserLogin);
   app.post('/userSignup', impl.postUserSignup);
