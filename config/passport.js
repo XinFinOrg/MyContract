@@ -12,6 +12,7 @@ var Currency = db.currency;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
+let Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 var keythereum = require("keythereum");
 
@@ -106,6 +107,11 @@ module.exports = function(passport) {
             });
             project[0].addUserCurrencyAddress(createdEthAddress);
             project[0].addUser(createdUser);
+
+            promises.push(ImageDataURI.encodeFromFile(req.files[i].path));
+            Promise.all(promises).then((results)=>{
+              console.log(results.length);
+            });
             return done(null, createdUser.dataValues);
 
           }

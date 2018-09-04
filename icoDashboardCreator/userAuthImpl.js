@@ -1,9 +1,8 @@
 var db = require('../database/models/index');
-var User = db.User;
+var User = db.user;
+var fs = require('fs');
 var configAuth = require('../config/auth');
-const ImageDataURI = require('image-data-uri');
 const Binance = require('node-binance-api');
-let Promise = require('bluebird');
 module.exports = {
 
   getTransactions: (req, res, next) => {
@@ -111,23 +110,16 @@ module.exports = {
   },
 
   uploadKYC: (req, res, next) => {
-    var promises = [];
-    for(var i=0; i<req.files.length; i++){
-      promises.push(createDataURI(req.files[i].path, i));
-    }
-    Promise.all(promises).then((results)=>{
-      console.log(results);
+    User.update({
+      'kycDoc1': fs.readFileSync(req.files[0].path),
+      'kycDoc2': fs.readFileSync(req.files[1].path),
+      'kycDoc3': fs.readFileSync(req.files[2].path)
+    }, {
+      where: {
+        'email': req.user.email
+      }
+    }).then(() => {
+      res.redirect('/user/dashboard');
     });
   }
-
-
-}
-
-function createDataURI(file, counter){
-  ImageDataURI.encodeFromFile(file)
-    .then(imgurl => {
-      console.log(counter);
-      return imgurl;
-    });
-
 }

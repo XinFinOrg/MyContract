@@ -57,30 +57,27 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       defaultValue:true,
     },
-    kycDocUrl1:
+    kycDoc1:
     {
-      type:DataTypes.STRING,
-      defaultValue:true,
+      type:DataTypes.BLOB
     },
     kycDocName2:
     {
       type:DataTypes.STRING,
       defaultValue:true,
     },
-    kycDocUrl2:
+    kycDoc2:
     {
-      type:DataTypes.STRING,
-      defaultValue:true,
+      type:DataTypes.BLOB
     },
     kycDocName3:
     {
       type:DataTypes.STRING,
       defaultValue:true,
     },
-    kycDocUrl3:
+    kycDoc3:
     {
-      type:DataTypes.STRING,
-      defaultValue:true,
+      type:DataTypes.BLOB
     },
     createdAt: {
       allowNull: false,
