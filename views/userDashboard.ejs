@@ -58,15 +58,14 @@
                             <div class="tab-content card-body">
                                 <div class="tab-content clearfix">
                                     <div class="tab-pane active" id="1b">
-                                        <form id="eth_form" action="https://www.whatshalal.io/ico_buy" method="post">
-                                            <input type="hidden" name="_token" value="eCiRd4JtenkKj9je4CXSWkFzyi9AWUQxC84kDDHq">
+                                        <form id="eth_form" action="/user/ico_buy" method="post">
                                             <div class="row field_form">
                                                 <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
                                                     <label>ETH</label>
 
                                                     <input id="second_currency" name="second_currency" value="ETH" style="display: none">
                                                     <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
-                                                    <input id="ETH_second_currency_price"  type="number"  name="second_currency_price"  value="0.2286" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
+                                                    <input id="ETH_second_currency_price"  type="number"  name="second_currency_price"  value="" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
                                                     <div class="timeddss2">
@@ -74,7 +73,7 @@
                                                             <input id="ETH_first_currency_price" name="first_currency_price"  style="display: none">
                                                             <li class="d-flex align-items-center justify-content-between"><%= projectConfiguration.coinName %> TOTAL
 
-                                                                <p id="ejcash_total" >25000.00</p>
+                                                                <p id="ejcash_total" ></p>
                                                             </li>
 
 
@@ -100,8 +99,7 @@
                                     </div>
 
                                     <div class="tab-pane" id="2b">
-                                        <form id="btc_form" action="https://www.whatshalal.io/ico_buy" method="post">
-                                            <input type="hidden" name="_token" value="eCiRd4JtenkKj9je4CXSWkFzyi9AWUQxC84kDDHq">
+                                        <form id="btc_form" action="/user/ico_buy" method="post">
                                             <div class="row field_form">
 
                                                 <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
@@ -109,14 +107,14 @@
                                                     <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
                                                     <label>BTC</label>
 
-                                                    <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="0.016011" onkeyup="convert_price(this.value,'BTC')"  class="form-control input-lg">
+                                                    <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="" onkeyup="convert_price(this.value,'BTC')"  class="form-control input-lg">
                                                 </div>
                                                 <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
                                                     <div class="timeddss2">
                                                         <ul>
                                                             <li class="d-flex align-items-center justify-content-between"><%= projectConfiguration.coinName %> TOTAL
 
-                                                                <p id="bjcash_total" >25000.00</p>
+                                                                <p id="bjcash_total" ></p>
                                                             </li>
 
 

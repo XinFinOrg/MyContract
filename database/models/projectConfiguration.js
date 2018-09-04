@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: true,
     },
+    tokenSold: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0
+    },
     tokenSupply: {
       type: DataTypes.STRING,
       allowNull: true,

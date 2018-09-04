@@ -54,8 +54,10 @@ module.exports = {
         user: req.user
       });
     } else {
+      var projectConfiguration = req.user.projectConfiguration;
       res.render('userContactPage', {
-        user: req.user
+        user: req.user,
+        projectConfiguration: projectConfiguration
       });
     }
   },
@@ -70,6 +72,22 @@ module.exports = {
         user: req.user
       });
     }
+  },
+
+  postProfileEditPage: (req, res, next) => {
+    User.update({
+      'firstName': req.body.first_name,
+      'lastName': req.body.last_name,
+      'country': req.body.country_id
+    }, {
+      where: {
+        'email': req.user.email,
+        'projectConfigurationCoinName': req.user.projectConfiguration.coinName
+      }
+    }).then(() => {
+      res.redirect('/user/dashboard');
+    });
+
   },
 
   logout: (req, res, next) => {
@@ -116,10 +134,17 @@ module.exports = {
       'kycDoc3': fs.readFileSync(req.files[2].path)
     }, {
       where: {
-        'email': req.user.email
+        'email': req.user.email,
+        'projectConfigurationCoinName': req.user.projectConfiguration.coinName
       }
     }).then(() => {
       res.redirect('/user/dashboard');
     });
+  },
+
+  postContactPage: (req, res, next) => {
+    var nodemailerservice = require('../emailer/impl');
+    nodemailerservice.sendEmail(req.body.enquiry_email, req.user.projectConfiguration.contactEmail, "Enquiry", req.body.enquiry_message);
+    res.redirect('/user/dashboard');
   }
 }

@@ -1,3 +1,3 @@
 module.exports = {
-  mongoURI: "mongodb://localhost:27017/autoCoin"
+  'contractEmailSubject': "AutoCoin - Smart Contract generation",
 }

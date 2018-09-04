@@ -14,10 +14,11 @@ router.get('/kyc', isAuthenticated, impl.getKYC);
 router.get('/logout', isAuthenticated, impl.logout);
 router.get('/dashboard', isAuthenticated, impl.getDashboard);
 router.get('/contact_us', isAuthenticated, impl.getContactPage);
+router.post('/contact_us', isAuthenticated, impl.postContactPage);
 router.get('/profile', isAuthenticated, impl.getProfileEditPage);
+router.post('/profile', isAuthenticated, impl.postProfileEditPage);
 router.get('/getUSDPrice', isAuthenticated, impl.getUSDPrice);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
-
 
 function isAuthenticated(req, res, next)
 {

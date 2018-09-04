@@ -1,9 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
-const passportJWT = require("passport-jwt");
-const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('./auth');
 var db = require('../database/models/index');
 var client = db.client;
@@ -81,45 +78,23 @@ module.exports = function(passport) {
                 'name': "Ethereum"
               }
             });
-            var newEthAddress = new Object();
-            newEthAddress.cipher = generateCipher();
-            var keyStore = generateNewAccount(newEthAddress.cipher);
-            newEthAddress.address = "0x" + keyStore.address;
-            newEthAddress.balance = 0;
-            var createdEthAddress = await Address.create(newEthAddress);
-            ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
-            var newUser = new Object();
-
-            // set the user's local credentials
-            newUser.email = email;
-            newUser.password = generateHash(password);
-            newUser.firstName = req.body.first_name;
-            newUser.lastName = req.body.last_name;
-            newUser.country = req.body.country_id;
-            var createdUser = await User.create(newUser);
-            createdUser.addUserCurrencyAddress(createdEthAddress);
-
             //Find project details and map user
             var project = await Project.findOrCreate({
               where: {
                 'coinName': req.body.coinName
               }
             });
-            project[0].addUserCurrencyAddress(createdEthAddress);
-            project[0].addUser(createdUser);
-
-            promises.push(ImageDataURI.encodeFromFile(req.files[i].path));
-            Promise.all(promises).then((results)=>{
-              console.log(results.length);
+            
+            Promise.all([generateEthAddress(), createNewUser(req)]).then(([createdEthAddress, createdUser]) => {
+              ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
+              createdUser.addUserCurrencyAddress(createdEthAddress);
+              project[0].addUserCurrencyAddress(createdEthAddress);
+              project[0].addUser(createdUser);
+              return done(null, createdUser.dataValues);
             });
-            return done(null, createdUser.dataValues);
-
           }
-
         });
-
       });
-
     }));
 
   //local login strategy for passport
@@ -215,11 +190,7 @@ module.exports = function(passport) {
                 'name': "Ethereum"
               }
             });
-            var newEthAddress = new Object();
-            newEthAddress.cipher = generateCipher();
-            var keyStore = generateNewAccount(newEthAddress.cipher);
-            newEthAddress.address = "0x" + keyStore.address;
-            var createdEthAddress = await Address.create(newEthAddress);
+
             currencyname[0].addUserCurrencyAddress(createdEthAddress);
             client.create({
               email: newUser.email,
@@ -364,4 +335,29 @@ module.exports = function(passport) {
       });
     }
   ));
+}
+
+function generateEthAddress() {
+  return new Promise(async function(resolve, reject) {
+    var newEthAddress = new Object();
+    newEthAddress.cipher = generateCipher();
+    var keyStore = generateNewAccount(newEthAddress.cipher);
+    newEthAddress.address = "0x" + keyStore.address;
+    var createdEthAddress = await Address.create(newEthAddress);
+    resolve(createdEthAddress);
+  });
+}
+
+function createNewUser(req) {
+  return new Promise(async function(resolve, reject) {
+    var newUser = new Object();
+    // set the user's local credentials
+    newUser.email = req.body.email;
+    newUser.password = generateHash(req.body.password);
+    newUser.firstName = req.body.first_name;
+    newUser.lastName = req.body.last_name;
+    newUser.country = req.body.country_id;
+    var createdUser = await User.create(newUser);
+    resolve(createdUser)
+  });
 }

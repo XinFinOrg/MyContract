@@ -26,5 +26,22 @@ module.exports = {
         return;
       }
     });
+  },
+
+  sendEmail: function(sendermail, recipientmail, subject, content) {
+    var mailOptions = {
+      from: sendermail,
+      to: recipientmail,
+      subject: subject,
+      text: content
+    };
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+        return;
+      }
+    });
   }
 }
