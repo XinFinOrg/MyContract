@@ -2,6 +2,7 @@ var createError = require('http-errors');
 const express = require('express');
 var path = require('path');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 const logger = require('morgan');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -25,6 +26,20 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null,  __dirname + '/kycDump')
+  },
+  filename: function (req, file, cb) {
+    console.log("files",file,req.body)
+    cb(null, file.originalname)
+  }
+});
+
+app.use(multer({
+  storage: storage
+}).any());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

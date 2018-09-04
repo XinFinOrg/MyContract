@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'projectConfigurationCoinName',
         allowNull: false,
         onDelete: 'CASCADE'
-      })
+      });
       projectConfiguration.hasMany(models.userCurrencyAddress, {
         foreignKey: 'project_id',
         onDelete: 'CASCADE',

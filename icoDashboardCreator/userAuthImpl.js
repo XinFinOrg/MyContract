@@ -1,7 +1,9 @@
 var db = require('../database/models/index');
 var User = db.User;
 var configAuth = require('../config/auth');
+const ImageDataURI = require('image-data-uri');
 const Binance = require('node-binance-api');
+let Promise = require('bluebird');
 module.exports = {
 
   getTransactions: (req, res, next) => {
@@ -106,10 +108,26 @@ module.exports = {
         BTC: ticker.BTCUSDT
       });
     });
-
-
-
   },
 
+  uploadKYC: (req, res, next) => {
+    var promises = [];
+    for(var i=0; i<req.files.length; i++){
+      promises.push(createDataURI(req.files[i].path, i));
+    }
+    Promise.all(promises).then((results)=>{
+      console.log(results);
+    });
+  }
+
+
+}
+
+function createDataURI(file, counter){
+  ImageDataURI.encodeFromFile(file)
+    .then(imgurl => {
+      console.log(counter);
+      return imgurl;
+    });
 
 }

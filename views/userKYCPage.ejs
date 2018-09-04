@@ -48,27 +48,6 @@
                                         <label for="gender" class="error" generated="true"></label>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 <div class="col-md-4">
                                     <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1s">
                                         <select name="country_id" class="form-control" id="country_id" onchange="set_country()">
@@ -429,14 +408,6 @@
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
 <a href="#" class="scrollup btn-default"><i class="fa fa-angle-up"></i></a>
 
-<script type="text/javascript">
-  function goTo(baseurl) {
-    token = window.localStorage.getItem('token');
-    console.log("HERE");
-    window.location.assign(baseurl+token);
-  }
-</script>
-
 <!-- Latest jQuery -->
 <script src="https://www.whatshalal.io/front/assets1/js/jquery-1.12.4.min.js"></script>
 <!-- Latest compiled and minified Bootstrap -->
@@ -548,29 +519,6 @@
         });
 </script><!--selectpicker ends-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
     $.validator.addMethod(
         "regex",
@@ -586,37 +534,37 @@
         return this.optional(element) || (element.files[0].size <= arg)
     }, 'File size must be less than {0}');
 
-    $("#kyc").validate({
-        rules:
-            {
-                first_name: { required: true,minlength:2, maxlength:500, regex:"(?!^ +$)^.+$\"}"},
-                last_name: { required: true,minlength:2, maxlength:500, regex:"(?!^ +$)^.+$\"}"},
-                isd_code:{required:'ISD code is required'},
-                country_id: { required: true},
-                // dob: { required: true},
-                gender:{required:true},
-                // doc_id: { required: true,regex:"(?!^ +$)^.+$"},
-                // phone_no: {required:true, number: true,regex:"^[1-9][0-9]*$"},
-                f_side: {required: true,filesize:3145728},
-                b_side: {required: true,filesize:3145728},
-                h_side: {required: true,filesize:3145728},
-            },
-        messages:
-            {
-                first_name: { required: 'First Name  is required',minlength:'First name should contain atleast two alphabets', maxlength:'First name should not exceed than 500 characters', regex:'Only alphabets allowed'},
-                last_name: { required: 'Last Name  is required',minlength:'Last name should contain atleast two alphabets', maxlength:'First name should not exceed than 500 characters', regex:'Only alphabets allowed'},
-                phone_no: { required:'Phone number is required',number: 'Digit only allowed',regex:'Number not valid should not start with zero'},
-                isd_code:{required:'ISD code is required'},
-                country_id: { required:'Country  is required'},
-                // dob: { required: 'Date of Birth  is required'},
-                gender:{required:'Gender is required'},
-                // doc_id: { required:'Document ID  is required',regex:"Space not Allowed"},
-                f_side: { required: 'Front Side  is required',filesize:"Maximum size is 3mb"},
-                b_side: { required: 'Back Side  is required',filesize:"Maximum size is 3mb"},
-                h_side: { required: 'Selfie with ID is required',filesize:"Maximum size is 3mb"},
-
-            }
-    });
+    // $("#kyc").validate({
+    //     rules:
+    //         {
+    //             first_name: { required: true,minlength:2, maxlength:500, regex:"(?!^ +$)^.+$\"}"},
+    //             last_name: { required: true,minlength:2, maxlength:500, regex:"(?!^ +$)^.+$\"}"},
+    //             isd_code:{required:'ISD code is required'},
+    //             country_id: { required: true},
+    //             // dob: { required: true},
+    //             gender:{required:true},
+    //             // doc_id: { required: true,regex:"(?!^ +$)^.+$"},
+    //             // phone_no: {required:true, number: true,regex:"^[1-9][0-9]*$"},
+    //             f_side: {required: true,filesize:3145728},
+    //             b_side: {required: true,filesize:3145728},
+    //             h_side: {required: true,filesize:3145728},
+    //         },
+    //     messages:
+    //         {
+    //             first_name: { required: 'First Name  is required',minlength:'First name should contain atleast two alphabets', maxlength:'First name should not exceed than 500 characters', regex:'Only alphabets allowed'},
+    //             last_name: { required: 'Last Name  is required',minlength:'Last name should contain atleast two alphabets', maxlength:'First name should not exceed than 500 characters', regex:'Only alphabets allowed'},
+    //             phone_no: { required:'Phone number is required',number: 'Digit only allowed',regex:'Number not valid should not start with zero'},
+    //             isd_code:{required:'ISD code is required'},
+    //             country_id: { required:'Country  is required'},
+    //             // dob: { required: 'Date of Birth  is required'},
+    //             gender:{required:'Gender is required'},
+    //             // doc_id: { required:'Document ID  is required',regex:"Space not Allowed"},
+    //             f_side: { required: 'Front Side  is required',filesize:"Maximum size is 3mb"},
+    //             b_side: { required: 'Back Side  is required',filesize:"Maximum size is 3mb"},
+    //             h_side: { required: 'Selfie with ID is required',filesize:"Maximum size is 3mb"},
+    //
+    //         }
+    // });
 </script>
 <script src="https://www.whatshalal.io/front/assets/js/countrySelect.js"></script>
 <script type="text/javascript">
@@ -627,16 +575,6 @@
         $("#country_selector").countrySelect("selectCountry", code);
     }
 </script>
-
-
-
-
-
-
-
-
-
-
 
 <script>
     function el(id){return document.getElementById(id);} // Get elem by ID
