@@ -11,11 +11,11 @@ module.exports = {
       });
     } else {
       console.log(req.user);
-      var projectConfiguration = req.user.projectConfigurations[0];
+      var projectConfiguration = req.user.projectConfiguration;
       res.render('userTransactionHistory', {
         user: req.user,
         projectConfiguration: projectConfiguration,
-        transactions: projectConfiguration.icotransactions
+        transactions: req.user.icotransactions
       });
     }
   },
@@ -26,11 +26,11 @@ module.exports = {
         user: req.user
       });
     } else {
-      var projectConfiguration = req.user.projectConfigurations[0];
+      var projectConfiguration = req.user.projectConfiguration;
       res.render('userWalletPage', {
         user: req.user,
         projectConfiguration: projectConfiguration,
-        addresses: projectConfiguration.userCurrencyAddresses
+        addresses: req.user.userCurrencyAddresses
       });
     }
   },
@@ -72,7 +72,7 @@ module.exports = {
   },
 
   logout: (req, res, next) => {
-    var projectConfiguration = req.user.projectConfigurations[0];
+    var projectConfiguration = req.user.projectConfiguration;
     console.log(projectConfiguration);
     res.redirect('http://' + projectConfiguration.homeURL);
   },
@@ -83,7 +83,7 @@ module.exports = {
         user: req.user
       });
     } else {
-      var projectConfiguration = req.user.projectConfigurations[0];
+      var projectConfiguration = req.user.projectConfiguration;
       res.render('userDashboard', {
         user: req.user,
         projectConfiguration: projectConfiguration,
@@ -93,26 +93,22 @@ module.exports = {
 
   getUSDPrice: async (req, res, next) => {
     console.log("Getting price");
-    const binance = await Binance().options({
+    const binance = Binance().options({
       APIKEY: configAuth.binanceKey.apiKey,
       APISECRET: configAuth.binanceKey.apiSecret,
       useServerTime: true, // If you get timestamp errors, synchronize to server time at startup
       test: true // If you want to use sandbox mode where orders are simulated
     });
 
-    var btcPrice, ethPrice;
-    binance.prices('BTCUSDT', (error, ticker) => {
-      btcPrice = ticker.BTCUSDT;
-      console.log(btcPrice);
+    binance.prices((error, ticker) => {
+      res.send({
+        ETH: ticker.ETHUSDT,
+        BTC: ticker.BTCUSDT
+      });
     });
-    await binance.prices('ETHUSDT', (error, ticker) => {
-      btcPrice = ticker.ETHUSDT;
-    });
-    console.log(btcPrice);
-    res.send({
-      'ETH': ethPrice,
-      'BTC': btcPrice
-    });
+
+
+
   },
 
 

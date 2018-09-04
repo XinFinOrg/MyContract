@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.STRING,
       defaultValue:true,
-    }, 
+    },
     kycDocUrl1:
     {
       type:DataTypes.STRING,
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.STRING,
       defaultValue:true,
-    }, 
+    },
     kycDocUrl2:
     {
       type:DataTypes.STRING,
@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.STRING,
       defaultValue:true,
-    }, 
+    },
     kycDocUrl3:
     {
       type:DataTypes.STRING,
@@ -109,8 +109,7 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'email'
     });
 
-    user.belongsToMany(models.projectConfiguration, {
-      foreignKey: 'userId',
+    user.belongsTo(models.projectConfiguration, {
       allowNull: false,
       through: 'UserProject'
     });

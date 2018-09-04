@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true,
       type: DataTypes.INTEGER,
     },
     uniqueId:
@@ -19,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     coinName: {
       type: DataTypes.STRING,
+      primaryKey: true,
       allowNull: true,
     },
     tokenSupply: {
@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes) => {
 
     projectConfiguration.hasMany(models.user,
       {
-        foreignkey: 'project_id',
+        foreignKey: 'projectConfigurationCoinName',
         allowNull: false,
         onDelete: 'CASCADE'
       })
@@ -104,7 +104,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'project_id',
         onDelete: 'CASCADE',
       });
-  
+
       projectConfiguration.hasMany(models.icotransactions, {
         foreignKey: 'project_id',
         allowNull: true,
