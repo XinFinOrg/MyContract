@@ -14,17 +14,19 @@ module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
     console.log(req.params, "project")
-    res.render('siteConfiguration', {
+    res.render('icoDashboard', {
       user: req.user,
       projectName: req.params.projectName
     });
   },
 
-  // siteConfiguration: function (req, res) {
-  //   res.render('siteConfiguration', {
-  //     user: req.user
-  //   });
-  // },
+  siteConfiguration: function (req, res) {
+    console.log(req.params, "project")
+    res.render('siteConfiguration', {
+      user: req.user,
+      projectName: req.params.projectName
+    });
+  },
   getSiteConfiguration: function (req, res) {
     client.findAll({
       where: {
@@ -39,8 +41,8 @@ module.exports = {
         res.send({ message: "null!" });
       } else {
         var dataobj = new Object();
-        dataobj= values[0].projectConfigurations[0].dataValues;
-        dataobj.siteLogo='data:image/bmp;base64,'+Buffer.from( values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
+        dataobj = values[0].projectConfigurations[0].dataValues;
+        dataobj.siteLogo = 'data:image/bmp;base64,' + Buffer.from(values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
         res.send({
           data: dataobj,
           message: "updated!"
@@ -49,38 +51,12 @@ module.exports = {
     });
   },
   updateSiteConfiguration: async function (req, res) {
-    // ImageDataURI.encodeFromFile("kycdump/" + req.file.originalname)
-    //   .then(async imgurl => {
-    //     var projectdata = await client.find({
-    //       where: {
-    //         'email': req.user.email
-    //       },
-    //       include: ['projectConfigurations'],
-    //     })
-    //     await ProjectConfiguration.update(
-    //       {
-    //         siteName: req.body.site_name,
-    //         siteLogo: imgurl,
-    //         coinName: req.body.coin_name,
-    //         softCap: req.body.soft_cap,
-    //         hardCap: req.body.hard_cap,
-    //         startDate: req.body.start_date,
-    //         endDate: req.body.end_date,
-    //         homeURL: req.body.website_url,
-    //       },
-    //       { where: { client_id: projectdata.projectConfigurations[0].dataValues.client_id } }).then(updatedata => {
-    //         if (!updatedata)
-    //           console.log("Project update failed !");
-    //         console.log("Project updated successfully!");
-    //         res.redirect("/icoDashboardSetup/project/" +req.body.coin_name)
-    //       })
-    //   })
     var projectdata = await client.find({
-            where: {
-              'email': req.user.email
-            },
-            include: ['projectConfigurations'],
-          })
+      where: {
+        'email': req.user.email
+      },
+      include: ['projectConfigurations'],
+    })
     ProjectConfiguration.update({
       'siteLogo': fs.readFileSync(req.files[0].path),
       "siteName": req.body.site_name,

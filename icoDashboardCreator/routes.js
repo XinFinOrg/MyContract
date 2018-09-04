@@ -5,7 +5,7 @@ var client = db.client;
 
 module.exports = function (app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
-  // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasPackage3, impl.siteConfiguration);
+  app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
   app.get('/userSignup', impl.getUserSignup);
