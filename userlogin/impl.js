@@ -31,7 +31,7 @@ module.exports = {
   }),
 
   getProfile: function (req, res) {
-    var projectarray=[];
+    var projectarray = [];
     client.findAll({
       where: {
         'email': req.user.email,
@@ -41,15 +41,15 @@ module.exports = {
       }],
     }).then(values => {
       values[0].projectConfigurations.forEach(element => {
-        console.log(element,"hello")
+        console.log(element, "hello")
         projectarray.push(element.dataValues.coinName);
       });
-      console.log(projectarray,"prject array")
+      console.log(projectarray, "prject array")
       res.render('profile.ejs', {
         user: req.user, // get the user out of session and pass to template
-        ProjectConfiguration:projectarray,
+        ProjectConfiguration: projectarray,
         message: req.flash('package_flash'),
-        contractMessage:req.flash('contract_flash')
+        contractMessage: req.flash('contract_flash')
       });
     })
   },
@@ -73,7 +73,20 @@ module.exports = {
   githubLoginCallback: passport.authenticate('github', {
     successRedirect: '/profile',
     failureRedirect: '/'
-  })
+  }),
 
+  KYCpage: function (req, res) {
+    res.render('adminKYC.ejs', {
+      user: req.user,
+    })
+  },
+  KYCpagePending: function (req,res) {
+    res.render('pendingAdminKYC.ejs', {
+    })
+  },
+  KYCdocUpload: function (req, res) {
+    console.log("req.data",req.body);
+    console.log("req.data",req.files);
+  },
 
 }

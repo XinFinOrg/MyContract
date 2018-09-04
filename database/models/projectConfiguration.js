@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    siteLogo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     coinName: {
       type: DataTypes.STRING,
       primaryKey: true,

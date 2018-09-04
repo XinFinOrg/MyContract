@@ -1,17 +1,24 @@
 var impl = require('./impl');
-module.exports = function(app) {
+var db = require('../database/models/index');
+var client = db.client;
+module.exports = function (app) {
 
   app.get('/login', impl.getLogin);
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
-  app.post('/signup',impl.postSignup);
-  app.get('/profile', isLoggedIn, impl.getProfile);
+  app.post('/signup', impl.postSignup);
+  app.get('/profile', isLoggedIn, hasVerified, impl.getProfile);
   app.get("/auth/google", impl.googleLogin);
   app.get("/auth/google/callback", impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
 
+
+  //kyc
+  app.get('/KYCpage', impl.KYCpage);
+  app.get('/KYCpage/pending', impl.KYCpagePending);
+  app.post('/KYCpage/KYCdocUpload',impl.KYCdocUpload);
 };
 
 // route middleware to make sure a user is logged in
@@ -25,3 +32,28 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 
 }
+
+function hasVerified(req, res, next) {
+  client.find({
+    where: {
+      'email': req.user.email
+    }
+  }).then(result => {
+    console.log(result.dataValues.kyc_verified, "hello");
+    switch (result.dataValues.kyc_verified) {
+      case "active":
+        { next(); }
+        break;
+      case "pending":
+        { res.redirect('/KYCpage/pending'); }
+        break;
+      case "notInitiated":
+        { res.redirect('/KYCpage'); }
+        break;
+      default:
+        { next('/'); }
+        break;
+    }
+  })
+}
+

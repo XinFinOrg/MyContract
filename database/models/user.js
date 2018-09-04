@@ -55,7 +55,6 @@ module.exports = (sequelize, DataTypes) => {
     kycDocName1:
     {
       type:DataTypes.STRING,
-      defaultValue:true,
     },
     kycDoc1:
     {
@@ -64,7 +63,6 @@ module.exports = (sequelize, DataTypes) => {
     kycDocName2:
     {
       type:DataTypes.STRING,
-      defaultValue:true,
     },
     kycDoc2:
     {
@@ -73,7 +71,6 @@ module.exports = (sequelize, DataTypes) => {
     kycDocName3:
     {
       type:DataTypes.STRING,
-      defaultValue:true,
     },
     kycDoc3:
     {
