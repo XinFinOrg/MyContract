@@ -266,6 +266,26 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group"><label class="col-sm-3 control-label">Conversion Rate</label>
+
+                                                    <div class="col-sm-9 controls">
+                                                        <div class="row">
+                                                            <div class="col-xs-6"><input   type="text"  name="usd_conversion_rate" class="form-control"
+                                                                /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"><label class="col-sm-3 control-label">Minimum Contribution</label>
+
+                                                    <div class="col-sm-9 controls">
+                                                        <div class="row">
+                                                            <div class="col-xs-6"><input   type="text"  name="minimum_contribution" class="form-control"
+                                                                /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
 
                                                 <div class="form-group"><label class="col-sm-3 control-label">Contract Address</label>
 
@@ -421,6 +441,8 @@
                 document.getElementById("imglogo").src = response.data.data.siteLogo;
                 document.getElementsByName('start_date')[0].value =response.data.data.startDate;
                 document.getElementsByName("end_date")[0].value = response.data.data.endDate;
+                document.getElementsByName("usd_conversion_rate")[0].value = response.data.data.usdConversionRate;
+                document.getElementsByName("minimum_contribution")[0].value = response.data.data.minimumContribution;
 
             })
             .catch(function (e) {

@@ -190,7 +190,7 @@ module.exports = function(passport) {
                 'name': "Ethereum"
               }
             });
-
+            Promise.all([generateEthAddress()]).then(([createdEthAddress, createdUser]) => {
             currencyname[0].addUserCurrencyAddress(createdEthAddress);
             client.create({
               email: newUser.email,
@@ -203,6 +203,8 @@ module.exports = function(passport) {
               result.addUserCurrencyAddress(createdEthAddress);
               return done(null, result.dataValues);
             })
+          })
+         
           }
 
         });
