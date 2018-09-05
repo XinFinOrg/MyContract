@@ -68,13 +68,18 @@ module.exports = {
       },
       include: ['projectConfigurations'],
     })
-    if (req.files[0]) {
-      console.log("here")
-      projectdata.projectConfigurations[0].dataValues.siteLogo = fs.readFileSync(req.files[0].path)
-      projectdata.save().then((result, error) => {
-        console.log("inside", error, result)
-      })
-    }
+    var projectdatavalues = await ProjectConfiguration.find({
+      where: {
+        "client_id": projectdata.projectConfigurations[0].dataValues.client_id
+      }
+    })
+     if (req.files[0]) { 
+        console.log("here")
+        projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path)
+        projectdatavalues.save().then((result,error) => { console.log("inside",error,result)})
+      } 
+
+    // projectdata.dataValues.siteLogo = fs.readFileSync(req.files[0].path)
     ProjectConfiguration.update({
       "siteName": req.body.site_name,
       "coinName": req.body.coin_name,

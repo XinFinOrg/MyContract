@@ -8,7 +8,7 @@ var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = function (app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
-  app.get('/deployer', hasPackage2, impl.getDeployer);
+  app.get('/deployer',hasVerified, hasPackage2, impl.getDeployer);
   app.get('/getBytecode', impl.getBytecode);
   app.post('/saveDeploymentData', impl.saveDeploymentData);
 }
@@ -42,3 +42,28 @@ function hasPackage2(req, res, next) {
     }
   })
 }
+
+function hasVerified(req, res, next) {
+  client.find({
+    where: {
+      'email': req.user.email
+    }
+  }).then(result => {
+    console.log(result.dataValues.kyc_verified, "hello");
+    switch (result.dataValues.kyc_verified) {
+      case "active":
+        { next(); }
+        break;
+      case "pending":
+        { res.redirect('/KYCpage/pending'); }
+        break;
+      case "notInitiated":
+        { res.redirect('/KYCpage'); }
+        break;
+      default:
+        {  res.redirect('/'); }
+        break;
+    }
+  })
+}
+

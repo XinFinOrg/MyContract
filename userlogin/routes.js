@@ -18,7 +18,7 @@ module.exports = function (app) {
   //kyc
   app.get('/KYCpage', impl.KYCpage);
   app.get('/KYCpage/pending', impl.KYCpagePending);
-  app.post('/KYCpage/KYCdocUpload',impl.KYCdocUpload);
+  app.post('/KYCpage/KYCdocUpload', impl.KYCdocUpload);
 };
 
 // route middleware to make sure a user is logged in
@@ -51,7 +51,7 @@ function hasVerified(req, res, next) {
         { res.redirect('/KYCpage'); }
         break;
       default:
-        { next('/'); }
+        {  res.redirect('/'); }
         break;
     }
   })

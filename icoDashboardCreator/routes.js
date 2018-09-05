@@ -4,9 +4,9 @@ var db = require('../database/models/index');
 var client = db.client;
 
 module.exports = function (app, sequelize, DataTypes) {
-  app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasPackage3, impl.icoDashboardSetup);
-  app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasPackage3, impl.siteConfiguration);
-  app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
+  app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);
+  app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
+  app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
@@ -42,3 +42,29 @@ function hasPackage3(req, res, next) {
     }
   })
 }
+
+function hasVerified(req, res, next) {
+  client.find({
+    where: {
+      'email': req.user.email
+    }
+  }).then(result => {
+    console.log(result.dataValues.kyc_verified, "hello");
+    switch (result.dataValues.kyc_verified) {
+      case "active":
+        { next(); }
+        break;
+      case "pending":
+        { res.redirect('/KYCpage/pending'); }
+        break;
+      case "notInitiated":
+        { res.redirect('/KYCpage'); }
+        break;
+      default:
+        {  res.redirect('/'); }
+        break;
+    }
+  })
+}
+
+

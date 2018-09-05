@@ -31,6 +31,16 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:true,
     },
+    google_id:
+    {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
+    github_id:
+    {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
     isd_code:
     {
       type:DataTypes.INTEGER,
