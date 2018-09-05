@@ -64,7 +64,7 @@ module.exports = function(passport) {
         User.find({
           where: {
             'email': email,
-            'projectConfigurationCoinName': req.body.coinName
+            'projectConfigurationCoinName': req.body.projectName
           }
         }).then(async user => {
           // check to see if theres already a user with that email
@@ -78,13 +78,14 @@ module.exports = function(passport) {
                 'name': "Ethereum"
               }
             });
+            console.log(req.body.projectName);
             //Find project details and map user
             var project = await Project.findOrCreate({
               where: {
-                'coinName': req.body.coinName
+                'coinName': req.body.projectName
               }
             });
-            
+
             Promise.all([generateEthAddress(), createNewUser(req)]).then(([createdEthAddress, createdUser]) => {
               ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
               createdUser.addUserCurrencyAddress(createdEthAddress);
@@ -110,12 +111,11 @@ module.exports = function(passport) {
       User.find({
         where: {
           'email': email,
-          'projectConfigurationCoinName': req.body.coinName
+          'projectConfigurationCoinName': req.body.projectName
         },
-        include: [Project, Address, Transactions]
+        attributes: ['email', 'password', 'projectConfigurationCoinName']
       }).then(user => {
         console.log("Hey there", user);
-        console.log(req.body.coinName);
 
         // if no user is found, return the message
         if (!user) {

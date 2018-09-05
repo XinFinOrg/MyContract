@@ -54,7 +54,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Creating all app routes
-app.use('/user', require('./icoDashboardCreator/userAuthRoutes'));
+app.use('/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));
 require('./routes')(app);
 require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);

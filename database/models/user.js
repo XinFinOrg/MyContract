@@ -107,9 +107,8 @@ module.exports = (sequelize, DataTypes) => {
 
     user.belongsTo(models.projectConfiguration, {
       allowNull: false,
-      through: 'UserProject'
+      foreignKey: 'projectConfigurationCoinName'
     });
-
 
   };
   return user;

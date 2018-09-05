@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     password:
     {
       type:DataTypes.STRING,
-      allowNull:false,
+      allowNull:true,
     },
     isd_code:
     {

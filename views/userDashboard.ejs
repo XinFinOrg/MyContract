@@ -149,7 +149,7 @@
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
                                 <h5> <%= projectConfiguration.coinName %> </h5>
-                                <p> 1 <%= projectConfiguration.coinName %> = 0.05 USD </p>
+                                <p> 1 <%= projectConfiguration.coinName %> = <%= projectConfiguration.usdConversionRate %>  USD </p>
                             </div>
                         </div>
 
@@ -157,7 +157,7 @@
                             <div class="box_wrap bg-white text-center">
                                 <div class="line"></div>
                                 <h5> <%= projectConfiguration.coinName %> SOLD </h5>
-                                <p><span>notKnown/ <%= projectConfiguration.hardCap %></span></p>
+                                <p><span> <%= projectConfiguration.tokenSold %>/ <%= projectConfiguration.hardCap %></span></p>
                             </div>
                         </div>
 
@@ -201,9 +201,7 @@
                 <div align="center" class="modal-body">
                     <p align="left">Thank you for your interest in trading with other currencies.<br>
                         We would like to reach you to better connect with you.<br>
-                        Please provide us your contact details via <a href="/cdn-cgi/l/email-protection#452c262a05322d2431362d242924296b262a28"><span class="__cf_email__" data-cfemail="ef868c80af98878e9b9c878e838e83c18c8082c1">[email&#160;protected]</span></a>
-
-
+                        Please provide us your contact details via <%= projectConfiguration.contactEmail %>
 
                 </div>
             </div>

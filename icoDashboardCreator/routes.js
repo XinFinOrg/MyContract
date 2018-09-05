@@ -8,10 +8,10 @@ module.exports = function (app, sequelize, DataTypes) {
   app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
-  app.get('/userSignup', impl.getUserSignup);
-  app.get('/userLogin', impl.getUserLogin);
-  app.post('/userSignup', impl.postUserSignup);
-  app.post('/userLogin', impl.postUserLogin);
+  app.get('/:projectName/userSignup', impl.getUserSignup);
+  app.get('/:projectName/userLogin', impl.getUserLogin);
+  app.post('/:projectName/userSignup', impl.postUserSignup);
+  app.post('/:projectName/userLogin', impl.postUserLogin);
 }
 
 // route middleware to make sure a user is logged in

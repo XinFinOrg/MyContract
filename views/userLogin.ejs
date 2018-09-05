@@ -220,19 +220,20 @@
       var xhttp = new XMLHttpRequest();
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
-      var parameters = "coinName=NMC&email=" + email + "&password=" + password;
+      var projectName = "<%= projectName %>";
+      var parameters = "email=" + email + "&password=" + password+"&projectName="+ projectName;
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           if (xhttp.responseText == -1) {
 
           } else {
             var res = JSON.parse(xhttp.responseText);
-            window.location.assign('../user/dashboard');
+            window.location.assign('./user/dashboard');
           }
         }
       }
 
-      xhttp.open("POST", "/userLogin", true);
+      xhttp.open("POST", "./userLogin", true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send(parameters);
     }

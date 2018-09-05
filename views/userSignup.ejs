@@ -33,9 +33,10 @@
     var password = document.getElementById('password').value;
     var country_id = document.getElementById('country_id').value;
     var first_name = document.getElementById('first_name').value;
-    var last_name = document.getElementById('last_name').value
-    var country_id = document.getElementById('country_id').value
-    var parameters = "coinName=NMC&email=" + email + "&password=" + password + "&country_id=" + country_id + "&first_name=" + first_name + "&last_name=" + last_name;
+    var last_name = document.getElementById('last_name').value;
+    var country_id = document.getElementById('country_id').value;
+    var projectName = "<%= projectName %>";
+    var parameters = "email=" + email + "&password=" + password + "&country_id=" + country_id + "&first_name=" + first_name + "&last_name=" + last_name+"&projectName="+ projectName;
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (xhttp.responseText == -1) {
@@ -43,13 +44,12 @@
         } else {
           var res = JSON.parse(xhttp.responseText);
           console.log("Status", res);
-          localStorage.setItem("token", res.token);
-          window.location.assign('../userLogin');
+          window.location.assign('./userLogin');
         }
       }
     }
 
-    xhttp.open("POST", "/userSignup", true);
+    xhttp.open("POST", "./userSignup", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(parameters);
   }
@@ -87,7 +87,6 @@
               <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Create your Account</p>
             </div>
             <div class="field_form authorize_form">
-              <input type="hidden" name="coinName" value="NMC">
               <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
                 <input type="text" class="form-control" required="" placeholder="First Name" name="first_name" id="first_name">
               </div>
@@ -355,7 +354,7 @@
           </div>
           <div class="divider xsmall_divider"></div>
           <div class="text-center">
-            <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Already have an account? <a href="/userLogin"> Login</a></span>
+            <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Already have an account? <a href="../userLogin"> Login</a></span>
           </div>
         </div>
       </div>
