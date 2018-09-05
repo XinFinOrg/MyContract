@@ -49,7 +49,11 @@ module.exports = {
       } else {
         var dataobj = new Object();
         dataobj = values[0].projectConfigurations[0].dataValues;
-        dataobj.siteLogo = 'data:image/bmp;base64,' + Buffer.from(values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
+        if (values[0].projectConfigurations[0].dataValues.siteLogo) {
+          dataobj.siteLogo = 'data:image/bmp;base64,' + Buffer.from(values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
+        } else {
+          dataobj.siteLogo = null;
+        }
         res.send({
           data: dataobj,
           message: "updated!"
@@ -64,8 +68,14 @@ module.exports = {
       },
       include: ['projectConfigurations'],
     })
+    if (req.files[0]) {
+      console.log("here")
+      projectdata.projectConfigurations[0].dataValues.siteLogo = fs.readFileSync(req.files[0].path)
+      projectdata.save().then((result, error) => {
+        console.log("inside", error, result)
+      })
+    }
     ProjectConfiguration.update({
-      'siteLogo': fs.readFileSync(req.files[0].path),
       "siteName": req.body.site_name,
       "coinName": req.body.coin_name,
       "softCap": req.body.soft_cap,
@@ -73,6 +83,8 @@ module.exports = {
       "startDate": req.body.start_date,
       "endDate": req.body.end_date,
       "homeURL": req.body.website_url,
+      "usdConversionRate": req.body.usd_conversion_rate,
+      "minimumContribution": req.body.minimum_contribution,
     }, {
       where: {
         "client_id": projectdata.projectConfigurations[0].dataValues.client_id
@@ -85,7 +97,9 @@ module.exports = {
     });
   },
 
+  getICOdata: async function(req, res) {
 
+  },
 
   //user login
   userLogin: function(req, res) {
