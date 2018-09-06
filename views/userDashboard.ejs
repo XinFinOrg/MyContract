@@ -401,7 +401,7 @@
         function get_usd_price()
         {
             $.ajax({
-                url:'/user/getUSDPrice',
+                url:'./getUSDPrice',
                 type:'get',
                 success:function(data)
                 {
@@ -414,6 +414,7 @@
                     Bonus = result.Bonus;
                     minETH = result.minETH;
                     minBTC = result.minBTC;
+                    console.log("Conversit");
 
                     convert_price(eth_price,'ETH');
                     convert_price(btc_price,'BTC');

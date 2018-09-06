@@ -14,7 +14,7 @@
 
     }
 
-    
+
   </style>
 </head>
 
@@ -34,6 +34,31 @@
         <div class="well text-center">
           <h2 class="text-center">Smart Contract Details </h2>
           <form action="/createContract" method="post">
+
+            <div class="form-group">
+              <label for="token_name"> Token Name:</label>
+              <input type="text" class="form-control" name="token_name" placeholder="Enter Token Name (For example Ethereum, Bitcoin, Xinfin)">
+            </div>
+            <div class="form-group">
+              <label for="token_symbol">Token Symbol:</label>
+              <input type="text" class="form-control" name="token_symbol" placeholder="Enter Token Symbol (For example ETH, BTC, XDC)">
+            </div>
+            <div class="form-group">
+              <label for="token_decimals">Token Decimals:</label>
+              <input type="number" class="form-control" name="token_decimals" placeholder="18" value= 18>
+            </div>
+            <div class="form-group">
+              <label for="token_supply">Total Supply: (This will be your hard cap for your ICO)</label>
+              <input type="number" class="form-control" name="token_supply" placeholder="Enter Total Supply (eg. 1000000000000)">
+            </div>
+            <div class="form-group">
+              <label for="token_sale">Sale Token limit:</label>
+              <input type="number" class="form-control" name="token_sale" placeholder="Enter Sale Token limit (This will be your soft cap for your ICO)">
+            </div>
+            <div class="form-group">
+              <label for="eth_tokens">1 eth = ? tokens:</label>
+              <input type="number" class="form-control" name="eth_tokens" placeholder="How many tokens will you be able to buy using 1 Eth ?">
+            </div>
             <h4>Functionalities</h4>
             <p>
               <label class="checkbox-inline">
@@ -62,30 +87,6 @@
               </label>
             </p>
 
-            <div class="form-group">
-              <label for="token_name"> Token Name:</label>
-              <input type="text" class="form-control" name="token_name" placeholder="Enter Token Name">
-            </div>
-            <div class="form-group">
-              <label for="token_symbol">Token Symbol:</label>
-              <input type="text" class="form-control" name="token_symbol" placeholder="Enter Token Symbol">
-            </div>
-            <div class="form-group">
-              <label for="token_decimals">Token Decimals:</label>
-              <input type="number" class="form-control" name="token_decimals" placeholder="Enter Token Decimals">
-            </div>
-            <div class="form-group">
-              <label for="token_supply">Total Supply:</label>
-              <input type="number" class="form-control" name="token_supply" placeholder="Enter Total Supply">
-            </div>
-            <div class="form-group">
-              <label for="token_sale">Sale Token limit:</label>
-              <input type="number" class="form-control" name="token_sale" placeholder="Enter Sale Token limit">
-            </div>
-            <div class="form-group">
-              <label for="eth_tokens">1 eth = ? tokens:</label>
-              <input type="number" class="form-control" name="eth_tokens">
-            </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
 

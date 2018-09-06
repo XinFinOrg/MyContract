@@ -14,14 +14,14 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('../config/auth');
 
-router.get('/transactions', isAuthenticated, impl.getTransactions);
-router.get('/wallets', isAuthenticated, impl.getWallets);
-router.get('/kyc', isAuthenticated, impl.getKYC);
+router.get('/transactions', isAuthenticated, kycVerified, impl.getTransactions);
+router.get('/wallets', isAuthenticated, kycVerified, impl.getWallets);
+router.get('/kyc', isAuthenticated, kycVerified);
 router.get('/logout', isAuthenticated, impl.logout);
-router.get('/dashboard', isAuthenticated, impl.getDashboard);
-router.get('/contact_us', isAuthenticated, impl.getContactPage);
+router.get('/dashboard', isAuthenticated, kycVerified, impl.getDashboard);
+router.get('/contact_us', isAuthenticated, kycVerified, impl.getContactPage);
 router.post('/contact_us', isAuthenticated, impl.postContactPage);
-router.get('/profile', isAuthenticated, impl.getProfileEditPage);
+router.get('/profile', isAuthenticated, kycVerified, impl.getProfileEditPage);
 router.post('/profile', isAuthenticated, impl.postProfileEditPage);
 router.get('/getUSDPrice', isAuthenticated, impl.getUSDPrice);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
@@ -32,7 +32,7 @@ function isAuthenticated(req, res, next) {
   jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
     if (err) {
       console.log(err);
-      return res.redirect('/userLogin');
+      return res.redirect('../userLogin');
     } else {
       User.find({
         where: {
@@ -47,6 +47,36 @@ function isAuthenticated(req, res, next) {
     }
   });
 
+}
+
+function kycVerified(req, res, next) {
+
+  switch (req.user.kyc_verified) {
+    case "active":
+      {
+        next();
+      }
+      break;
+    case "pending":
+      {
+        res.render('userKYCPending', {
+          user: req.user
+        });
+      }
+      break;
+    case "notInitiated":
+      {
+        res.render('userKYCPage', {
+          user: req.user
+        });
+      }
+      break;
+    default:
+      {
+        res.redirect('../userLogin');
+      }
+      break;
+  }
 }
 
 module.exports = router;

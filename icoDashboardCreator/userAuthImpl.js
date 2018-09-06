@@ -6,72 +6,36 @@ const Binance = require('node-binance-api');
 module.exports = {
 
   getTransactions: (req, res, next) => {
-    if (!req.user.kyc_verified) {
-      res.render('userKYCPage', {
-        user: req.user
-      });
-    } else {
-      console.log(req.user);
-      var projectConfiguration = req.user.projectConfiguration;
-      res.render('userTransactionHistory', {
-        user: req.user,
-        projectConfiguration: projectConfiguration,
-        transactions: req.user.icotransactions
-      });
-    }
+    console.log(req.user);
+    var projectConfiguration = req.user.projectConfiguration;
+    res.render('userTransactionHistory', {
+      user: req.user,
+      projectConfiguration: projectConfiguration,
+      transactions: req.user.icotransactions
+    });
   },
 
   getWallets: (req, res, next) => {
-    if (!req.user.kyc_verified) {
-      res.render('userKYCPage', {
-        user: req.user
-      });
-    } else {
-      var projectConfiguration = req.user.projectConfiguration;
-      res.render('userWalletPage', {
-        user: req.user,
-        projectConfiguration: projectConfiguration,
-        addresses: req.user.userCurrencyAddresses
-      });
-    }
-  },
-
-  getKYC: (req, res, next) => {
-    if (!req.user.kyc_verified) {
-      res.render('userKYCPage', {
-        user: req.user
-      });
-    } else {
-      res.render('kycComplete', {
-        user: req.user
-      });
-    }
+    var projectConfiguration = req.user.projectConfiguration;
+    res.render('userWalletPage', {
+      user: req.user,
+      projectConfiguration: projectConfiguration,
+      addresses: req.user.userCurrencyAddresses
+    });
   },
 
   getContactPage: (req, res, next) => {
-    if (!req.user.kyc_verified) {
-      res.render('userKYCPage', {
-        user: req.user
-      });
-    } else {
-      var projectConfiguration = req.user.projectConfiguration;
-      res.render('userContactPage', {
-        user: req.user,
-        projectConfiguration: projectConfiguration
-      });
-    }
+    var projectConfiguration = req.user.projectConfiguration;
+    res.render('userContactPage', {
+      user: req.user,
+      projectConfiguration: projectConfiguration
+    });
   },
 
   getProfileEditPage: (req, res, next) => {
-    if (!req.user.kyc_verified) {
-      res.render('userKYCPage', {
-        user: req.user
-      });
-    } else {
-      res.render('userProfileEdit', {
-        user: req.user
-      });
-    }
+    res.render('userProfileEdit', {
+      user: req.user
+    });
   },
 
   postProfileEditPage: (req, res, next) => {
