@@ -5,8 +5,8 @@ var client = db.client;
 
 module.exports = function (app) {
 
-  app.get('/customContract', isLoggedIn,hasVerified, hasPackage1, impl.getCustomContractForm);
-  app.get('/generatedContract', isLoggedIn,hasVerified, impl.getGeneratedContract);
+  app.get('/customContract', isLoggedIn, hasPackage1, impl.getCustomContractForm);
+  app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
   app.post("/createContract", isLoggedIn, impl.createContract);
 }
 
@@ -39,28 +39,5 @@ function hasPackage1(req, res, next) {
   })
 }
 
-function hasVerified(req, res, next) {
-  client.find({
-    where: {
-      'email': req.user.email
-    }
-  }).then(result => {
-    console.log(result.dataValues.kyc_verified, "hello");
-    switch (result.dataValues.kyc_verified) {
-      case "active":
-        { next(); }
-        break;
-      case "pending":
-        { res.redirect('/KYCpage/pending'); }
-        break;
-      case "notInitiated":
-        { res.redirect('/KYCpage'); }
-        break;
-      default:
-        {  res.redirect('/'); }
-        break;
-    }
-  })
-}
 
 

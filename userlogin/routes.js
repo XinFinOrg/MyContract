@@ -7,7 +7,7 @@ module.exports = function (app) {
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
-  app.get('/profile', isLoggedIn, hasVerified, impl.getProfile);
+  app.get('/profile', isLoggedIn, impl.getProfile);
   app.get("/auth/google", impl.googleLogin);
   app.get("/auth/google/callback", impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
@@ -33,27 +33,4 @@ function isLoggedIn(req, res, next) {
 
 }
 
-function hasVerified(req, res, next) {
-  client.find({
-    where: {
-      'email': req.user.email
-    }
-  }).then(result => {
-    console.log(result.dataValues.kyc_verified, "hello");
-    switch (result.dataValues.kyc_verified) {
-      case "active":
-        { next(); }
-        break;
-      case "pending":
-        { res.redirect('/KYCpage/pending'); }
-        break;
-      case "notInitiated":
-        { res.redirect('/KYCpage'); }
-        break;
-      default:
-        {  res.redirect('/'); }
-        break;
-    }
-  })
-}
 

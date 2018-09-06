@@ -42,6 +42,31 @@
 
             </div>
           </div>
+          <div class="col-sm-12 text-center">
+            <div class="well">
+              <h3><span class="fa fa-info-circle"></span>Deployed COntract Details</h3><br>
+
+              <table class="table text-left">
+                <thead>
+                  <tr>
+                    <th>Coin Name</th>
+                    <th>Contract Address</th>
+                    <th>Transaction Hash</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                  <tr>
+                    <td> <%= ProjectConfiguration.coinName %> </td>
+                    <td><%= ProjectConfiguration.contractAddress %> </td>
+                    <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
         </div>
         <br><br><br>
         <% if (message.length >0) { %>
@@ -86,10 +111,10 @@
           </div>
           <div class="col-sm-12 text-center">
             <div class="well">
-              <h3>Smart Contract ICO platform</h3>
+              <h3>ICO platforms</h3>
               <br>
               <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration %>" class="btn "><%= ProjectConfiguration %> 
+                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="btn "><%= ProjectConfiguration.coinName %> 
                 </a><br>
                 <% }) %>
             </div>

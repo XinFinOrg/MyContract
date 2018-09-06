@@ -235,6 +235,22 @@ module.exports = function(passport) {
               console.log(error, result, "inside")
             })
             return done(null, result.dataValues);
+            console.log(result.dataValues)
+            newUser.google_id = profile.id;
+            // if a user is found, log them in
+            client.update({
+              "google_id": profile.id
+            }, {
+                where: {
+                  'email': profile.emails[0].value
+                }
+              }).then(function (result) {
+                if (!result)
+                  console.log("null");
+                  console.log(result.dataValues,"hello")
+                return done(null, result.dataValues);
+              })
+
           } else {
             // if the user isnt in our database, create a new user
             // set all of the relevant information

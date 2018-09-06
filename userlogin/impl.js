@@ -44,7 +44,7 @@ module.exports = {
     }).then(values => {
       values[0].projectConfigurations.forEach(element => {
         console.log(element, "hello")
-        projectarray.push(element.dataValues.coinName);
+        projectarray.push(element.dataValues);
       });
       console.log(projectarray, "prject array")
       res.render('profile.ejs', {
