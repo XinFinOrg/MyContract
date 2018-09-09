@@ -4,13 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       allowNull: false,
       autoIncrement: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
+      unique: true,
       defaultValue: DataTypes.UUIDV1,
-
+      primaryKey: true,
     },
     firstName: {
       type: DataTypes.STRING,
@@ -25,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true, // checks for email format (foo@bar.com)
       },
-      primaryKey: true,
       allowNull: false,
     },
     password: {
@@ -48,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+
+    emailVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
     kyc_verified:
     {
       type:DataTypes.ENUM,
@@ -95,14 +101,12 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.userCurrencyAddress, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
-      sourceKey: 'email'
     });
 
     //transaction relation
     user.hasMany(models.icotransactions, {
       foreignKey: 'user_id',
       allowNull: true,
-      sourceKey: 'email'
     });
 
     user.belongsTo(models.projectConfiguration, {

@@ -18,7 +18,7 @@ module.exports = {
       },
       include: ['projectConfigurations'],
     })
-    fs.readFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory", req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".SOL"), "utf8",
+    fs.readFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory", req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".sol"), "utf8",
       function (err, doc) {
         if (err) {
           return console.log(err);

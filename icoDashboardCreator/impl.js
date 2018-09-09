@@ -73,11 +73,11 @@ module.exports = {
         "client_id": projectdata.projectConfigurations[0].dataValues.client_id
       }
     })
-     if (req.files[0]) { 
+     if (req.files[0]) {
         console.log("here")
         projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path)
         projectdatavalues.save().then((result,error) => { console.log("inside",error,result)})
-      } 
+      }
 
     // projectdata.dataValues.siteLogo = fs.readFileSync(req.files[0].path)
     ProjectConfiguration.update({
@@ -108,17 +108,21 @@ module.exports = {
 
   //user login
   userLogin: function(req, res) {
-    res.render("userLogin.ejs");
+    res.render("userLogin.ejs", {
+      message: req.flash('loginMessage')
+    });
   },
   getUserSignup: function(req, res) {
     res.render("userSignup.ejs", {
-      'projectName': req.params.projectName
+      projectName: req.params.projectName,
+      message: req.flash('signupMessage')
     });
   },
 
   getUserLogin: function(req, res) {
     res.render("userLogin.ejs", {
-      'projectName': req.params.projectName
+      'projectName': req.params.projectName,
+      message: req.flash('signupMessage')
     });
   },
 
@@ -130,7 +134,11 @@ module.exports = {
       try {
         if (err || !user) {
           const error = new Error('An Error occured')
-          return next(error);
+          console.log();
+          return res.json({
+            'token': "failure",
+            'message': req.flash('loginMessage')
+          });
         }
         const token = jwt.sign({
           userEmail: user.email,
@@ -151,23 +159,35 @@ module.exports = {
     })(req, res, next);
   },
 
-  postUserSignup: async function(req, res, next) {
+  postUserSignup: function(req, res, next) {
     passport.authenticate('user-signup', {
       session: false
     }, async (err, user, info) => {
       console.log(user);
       try {
         if (err || !user) {
-          const error = new Error('An Error occured')
-          return next(error);
+          return res.redirect('./userSignup');
         }
-        return res.json({
-          "success": "success"
-        });
+        return res.redirect('./userLogin');
       } catch (error) {
         return next(error);
       }
     })(req, res, next);
+  },
+
+
+  verifyMail: (req, res) => {
+    console.log(req.query);
+    db.user.find({
+      where: {
+        uniqueId: req.query.verificationId
+      }
+    }).then((user) => {
+      user.emailVerified = true;
+      user.save().then((user)=> {
+        res.redirect('./'+user.projectConfigurationCoinName+'/userLogin');
+      });
+    });
   }
 
 }

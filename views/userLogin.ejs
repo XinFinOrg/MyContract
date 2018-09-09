@@ -52,31 +52,36 @@
   <!-- START SECTION SIGN UP -->
   <section class="small_pt small_pb">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="authorize_box">
-            <div class="title_dark title_border text-center">
-              <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Welcome</h4>
-              <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Sign in to your Account</p>
-            </div>
-            <div class="field_form authorize_form">
-                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
-                  <input type="email" class="form-control" required="" placeholder="Email" name="email" id="email">
-                </div>
-                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.7s" style="animation-delay: 0.7s; opacity: 1;">
-                  <input type="password" class="form-control" required="" placeholder="Password" name="password" id="password">
-                </div>
-                <div class="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
-                  <button class="btn btn-default" id="submit_btn" onclick=login()>Sign in</button>
-                </div>
-            </div>
-          </div>
-          <div class="divider xsmall_divider"></div>
-          <div class="text-center">
-            <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Need an account? <a href="./userSignup">Signup</a></span>
-          </div>
+      <% if (message.length > 0) { %>
+        <div class="alert alert-danger">
+          <%= message %>
         </div>
-      </div>
+        <% } %>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="authorize_box">
+                <div class="title_dark title_border text-center">
+                  <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Welcome</h4>
+                  <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Sign in to your Account</p>
+                </div>
+                <div class="field_form authorize_form">
+                  <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
+                    <input type="email" class="form-control" required="" placeholder="Email" name="email" id="email">
+                  </div>
+                  <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.7s" style="animation-delay: 0.7s; opacity: 1;">
+                    <input type="password" class="form-control" required="" placeholder="Password" name="password" id="password">
+                  </div>
+                  <div class="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
+                    <button class="btn btn-default" id="submit_btn" onclick=login()>Sign in</button>
+                  </div>
+                </div>
+              </div>
+              <div class="divider xsmall_divider"></div>
+              <div class="text-center">
+                <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Need an account? <a href="./userSignup">Signup</a></span>
+              </div>
+            </div>
+          </div>
     </div>
 
   </section>
@@ -131,7 +136,6 @@
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     };
-
   </script>
 
 
@@ -221,14 +225,18 @@
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
       var projectName = "<%= projectName %>";
-      var parameters = "email=" + email + "&password=" + password+"&projectName="+ projectName;
+      var parameters = "email=" + email + "&password=" + password + "&projectName=" + projectName;
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           if (xhttp.responseText == -1) {
 
           } else {
             var res = JSON.parse(xhttp.responseText);
-            window.location.assign('./user/dashboard');
+            if (res.token == "failure") {
+              window.location.assign('./userLogin');
+            } else {
+              window.location.assign('./user/dashboard');
+            }
           }
         }
       }
@@ -237,4 +245,4 @@
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send(parameters);
     }
-    </script>
+  </script>

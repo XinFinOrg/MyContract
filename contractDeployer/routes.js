@@ -8,9 +8,9 @@ var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = function (app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
-  app.get('/deployer', hasPackage2, impl.getDeployer);
-  app.get('/getBytecode', impl.getBytecode);
-  app.post('/saveDeploymentData', impl.saveDeploymentData);
+  app.get('/deployer', isLoggedIn, hasPackage2, impl.getDeployer);
+  app.get('/getBytecode', isLoggedIn, impl.getBytecode);
+  app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
 }
 
 
@@ -42,6 +42,3 @@ function hasPackage2(req, res, next) {
     }
   })
 }
-
-
-

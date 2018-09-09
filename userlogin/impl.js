@@ -106,4 +106,15 @@ module.exports = {
     });
   },
 
+  getProjectList: (req, res) => {
+    client.findAll({
+      include: [ProjectConfiguration]
+    }).then((clients)=>{
+      console.log(clients);
+      res.render('projectList.ejs', {
+        clients: clients
+      })
+    });
+  }
+
 }

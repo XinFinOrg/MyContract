@@ -2,6 +2,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 var configAuth = require('./auth');
+var fs = require('fs');
+var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
@@ -59,6 +61,7 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
+      console.log(req.body);
       process.nextTick(function() {
         // find a user whose email is the same as the forms email
         User.find({
@@ -122,17 +125,19 @@ module.exports = function(passport) {
           'email': email,
           'projectConfigurationCoinName': req.body.projectName
         },
-        attributes: ['email', 'password', 'projectConfigurationCoinName']
+        attributes: ['email', 'password', 'projectConfigurationCoinName', 'emailVerified']
       }).then(user => {
         console.log("Hey there", user);
 
         // if no user is found, return the message
         if (!user) {
-          return done(null, false, 'No user found.');
+          return done(null, false, req.flash('loginMessage', 'No user found.'));
+        } else if (!user.emailVerified) {
+          return done(null, false, req.flash('loginMessage', 'That email is yet to be verified.'));
         }
         // if the user is found but the password is wrong
         if (!bcrypt.compareSync(password, user.password))
-          return done(null, false, 'Oops! Wrong password.');
+          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
         // all is well, return successful user
         return done(null, user.dataValues);
       });
@@ -352,7 +357,8 @@ function createNewUser(req) {
     newUser.lastName = req.body.last_name;
     newUser.country = req.body.country_id;
     var createdUser = await User.create(newUser);
-    resolve(createdUser)
+    sendVerificationMail(req, createdUser.email, createdUser.firstName, createdUser.uniqueId);
+    resolve(createdUser);
   });
 }
 
@@ -364,6 +370,11 @@ function createNewClient(req) {
     newUser.email = req.body.email;
     newUser.password = generateHash(req.body.password);
     var createdClient = await client.create(newUser);
-    resolve(createdClient)
+    resolve(createdClient);
   });
+}
+
+function sendVerificationMail(req, userEmail, userName, userHash){
+  var nodemailerservice = require('../emailer/impl');
+  nodemailerservice.sendVerificationMail(req, userEmail, userName, userHash);
 }

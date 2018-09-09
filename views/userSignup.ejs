@@ -26,35 +26,6 @@
   <link href="https://www.whatshalal.io/front/assets1/popup/popup-styles.css" rel="stylesheet">
 
 </head>
-<script>
-  function signup() {
-    var xhttp = new XMLHttpRequest();
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var country_id = document.getElementById('country_id').value;
-    var first_name = document.getElementById('first_name').value;
-    var last_name = document.getElementById('last_name').value;
-    var country_id = document.getElementById('country_id').value;
-    var projectName = "<%= projectName %>";
-    var parameters = "email=" + email + "&password=" + password + "&country_id=" + country_id + "&first_name=" + first_name + "&last_name=" + last_name+"&projectName="+ projectName;
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        if (xhttp.responseText == -1) {
-
-        } else {
-          var res = JSON.parse(xhttp.responseText);
-          console.log("Status", res);
-          window.location.assign('./userLogin');
-        }
-      }
-    }
-
-    xhttp.open("POST", "./userSignup", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send(parameters);
-  }
-</script>
-
 <body class="v_light_dark login page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white loaded" data-spy="scroll" data-offset="110">
   <div class="parallax-mirror" style="visibility: visible; z-index: 1; position: fixed; top: -146px; left: 0px; overflow: hidden; transform: translate3d(0px, 0px, 0px); height: 208px; width: 731px;"></div>
 
@@ -79,25 +50,32 @@
   <!-- START SECTION SIGN UP -->
   <section class="small_pt small_pb">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="authorize_box">
-            <div class="title_dark title_border text-center">
-              <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Register</h4>
-              <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Create your Account</p>
-            </div>
-            <div class="field_form authorize_form">
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
-                <input type="text" class="form-control" required="" placeholder="First Name" name="first_name" id="first_name">
-              </div>
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
-                <input type="text" class="form-control" required="" placeholder="Last Name" name="last_name" id="last_name">
-              </div>
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
-                <input type="email" class="form-control" required="" placeholder="Email" name="email" id="email">
-              </div>
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
-                <select name="country_id" id="country_id" class="form-control input-lg" onchange="set_country()">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="authorize_box">
+                <% if (message.length > 0) { %>
+                  <div class="alert alert-danger">
+                    <%= message %>
+                  </div>
+                  <% } %>
+                <div class="title_dark title_border text-center">
+                  <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Register</h4>
+                  <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Create your Account</p>
+                </div>
+                <form action='./userSignup' method="post">
+                  <div class="field_form authorize_form">
+                    <input type="hidden" name="projectName" value= <%= projectName %>>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
+                      <input type="text" class="form-control" required="" placeholder="First Name" name="first_name" id="first_name">
+                    </div>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
+                      <input type="text" class="form-control" required="" placeholder="Last Name" name="last_name" id="last_name">
+                    </div>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
+                      <input type="email" class="form-control" required="" placeholder="Email" name="email" id="email">
+                    </div>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style="animation-delay: 0.5s; opacity: 1;">
+                      <select name="country_id" id="country_id" class="form-control input-lg" onchange="set_country()">
                                         <option value="">Select Country</option>
                                                                                     <option value="1" data-id="af">Afghanistan</option>
                                                                                     <option value="2" data-id="al">Albania</option>
@@ -340,24 +318,25 @@
                                                                                     <option value="239" data-id="zw">Zimbabwe</option>
                                                                             </select>
 
+                    </div>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.7s" style="animation-delay: 0.7s; opacity: 1;">
+                      <input type="password" class="form-control" required="" placeholder="Password" name="password" id="password">
+                    </div>
+                    <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.8s" style="animation-delay: 0.8s; opacity: 1;">
+                      <input type="password" class="form-control" required="" placeholder="Confirm Password" name="password_confirmation" id="password_confirmation">
+                    </div>
+                    <div class="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
+                      <button class="btn btn-default" id="submit_btn" type=submit>Submit</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.7s" style="animation-delay: 0.7s; opacity: 1;">
-                <input type="password" class="form-control" required="" placeholder="Password" name="password" id="password">
-              </div>
-              <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.8s" style="animation-delay: 0.8s; opacity: 1;">
-                <input type="password" class="form-control" required="" placeholder="Confirm Password" name="password_confirmation" id="password_confirmation">
-              </div>
-              <div class="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
-                <button class="btn btn-default" id="submit_btn" onclick=signup()>Submit</button>
+              <div class="divider xsmall_divider"></div>
+              <div class="text-center">
+                <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Already have an account? <a href="./userLogin"> Login</a></span>
               </div>
             </div>
           </div>
-          <div class="divider xsmall_divider"></div>
-          <div class="text-center">
-            <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Already have an account? <a href="./userLogin"> Login</a></span>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
   <!-- END SECTION SIGN UP -->
@@ -409,8 +388,6 @@
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     };
-
-
   </script>
   <script type="text/javascript">
     $('body').addClass('login');

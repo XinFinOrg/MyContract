@@ -13,7 +13,7 @@ module.exports = function (app) {
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
-
+  app.get('/projectList', impl.getProjectList);
 
   //kyc
   app.get('/KYCpage', impl.KYCpage);
@@ -32,5 +32,3 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 
 }
-
-

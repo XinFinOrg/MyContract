@@ -12,6 +12,7 @@ module.exports = function (app, sequelize, DataTypes) {
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);
   app.post('/:projectName/userLogin', impl.postUserLogin);
+  app.get('/verifyMail', impl.verifyMail);
 }
 
 // route middleware to make sure a user is logged in
@@ -66,5 +67,3 @@ function hasVerified(req, res, next) {
     }
   })
 }
-
-

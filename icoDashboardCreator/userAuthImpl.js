@@ -55,9 +55,8 @@ module.exports = {
   },
 
   logout: (req, res, next) => {
-    var projectConfiguration = req.user.projectConfiguration;
-    console.log(projectConfiguration);
-    res.redirect('http://' + projectConfiguration.homeURL);
+    res.clearCookie('token');
+    res.redirect('../userSignup');
   },
 
   getDashboard: async (req, res, next) => {
@@ -110,5 +109,11 @@ module.exports = {
     var nodemailerservice = require('../emailer/impl');
     nodemailerservice.sendEmail(req.body.enquiry_email, req.user.projectConfiguration.contactEmail, "Enquiry", req.body.enquiry_message);
     res.redirect('/user/dashboard');
+  },
+
+  getCompletedKYCPage: (req, res) => {
+    res.render('kycComplete', {
+      user: req.user
+    });
   }
 }

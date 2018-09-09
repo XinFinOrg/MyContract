@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <!DOCTYPE html>
@@ -6,458 +5,448 @@
 <!-- Navigation -->
 <!-- START HEADER -->
 <% include ./userHeader %>
-    <!-- END HEADER -->
-<div class="clearfix"> </div>
+  <!-- END HEADER -->
+  <div class="clearfix"> </div>
 
-    <!-- START SECTION DASHBOARD -->
-    <section class="section_token overflow_hide small_pt small_pb">
-        <div class="container">
+  <!-- START SECTION DASHBOARD -->
+  <section class="section_token overflow_hide small_pt small_pb">
+    <div class="container">
 
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <div class="col-md-12 col-sm-12 mb-4 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
-                        <div class="box text-center">
-                            <div class="box-body">
-                                <span>1 BTC = ? <%=projectConfiguration.coinName %> </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 col-sm-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
-                        <div class="box text-center">
-                            <div class="box-body">
-                                <span>1 ETH = ? <%=projectConfiguration.coinName %> </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="bg_green_light_dark radius-10 token_dt res_md_mt_30 res_xs_mt_20 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
-                        <div class="tk_counter_inner text-center lg_pt_10 lg_pb_10">
-                            <h4 class="mb-20 animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s">Pre-Sale Starts In</h4>
-                            <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="<%=projectConfiguration.endDate%>-<%=projectConfiguration.startDate %>"></div>
-
-                        </div>
-                    </div>
-                </div>
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <div class="col-md-12 col-sm-12 mb-4 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
+            <div class="box text-center">
+              <div class="box-body">
+                <span >1 BTC = ? <%=projectConfiguration.coinName %> </span>
+              </div>
             </div>
-            <div class="row align-items-center large_space">
-                <div class="col-lg-6 col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">MINIMUM CONTRIBUTION : <%= projectConfiguration.minimumContribution %> USD</div>
-                        <div class="col-md-12 pt-4">
-                            <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= projectConfiguration.coinName %> with</h6>
+          </div>
+
+          <div class="col-md-12 col-sm-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
+            <div class="box text-center">
+              <div class="box-body">
+                <span>1 ETH = ? <%=projectConfiguration.coinName %> </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="bg_green_light_dark radius-10 token_dt res_md_mt_30 res_xs_mt_20 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
+            <div class="tk_counter_inner text-center lg_pt_10 lg_pb_10">
+              <h4 class="mb-20 animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s">Pre-Sale Starts In</h4>
+              <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="<%=projectConfiguration.endDate%>-<%=projectConfiguration.startDate %>"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center large_space">
+        <div class="col-lg-6 col-md-12">
+          <div class="card mb-4">
+            <div class="card-header">MINIMUM CONTRIBUTION :
+              <%= projectConfiguration.minimumContribution %> USD</div>
+            <div class="col-md-12 pt-4">
+              <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= projectConfiguration.coinName %> with</h6>
+            </div>
+            <div class="card-wrap">
+              <ul role="tablist" id="pills-tab" class="nav nav_tab animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
+                <li class="nav-item"><a href="#1b" data-toggle="tab" class="nav-link active show">ETH</a></li>
+                <li class="nav-item"><a href="#2b" data-toggle="tab" class="nav-link">BTC</a></li>
+                <li class="nav-item"><a href="#3b" data-toggle="modal" data-target="#myModal" class="nav-link">OTHER</a></li>
+
+              </ul>
+              <div class="tab-content card-body">
+                <div class="tab-content clearfix">
+                  <div class="tab-pane active" id="1b">
+                    <form id="eth_form" action="/user/ico_buy" method="post">
+                      <div class="row field_form">
+                        <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                          <label>ETH</label>
+
+                          <input id="second_currency" name="second_currency" value="ETH" style="display: none">
+                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
+                          <input id="ETH_second_currency_price" type="number" name="second_currency_price" value="" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
                         </div>
-                        <div class="card-wrap">
-                            <ul role="tablist" id="pills-tab" class="nav nav_tab animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
-                                <li class="nav-item"><a href="#1b" data-toggle="tab" class="nav-link active show">ETH</a></li>
-                                <li class="nav-item"><a href="#2b" data-toggle="tab" class="nav-link">BTC</a></li>
-                                <li class="nav-item"><a href="#3b" data-toggle="modal" data-target="#myModal"  class="nav-link">OTHER</a></li>
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
+                          <div class="timeddss2">
+                            <ul>
+                              <input id="ETH_first_currency_price" name="first_currency_price" style="display: none">
+                              <li class="d-flex align-items-center justify-content-between">
+                                <%= projectConfiguration.coinName %> TOTAL
+
+                                  <p id="token_total"></p>
+                              </li>
+
+
 
                             </ul>
-                            <div class="tab-content card-body">
-                                <div class="tab-content clearfix">
-                                    <div class="tab-pane active" id="1b">
-                                        <form id="eth_form" action="/user/ico_buy" method="post">
-                                            <div class="row field_form">
-                                                <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
-                                                    <label>ETH</label>
+                            <div class="clearfix"></div>
+                          </div>
+                        </div>
 
-                                                    <input id="second_currency" name="second_currency" value="ETH" style="display: none">
-                                                    <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
-                                                    <input id="ETH_second_currency_price"  type="number"  name="second_currency_price"  value="" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
-                                                </div>
-                                                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
-                                                    <div class="timeddss2">
-                                                        <ul>
-                                                            <input id="ETH_first_currency_price" name="first_currency_price"  style="display: none">
-                                                            <li class="d-flex align-items-center justify-content-between"><%= projectConfiguration.coinName %> TOTAL
-
-                                                                <p id="ejcash_total" ></p>
-                                                            </li>
-
-
-
-                                                        </ul>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
+                          <div class="form-check">
+                            <label class="form-check-label">
                                                             <input class="form-check-input" type="checkbox" onchange="activateButton(this,'ETH')"> I have read and agree with the <a href="https://www.whatshalal.io/terms" target="_blank">Terms &amp; Condition</a></label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
+                          </div>
+                        </div>
+                        <div class="col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
 
-                                                    <button class="btn btn-default" type="submit" id="eth_button" disabled>CONTRIBUTE</button>
+                          <button class="btn btn-default" type="submit" id="eth_button" disabled>CONTRIBUTE</button>
 
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
 
-                                    <div class="tab-pane" id="2b">
-                                        <form id="btc_form" action="/user/ico_buy" method="post">
-                                            <div class="row field_form">
+                  <div class="tab-pane" id="2b">
+                    <form id="btc_form" action="/user/ico_buy" method="post">
+                      <div class="row field_form">
 
-                                                <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
-                                                    <input id="second_currency" name="second_currency" value="BTC" style="display: none">
-                                                    <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
-                                                    <label>BTC</label>
+                        <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                          <input id="second_currency" name="second_currency" value="BTC" style="display: none">
+                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
+                          <label>BTC</label>
 
-                                                    <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="" onkeyup="convert_price(this.value,'BTC')"  class="form-control input-lg">
-                                                </div>
-                                                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
-                                                    <div class="timeddss2">
-                                                        <ul>
-                                                            <li class="d-flex align-items-center justify-content-between"><%= projectConfiguration.coinName %> TOTAL
+                          <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="" onkeyup="convert_price(this.value,'BTC')" class="form-control input-lg">
+                        </div>
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
+                          <div class="timeddss2">
+                            <ul>
+                              <li class="d-flex align-items-center justify-content-between">
+                                <%= projectConfiguration.coinName %> TOTAL
 
-                                                                <p id="bjcash_total" ></p>
-                                                            </li>
+                                  <p id="token_total2"></p>
+                              </li>
 
 
 
-                                                        </ul>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
+                            </ul>
+                            <div class="clearfix"></div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
+                          <div class="form-check">
+                            <label class="form-check-label">
                                                             <input class="form-check-input" type="checkbox" onchange="activateButton(this,'BTC')"> I have read and agree with the <a href="https://www.whatshalal.io/terms" target="_blank">Terms &amp; Condition</a></label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
-
-                                                    <button class="btn btn-default" type="submit" id="btc_button" disabled>CONTRIBUTE</button>
-
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
+                        <div class="col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
+
+                          <button class="btn btn-default" type="submit" id="btc_button" disabled>CONTRIBUTE</button>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-
-                <div class="col-lg-6 col-md-12">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
-                            <div class="box_wrap bg-white text-center">
-                                <div class="line"></div>
-                                <h5> <%= projectConfiguration.coinName %> </h5>
-                                <p> 1 <%= projectConfiguration.coinName %> = <%= projectConfiguration.usdConversionRate %>  USD </p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
-                            <div class="box_wrap bg-white text-center">
-                                <div class="line"></div>
-                                <h5> <%= projectConfiguration.coinName %> SOLD </h5>
-                                <p><span> <%= projectConfiguration.tokenSold %>/ <%= projectConfiguration.hardCap %></span></p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.8s" style="animation-delay: 0.8s; opacity: 1;">
-                            <div class="box_wrap bg-white text-center">
-                                <div class="line"></div>
-                                <h5> Presale Start </h5>
-                                <p> <%=projectConfiguration.startDate %></p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
-                            <div class="box_wrap bg-white text-center">
-                                <div class="line"></div>
-                                <h5> Presale End </h5>
-                                <p> <%=projectConfiguration.endDate %></p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1.2s" style="animation-delay: 1.2s; opacity: 1;">
-                            <div class="box_wrap bg-white text-center">
-                                <div class="line"></div>
-                                <h5> Acceptable Currency </h5>
-                                <p> BTC / ETH </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
-    <!-- END SECTION DASHBOARD -->
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel" style="position: absolute;">OTHERS</h4>
-                </div>
-                <div align="center" class="modal-body">
-                    <p align="left">Thank you for your interest in trading with other currencies.<br>
-                        We would like to reach you to better connect with you.<br>
-                        Please provide us your contact details via <%= projectConfiguration.contactEmail %>
 
-                </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="row">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
+              <div class="box_wrap bg-white text-center">
+                <div class="line"></div>
+                <h5> <%= projectConfiguration.coinName %> </h5>
+                <p> 1
+                  <%= projectConfiguration.coinName %> =
+                    <%= projectConfiguration.usdConversionRate %> USD </p>
+              </div>
             </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
+              <div class="box_wrap bg-white text-center">
+                <div class="line"></div>
+                <h5> <%= projectConfiguration.coinName %> SOLD </h5>
+                <p><span> <%= projectConfiguration.tokenSold %>/ <%= projectConfiguration.hardCap %></span></p>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.8s" style="animation-delay: 0.8s; opacity: 1;">
+              <div class="box_wrap bg-white text-center">
+                <div class="line"></div>
+                <h5> Presale Start </h5>
+                <p>
+                  <%=projectConfiguration.startDate %>
+                </p>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
+              <div class="box_wrap bg-white text-center">
+                <div class="line"></div>
+                <h5> Presale End </h5>
+                <p>
+                  <%=projectConfiguration.endDate %>
+                </p>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1.2s" style="animation-delay: 1.2s; opacity: 1;">
+              <div class="box_wrap bg-white text-center">
+                <div class="line"></div>
+                <h5> Acceptable Currency </h5>
+                <p> BTC / ETH </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- End Modal -->
-<!-- / latest exchanges -->
+  </section>
+  <!-- END SECTION DASHBOARD -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="myModalLabel" style="position: absolute;">OTHERS</h4>
+        </div>
+        <div align="center" class="modal-body">
+          <p align="left">Thank you for your interest in trading with other currencies.<br> We would like to reach you to better connect with you.<br> Please provide us your contact details via
+            <%= projectConfiguration.contactEmail %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+  <!-- / latest exchanges -->
 
 
-<!-- / footer -->
-<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-<a href="#" class="scrollup btn-default"><i class="fa fa-angle-up"></i></a>
+  <!-- / footer -->
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <a href="#" class="scrollup btn-default"><i class="fa fa-angle-up"></i></a>
 
-<!-- Latest jQuery -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.whatshalal.io/front/assets1/js/jquery-1.12.4.min.js"></script>
-<!-- Latest compiled and minified Bootstrap -->
-<script src="https://www.whatshalal.io/front/assets1/bootstrap/js/bootstrap.min.js"></script>
-<!-- owl-carousel min js  -->
-<script src="https://www.whatshalal.io/front/assets1/owlcarousel/js/owl.carousel.min.js"></script>
-<!-- magnific-popup min js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/magnific-popup.min.js"></script>
-<!-- waypoints min js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/waypoints.min.js"></script>
-<!-- parallax js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/parallax.js"></script>
-<!-- countdown js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.countdown.min.js"></script>
-<!-- scripts js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.dd.min.js"></script>
-<!-- jquery.counterup.min js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.counterup.min.js"></script>
-<!-- scripts js -->
-<script src="https://www.whatshalal.io/front/assets1/js/scripts.js"></script>
+  <!-- Latest jQuery -->
+  <script src="https://www.whatshalal.io/front/assets1/js/jquery-1.12.4.min.js"></script>
+  <!-- Latest compiled and minified Bootstrap -->
+  <script src="https://www.whatshalal.io/front/assets1/bootstrap/js/bootstrap.min.js"></script>
+  <!-- owl-carousel min js  -->
+  <script src="https://www.whatshalal.io/front/assets1/owlcarousel/js/owl.carousel.min.js"></script>
+  <!-- magnific-popup min js  -->
+  <script src="https://www.whatshalal.io/front/assets1/js/magnific-popup.min.js"></script>
+  <!-- waypoints min js  -->
+  <script src="https://www.whatshalal.io/front/assets1/js/waypoints.min.js"></script>
+  <!-- parallax js  -->
+  <script src="https://www.whatshalal.io/front/assets1/js/parallax.js"></script>
+  <!-- countdown js -->
+  <script src="https://www.whatshalal.io/front/assets1/js/jquery.countdown.min.js"></script>
+  <!-- scripts js -->
+  <script src="https://www.whatshalal.io/front/assets1/js/jquery.dd.min.js"></script>
+  <!-- jquery.counterup.min js -->
+  <script src="https://www.whatshalal.io/front/assets1/js/jquery.counterup.min.js"></script>
+  <!-- scripts js -->
+  <script src="https://www.whatshalal.io/front/assets1/js/scripts.js"></script>
 
-<script src="https://www.whatshalal.io/front/assets1/js/toastr-2.1.3.js"></script>
+  <script src="https://www.whatshalal.io/front/assets1/js/toastr-2.1.3.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
 
 
-<script type="text/javascript">
-
+  <script type="text/javascript">
     toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
     };
-        //this line works as expected
+    //this line works as expected
     toastr.info("Welcome to AUTOCOIN");
+  </script>
 
-
-</script>
-
-<script type="text/javascript">
-  function goTo(baseurl) {
-    token = window.localStorage.getItem('token');
-    window.location.assign(baseurl+token);
-  }
-</script>
-<script type="text/javascript">
+  <script type="text/javascript">
+    function goTo(baseurl) {
+      token = window.localStorage.getItem('token');
+      window.location.assign(baseurl + token);
+    }
+  </script>
+  <script type="text/javascript">
     $('body').addClass('login');
     $('#root-view').addClass('auth-layout');
-</script>
+  </script>
 
-<style type="text/css">
+  <style type="text/css">
     .login-box-body {
-        position: relative;
+      position: relative;
     }
-</style>
-<script>
+  </style>
+  <script>
     $('body').addClass('page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white');
     $('#root-view').addClass('page-wrapper');
-</script>
+  </script>
 
-<script type="text/javascript">
-    $("#subscribe_form").validate(
-        {
-            rules:
-                {
-                    email:{required:true,email:true},
-                },
-            messages:
-                {
-                    email: {required: 'Email is required', email: 'Enter valid email'},
-                }
-        });
-</script><!--selectpicker ends-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
-    <script type="text/javascript">
-        window.setInterval(function ()
-        {
-            get_usd_price();
-        }, 300000);
+  <script type="text/javascript">
+    $("#subscribe_form").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        },
+      },
+      messages: {
+        email: {
+          required: 'Email is required',
+          email: 'Enter valid email'
+        },
+      }
+    });
+  </script>
+  <!--selectpicker ends-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
+  <script type="text/javascript">
+    var minETH;
+    var minBTC;
+    var balBtc;
+    var balEth;
+    window.setInterval(function() {
+      get_usd_price();
+    }, 300000);
 
-        var minETH =0;
-        var minBTC =0;
-        var balBtc =0;
-        var balEth =0;
-        minETH = 0.2286;
-        minBTC = 0.016011;
-        balBtc = 8.91989940;
-        balEth =  0.39980000;
+    $.validator.addMethod('minval', function(value, element) {
+      return this.optional(element) || (value <= balBtc);
+    }, "Please enter a correct number");
 
-        $.validator.addMethod('minval', function (value, element) {
-            return this.optional(element) || (value <= balBtc);
-        }, "Please enter a correct number");
+    $.validator.addMethod('minval1', function(value, element) {
+      return this.optional(element) || (value <= balEth);
+    }, "Please enter a correct number");
 
-        $.validator.addMethod('minval1', function (value, element) {
-            return this.optional(element) || (value <= balEth);
-        }, "Please enter a correct number");
+    $.validator.addMethod('adecimal', function(value, element) {
+      return this.optional(element) || (value > 0);
+    }, "Please enter a correct number");
 
-        $.validator.addMethod('adecimal', function (value, element) {
-            return this.optional(element) || (value > 0);
-        }, "Please enter a correct number");
+    $("#btc_form").validate({
+      rules: {
+        second_currency_price: {
+          required: true,
+          number: true,
+          minval: true,
+          min: minBTC,
+          adecimal: true
+        },
+        jcash_id: {
+          required: true,
+          regex: '^[0-9a-zA-Z]+$'
+        },
 
-        $("#btc_form").validate(
-            {
-                rules:
-                    {
-                        second_currency_price:{required:true,number: true,minval: true,min:minBTC,adecimal: true},
-                        jcash_id:{required:true,regex:'^[0-9a-zA-Z]+$'},
+      },
+      messages: {
 
-                    },
-                messages:
-                    {
+        second_currency_price: {
+          required: 'Amount is required',
+          number: 'Enter valid number',
+          minval: 'Insufficient Balance',
+          min: 'Minimum Amount is ' + minBTC,
+          adecimal: 'Only decimals allowed'
+        },
+        jcash_id: {
+          required: 'JCash Id is required',
+          regex: 'Enter valid JCashId'
+        },
 
-                        second_currency_price:{required:'Amount is required',number:'Enter valid number',minval: 'Insufficient Balance',min: 'Minimum Amount is '+minBTC,adecimal:'Only decimals allowed'},
-                        jcash_id: { required:'JCash Id is required',regex:'Enter valid JCashId'},
+      }
+    });
 
-                    }
-            });
+    $("#eth_form").validate({
+      rules: {
+        second_currency_price: {
+          required: true,
+          number: true,
+          minval1: true,
+          min: minETH,
+          adecimal: true,
+        },
+        jcash_id: {
+          required: true,
+          regex: '^[0-9a-zA-Z]+$'
+        },
+      },
+      messages: {
+        second_currency_price: {
+          required: 'Amount is required',
+          number: 'Enter valid number',
+          minval1: 'Insufficient Balance',
+          min: 'Minimum Amount is ' + minETH,
+          adecimal: 'Only decimals allowed'
+        },
+        jcash_id: {
+          required: 'JCash Id is required',
+          regex: 'Enter valid JCashId'
+        },
+      }
+    });
 
-        $("#eth_form").validate(
-            {
-                rules:
-                    {
-                        second_currency_price:{required:true,number: true,minval1: true,min:minETH, adecimal: true,},
-                        jcash_id:{required:true,regex:'^[0-9a-zA-Z]+$'},
-                    },
-                messages:
-                    {
-                        second_currency_price:{required:'Amount is required',number:'Enter valid number',minval1: 'Insufficient Balance',min: 'Minimum Amount is '+minETH,adecimal:'Only decimals allowed'},
-                        jcash_id: { required:'JCash Id is required',regex:'Enter valid JCashId'},
-                    }
-            });
+    function activateButton(element, currency) {
 
-        function activateButton(element,currency) {
-
-            if (element.checked) {
-                if(currency =='ETH')
-                {
-                    document.getElementById("eth_button").disabled = false;
-                }
-                else
-                {
-                    document.getElementById("btc_button").disabled = false;
-                }
-
-            }
-            else {
-
-                if(currency =='BTC')
-                {
-                    document.getElementById("eth_button").disabled = true;
-                }
-                else
-                {
-                    document.getElementById("btc_button").disabled = true;
-                }
-            }
+      if (element.checked) {
+        if (currency == 'ETH') {
+          document.getElementById("eth_button").disabled = false;
+        } else {
+          document.getElementById("btc_button").disabled = false;
         }
 
-        $(document).ready(function () {
+      } else {
 
-            get_usd_price();
-        });
-        var eth_usd;
-        var btc_usd;
-        var jcash_usd = <%= projectConfiguration.usdConversionRate %> ;
-        var CAP;
-        var Bonus;
-        var eth_price = $('#ETH_second_currency_price').val();
-        var btc_price = $('#BTC_second_currency_price').val();
-        function get_usd_price()
-        {
-            $.ajax({
-                url:'./getUSDPrice',
-                type:'get',
-                success:function(data)
-                {
-
-                    var result = JSON.parse(data);
-                    console.log(result);
-                    eth_usd = result.ETH;
-                    btc_usd = result.BTC;
-                    CAP = result.CAP;
-                    Bonus = result.Bonus;
-                    minETH = result.minETH;
-                    minBTC = result.minBTC;
-                    console.log("Conversit");
-
-                    convert_price(eth_price,'ETH');
-                    convert_price(btc_price,'BTC');
-
-                }
-            });
+        if (currency == 'BTC') {
+          document.getElementById("eth_button").disabled = true;
+        } else {
+          document.getElementById("btc_button").disabled = true;
         }
+      }
+    }
 
-        function convert_price(price,currency)
-        {
-            console.log(price);
-            var cnv;
-            if(currency === 'ETH')
-            {
-                cnv = eth_usd;
-            }
-            else
-            {
-                cnv = btc_usd;
-            }
-            var ourcnv=jcash_usd;
+    $(document).ready(function() {
+      get_usd_price();
+    });
+    var eth_usd;
+    var btc_usd;
+    var token_usd = <%= projectConfiguration.usdConversionRate %>;
+    var token_min = <%= projectConfiguration.minimumContribution %>;
 
-            var inusd=cnv*price;
-            var jcash=(inusd/ourcnv)+(inusd/ourcnv*Bonus);
-            var jcashbonus=(inusd/ourcnv*Bonus);
-
-
-            if(currency === 'ETH')
-            {
-                $('#ejcash_total').html(jcash.toFixed(2));
-                $('#ejcash_bonus').html(jcashbonus.toFixed(2));
-                $('#ETH_first_currency_price').val(jcash.toFixed(2));
-            }
-            else
-            {
-                $('#bjcash_total').html(jcash.toFixed(2));
-                $('#bjcash_bonus').html(jcashbonus.toFixed(2));
-                $('#BTC_first_currency_price').val(jcash.toFixed(2));
-            }
+    function get_usd_price() {
+      $.ajax({
+        url: './getUSDPrice',
+        type: 'get',
+        success: function(result) {
+          eth_usd = result.ETH;
+          btc_usd = result.BTC;
+          minETH = token_min/eth_usd;
+          minBTC = token_min/btc_usd;
+          $('#ETH_second_currency_price').val(minEth.toFixed(4));
+          $('#BTC_second_currency_price').val(minBTC.toFixed(4));
+          convert_price(minEth, 'ETH');
+          convert_price(minBTC, 'BTC');
 
         }
+      });
+    }
 
-    </script>
+    function convert_price(to_spend, currency) {
+      if(currency=="ETH")
+        $('#token_total').html((to_spend*eth_usd/token_usd).toFixed(2));
+      else {
+        $('#token_total2').html((to_spend*btc_usd/token_usd).toFixed(2));
+      }
+    }
+  </script>
 
-</body>
+  </body>
+
 </html>

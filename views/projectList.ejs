@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+
+<head>
+  <title>AutoCoin</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <style>
+    body {
+      padding-top: 80px;
+      word-wrap: break-word;
+      /* Standard syntax (must be last) */
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    <div class="container">
+
+      <div class="row align-items-left">
+        <div class="content_box">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Sl.No</th>
+                  <th>Client Email</th>
+                  <th>Project Name</th>
+                  <th>Deployment Status</th>
+                  <th>Deployment Address</th>
+                  <th>Deployment Tx Hash</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(clients){ %>
+                  <% for(var i=0; i<clients.length; i++) { %>
+                    <tr>
+                      <td rowspan="<%= clients[i].projectConfigurations.length %>"><%= i+1 %></td>
+                      <td rowspan="<%= clients[i].projectConfigurations.length %>"><%= clients[i].email %></td>
+                      <% for(var j=0; j<clients[i].projectConfigurations.length; j++) { %>
+
+                          <td>
+                            <%= clients[i].projectConfigurations[j].coinName %>
+                          </td>
+                          <% if(clients[i].projectConfigurations[j].contractAddress){ %>
+                            <td>True</td>
+                            <td>
+                              <%= clients[i].projectConfigurations[j].contractAddress %>
+                            </td>
+                            <td>
+                              <%= clients[i].projectConfigurations[j].contractHash %>
+                            </td>
+                            <% } else { %>
+                              <td>False</td>
+                              <td> None </td>
+                              <td> None </td>
+                              <% } %>
+                        </tr>
+                      <% } %>
+                    <% } %>
+                  <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
