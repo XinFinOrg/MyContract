@@ -6,59 +6,58 @@ var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
 
-
-
-
 module.exports = {
 
-  getBytecode: async function (req, res) {
-    var projectdata = await client.find({
+  getBytecode: async function(req, res) {
+    var coinName = req.session.coinName;
+    ProjectConfiguration.find({
       where: {
-        'email': req.user.email
+        'coinName': coinName
       },
-      include: ['projectConfigurations'],
-    })
-    fs.readFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory", req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".sol"), "utf8",
-      function (err, doc) {
-        if (err) {
-          return console.log(err);
-        }
-        byteCode = solc.compile(doc.toString(), 1).contracts[':Coin'];
-        //file read for contract bytecode
-        fs.writeFile(path.resolve(__dirname, "..", "./contractCreator/contractDirectory/" + req.user.email + "/" + projectdata.projectConfigurations[0].dataValues.coinName + ".bytecode"), byteCode.bytecode, {
-          flag: 'w'
-        }, function (err) {
-          if (err) return console.log(err);
-        });
+      attributes: ['coinName', 'contractCode', 'contractByteCode']
+    }).then(async projectData => {
+      byteCode = projectData.contractByteCode;
+      console.log(byteCode);
+      if (byteCode == null){
+        byteCode = solc.compile(projectData.contractCode, 1).contracts[':Coin'].bytecode;
+        projectData.contractByteCode = byteCode;
+        await projectData.save();
+      }
 
-
-        res.send({ bytecode: byteCode.bytecode })
-      });
-  },
-
-  saveDeploymentData: async function (req, res) {
-    var projectdata = await client.find({
-      where: {
-        'email': req.user.email
-      },
-      include: ['projectConfigurations'],
-    })
-    await ProjectConfiguration.update(
-      { 'contractAddress': req.body.contractAddress, 'contractHash': req.body.contractTxHash },
-      { where: { client_id: projectdata.projectConfigurations[0].dataValues.client_id } }).then(updateddata => {
-        if (!updateddata)
-          console.log("Project update failed !");
-        req.session.contractAddress = req.body.contractAddress;
-        req.session.contractTxHash = req.body.contractTxHash;
-        console.log("Project updated successfully!");
-        req.flash('contract_flash', 'Contract mined successfully!');
-        res.redirect('/generatedContract');
-
-
+      res.send({
+        bytecode: byteCode
       })
+
+    });
   },
 
-  getDeployer: function (req, res) {
+  saveDeploymentData: async function(req, res) {
+    var projectdata = await client.find({
+      where: {
+        'email': req.user.email
+      },
+      include: ['projectConfigurations'],
+    })
+    await ProjectConfiguration.update({
+      'contractAddress': req.body.contractAddress,
+      'contractHash': req.body.contractTxHash
+    }, {
+      where: {
+        client_id: projectdata.projectConfigurations[0].dataValues.client_id
+      }
+    }).then(updateddata => {
+      if (!updateddata)
+        console.log("Project update failed !");
+      req.session.contractAddress = req.body.contractAddress;
+      req.session.contractTxHash = req.body.contractTxHash;
+      req.flash('contract_flash', 'Contract mined successfully!');
+      res.redirect('/generatedContract');
+
+    })
+  },
+
+  getDeployer: function(req, res) {
+    req.session.coinName = req.query.coinName;
     res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
   }
 }

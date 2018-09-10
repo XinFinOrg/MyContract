@@ -6,7 +6,7 @@ const multer = require('multer');
 const logger = require('morgan');
 var passport = require('passport');
 var flash = require('connect-flash');
-var config = require('./config/dev')
+var config = require('./config/dev');
 
 const app = express();
 const session = require('express-session');

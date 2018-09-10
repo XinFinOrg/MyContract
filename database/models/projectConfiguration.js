@@ -77,6 +77,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    contractCode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    contractByteCode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     contractHash: {
       type: DataTypes.STRING,
       allowNull: true,

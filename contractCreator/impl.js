@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const nodemailerAuth = require("../config/auth").nodemailerAuth;
-// var User = require('../userlogin/models');
 var coin, templateCoin, mintableContract, burnableContract, releaseableContract, upgradeableContract;
 var filereaderservice = require('../filereader/impl');
 var result;
@@ -39,12 +38,6 @@ fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8",
     }
     burnableContract = data;
   });
-fs.readFile(path.resolve(__dirname + "/contracts/" + "coin.sol"), "utf8", function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  coin = data;
-});
 
 var nodemailerservice = require('../emailer/impl');
 module.exports = {
@@ -54,7 +47,6 @@ module.exports = {
   },
 
   createContract: async function (req, res) {
-    console.log("Template data is ", templateCoin);
     if (!fs.existsSync(__dirname + "/contractDirectory")) {
       fs.mkdirSync(__dirname + "/contractDirectory");
     }
@@ -62,22 +54,6 @@ module.exports = {
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
     }
-
-
-    var mapObj = {
-      tokenName: req.body.token_name,
-      tokenSymbol: req.body.token_symbol,
-      tokenDecimals: req.body.token_decimals.toString(),
-      tokenTotalSupply: req.body.token_supply.toString(),
-      tokenOnSale: req.body.token_sale.toString(),
-      tokenPricePerToken: req.body.eth_tokens.toString()
-    };
-    result = coin.replace(
-      /tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken/gi,
-      function (matched) {
-        return mapObj[matched];
-      }
-    );
     // custom token
     var mint = "";
     var allContracts = "";
@@ -92,37 +68,30 @@ module.exports = {
     var isMintable = (req.body.isM == "on") ? true : false;;
 
     generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
-
-    fs.writeFile(path.resolve(userDir + "/" + req.body.token_name + ".sol"), result, {
-      flag: 'w'
-    }, function (err) {
-      if (err)
-        return console.log(err);
-    });
-
     nodemailerservice.sendContractEmail(req.user.email, result);
     req.session.contract = result;
+    req.session.coinName = req.body.token_name;
     var clientdata = await client.find({
       where: {
         'email': req.user.email
       }
-    })
+    });
     var objdata = new Object();
+    objdata.contractCode = result;
     objdata.coinName = req.body.token_name;
     objdata.tokenSupply = req.body.token_supply;
     objdata.hardCap = req.body.token_sale;
     var projectData = await ProjectConfiguration.create(objdata)
     clientdata.addProjectConfiguration(projectData);
     //packageremoval will be added here
-    console.log("info updated");
     res.redirect('/generatedContract');
   },
 
   getGeneratedContract: function (req, res) {
-    // console.log(req.session.contract);
     res.render('deployedContract', {
       user: req.user,
       contract: req.session.contract,
+      coinName: req.session.coinName
     });
   }
 }
