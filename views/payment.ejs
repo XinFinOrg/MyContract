@@ -10,11 +10,10 @@
     body {
       padding-top: 80px;
       word-wrap: break-word;
-      background-image: linear-gradient(180deg,rgba(53, 53, 138, 0.623), white); /* Standard syntax (must be last) */
+      background-image: linear-gradient(180deg, rgba(53, 53, 138, 0.623), white);
+      /* Standard syntax (must be last) */
 
     }
-
-    
   </style>
 </head>
 
@@ -22,7 +21,7 @@
   <div class="container">
 
     <div class="page-header">
-      <h1 class="text-center"> Payment</h1>
+      <h1 class="text-center"> Package Cart</h1>
       <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
       <a href="/profile" class="btn btn-default btn-sm pull-left fa fa-power-on"> Back</a>
 
@@ -33,20 +32,22 @@
 
       <!-- LOCAL INFORMATION -->
       <div class="col-lg-12 text-center">
-          <div class="row">
+        <div class="row">
           <div class="col-lg-12 text-center">
-        <div class="well">
-          <h3><span ></span> Payment </h3><br><hr>
-          <h4><%= user.ethereumAccount %></h4>
+            <div class="well">
+              <h3><span></span> PAYMENT INFORMATION </h3><br>
+              <hr>
+              <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=<%= user %>">
+              <h4><%= user %></h4><hr>
+              <!-- <h3>Make Payment to this Address by Scaning QR code from Xinfin e-wallet or address!</h3> -->
+              <!-- <p>In case of new e-wallet account <a href="https://ewallet.xinfin.org" target="_blank">Click Here!</a></p> -->
 
-          <h3>Make Payment to this Ethereum Address by Scaning QR code or address!</h3>
 
-         
+            </div>
+          </div>
         </div>
       </div>
-     </div>
-</div>
-  </div>
+    </div>
   </div>
 </body>
 

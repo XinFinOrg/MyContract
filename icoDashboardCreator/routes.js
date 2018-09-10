@@ -8,6 +8,10 @@ module.exports = function (app, sequelize, DataTypes) {
   app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
+  app.get('/icoDashboardSetup/project/:projectName/kyctab', impl.getKYCPage);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata', impl.getICOdata);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab/projectName/:projectName/:userid/getUserData', impl.getUserData);
+  app.post('/icoDashboardSetup/project/:projectName/kyctab/projectName/:projectName/:userid/updateUserData', impl.updateUserData);
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);

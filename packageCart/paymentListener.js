@@ -1,51 +1,30 @@
 const Web3 = require('web3');
-const keythereum = require('keythereum');
-const ethTx = require('ethereumjs-tx');
-const sleep = require('sleep');
+var db = require('../database/models/index');
+var client = db.client;
+var ws_provider = 'wss://ropsten.infura.io/ws'
+var web3 = new Web3(new Web3.providers.WebsocketProvider(ws_provider))
+var config = new Object();
+config.erc20ABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "remaining", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }];
+config.tokenShortName = "XDC";
+config.tokenAddress = "0x57cc73381e3b6b0684214faf3cf10e3124edcd10";
+config.tokenDecimals = 18;
+config.tokenName = "XDCCoin";
+config.tokenTotalSupply = 1000000000000000;
+var contractinst = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
+console.log("listener started")
+var a = [];
+client.findAll({
+    include: ['userCurrencyAddresses']
+  }).then(result => {
 
-if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-} else {
-    var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/78791c2bd8794f2693aa31db1ae6d4f3'));
-}
-
- web3.eth.subscribe('newBlockHeaders', function(error, result){
-    if (!error) {
-        console.log(result);
-
-        return;
-    }
-
-    console.error(error);
-})
-.on("data", function(blockHeader){
-    console.log(blockHeader);
-})
-.on("error", console.error);
-
-// console.log("Hello");
-// var blockNo = 0;
-
-// // function checkForNewBlock() {
-// //     var number = web3.eth.blockNumber;
-// //     return number;
-// // }
-// while (true) {
-//             var numbers = 0;
-//         console.log("number ", numbers);
-//         var blockData = web3.eth.getBlock("latest");
-//         console.log("details:",blockData.number);
-//         var txData;
-//         var i = 0;
-//         for (i = 0; i < blockData.transactions.length; i++) {
-//             txData = web3.eth.getTransaction(blockData.transactions[i]);
-//             if (txData.to == "0x464f383020dd7c8efd7db843049dabdd729d4c92") {
-//                 console.log("transaction detected");
-//                 console.log("txData", txData);
-//             } 
-//             else{
-//                 console.log(" No transaction");
-//             }
-//         }
-
-// }
+        // console.log(result[].userCurrencyAddresses) 
+        result.forEach(element => {
+            console.log(element.userCurrencyAddresses[0].dataValues.address)
+            a.push(element.userCurrencyAddresses[0].dataValues.address)
+        });
+   
+    
+    });
+contractinst.events.Transfer({ _to:a}, { fromBlock: 0, toBlock: 'latest' }, function (err, res) {
+    console.log(err, res.returnValues);
+}); 

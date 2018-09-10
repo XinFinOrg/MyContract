@@ -5,6 +5,7 @@ const ImageDataURI = require('image-data-uri');
 var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
+var User = db.user;
 var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var Address = db.userCurrencyAddress;
@@ -15,7 +16,7 @@ var Project = db.projectConfiguration;
 
 module.exports = {
   //client setup
-  icoDashboardSetup: function(req, res) {
+  icoDashboardSetup: function (req, res) {
     console.log(req.params, "project")
     res.render('icoDashboard', {
       user: req.user,
@@ -23,14 +24,14 @@ module.exports = {
     });
   },
 
-  siteConfiguration: function(req, res) {
+  siteConfiguration: function (req, res) {
     console.log(req.params, "project")
     res.render('siteConfiguration', {
       user: req.user,
       projectName: req.params.projectName
     });
   },
-  getSiteConfiguration: function(req, res) {
+  getSiteConfiguration: function (req, res) {
     client.findAll({
       where: {
         'email': req.user.email,
@@ -61,7 +62,7 @@ module.exports = {
       }
     });
   },
-  updateSiteConfiguration: async function(req, res) {
+  updateSiteConfiguration: async function (req, res) {
     var projectdata = await client.find({
       where: {
         'email': req.user.email
@@ -91,19 +92,64 @@ module.exports = {
       "usdConversionRate": req.body.usd_conversion_rate,
       "minimumContribution": req.body.minimum_contribution,
     }, {
-      where: {
-        "client_id": projectdata.projectConfigurations[0].dataValues.client_id
-      }
-    }).then(updatedata => {
-      if (!updatedata)
-        console.log("Project update failed !");
-      console.log("Project updated successfully!");
-      res.redirect("/icoDashboardSetup/project/" + req.body.coin_name)
-    });
+        where: {
+          "client_id": projectdata.projectConfigurations[0].dataValues.client_id
+        }
+      }).then(updatedata => {
+        if (!updatedata)
+          console.log("Project update failed !");
+        console.log("Project updated successfully!");
+        res.redirect("/icoDashboardSetup/project/" + req.body.coin_name)
+      });
   },
 
-  getICOdata: async function(req, res) {
+  getKYCPage: async function (req, res) {
+    res.render("kyctab.ejs")
+  },
+  getICOdata: async function (req, res) {
+    var userdata = await User.find({
+      where: {
+        "projectConfigurationCoinName": "don"
+      },
+      attributes: { exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password", "uniqueId"] }
+    })
 
+    res.send({ data: [userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues] });
+  },
+  getUserData: async function (req, res) {
+    var userdata = new Object();
+    User.find({
+      where: {
+        "projectConfigurationCoinName": "don", "id": req.params.userid
+      },
+    }).then(result => {
+      console.log(result.dataValues)
+      userdata = result.dataValues;
+      console.log(userdata,"helloS")
+
+      if (result.dataValues.kycDoc1) {
+        userdata.kycDoc1 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc1).toString('base64')
+        userdata.kycDoc2 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc2).toString('base64')
+        userdata.kycDoc3 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc3).toString('base64')
+      }
+      res.render("adminKYCpanel.ejs", { KYCdata: userdata })
+    })
+  
+  },
+  updateUserData: async function (req, res) {
+    var userdata = await User.find({
+      where: {
+        "projectConfigurationCoinName": "don", "id": req.params.userid
+      },
+    })
+    userdata.kyc_verified = req.body.kyc_verified;
+    userdata.status = req.body.status;
+    userdata.save().then(function (result, error) {
+      if (!result)
+        console.log("not updated");
+      console.log("updated");
+    })
+    res.redirect("/kycTab")
   },
 
   //user login
@@ -112,21 +158,21 @@ module.exports = {
       message: req.flash('loginMessage')
     });
   },
-  getUserSignup: function(req, res) {
+  getUserSignup: function (req, res) {
     res.render("userSignup.ejs", {
       projectName: req.params.projectName,
       message: req.flash('signupMessage')
     });
   },
 
-  getUserLogin: function(req, res) {
+  getUserLogin: function (req, res) {
     res.render("userLogin.ejs", {
       'projectName': req.params.projectName,
       message: req.flash('signupMessage')
     });
   },
 
-  postUserLogin: async function(req, res, next) {
+  postUserLogin: async function (req, res, next) {
     passport.authenticate('user-login', {
       session: false
     }, async (err, user, info) => {
@@ -144,8 +190,8 @@ module.exports = {
           userEmail: user.email,
           projectName: user.projectConfigurationCoinName
         }, configAuth.jwtAuthKey.secret, {
-          expiresIn: configAuth.jwtAuthKey.tokenLife
-        });
+            expiresIn: configAuth.jwtAuthKey.tokenLife
+          });
         //Send back the token to the user
         res.cookie('token', token, {
           expire: 360000 + Date.now()

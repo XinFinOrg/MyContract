@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       defaultValue: 0
     },
-
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
@@ -27,14 +26,14 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue:DataTypes.NOW
+      defaultValue: DataTypes.NOW
     },
   }, {});
-  userCurrencyAddress.associate = function(models) {};
+  userCurrencyAddress.associate = function (models) { };
   return userCurrencyAddress;
 };
