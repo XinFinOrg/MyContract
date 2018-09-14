@@ -76,6 +76,8 @@ module.exports = {
     objdata.hardCap = req.body.token_sale;
     var projectData = await ProjectConfiguration.create(objdata)
     clientdata.addProjectConfiguration(projectData);
+    clientdata.package1-=1;
+    await clientdata.save();
     //packageremoval will be added here
     res.redirect('/generatedContract');
   },

@@ -221,7 +221,6 @@ module.exports = function(passport) {
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
       process.nextTick(function() {
-        var newUser = new Object();
         // try to find the user based on their google id
         client.find({
           where: {
@@ -230,28 +229,11 @@ module.exports = function(passport) {
         }).then(async result => {
           if (result) {
             result.google_id = profile.id;
-            result.save().then(function(error, result) {
-              console.log(error, result, "inside")
-            })
+            await result.save();
             return done(null, result.dataValues);
-            console.log(result.dataValues)
-            newUser.google_id = profile.id;
-            // if a user is found, log them in
-            client.update({
-              "google_id": profile.id
-            }, {
-                where: {
-                  'email': profile.emails[0].value
-                }
-              }).then(function (result) {
-                if (!result)
-                  console.log("null");
-                  console.log(result.dataValues,"hello")
-                return done(null, result.dataValues);
-              })
-
           } else {
             // if the user isnt in our database, create a new user
+            var newUser = new Object();
             // set all of the relevant information
             newUser.google_id = profile.id;
             newUser.name = profile.displayName;
@@ -286,29 +268,20 @@ module.exports = function(passport) {
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
       process.nextTick(function() {
-        var newUser = new Object();
+
         // try to find the user based on their google id
         client.find({
           where: {
             'email': profile.emails[0].value
           }
         }).then(async result => {
-          newUser.github_id = profile.id;
-
           if (result) {
-            client.update({
-              "github_id": profile.id
-            }, {
-              where: {
-                'email': profile.emails[0].value
-              }
-            }).then(function(res) {
-              if (!res)
-                console.log("null");
-              return done(null, result.dataValues);
-            })
+            result.github_id = profile.id;
+            await result.save();
+            return done(null, result.dataValues);
           } else {
             // if the user isnt in our database, create a new user
+            var newUser = new Object();
             // set all of the relevant information
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;

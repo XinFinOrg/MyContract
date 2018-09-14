@@ -12,7 +12,6 @@
       word-wrap: break-word;
       background-image: linear-gradient(180deg, rgba(53, 53, 138, 0.623), white);
       /* Standard syntax (must be last) */
-
     }
   </style>
 </head>
@@ -23,56 +22,11 @@
     <div class="page-header">
       <h1 class="text-center"><span class="fa fa-user"></span> Profile Page</h1>
       <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
-      <a href="/profileDetails" class="btn btn-default btn-sm pull-right fa fa-power-off">Profile</a>
+      <a href="/profileDetails" class="btn btn-default btn-sm pull-right fa fa-user">Profile</a>
       <br><br>
     </div>
 
     <div class="row">
-
-      <!-- LOCAL INFORMATION -->
-      <div class="col-sm-6 text-center">
-        <div class="row">
-          <div class="col-sm-12 text-center">
-            <div class="well">
-              <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
-
-              <table class="table text-left">
-                <thead>
-                  <tr>
-                    <th>Coin Name</th>
-                    <th>Contract Address</th>
-                    <th>Transaction Hash</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                  <tr>
-                    <td> <%= ProjectConfiguration.coinName %> </td>
-                    <td><%= ProjectConfiguration.contractAddress %> </td>
-                    <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
-                  </tr>
-                  <% }) %>
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-        </div>
-        <br><br><br>
-        <% if (message.length >0) { %>
-          <div class="alert alert-danger">
-            <%= message %>
-          </div>
-          <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
-          <% } %>
-          <br><br>
-          <% if (contractMessage.length >0) { %>
-            <div class="alert alert-success">
-                <strong>Success!</strong> Contract Mined Succefully!
-              </div>
-              <br>
-            <% } %>
-      </div>
       <div class="col-sm-6 text-center">
         <div class="row">
           <div class="col-sm-12 text-center">
@@ -95,7 +49,10 @@
             <div class="well">
               <h3>Smart Contract Deployment</h3>
               <br>
-              <a href="/deployer" class="btn btn-default btn-sm">Deploy Contract</a>
+              <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                <a href="/deployer?coinName=<%= ProjectConfiguration.coinName %>" class="btn btn-default btn-sm">Deploy <%= ProjectConfiguration.coinName %>
+                </a><br><br>
+                <% }) %>
 
             </div>
           </div>
@@ -104,12 +61,64 @@
               <h3>ICO platforms</h3>
               <br>
               <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="btn "><%= ProjectConfiguration.coinName %>
-                </a><br>
+                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="btn btn-default btn-sm" disabled>
+                  <%= ProjectConfiguration.coinName %>
+                </a><br><br>
                 <% }) %>
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-sm-6 text-center">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <div class="well">
+              <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
+
+              <table class="table text-left">
+                <thead>
+                  <tr>
+                    <th>Coin Name</th>
+                    <th>Contract Address</th>
+                    <th>Transaction Hash</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                    <tr>
+                      <td>
+                        <%= ProjectConfiguration.coinName %>
+                      </td>
+                      <% if(ProjectConfiguration.contractAddress) {%>
+                        <td>
+                          <%= ProjectConfiguration.contractAddress %>
+                        </td>
+                        <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
+                        <% } else { %>
+                          <td colspan="2"> Not deployed yet
+                        <% } %>
+                    </tr>
+                    <% }) %>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <br><br><br>
+        <% if (message.length >0) { %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+          <% } %>
+            <br><br>
+            <% if (contractMessage.length >0) { %>
+              <div class="alert alert-success">
+                <strong>Success!</strong> Contract Mined Succefully!
+              </div>
+              <br>
+              <% } %>
       </div>
     </div>
 

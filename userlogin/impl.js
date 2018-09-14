@@ -43,10 +43,8 @@ module.exports = {
       }],
     }).then(values => {
       values[0].projectConfigurations.forEach(element => {
-        console.log(element, "hello")
         projectarray.push(element.dataValues);
       });
-      console.log(projectarray, "prject array")
       res.render('profile.ejs', {
         user: req.user, // get the user out of session and pass to template
         ProjectConfiguration: projectarray,
@@ -88,7 +86,6 @@ module.exports = {
     })
   },
   KYCdocUpload: function (req, res) {
-    console.log("req.data",req.body);
     client.update({
       "name":req.body.first_name+" "+req.body.last_name,
       "isd_code":req.body.ISD_code,
@@ -110,7 +107,6 @@ module.exports = {
     client.findAll({
       include: [ProjectConfiguration]
     }).then((clients)=>{
-      console.log(clients);
       res.render('projectList.ejs', {
         clients: clients
       })

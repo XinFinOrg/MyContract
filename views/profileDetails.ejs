@@ -22,7 +22,7 @@
     <div class="page-header">
       <h1 class="text-center"><span class="fa fa-user"></span> Profile Details Page</h1>
       <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
-      <a href="/profile" class="btn btn-default btn-sm pull-right fa fa-power-off"> Back</a>
+      <a href="/profile" class="btn btn-default btn-sm pull-right fa fa-arrow-left"> Back</a>
       <br><br>
     </div>
 
@@ -33,6 +33,9 @@
         <p>
           <strong>Email</strong>:
           <%= user.email %><br><br>
+          <strong>Packages Bought</strong>:<br>
+          Package 1 : <%= user.package1 %> credits<br>
+          Package 2 : <%= user.package2 %> credits
         </p>
       </div>
     </div>
