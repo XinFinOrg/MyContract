@@ -13,7 +13,8 @@ var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
 let Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
-var keythereum = require("keythereum");
+const Web3 = require('web3');
+const web3 = new Web3();
 
 // methods ======================
 function generateHash(password) {
@@ -21,16 +22,8 @@ function generateHash(password) {
 };
 
 function generateNewAccount(password) {
-  var params = {
-    keyBytes: 32,
-    ivBytes: 16
-  };
-  var dk = keythereum.create(params);
-  return keythereum.dump(password, dk.privateKey, dk.salt, dk.iv)
-};
+  return web3.eth.accounts.create(web3.utils.randomHex(32));
 
-function generateCipher() {
-  return cipher = bcrypt.hashSync(((Math.random() * (99999 - 10000)) + 10000), bcrypt.genSaltSync(8), null);
 };
 
 module.exports = function(passport) {
@@ -207,6 +200,7 @@ module.exports = function(passport) {
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               createdClient.addUserCurrencyAddress(createdEthAddress);
+              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             });
           }
@@ -271,6 +265,7 @@ module.exports = function(passport) {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
+              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             })
           }
@@ -327,6 +322,7 @@ module.exports = function(passport) {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
+              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             });
           }
@@ -339,9 +335,10 @@ module.exports = function(passport) {
 function generateEthAddress() {
   return new Promise(async function(resolve, reject) {
     var newEthAddress = new Object();
-    newEthAddress.cipher = generateCipher();
-    var keyStore = generateNewAccount(newEthAddress.cipher);
-    newEthAddress.address = "0x" + keyStore.address;
+    var keyStore = generateNewAccount();
+    console.log(keyStore);
+    newEthAddress.privateKey = keyStore.privateKey;
+    newEthAddress.address = keyStore.address;
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
   });

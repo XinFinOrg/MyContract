@@ -1,0 +1,40 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+  <title>AutoCoin</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <style>
+    body {
+      padding-top: 80px;
+      word-wrap: break-word;
+      background-image: linear-gradient(180deg, rgba(53, 53, 138, 0.623), white);
+      /* Standard syntax (must be last) */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="page-header">
+      <h1 class="text-center"><span class="fa fa-user"></span> Profile Details Page</h1>
+      <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
+      <a href="/profile" class="btn btn-default btn-sm pull-right fa fa-power-off"> Back</a>
+      <br><br>
+    </div>
+
+    <div class="col-sm-12 text-center">
+      <div class="well">
+        <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
+
+        <p>
+          <strong>Email</strong>:
+          <%= user.email %><br><br>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>

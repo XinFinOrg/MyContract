@@ -38,10 +38,7 @@ contract UpgradeAgent {
 
 /**
  * A token upgrade mechanism where users can opt-in amount of tokens to the next smart contract revision.
- * First envisioned by Golem and Lunyr projects.
- * Taken and inspired from https://tokenmarket.net
  */
-
 
 contract UpgradeableToken is StandardToken {
 
@@ -57,7 +54,7 @@ contract UpgradeableToken is StandardToken {
   /**
    * Upgrade states.
    *
-   * - NotAllowed: The child contract has not reached a condition where the upgrade can bgun
+   * - NotAllowed: The child contract has not reached a condition where the upgrade can begin
    * - WaitingForAgent: Token allows upgrade, but we don't have a new agent yet
    * - ReadyToUpgrade: The agent is set, but not a single token has been upgraded yet
    * - Upgrading: Upgrade agent is set and the balance holders can upgrade their tokens

@@ -1,6 +1,5 @@
 /**
  * Define interface for releasing the token transfer after a successful crowdsale.
- * Taken and inspired from https://tokenmarket.net
  */
 
 contract ReleasableToken is ERC20, Ownable {
@@ -8,7 +7,7 @@ contract ReleasableToken is ERC20, Ownable {
   /* The finalizer contract that allows unlift the transfer limits on this token */
   address public releaseAgent;
 
-  /** A crowdsale contract can release us to the wild if ICO success. If false we are are in transfer lock up period.*/
+  /** If false we are are in transfer lock up period.*/
   bool public released = false;
 
   /** Map of agents that are allowed to transfer tokens regardless of the lock down period. These are crowdsale contracts and possible the team multisig itself. */
@@ -16,14 +15,12 @@ contract ReleasableToken is ERC20, Ownable {
 
   /**
    * Limit token transfer until the crowdsale is over.
-   *
    */
   modifier canTransfer(address _sender) {
 
     if(!released) {
         require(transferAgents[_sender]);
     }
-
     _;
   }
 

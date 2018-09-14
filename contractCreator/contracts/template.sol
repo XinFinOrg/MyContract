@@ -4,7 +4,6 @@ pragma solidity ^0.4.4;
  * @title ERC20 interface
  * see https://github.com/ethereum/EIPs/issues/20
  */
-
 contract ERC20 {
 
   uint public totalSupply;
@@ -21,7 +20,6 @@ contract ERC20 {
   event Approval(address indexed owner, address indexed spender, uint value);
 
 }
-
 
 /**
  * @title Ownable
@@ -95,13 +93,8 @@ contract SafeMathLib {
   }
 }
 
-
-
 /**
  * Standard ERC20 token with Short Hand Attack and approve() race condition mitigation.
- *
- * Based on code by FirstBlood:
- * https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol
  */
 contract StandardToken is ERC20, SafeMathLib {
 
@@ -140,10 +133,11 @@ contract StandardToken is ERC20, SafeMathLib {
 
   function approve(address _spender, uint _value) returns (bool success) {
 
-    // To change the approve amount you first have to reduce the addresses`
-    //  allowance to zero by calling `approve(_spender, 0)` if it is not
-    //  already 0 to mitigate the race condition described here:
-    //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+    /** To change the approve amount you first have to reduce the addresses`
+    *  allowance to zero by calling `approve(_spender, 0)` if it is not
+    *  already 0 to mitigate the race condition described here:
+    *  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+    */
     require(!((_value != 0) && (allowed[msg.sender][_spender] != 0)));
 
     allowed[msg.sender][_spender] = _value;
@@ -177,10 +171,6 @@ contract Coin is allContracts {
 
   event UpdatedTokenInformation(string newName, string newSymbol);
 
-
-//-------------------- changeable stuff starts here---------------------
-
-
   /* name of the token */
   string public name = "tokenName";
 
@@ -190,27 +180,14 @@ contract Coin is allContracts {
   /* token decimals to handle fractions */
   uint public decimals = tokenDecimals;
 
-/* initial token supply */
+  /* initial token supply */
 
   uint public onSaleTokens = tokenOnSale * (10 ** decimals);
 
   uint256 pricePerToken = tokenPricePerToken;
 
-
-// minEther  = (o.2/currentETHtoUSD) * 2500
-// maxEther = (0.2/currentETHtoUSD) * (to be specified)
-// 1 eth = 3379.53998
-// etherToUSD = 675.907996
-  uint minETH = 0; //   etherToUSD = 675.907996  (2500 Token)
-  uint maxETH = 500 * 10**decimals; // 500 ether  (1689769.99 Token)
-
-
-
-//-------------------- changeable stuff ends here---------------------
-
-
-
-
+  uint minETH = 0;                  // 0 ether
+  uint maxETH = 500 * 10**decimals; // 500 ether
 
   //Crowdsale running
   bool public isCrowdsaleOpen=false;
@@ -220,7 +197,6 @@ contract Coin is allContracts {
   address contractAddress;
 
   function Coin() upgradeCon {
-
     owner = msg.sender;
     contractAddress = address(this);
     totalSupply = tokenTotalSupply * (10 ** decimals);
@@ -235,14 +211,12 @@ contract Coin is allContracts {
     UpdatedTokenInformation(name, symbol);
   }
 
-
   function sendTokensToOwner(uint _tokens) onlyOwner returns (bool ok){
       require(balances[contractAddress] >= _tokens);
       balances[contractAddress] = safeSub(balances[contractAddress],_tokens);
       balances[owner] = safeAdd(balances[owner],_tokens);
       return true;
   }
-
 
   /* single address */
   function sendTokensToInvestors(address _investor, uint _tokens) onlyOwner returns (bool ok){
@@ -252,8 +226,6 @@ contract Coin is allContracts {
       balances[_investor] = safeAdd(balances[_investor],_tokens);
       return true;
   }
-
-
 
   /* A dispense feature to allocate some addresses with tokens
   * calculation done using token count
@@ -269,7 +241,6 @@ contract Coin is allContracts {
      return true;
   }
 
-
   function startCrowdSale() onlyOwner {
      isCrowdsaleOpen=true;
   }
@@ -277,7 +248,6 @@ contract Coin is allContracts {
    function stopCrowdSale() onlyOwner {
      isCrowdsaleOpen=false;
   }
-
 
  function setPublicSaleParams(uint _tokensForPublicSale, uint _min, uint _max, bool _crowdsaleStatus ) onlyOwner {
     require(_tokensForPublicSale != 0);
@@ -296,20 +266,6 @@ contract Coin is allContracts {
       tokensForPublicSale = _value;
   }
 
-//  function increaseSupply(uint value) onlyOwner returns (bool) {
-//   totalSupply = safeAdd(totalSupply, value);
-//   balances[contractAddress] = safeAdd(balances[contractAddress], value);
-//   Transfer(0x0, contractAddress, value);
-//   return true;
-// }
-
-// function decreaseSupply(uint value) onlyOwner returns (bool) {
-//   balances[contractAddress] = safeSub(balances[contractAddress], value);
-//   totalSupply = safeSub(totalSupply, value);
-//   Transfer(contractAddress, 0x0, value);
-//   return true;
-// }
-
   function setMinAndMaxEthersForPublicSale(uint _min, uint _max) onlyOwner{
       require(_min >= 0);
       require(_max > _min+1);
@@ -322,26 +278,21 @@ contract Coin is allContracts {
       pricePerToken = _value;
   }
 
-
   function updateOnSaleSupply(uint _newSupply) onlyOwner{
       require(_newSupply != 0);
       onSaleTokens = _newSupply;
   }
 
-
   function buyTokens() public payable returns(uint tokenAmount) {
-
     uint _tokenAmount;
     uint multiplier = (10 ** decimals);
     uint weiAmount = msg.value;
 
     require(isCrowdsaleOpen);
-    //require(whitelistedAddress[msg.sender]);
-
     require(weiAmount >= minETH);
     require(weiAmount <= maxETH);
 
-    _tokenAmount =  safeMul(weiAmount,multiplier) / pricePerToken;
+    _tokenAmount = safeMul(weiAmount,pricePerToken);
 
     require(_tokenAmount > 0);
 
@@ -354,7 +305,6 @@ contract Coin is allContracts {
 
     //send money to the owner
     require(owner.send(weiAmount));
-
     return _tokenAmount;
 
   }

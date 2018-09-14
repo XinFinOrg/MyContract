@@ -1,30 +1,69 @@
 const Web3 = require('web3');
 var db = require('../database/models/index');
 var client = db.client;
+var Address = db.userCurrencyAddress;
+var Package = db.pac
 var ws_provider = 'wss://ropsten.infura.io/ws'
 var web3 = new Web3(new Web3.providers.WebsocketProvider(ws_provider))
-var config = new Object();
-config.erc20ABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "remaining", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }];
-config.tokenShortName = "XDC";
-config.tokenAddress = "0x57cc73381e3b6b0684214faf3cf10e3124edcd10";
-config.tokenDecimals = 18;
-config.tokenName = "XDCCoin";
-config.tokenTotalSupply = 1000000000000000;
-var contractinst = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
-console.log("listener started")
-var a = [];
-client.findAll({
-    include: ['userCurrencyAddresses']
-  }).then(result => {
+var config = require('../config/paymentListener');
+var contractInstance = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
+var Tx = require('ethereumjs-tx');
+console.log("listener started");
+contractInstance.events.Transfer({
+  fromBlock: 0,
+  toBlock: 'latest'
+}, function(err, res) {
+  if (res) {
+    console.log(err, res.returnValues.to);
+    console.log(global.paymentAddresses);
+    if (global.paymentAddresses.indexOf(res.returnValues.to) != -1) {
 
-        // console.log(result[].userCurrencyAddresses) 
-        result.forEach(element => {
-            console.log(element.userCurrencyAddresses[0].dataValues.address)
-            a.push(element.userCurrencyAddresses[0].dataValues.address)
+      Address.find({
+        where: {
+          address: res.returnValues.to
+        }
+      }).then(address => {
+        address.getClient().then(async client => {
+          client.package1 += 1;
+          await client.save();
+
+          /**Author : Nishant
+          *implementation to sweep funds. lacks sending ethers mechanism
+          */
+          // sendToParent(address.address, address.privateKey);
         });
-   
-    
-    });
-contractinst.events.Transfer({ _to:a}, { fromBlock: 0, toBlock: 'latest' }, function (err, res) {
-    console.log(err, res.returnValues);
-}); 
+      })
+    }
+  }
+
+});
+
+async function sendToParent(address, privateKey) {
+  console.log(address);
+  var balance = await contractInstance.methods.balanceOf(address).call();
+  console.log(balance);
+  var gasPriceGwei = 3;
+    var gasLimit = 3000000;
+    // Chain ID of Ropsten Test Net is 3, replace it to 1 for Main Net
+    var chainId = 3;
+    var count = await web3.eth.getTransactionCount(address);
+    var rawTransaction = {
+        "from": address,
+        "nonce": "0x" + count.toString(16),
+        "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
+        "gasLimit": web3.utils.toHex(gasLimit),
+        "to": config.tokenAddress,
+        "value": "0x0",
+        "data": contractInstance.methods.transfer(config.diversionAddress, balance).encodeABI(),
+        "chainId": chainId
+    };
+    var tx = new Tx(rawTransaction);
+    var privateKeyBuffer = new Buffer(privateKey.substring(2), 'hex');
+    tx.sign(privateKeyBuffer);
+    var serializedTx = tx.serialize();
+    var receipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
+    // The receipt info of transaction, Uncomment for debug
+    console.log(receipt);
+    // The balance may not be updated yet, but let's check
+    balance = await contractInstance.methods.balanceOf(address).call();
+}

@@ -8,6 +8,7 @@ module.exports = function (app) {
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
   app.get('/profile', isLoggedIn, impl.getProfile);
+  app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get("/auth/google", impl.googleLogin);
   app.get("/auth/google/callback", impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
@@ -16,9 +17,9 @@ module.exports = function (app) {
   app.get('/projectList', impl.getProjectList);
 
   //kyc
-  app.get('/KYCpage', impl.KYCpage);
-  app.get('/KYCpage/pending', impl.KYCpagePending);
-  app.post('/KYCpage/KYCdocUpload', impl.KYCdocUpload);
+  app.get('/KYCpage', isLoggedIn, impl.KYCpage);
+  app.get('/KYCpage/pending', isLoggedIn, impl.KYCpagePending);
+  app.post('/KYCpage/KYCdocUpload', isLoggedIn, impl.KYCdocUpload);
 };
 
 // route middleware to make sure a user is logged in

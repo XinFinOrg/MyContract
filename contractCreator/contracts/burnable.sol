@@ -5,6 +5,5 @@ contract Burnable is ReleasableToken,UpgradeableToken {
         require(_amount <= balances[contractAddr] && _amount > 0);
         totalSupply = safeSub(totalSupply, _amount);
         balances[contractAddr] = safeSub(balances[contractAddr],_amount);
-
     }
 }

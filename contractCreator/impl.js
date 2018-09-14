@@ -47,13 +47,6 @@ module.exports = {
   },
 
   createContract: async function (req, res) {
-    if (!fs.existsSync(__dirname + "/contractDirectory")) {
-      fs.mkdirSync(__dirname + "/contractDirectory");
-    }
-    var userDir = path.resolve(__dirname + "/contractDirectory/" + req.user.email);
-    if (!fs.existsSync(userDir)) {
-      fs.mkdirSync(userDir);
-    }
     // custom token
     var mint = "";
     var allContracts = "";

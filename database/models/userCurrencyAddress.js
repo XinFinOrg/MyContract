@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
 
-    cipher: {
+    privateKey: {
       type: DataTypes.STRING
     },
     balance: {
@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     },
   }, {});
-  userCurrencyAddress.associate = function (models) { };
+  userCurrencyAddress.associate = function(models) {
+    userCurrencyAddress.belongsTo(models.client, {
+      allowNull: false,
+      foreignKey: 'client_id'
+    });
+  };
   return userCurrencyAddress;
 };

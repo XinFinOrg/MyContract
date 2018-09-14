@@ -28,17 +28,23 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage2(req, res, next) {
-
   client.find({
     where: {
       'email': req.user.email
-    },
-  }).then(result => {
-    if (result.dataValues.package_id == 2  || result.dataValues.package_id == 3 ) {
-      return next();
-    } else {
-      req.flash('package_flash', 'You need to buy Package 2');
-      res.redirect('/profile');
     }
-  })
+  }).then(result => {
+    result.getPackages({
+      where: {
+        'name': 'Package2'
+      }
+    }).then(package => {
+      console.log(package);
+      if (package) {
+        return next();
+      } else {
+        req.flash('package_flash', 'You need to buy Package 2');
+        res.redirect('/profile');
+      }
+    });
+  });
 }

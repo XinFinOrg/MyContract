@@ -115,6 +115,12 @@ module.exports = {
         clients: clients
       })
     });
+  },
+
+  getProfileDetails: (req, res) => {
+    res.render('profileDetails.ejs', {
+      'user': req.user
+    });
   }
 
 }

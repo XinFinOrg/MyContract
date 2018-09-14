@@ -4,6 +4,5 @@ contract Mintable is ReleasableToken,UpgradeableToken{
         require(_amount > 0 );
         totalSupply = safeAdd(totalSupply, _amount);
         balances[contractAddr] = safeAdd(balances[contractAddr],_amount);
-
     }
 }

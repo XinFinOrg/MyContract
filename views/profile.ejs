@@ -23,6 +23,7 @@
     <div class="page-header">
       <h1 class="text-center"><span class="fa fa-user"></span> Profile Page</h1>
       <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
+      <a href="/profileDetails" class="btn btn-default btn-sm pull-right fa fa-power-off">Profile</a>
       <br><br>
     </div>
 
@@ -33,18 +34,7 @@
         <div class="row">
           <div class="col-sm-12 text-center">
             <div class="well">
-              <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
-
-              <p>
-                <strong>email</strong>:
-                <%= user.email %><br><br>
-              </p>
-
-            </div>
-          </div>
-          <div class="col-sm-12 text-center">
-            <div class="well">
-              <h3><span class="fa fa-info-circle"></span>Deployed COntract Details</h3><br>
+              <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
 
               <table class="table text-left">
                 <thead>
@@ -114,7 +104,7 @@
               <h3>ICO platforms</h3>
               <br>
               <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="btn "><%= ProjectConfiguration.coinName %> 
+                <a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="btn "><%= ProjectConfiguration.coinName %>
                 </a><br>
                 <% }) %>
             </div>
