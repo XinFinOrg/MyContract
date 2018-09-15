@@ -79,7 +79,7 @@ app.use(function(err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({force: true}).then(()=> {
+db.sequelize.sync({force: false}).then(()=> {
   console.log("Sync done");
 });
 global.paymentAddresses=[];
