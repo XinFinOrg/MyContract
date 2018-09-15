@@ -7,63 +7,62 @@ var ws_provider = 'wss://mainnet.infura.io/ws'
 var web3 = new Web3(new Web3.providers.WebsocketProvider(ws_provider))
 var config = require('../config/paymentListener');
 var contractInstance = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
-var Tx = require('ethereumjs-tx');
-console.log("listener started");
-contractInstance.events.Transfer({
-  fromBlock: 0,
-  toBlock: 'latest'
-}, function(err, res) {
-  if (res) {
-    console.log(err, res.returnValues.to);
-    console.log(global.paymentAddresses);
-    if (global.paymentAddresses.indexOf(res.returnValues.to) != -1) {
 
-      Address.find({
-        where: {
-          address: res.returnValues.to
-        }
-      }).then(address => {
-        address.getClient().then(async client => {
-          client.package1 += 1;
-          await client.save();
+module.exports = {
+  attachListener: (address) => {
+    contractInstance.events.Transfer({
+      fromBlock: 'pending',
+      toBlock: 'latest'
+    }, function(err, res) {
+      if (res) {
+        console.log(err, res.returnValues);
+        if(res.returnValues.from == address)
+        Address.find({
+          where: {
+            address: address
+          }
+        }).then(address => {
+          address.getClient().then(async client => {
+            client.package1+=1;
+            await client.save();
+            return "success";
+          });
+        })
+      }
+    });
+  },
 
-          /**Author : Nishant
-          *implementation to sweep funds. lacks sending ethers mechanism
-          */
-          // sendToParent(address.address, address.privateKey);
-        });
-      })
-    }
-  }
-
-});
-
-async function sendToParent(address, privateKey) {
-  console.log(address);
-  var balance = await contractInstance.methods.balanceOf(address).call();
-  console.log(balance);
-  var gasPriceGwei = 3;
-    var gasLimit = 3000000;
+  sendToParent: async (address, privateKey) => {
     // Chain ID of Ropsten Test Net is 3, replace it to 1 for Main Net
-    var chainId = 3;
-    var count = await web3.eth.getTransactionCount(address);
+    var amountToSend = web3.utils.toWei('0.001', 'ether');
     var rawTransaction = {
-        "from": address,
-        "nonce": "0x" + count.toString(16),
-        "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
-        "gasLimit": web3.utils.toHex(gasLimit),
-        "to": config.tokenAddress,
-        "value": "0x0",
-        "data": contractInstance.methods.transfer(config.diversionAddress, balance).encodeABI(),
-        "chainId": chainId
+      "gasLimit": web3.utils.toHex(30000),
+      "to": address,
+      "value": amountToSend
     };
-    var tx = new Tx(rawTransaction);
-    var privateKeyBuffer = new Buffer(privateKey.substring(2), 'hex');
-    tx.sign(privateKeyBuffer);
-    var serializedTx = tx.serialize();
-    var receipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
-    // The receipt info of transaction, Uncomment for debug
-    console.log(receipt);
-    // The balance may not be updated yet, but let's check
-    balance = await contractInstance.methods.balanceOf(address).call();
+    web3.eth.accounts.signTransaction(rawTransaction, "0xD493D7F8F82C24BBFC3FE0E0FB14F45BAA8EA421356DC2F7C2B1A9EF455AB8DF").then(result => {
+      web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
+        console.log("Ether receipt generated");
+        var transaction = {
+          "from": address,
+          "to": config.tokenAddress,
+          "value": "0x0",
+          "data": contractInstance.methods.transfer(config.diversionAddress, "1001000000000000000000").encodeABI()
+        };
+        web3.eth.estimateGas(transaction).then(gasLimit => {
+          transaction["gasLimit"] = gasLimit;
+          web3.eth.accounts.signTransaction(transaction, privateKey).then(result => {
+            web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
+              return receipt;
+            });
+          });
+        });
+      });
+    });
+  },
+
+  checkBalance: async (address) => {
+    var balance = await contractInstance.methods.balanceOf(address).call();
+    return balance / 10 ** 18;
+  }
 }

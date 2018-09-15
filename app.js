@@ -83,12 +83,5 @@ var db = require('./database/models/index');
 db.sequelize.sync({force: false}).then(()=> {
   console.log("Sync done");
 });
-global.paymentAddresses=[];
-db.userCurrencyAddress.findAll().then(result => {
-  result.forEach(address => {
-    if(address.dataValues.client_id != null)
-      global.paymentAddresses.push(address.dataValues.address);
-  })
-})
-require('./packageCart/paymentListener');
+
 module.exports = app;

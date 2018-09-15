@@ -12,7 +12,6 @@
       word-wrap: break-word;
       background-image: linear-gradient(180deg, rgba(53, 53, 138, 0.623), white);
       /* Standard syntax (must be last) */
-
     }
   </style>
 </head>
@@ -35,11 +34,11 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <div class="well">
-              <h3><span></span> Packages</h3><br>
+              <h4><span></span> Packages</h4><br>
               <div class="row">
                 <!-- <div class="col-lg-4 text-center">
           <div class="well">
-            <h3><span></span> Package 1</h3><hr><br>
+            <h4><span></span> Package 1</h4><hr><br>
             <h5 class="fa fa-info-circle">Smart Contract Creation</h5><br><br><br><br><hr>
             <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
 
@@ -49,21 +48,31 @@
                 <div class="col-lg-6 text-center">
                   <div class="well">
                     <h1>Package 1</h1>
-                    <h3 class="fa  fa-check-square-o">Smart Contract Creation</h3><br>
-                    <h3 class="fa  fa-check-square-o">Smart Contract Deployment</h3><br><br><br><br><br>
-                    <h4>Price: 1001 XDCE</h3>
-                    <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
-
+                    <h4 class="fa  fa-check-square-o">Smart Contract Creation</h4><br>
+                    <h4 class="fa  fa-check-square-o">Smart Contract Deployment</h4><br><br><br><br><br>
+                    <h5>Price: 1001 XDCE</h4>
+                  </div>
+                  <div class="well">
+                    <h5>Address: <%= address %></h5>
+                    <hr>
+                    <h5>Current balance: <%= balance %> XDCE </h5>
+                    <% if(balance<1001) { %>
+                      <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
+                      <% } else { %>
+                        <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
+                        <% } %>
                   </div>
                 </div>
                 <div class="col-lg-6 text-center">
                   <div class="well">
-                    <h1> Package 2</h1> <h4><strong>(Coming Soon)</strong></h4>
-                    <hr><br>
-                    <h3 class="fa fa fa-check-square-o"> Smart Contract Creation</h3><br>
-                    <h3 class="fa fa fa-check-square-o"> Smart Contract Deployment</h3><br>
-                    <h3 class="fa fa fa-check-square-o"> ICO Platfrom with Dashboard</h3><br>
-                    <hr>
+                    <h1> Package 2</h1>
+                    <h5><strong>(Coming Soon)</strong></h5>
+                    <h4 class="fa fa fa-check-square-o"> Smart Contract Creation</h4><br>
+                    <h4 class="fa fa fa-check-square-o"> Smart Contract Deployment</h4><br>
+                    <h4 class="fa fa fa-check-square-o"> ICO Platfrom with Dashboard</h4><br><br>
+                    <h5>Price: Coming soon</h4>
+                  </div>
+                  <div class="well">
                     <a href="/payment" class="btn btn-default btn-sm" disabled>Make payment</a>
                   </div>
                 </div>

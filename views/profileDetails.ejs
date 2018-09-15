@@ -33,9 +33,16 @@
         <p>
           <strong>Email</strong>:
           <%= user.email %><br><br>
+          <strong>XDCE Address</strong>:
+          <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= address %>"> -->
+          <span id="address"><%= address %></span><br><br>
+
+          <strong>Current Balance </strong>
+           <%= balance %> XDCE %><br><br>
           <strong>Packages Bought</strong>:<br>
           Package 1 : <%= user.package1 %> credits<br>
-          Package 2 : <%= user.package2 %> credits
+          Package 2 : <%= user.package2 %> credits<br><br>
+          <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
         </p>
       </div>
     </div>

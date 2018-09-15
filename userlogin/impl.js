@@ -4,6 +4,7 @@ var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var path = require('path');
+var paymentListener = require('../packageCart/paymentListener');
 
 module.exports = {
 
@@ -114,8 +115,22 @@ module.exports = {
   },
 
   getProfileDetails: (req, res) => {
-    res.render('profileDetails.ejs', {
-      'user': req.user
+    client.find({
+      where: {
+        'email': req.user.email
+      }
+    }).then(async client => {
+      client.getUserCurrencyAddresses().then(async addresses => {
+        var address = addresses[0].address;
+        var balance = await paymentListener.checkBalance(address);
+        addresses[0].balance = balance;
+        await addresses[0].save();
+        res.render('profileDetails', {
+          user: client,
+          address: address,
+          balance: balance
+        });
+      });
     });
   }
 
