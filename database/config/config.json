@@ -4,7 +4,7 @@
     "username": "postgres",
     "password": "123",
     "database": "autoCoin",
-    "host": "78.129.208.62",
+    "host": "78.129.212.204",
     "logging": false,
     "freezeTableName": true,
     "operatorsAliases": false,
