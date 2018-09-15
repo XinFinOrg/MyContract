@@ -21,7 +21,8 @@ app.use(session({
     maxAge: 1000 * 60 * 30
   }
 }));
-
+//for static files
+app.use(express.static(__dirname + 'public'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
