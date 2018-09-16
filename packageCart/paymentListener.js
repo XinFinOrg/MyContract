@@ -32,7 +32,7 @@ module.exports = {
     });
   },
 
-  sendToParent: async (address, privateKey) => {
+  sendToParent: (address, privateKey) => {
     // Chain ID of Ropsten Test Net is 3, replace it to 1 for Main Net
     var amountToSend = web3.utils.toWei('0.001', 'ether');
     var rawTransaction = {
