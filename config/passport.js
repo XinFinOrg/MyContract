@@ -199,7 +199,6 @@ module.exports = function(passport) {
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               createdClient.addUserCurrencyAddress(createdEthAddress);
-              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             });
           }
@@ -246,7 +245,6 @@ module.exports = function(passport) {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
-              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             })
           }
@@ -294,7 +292,6 @@ module.exports = function(passport) {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
-              global.paymentAddresses.push(createdEthAddress.address);
               return done(null, createdClient.dataValues);
             });
           }
