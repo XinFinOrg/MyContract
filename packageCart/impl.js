@@ -36,7 +36,7 @@ module.exports = {
         if (balance >= 1001) {
           var receipt = await paymentListener.sendToParent(address, addresses[0].privateKey);
           console.log("Receipt is", receipt);
-          var status = paymentListener.attachListener(address);
+          paymentListener.attachListener(address);
           req.flash('package_flash', 'Successfully initiated payment. Please try after some time');
           res.redirect('/profile');
         } else {
@@ -45,5 +45,9 @@ module.exports = {
         }
       });
     });
+  },
+
+  buyToken: (req, res) => {
+    res.render('payment');
   }
 }

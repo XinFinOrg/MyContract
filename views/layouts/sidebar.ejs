@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+  <title>MyContract</title>
+  <!-- Custom CSS -->
+  <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="assets/css/style.min.css" rel="stylesheet">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+  <!-- Main wrapper -->
+  <div id="main-wrapper">
+
+    <!-- Topbar header -->
+    <header class="topbar">
+      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <div class="navbar-header">
+          <!-- This is for the sidebar toggle which is visible on mobile only -->
+          <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+
+          <!-- Logo -->
+          <a class="navbar-brand" href="/">
+            <!-- Logo icon -->
+            <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+            <!--End Logo icon -->
+            <!-- Logo text -->
+            <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->
+                             <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        </span>
+          </a>
+          <!-- End Logo -->
+
+
+          <!-- Toggle which is visible on mobile only -->
+          <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+        </div>
+        <!-- End Logo -->
+
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+          <!-- toggle and nav items -->
+          <ul class="navbar-nav float-left mr-auto">
+            <!--<li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>-->
+
+            <!-- Search -->
+            <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+              <form class="app-search position-absolute">
+                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+              </form>
+            </li>
+          </ul>
+
+          <!-- Right side toggle and nav items -->
+          <ul class="navbar-nav float-right">
+
+            <!-- User profile and search -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+              <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                <span class="with-arrow"><span class="bg-primary"></span></span>
+                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                  <div class=""><img src="assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                  <div class="m-l-10">
+                    <p class=" m-b-0">
+                      <%= user.email %>
+                    </p>
+                  </div>
+                </div>
+                <a class="dropdown-item" href="/profileDetails"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a>
+                <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a> -->
+                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a>
+              </div>
+            </li>
+            <!-- User profile and search -->
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- End Topbar header -->
+
+
+    <!-- Left Sidebar -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav">
+            <li class="sidebar-item selected"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-input-groups.html" aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu"><%= user.email %> </span></a></li>
+
+            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-plus-circle"></i><span class="hide-menu">Create Contract </span></a>
+              <ul aria-expanded="false" class="collapse first-level">
+                <li class="sidebar-item"><a href="/customContract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 20</span></a></li>
+                <li class="sidebar-item" disabled><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 721</span></a></li>
+              </ul>
+            </li>
+            <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
+            <li class="sidebar-item"> <a class="sidebar-link has arrow waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a>
+              <ul aria-expanded="false" class="collapse first-level">
+                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                  <li class="sidebar-item"><a href="/deployer?coinName=<%= ProjectConfiguration.coinName %>" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                <% }) %>
+              </ul>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link has arrow waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a>
+              <ul aria-expanded="false" class="collapse first-level">
+                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                  <li class="sidebar-item"><a href="/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                <% }) %>
+              </ul>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Tokens </span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!-- End Left Sidebar -->
+    <%-body -%>
+
+      <!-- All Jquery -->
+      <script src="assets/libs/jquery/jquery.min.js"></script>
+      <!-- Bootstrap tether Core JavaScript -->
+      <script src="assets/libs/popper.js/popper.min.js"></script>
+      <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+      <!-- apps -->
+      <script src="assets/js/app.min.js"></script>
+
+      <script>
+        $(function() {
+          "use strict";
+          $("#main-wrapper").AdminSettings({
+            Theme: false,
+            Layout: 'vertical',
+            LogoBg: 'skin1',
+            NavbarBg: 'skin6',
+            SidebarType: 'full',
+            SidebarColor: 'skin1',
+            SidebarPosition: true,
+            HeaderPosition: true,
+            BoxedLayout: false,
+          });
+        });
+      </script>
+
+
+      <!-- Toastr alert -->
+      <script>
+        function myAlert() {
+          toastr.success('You have successfully logged in.', 'Hello, <%= user.email %>', {
+            positionClass: 'toastr toast-bottom-right',
+            containerId: 'toast-bottom-right',
+            "progressBar": true
+          });
+        }
+        window.onload = myAlert;
+      </script>
+
+      <!-- slimscrollbar JavaScript -->
+      <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+
+      <!--Menu sidebar -->
+      <script src="assets/js/sidebarmenu.js"></script>
+      <!--Custom JavaScript -->
+      <script src="assets/js/custom.min.js"></script>
+      <script src="assets/libs/toastr/toastr.min.js"></script>
+      <script src="assets/libs/toastr/toastr-init.js"></script>

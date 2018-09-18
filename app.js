@@ -7,6 +7,7 @@ const logger = require('morgan');
 var passport = require('passport');
 var flash = require('connect-flash');
 var config = require('./config/dev');
+var engine = require('ejs-mate')
 
 const app = express();
 const session = require('express-session');
@@ -44,6 +45,7 @@ app.use(multer({
 }).any());
 
 // view engine setup
+app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

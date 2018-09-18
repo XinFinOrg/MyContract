@@ -3,6 +3,7 @@ module.exports = function(app) {
 
   app.get('/buyPackage', isLoggedIn, impl.buyPackage);
   app.get('/payment', isLoggedIn, impl.payment);
+  app.get('/buyToken', isLoggedIn, impl.buyToken);
 
 }
 

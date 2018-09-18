@@ -115,20 +115,30 @@ module.exports = {
   },
 
   getProfileDetails: (req, res) => {
+    var projectarray=[];
     client.find({
       where: {
         'email': req.user.email
-      }
+      },
+      include: [{
+        model: ProjectConfiguration,
+      }],
     }).then(async client => {
+      client.projectConfigurations.forEach(element => {
+        projectarray.push(element.dataValues);
+      });
       client.getUserCurrencyAddresses().then(async addresses => {
         var address = addresses[0].address;
         var balance = await paymentListener.checkBalance(address);
+        var ethBalance = await paymentListener.checkEtherBalance(address);
         addresses[0].balance = balance;
         await addresses[0].save();
         res.render('profileDetails', {
           user: client,
           address: address,
-          balance: balance
+          balance: balance,
+          ProjectConfiguration: projectarray,
+          ethBalance: ethBalance
         });
       });
     });
