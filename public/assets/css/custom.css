@@ -45,7 +45,7 @@
 .modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #206EFF;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
 .modal-title.buy-tokens i{margin-right:10px;}
 
-.download-QRcode {padding: 14px;display: inline-block;border: 1px dashed #c7d8e9;background-color: #eef5f9;margin-bottom: 30px;}
+.download-QRcode {display: inline-block;border: 1px dashed #c7d8e9;margin-bottom: 30px;}
 
 
 
@@ -62,7 +62,7 @@
 
 
 
-.switch input { 
+.switch input {
     display:none;
 }
 .switch {
@@ -218,7 +218,7 @@ input:checked + .slider {
     position: relative;
     right: 5px;
     font-size: 16px;
-} 
+}
 
 .table-list li span {
     font-weight: 400;
@@ -281,7 +281,7 @@ input:checked + .slider {
 }
 
 .recommended .table-buy .pricing-action:hover {
-    background: #228799;    
+    background: #228799;
 }
 
 /** ================
@@ -295,7 +295,7 @@ input:checked + .slider {
     .pricing-table {
         width: 236px;
     }
-    
+
     .table-list li {
         font-size: 1.3em;
     }
@@ -319,7 +319,7 @@ input:checked + .slider {
     .pricing-wrapper {
         width: 300px;
     }
-} 
+}
 
 
 
@@ -327,5 +327,3 @@ input:checked + .slider {
 @media (max-width:576px){.auth-box_content p{font-size:25px;line-height:30px;}.header-buy-tokens{display:none;}.ethBalance{display:none;}}
 @media (max-width: 768px){.auth-box_content{position:relative;padding-top:120px;}}
 @media screen and (max-width: 992px) and (min-width: 577px) {.auth-box_content p{font-size:30px;line-height:35px;}}
-
-
