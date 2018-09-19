@@ -15,6 +15,7 @@
   <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
   <!-- Custom CSS -->
   <link href="assets/css/style.min.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -222,24 +223,8 @@
 
       <!-- Toastr alert -->
       <script>
-        function myAlert() {
-          toastr.success('You have successfully logged in.', 'Hello, <%= user.email %>', {
-            positionClass: 'toastr toast-bottom-right',
-            containerId: 'toast-bottom-right',
-            "progressBar": true
-          });
-          checkBalances();
-          // getProjectArray();
-        }
 
-        function checkBalances() {
-          $.get('/getBalances', function(result) {
-            balance = result["XDCE"];
-            ethBalance = result["ETH"];
-            $("#xdce").text(balance);
-            $("#eth").text(ethBalance);
-          });
-        }
+
 
         // function getProjectArray(){
         //   $.get('/getProjectArray', function(result){
@@ -249,10 +234,7 @@
         //       }
         //     });
         // }
-        window.onload = myAlert;
-        window.setInterval(function() {
-          checkBalances();
-        }, 30000);
+
       </script>
 
       <!-- slimscrollbar JavaScript -->
@@ -263,4 +245,6 @@
       <!--Custom JavaScript -->
       <script src="assets/js/custom.min.js"></script>
       <script src="assets/libs/toastr/toastr.min.js"></script>
-      <script src="assets/libs/toastr/toastr-init.js"></script>
+      <!--Custom JavaScript -->
+   <script src="assets/js/custom.min.js"></script>
+   <script src="assets/js/custom.js"></script>

@@ -51,39 +51,13 @@
 
 
 
-::-moz-focus-inner { 
-  padding: 0;
-  border: 0;
-}
+::-moz-focus-inner {padding: 0;border: 0;}
 
-.copied::after {
-  position: absolute;
-  top: 12%;
-  right: 130%;
-  display: block;
-  content: "copied";
-  font-size: 1em;
-  padding: 5px 5px;
-  color: #fff;
-  background-color: #feba15;
-  border-radius: 3px;
-  opacity: 0;
-  will-change: opacity, transform;
-  animation: showcopied 1.5s ease;
-}
+.copied::after {position: absolute;top: 12%;right: 130%;display: block;content: "copied";font-size: 1em;padding: 5px 5px;color: #fff;background-color: #feba15;border-radius: 3px;opacity: 0;will-change: opacity, transform;animation: showcopied 1.5s ease;}
 
-@keyframes showcopied {
-  0% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  70% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-  }
+@keyframes showcopied {0% {opacity: 0;transform: translateX(100%);}
+  70% {opacity: 1;transform: translateX(0);}
+  100% {opacity: 0;}
 }
 
 
