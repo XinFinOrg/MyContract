@@ -9,12 +9,13 @@ module.exports = function (app) {
   app.post('/signup', impl.postSignup);
   app.get('/profile', isLoggedIn, impl.getProfile);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
-  app.get("/auth/google", impl.googleLogin);
-  app.get("/auth/google/callback", impl.googleLoginCallback);
+  app.get('/auth/google', impl.googleLogin);
+  app.get('/auth/google/callback', impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
   app.get('/projectList', impl.getProjectList);
+  // app.get('/getProjectArray', impl.getProjectArray);
 
   //kyc
   app.get('/KYCpage', isLoggedIn, impl.KYCpage);

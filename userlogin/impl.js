@@ -8,7 +8,7 @@ var paymentListener = require('../packageCart/paymentListener');
 
 module.exports = {
 
-  getLogin: function (req, res) {
+  getLogin: function(req, res) {
     res.render('login', {
       message: req.flash('loginMessage')
     });
@@ -20,7 +20,7 @@ module.exports = {
     failureFlash: true // allow flash messages
   }),
 
-  getSignup: function (req, res) {
+  getSignup: function(req, res) {
     // render the page and pass in any flash data if it exists
     res.render('signup.ejs', {
       message: req.flash('signupMessage')
@@ -33,115 +33,131 @@ module.exports = {
     failureFlash: true // allow flash messages
   }),
 
-  getProfile: function (req, res) {
-    var projectarray = [];
-    client.findAll({
-      where: {
-        'email': req.user.email,
-      },
-      include: [{
-        model: ProjectConfiguration,
-      }],
-    }).then(values => {
-      values[0].projectConfigurations.forEach(element => {
-        projectarray.push(element.dataValues);
-      });
-      res.render('profile.ejs', {
-        user: req.user, // get the user out of session and pass to template
-        ProjectConfiguration: projectarray,
-        message: req.flash('package_flash'),
-        contractMessage: req.flash('contract_flash')
-      });
-    })
-  },
-
-  googleLogin: passport.authenticate("google", {
-    scope: ["profile ", "email"]
-  }),
-
-  googleLoginCallback: passport.authenticate("google", {
-    successRedirect: '/profile',
-    failureRedirect: '/'
-  }),
-
-  getLogout: function (req, res) {
-    req.logout();
-    res.redirect('/');
-  },
-
-  githubLogin: passport.authenticate('github'),
-
-  githubLoginCallback: passport.authenticate('github', {
-    successRedirect: '/profile',
-    failureRedirect: '/'
-  }),
-
-  KYCpage: function (req, res) {
-    res.render('adminKYC.ejs', {
-      user: req.user,
-    })
-  },
-  KYCpagePending: function (req,res) {
-    res.render('pendingAdminKYC.ejs', {
-      user: req.user,
-    })
-  },
-  KYCdocUpload: function (req, res) {
-    client.update({
-      "name":req.body.first_name+" "+req.body.last_name,
-      "isd_code":req.body.ISD_code,
-      "mobile":req.body.number,
-      'kycDoc1': fs.readFileSync(req.files[0].path),
-      'kycDoc2': fs.readFileSync(req.files[1].path),
-      'kycDoc3': fs.readFileSync(req.files[2].path),
-      "kyc_verified":"pending"
-    }, {
-      where: {
-        'email': req.user.email
+  getProfile: async function(req, res) {
+      var projectArray = await getProjectArray(req.user.email);
+      console.log(projectArray);
+      var address;
+      address = req.cookies['address'];
+      console.log("cookie is ", address);
+      if (!address) {
+        client.find({
+          where: {
+            'email': req.user.email
+          }
+        }).then(async client => {
+          var addresses = await client.getUserCurrencyAddresses();
+          address = addresses[0].address;
+          res.cookie('address', address, {
+            expire: 360000 + Date.now()
+          });
+          res.render('profile.ejs', {
+            user: req.user, // get the user out of session and pass to template
+            ProjectConfiguration: projectArray,
+            message: req.flash('package_flash'),
+            contractMessage: req.flash('contract_flash'),
+            address: address
+          });
+        });
+      } else {
+        res.render('profile.ejs', {
+          user: req.user, // get the user out of session and pass to template
+          ProjectConfiguration: projectArray,
+          message: req.flash('package_flash'),
+          contractMessage: req.flash('contract_flash'),
+          address: address
+        });
       }
-    }).then(() => {
-      res.redirect('/KYCpage/pending');
-    });
-  },
+    },
 
-  getProjectList: (req, res) => {
-    client.findAll({
-      include: [ProjectConfiguration]
-    }).then((clients)=>{
-      res.render('projectList.ejs', {
-        clients: clients
+    googleLogin: passport.authenticate("google", {
+      scope: ["profile ", "email"]
+    }),
+
+    googleLoginCallback: passport.authenticate("google", {
+      successRedirect: '/profile',
+      failureRedirect: '/'
+    }),
+
+    getLogout: function(req, res) {
+      req.logout();
+      res.clearCookie('address');
+      res.redirect('/');
+    },
+
+    githubLogin: passport.authenticate('github'),
+
+    githubLoginCallback: passport.authenticate('github', {
+      successRedirect: '/profile',
+      failureRedirect: '/'
+    }),
+
+    KYCpage: function(req, res) {
+      res.render('adminKYC.ejs', {
+        user: req.user,
       })
-    });
-  },
+    },
+    KYCpagePending: function(req, res) {
+      res.render('pendingAdminKYC.ejs', {
+        user: req.user,
+      })
+    },
+    KYCdocUpload: function(req, res) {
+      client.update({
+        "name": req.body.first_name + " " + req.body.last_name,
+        "isd_code": req.body.ISD_code,
+        "mobile": req.body.number,
+        'kycDoc1': fs.readFileSync(req.files[0].path),
+        'kycDoc2': fs.readFileSync(req.files[1].path),
+        'kycDoc3': fs.readFileSync(req.files[2].path),
+        "kyc_verified": "pending"
+      }, {
+        where: {
+          'email': req.user.email
+        }
+      }).then(() => {
+        res.redirect('/KYCpage/pending');
+      });
+    },
 
-  getProfileDetails: (req, res) => {
-    var projectarray=[];
+    getProjectList: (req, res) => {
+      client.findAll({
+        include: [ProjectConfiguration]
+      }).then((clients) => {
+        res.render('projectList.ejs', {
+          clients: clients
+        })
+      });
+    },
+
+    getProfileDetails: async (req, res) => {
+        var projectArray = await getProjectArray(req.user.email);
+        var address = req.cookies['address'];
+        res.render('profileDetails', {
+          user: req.user,
+          address: address,
+          ProjectConfiguration: projectArray,
+        });
+      },
+
+};
+
+function getProjectArray(email) {
+  var projectArray = [];
+  return new Promise(async function(resolve, reject) {
     client.find({
       where: {
-        'email': req.user.email
+        'email': email
       },
       include: [{
         model: ProjectConfiguration,
+        attributes: ['coinName', 'contractAddress', 'contractHash']
       }],
-    }).then(async client => {
+    }).then(client => {
       client.projectConfigurations.forEach(element => {
-        projectarray.push(element.dataValues);
+        projectArray.push(element.dataValues);
       });
-      client.getUserCurrencyAddresses().then(async addresses => {
-        var address = addresses[0].address;
-        var balance = await paymentListener.checkBalance(address);
-        var ethBalance = await paymentListener.checkEtherBalance(address);
-        addresses[0].balance = balance;
-        await addresses[0].save();
-        res.render('profileDetails', {
-          user: client,
-          address: address,
-          balance: balance,
-          ProjectConfiguration: projectarray,
-          ethBalance: ethBalance
-        });
-      });
+      // res.send({'projectArray': projectArray});
+      resolve(projectArray);
     });
-  }
-
+  });
 }

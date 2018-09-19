@@ -1,79 +1,48 @@
-<!-- views/profile.ejs -->
-<!doctype html>
-<html>
-
-<head>
-  <title>AutoCoin</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  <style>
-    body {
-      padding-top: 80px;
-      word-wrap: break-word;
-      background-image: linear-gradient(180deg, rgba(53, 53, 138, 0.623), white);
-      /* Standard syntax (must be last) */
-    }
-  </style>
-</head>
-
 <body>
-  <div class="container">
-
-    <div class="page-header">
-      <h1 class="text-center"><span class="fa fa-user"></span> Payment Packages</h1>
-      <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
-      <a href="/profile" class="btn btn-default btn-sm pull-left fa fa-power-on"> Back</a>
-
-      <br><br>
+  <% layout('./layouts/sidebar') -%>
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-    <div class="row">
-
-      <!-- LOCAL INFORMATION -->
-      <div class="col-lg-12 text-center">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="well">
-              <h4><span></span> Packages</h4><br>
-              <div class="row">
-                <!-- <div class="col-lg-4 text-center">
-          <div class="well">
-            <h4><span></span> Package 1</h4><hr><br>
-            <h5 class="fa fa-info-circle">Smart Contract Creation</h5><br><br><br><br><hr>
-            <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
-
-
-          </div>
-        </div> -->
-                <div class="col-lg-6 text-center">
-                  <div class="well">
-                    <h1>Package 1</h1>
-                    <h4 class="fa  fa-check-square-o">Smart Contract Creation</h4><br>
-                    <h4 class="fa  fa-check-square-o">Smart Contract Deployment</h4><br><br><br><br><br>
-                    <h5>Price: 1001 XDCE</h4>
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card" style="min-height:500px;">
+        <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6 text-center">
+                <div class="well">
+                  <h1>Package 1</h1>
+                  <h4 class="fa  fa-check-square-o">Smart Contract Creation</h4><br>
+                  <h4 class="fa  fa-check-square-o">Smart Contract Deployment</h4><br><br><br><br><br>
+                  <h5>Price: 1001 XDCE</h4>
                   </div>
                   <div class="well">
                     <h5>Address: <%= address %></h5>
-                    <hr>
-                    <h5>Current balance: <%= balance %> XDCE </h5>
-                    <% if(balance<1001) { %>
-                      <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
-                      <% } else { %>
-                        <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
-                        <% } %>
-                  </div>
+                  <hr>
+                  <h5>Current balance: <%= balance %> XDCE </h5>
+                  <% if(balance<1001) { %>
+                  <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
+                  <% } else { %>
+                  <a href="/payment" class="btn btn-default btn-sm">Make payment</a>
+                  <% } %>
                 </div>
-                <div class="col-lg-6 text-center">
-                  <div class="well">
-                    <h1> Package 2</h1>
-                    <h5><strong>(Coming Soon)</strong></h5>
-                    <h4 class="fa fa fa-check-square-o"> Smart Contract Creation</h4><br>
-                    <h4 class="fa fa fa-check-square-o"> Smart Contract Deployment</h4><br>
-                    <h4 class="fa fa fa-check-square-o"> ICO Platfrom with Dashboard</h4><br><br>
-                    <h5>Price: Coming soon</h4>
+              </div>
+              <div class="col-lg-6 text-center">
+                <div class="well">
+                  <h1> Package 2</h1>
+                  <h5><strong>(Coming Soon)</strong></h5>
+                  <h4 class="fa fa fa-check-square-o"> Smart Contract Creation</h4><br>
+                  <h4 class="fa fa fa-check-square-o"> Smart Contract Deployment</h4><br>
+                  <h4 class="fa fa fa-check-square-o"> ICO Platfrom with Dashboard</h4><br><br>
+                  <h5>Price: Coming soon</h4>
                   </div>
                   <div class="well">
-                    <a href="/payment" class="btn btn-default btn-sm" disabled>Make payment</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-sm" disabled="true">Make payment</a>
                   </div>
                 </div>
               </div>
@@ -82,8 +51,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </body>
 
 </html>

@@ -23,7 +23,7 @@ app.use(session({
   }
 }));
 //for static files
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -55,7 +55,6 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 //Creating all app routes
 app.use('/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));

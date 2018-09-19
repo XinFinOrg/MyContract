@@ -38,7 +38,57 @@
   color: #bebebe!important;
 }
 
-@media (max-width:576px){.auth-box_content p{font-size:25px;line-height:30px;}} 
+
+.header-price-box{background:#eef5f9;margin:8px;padding:8px;border-radius:10px;}
+.header-buy-tokens{margin:12px;}
+
+.modal-title.buy-tokens{ font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #206EFF;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
+.modal-title.buy-tokens i{margin-right:10px;}
+
+.download-QRcode {padding: 14px;display: inline-block;border: 1px dashed #c7d8e9;background-color: #eef5f9;margin-bottom: 30px;}
+
+
+
+
+
+::-moz-focus-inner { 
+  padding: 0;
+  border: 0;
+}
+
+.copied::after {
+  position: absolute;
+  top: 12%;
+  right: 130%;
+  display: block;
+  content: "copied";
+  font-size: 1em;
+  padding: 5px 5px;
+  color: #fff;
+  background-color: #feba15;
+  border-radius: 3px;
+  opacity: 0;
+  will-change: opacity, transform;
+  animation: showcopied 1.5s ease;
+}
+
+@keyframes showcopied {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
+@media (max-width:576px){.auth-box_content p{font-size:25px;line-height:30px;}.header-buy-tokens{display:none;}}
 @media (max-width: 768px){.auth-box_content{position:relative;padding-top:120px;}}
 @media screen and (max-width: 992px) and (min-width: 577px) {.auth-box_content p{font-size:30px;line-height:35px;}}
 
