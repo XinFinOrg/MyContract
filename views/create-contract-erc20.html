@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/assets/images/favicon.png">
+
+    <title>MyContract</title>
+
+    <!-- CSS -->
+    <link href="../public/assets/css/style.min.css" rel="stylesheet">
+    <link href="../public/assets/css/custom.css" rel="stylesheet">
+    <!-- This Page CSS -->
+    <link href="../public/assets/libs/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <!-- Main wrapper -->
+    <div id="main-wrapper">
+
+        <!-- Topbar header -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="../public/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="../public/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="../public/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->    
+                             <img src="../public/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- End Logo -->
+
+                    <!-- Toggle which is visible on mobile only -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- End Logo -->
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+                    <!-- toggle and nav items -->
+                    <ul class="navbar-nav float-left mr-auto pl-2">
+                        <li class="">
+                            <div class="header-price-box">
+                                <img src="../public/assets/images/icons/xdce.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-price-box ethBalance">
+                                <img src="../public/assets/images/icons/eth.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-buy-tokens">
+                                <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
+                            </div>
+                        </li>
+                        <!-- Balance -->
+                    </ul>
+
+                    <!-- Right side toggle and nav items -->
+                    <ul class="navbar-nav float-right">
+
+                        <!-- User profile and search -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../public/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    <div class=""><img src="../public/assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">John Doe</h4>
+                                        <p class=" m-b-0">johndoe@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a>
+                            </div>
+                        </li>
+                        <!-- User profile and search -->
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- End Topbar header -->
+
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-input-groups.html" aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu">johndoe@gmail.com </span></a></li>
+
+                        <li class="sidebar-item selected"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-plus-circle"></i><span class="hide-menu">Create Contract </span></a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item active"><a href="create-contract-erc20.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 20</span></a></li>
+                                <li class="sidebar-item"><a href="create-contract-erc721.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 721</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ongoing-projects.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="deploy-contract.html" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ico-platform.html" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="buy-package.html" data-whatever="@getbootstrap"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span class="hide-menu">Buy Tokens </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="login.html" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- End Left Sidebar -->
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Create Contract</h4>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <form class="form-horizontal m-t-20" id="createContract" action="#">
+                                    <div class="form-group">
+                                        <label for="tokenName">Token Name</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tokenName" placeholder="Enter Token Name">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tokenSymbol">Token Symbol</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tokenSymbol" placeholder="Enter Token Symbol">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Symbol (eg. ETH, BTC, XDC)"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tokenDecimals">Token Decimals</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tokenDecimals" placeholder="Enter Token Decimals">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Decimals (eg. 18)"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="form-group">
+                                        <label for="totalSupply">Total Supply</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="totalSupply" placeholder="Enter Total Supply">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Total Supply (eg. 1000000000000)"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="saleTokenlimit">Sale Token limit</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="saleTokenlimit" placeholder="How many tokens will you be able to buy using 1 Eth ?">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Sale Token limit (This will be your soft cap for your ICO)"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="1ETHTokens">1 ETH = ? Tokens</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="1ETHTokens" placeholder="1 ETH = ? Tokens">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="How many tokens will you be able to buy using 1 Eth ?"><i class="ti-help-alt"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row bt-switch mb-4">
+                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                            <input type="checkbox" id="releaseable" checked data-size="mini" />
+                                            <label for="releaseable">Releaseable</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                            <input type="checkbox" id="upgradeable" checked data-size="mini" />
+                                            <label for="upgradeable">Upgradeable</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                            <input type="checkbox" id="burnable" checked data-size="mini" />
+                                            <label for="burnable">Burnable</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                            <input type="checkbox" id="mintable" checked data-size="mini" />
+                                            <label for="mintable">Mintable</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4 ml-1">
+                                        <div class="mr-2">
+                                            <label class="switch">
+                                                <input type="checkbox" id="releaseable-1" checked><span class="slider"></span></label>
+                                            <label for="releaseable-1">Releaseable</label>
+                                        </div>
+                                        <div class="mr-2">
+                                            <label class="switch">
+                                                <input type="checkbox" id="upgradeable-1" checked><span class="slider"></span></label>
+                                            <label for="upgradeable-1">Upgradeable</label>
+                                        </div>
+                                        <div class="mr-2">
+                                            <label class="switch">
+                                                <input type="checkbox" id="burnable-1" checked><span class="slider"></span></label>
+                                            <label for="burnable-1">Burnable</label>
+                                        </div>
+                                        <div class="mr-2">
+                                            <label class="switch">
+                                                <input type="checkbox" id="mintable-1" checked><span class="slider"></span></label>
+                                            <label for="mintable-1">Mintable</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4 ml-1">
+                                        <div class="checkbox-btn" data-toggle="buttons">
+                                            <label class="btn btn-checkbox mr-2 active">
+                                                <input type="checkbox" checked autocomplete="off"> Releaseable
+                                            </label>
+                                            <label class="btn btn-checkbox mr-2">
+                                                <input type="checkbox" autocomplete="off"> Upgradeable
+                                            </label>
+                                            <label class="btn btn-checkbox mr-2">
+                                                <input type="checkbox" autocomplete="off"> Burnable
+                                            </label>
+                                            <label class="btn btn-checkbox">
+                                                <input type="checkbox" autocomplete="off"> Mintable
+                                            </label>
+                                        </div>                                        
+                                        <button type="button" class="btn btn-circle btn-tooltip mt-1" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i class="ti-help-alt"></i></button>
+                                    </div>
+
+                                    <div class="form-actions mb-3">
+                                        <button type="submit" class="btn btn-rounded btn-lg btn-info mr-1">CREATE</button>
+                                        <button type="button" class="btn btn-rounded btn-lg btn-light">Cancel</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Container fluid  -->
+
+        <!-- footer -->
+        <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+        <!-- End footer -->
+
+    </div>
+    <!-- End Page wrapper  -->
+
+    </div>
+    <!-- End Wrapper -->
+
+    <!-- Buy Token modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title buy-tokens" id="exampleModalLabel1"><i class="ti-wallet"></i> Buy Tokens</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="download-QRcode">
+                            <img src="../public/assets/images/QRcode.jpg">
+                        </div>
+                    </div>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="" aria-label="" id="tokenAddress" value="0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2" />
+                            <div class="input-group-append">
+                                <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Buy Token modal -->
+    
+    
+    <!-- RUBM modal -->
+    <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Releasable</span></h5>
+                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+                                                
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Upgradeable</span></h5>
+                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+                                                
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
+                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+                                                
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Mintable</span></h5>
+                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+                                            </div>
+                                            <div class="modal-footer text-center">
+                    							<button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                							</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- / RUBM modal -->
+
+    
+
+    <!-- All Jquery -->
+    <script src="../public/assets/libs/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../public/assets/libs/popper.js/popper.min.js"></script>
+    <script src="../public/assets/libs/bootstrap/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="../public/assets/js/app.min.js"></script>
+
+    <script>
+        $(function() {
+            "use strict";
+            $("#main-wrapper").AdminSettings({
+                Theme: false,
+                Layout: 'vertical',
+                LogoBg: 'skin1',
+                NavbarBg: 'skin6',
+                SidebarType: 'full',
+                SidebarColor: 'skin1',
+                SidebarPosition: true,
+                HeaderPosition: true,
+                BoxedLayout: false,
+            });
+        });
+    </script>
+
+    <!-- slimscrollbar JavaScript -->
+    <script src="../public/assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+
+    <!--Menu sidebar -->
+    <script src="../public/assets/js/sidebarmenu.js"></script>
+
+    <script src="../public/assets/libs/toastr/toastr.min.js"></script>
+    <script src="../public/assets/libs/toastr/toastr-init.js"></script>
+
+    <script src="../public/assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script>
+        $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+        var radioswitch = function() {
+            var bt = function() {
+                $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioState")
+                }), $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+                }), $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+                })
+            };
+            return {
+                init: function() {
+                    bt()
+                }
+            }
+        }();
+        $(document).ready(function() {
+            radioswitch.init()
+        });
+    </script>
+
+    <!--Custom JavaScript -->
+    <script src="../public/assets/js/custom.min.js"></script>
+</body>
+
+</html>
