@@ -1,17 +1,5 @@
 // JavaScript Document
-
- <!-- Toastr alert -->
-        function myAlert() {
-            toastr.success('You have successfully logged in.', 'Hello, John Doe!', {
-                positionClass: 'toastr toast-bottom-right',
-                containerId: 'toast-bottom-right',
-                "progressBar": true
-            });
-        }
-        window.onload = myAlert;
-    <!-- Toastr alert Ends -->
-    
-    
+   
 <!-- Copy to clipboard -->
 (function() {
 	'use strict';  
