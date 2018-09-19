@@ -11,28 +11,28 @@ var client = db.client;
 templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
 
 fs.readFile(path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
-  function (err, data) {
+  function(err, data) {
     if (err) {
       return console.log(err);
     }
     releaseableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "upgrade.sol"), "utf8",
-  function (err, data) {
+  function(err, data) {
     if (err) {
       return console.log(err);
     }
     upgradeableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "mintable.sol"), "utf8",
-  function (err, data) {
+  function(err, data) {
     if (err) {
       return console.log(err);
     }
     mintableContract = data;
   });
 fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8",
-  function (err, data) {
+  function(err, data) {
     if (err) {
       return console.log(err);
     }
@@ -42,53 +42,79 @@ fs.readFile(path.resolve(__dirname, "./contracts/", "burnable.sol"), "utf8",
 var nodemailerservice = require('../emailer/impl');
 module.exports = {
 
-  getCustomContractForm: function (req, res) {
-    res.render('customContract');
-  },
+  getCustomContractForm: async (req, res) => {
+      var projectArray = await getProjectArray(req.user.email);
+      var address = req.cookies['address'];
+      res.render('customContract', {
+        user: req.user,
+        message: req.flash('package_flash'),
+        address: address,
+        ProjectConfiguration: projectArray,
+      });
+    },
 
-  createContract: async function (req, res) {
-    // custom token
-    var mint = "";
-    var allContracts = "";
-    var release = "";
-    var upgrade = "";
-    var burn = "";
-    var upgradeCon = "";
+    checkPackage: (req, res) => {
+      console.log("Here");
+      client.find({
+        where: {
+          'email': req.user.email
+        }
+      }).then(result => {
+        if (result.package1 > 0) {
+          res.send({
+            "message": "success"
+          })
+        } else {
+          res.send({
+            "message": 'You need to buy Package 1'
+          })
+        }
+      });
+    },
 
-    var isReleasable = (req.body.isR == "on") ? true : false;
-    var isUpgradable = (req.body.isU == "on") ? true : false;
-    var isBurnable = (req.body.isB == "on") ? true : false;
-    var isMintable = (req.body.isM == "on") ? true : false;;
+    createContract: async function(req, res) {
+        // custom token
+        var mint = "";
+        var allContracts = "";
+        var release = "";
+        var upgrade = "";
+        var burn = "";
+        var upgradeCon = "";
 
-    generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
-    nodemailerservice.sendContractEmail(req.user.email, result);
-    req.session.contract = result;
-    req.session.coinName = req.body.token_name;
-    var clientdata = await client.find({
-      where: {
-        'email': req.user.email
+        var isReleasable = (req.body.isR == "on") ? true : false;
+        var isUpgradable = (req.body.isU == "on") ? true : false;
+        var isBurnable = (req.body.isB == "on") ? true : false;
+        var isMintable = (req.body.isM == "on") ? true : false;;
+
+        generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
+        nodemailerservice.sendContractEmail(req.user.email, result);
+        req.session.contract = result;
+        req.session.coinName = req.body.token_name;
+        var clientdata = await client.find({
+          where: {
+            'email': req.user.email
+          }
+        });
+        var objdata = new Object();
+        objdata.contractCode = result;
+        objdata.coinName = req.body.token_name;
+        objdata.tokenSupply = req.body.token_supply;
+        objdata.hardCap = req.body.token_sale;
+        var projectData = await ProjectConfiguration.create(objdata)
+        clientdata.addProjectConfiguration(projectData);
+        clientdata.package1 -= 1;
+        await clientdata.save();
+        //packageremoval will be added here
+        res.redirect('/generatedContract');
+      },
+
+      getGeneratedContract: function(req, res) {
+        res.render('deployedContract', {
+          user: req.user,
+          contract: req.session.contract,
+          coinName: req.session.coinName
+        });
       }
-    });
-    var objdata = new Object();
-    objdata.contractCode = result;
-    objdata.coinName = req.body.token_name;
-    objdata.tokenSupply = req.body.token_supply;
-    objdata.hardCap = req.body.token_sale;
-    var projectData = await ProjectConfiguration.create(objdata)
-    clientdata.addProjectConfiguration(projectData);
-    clientdata.package1-=1;
-    await clientdata.save();
-    //packageremoval will be added here
-    res.redirect('/generatedContract');
-  },
-
-  getGeneratedContract: function (req, res) {
-    res.render('deployedContract', {
-      user: req.user,
-      contract: req.session.contract,
-      coinName: req.session.coinName
-    });
-  }
 }
 
 async function generateCustomContract(
@@ -245,8 +271,29 @@ async function generateCustomContract(
   };
   result = template.replace(
     /upgradeableToken|releaseableToken|mintableToken|burnableToken|allContracts|tokenName|tokenSymbol|tokenDecimals|tokenTotalSupply|tokenOnSale|tokenPricePerToken|upgradeCon/gi,
-    function (matched) {
+    function(matched) {
       return mapObj[matched];
     }
   );
+}
+
+function getProjectArray(email) {
+  var projectArray = [];
+  return new Promise(async function(resolve, reject) {
+    client.find({
+      where: {
+        'email': email
+      },
+      include: [{
+        model: ProjectConfiguration,
+        attributes: ['coinName', 'contractAddress', 'contractHash']
+      }],
+    }).then(client => {
+      client.projectConfigurations.forEach(element => {
+        projectArray.push(element.dataValues);
+      });
+      // res.send({'projectArray': projectArray});
+      resolve(projectArray);
+    });
+  });
 }

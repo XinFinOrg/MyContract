@@ -1,102 +1,120 @@
-<!-- views/profile.ejs -->
-<!doctype html>
-<html>
-
-<head>
-  <title>AutoCoin</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  <style>
-    body {
-      padding-top: 80px;
-      word-wrap: break-word;
-      background-image: linear-gradient(180deg,rgba(53, 53, 138, 0.623), white); /* Standard syntax (must be last) */
-
-    }
-
-
-  </style>
-</head>
-
 <body>
-  <div class="container">
-
-    <div class="page-header text-center">
-      <h1>Custom Contract</h1>
-      <a href="/profile" class="btn btn-default btn-sm">Back</a>
-      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  <% layout('./layouts/sidebar') -%>
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-    <div class="row">
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card" style="min-height:500px;">
+        <div class="card-body">
+          <div class="row">
 
-      <!-- LOCAL INFORMATION -->
-      <div class="col-sm-12">
-        <div class="well text-center">
-          <h2 class="text-center">Smart Contract Details </h2>
-          <form action="/createContract" method="post">
+            <!-- LOCAL INFORMATION -->
+            <div class="col-sm-12">
+              <div class="well text-center">
+                <% if (message.length >0) { %>
+                <div class="alert alert-danger">
+                  <%= message %>
+                </div>
+                <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+                <% } %>
+                <h2 class="text-center">Smart Contract Details </h2>
+                <form id="contractForm" action="/createContract" method="post">
 
-            <div class="form-group">
-              <label for="token_name"> Token Name:</label>
-              <input type="text" class="form-control" name="token_name" placeholder="Enter Token Name (For example Ethereum, Bitcoin, Xinfin)">
+                  <div class="form-group">
+                    <label for="token_name"> Token Name:</label>
+                    <input type="text" class="form-control" name="token_name" id="token_name" placeholder="Enter Token Name (For example Ethereum, Bitcoin, Xinfin)">
             </div>
-            <div class="form-group">
-              <label for="token_symbol">Token Symbol:</label>
-              <input type="text" class="form-control" name="token_symbol" placeholder="Enter Token Symbol (For example ETH, BTC, XDC)">
+                    <div class="form-group">
+                      <label for="token_symbol">Token Symbol:</label>
+                      <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol (For example ETH, BTC, XDC)">
             </div>
-            <div class="form-group">
-              <label for="token_decimals">Token Decimals:</label>
-              <input type="number" class="form-control" name="token_decimals" placeholder="18" value= 18>
+                      <div class="form-group">
+                        <label for="token_decimals">Token Decimals:</label>
+                        <input type="number" class="form-control" name="token_decimals" id="token_decimals" placeholder="18" value= 18>
             </div>
-            <div class="form-group">
-              <label for="token_supply">Total Supply: (This will be your hard cap for your ICO)</label>
-              <input type="number" class="form-control" name="token_supply" placeholder="Enter Total Supply (eg. 1000000000000)">
+                        <div class="form-group">
+                          <label for="token_supply">Total Supply: (This will be your hard cap for your ICO)</label>
+                          <input type="number" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply (eg. 1000000000000)">
             </div>
-            <div class="form-group">
-              <label for="token_sale">Sale Token limit:</label>
-              <input type="number" class="form-control" name="token_sale" placeholder="Enter Sale Token limit (This will be your soft cap for your ICO)">
+                          <div class="form-group">
+                            <label for="token_sale">Sale Token limit:</label>
+                            <input type="number" class="form-control" name="token_sale" id="token_sale" placeholder="Enter Sale Token limit (This will be your soft cap for your ICO)">
             </div>
-            <div class="form-group">
-              <label for="eth_tokens">1 eth = ? tokens:</label>
-              <input type="number" class="form-control" name="eth_tokens" placeholder="How many tokens will you be able to buy using 1 Eth ?">
+                            <div class="form-group">
+                              <label for="eth_tokens">1 eth = ? tokens:</label>
+                              <input type="number" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="How many tokens will you be able to buy using 1 Eth ?">
             </div>
-            <h4>Functionalities</h4>
-            <p>
-              <label class="checkbox-inline">
+                              <h4>Functionalities</h4>
+                              <p>
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>ERC20
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Standard
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Safemath
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" disabled>Ownable
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" name="isR" data-offstyle="danger">Releaseable
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" name="isU" data-offstyle="danger">Upgradeable
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" name="isB" data-offstyle="danger">Burnable
               </label>
-              <label class="checkbox-inline">
+                                <label class="checkbox-inline">
                   <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" name="isM" data-offstyle="danger">Mintable
               </label>
-            </p>
+                              </p>
 
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+                              <button type="button" id="submitButton" class="btn btn-default" onclick="submitForm()">Submit</button>
+                </form>
 
+
+              </div>
+            </div>
+
+          </div>
 
         </div>
       </div>
-
     </div>
-
   </div>
 </body>
+<script>
+  window.setTimeout(function() {
+    if(window.sessionStorage.getItem("tokenName")){
+      $("#token_name").val(window.sessionStorage.getItem("tokenName"));
+      $("#token_symbol").val(window.sessionStorage.getItem("tokenSymbol"));
+      $("#token_decimals").val(window.sessionStorage.getItem("tokenDecimals"));
+      $("#token_supply").val(window.sessionStorage.getItem("tokenSupply"));
+      $("#token_sale").val(window.sessionStorage.getItem("tokenSale"));
+      $("#eth_tokens").val(window.sessionStorage.getItem("ethTokens"));
+    }
+  }, 100);
+  function submitForm() {
+    console.log("Yo");
+    window.sessionStorage.setItem("tokenName",$("#token_name").val());
+    window.sessionStorage.setItem("tokenSymbol",$("#token_symbol").val());
+    window.sessionStorage.setItem("tokenDecimals",$("#token_decimals").val());
+    window.sessionStorage.setItem("tokenSupply",$("#token_supply").val());
+    window.sessionStorage.setItem("tokenSale",$("#token_sale").val());
+    window.sessionStorage.setItem("ethTokens",$("#eth_tokens").val());
+    // window.sessionStorage.setItem("tokenName", )
+    $("#contractForm").submit();
+  }
 
+</script>
 </html>
