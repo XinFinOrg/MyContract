@@ -1,7 +1,6 @@
 /*!
  * Bootstrap v4.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */:root{--gray-dark:#343a40;--blue:#2962FF;--indigo:#6610f2;--pink:#e83e8c;--red:#f62d51;--yellow:#ffbc34;--green:#36bea6;--teal:#20c997;--white:#fff;--gray:#6c757d;--primary:#7460ee;--secondary:#6c757d;--success:#36bea6;--info:#2962FF;--warning:#ffbc34;--danger:#f62d51;--light:#f8f9fa;--dark:#343a40;--cyan:#4fc3f7;--orange:#fb8c00;--purple:#7460ee;--breakpoint-xs:0;--breakpoint-sm:576px;--breakpoint-md:768px;--breakpoint-lg:992px;--breakpoint-xl:1600px;--font-family-sans-serif:"Muli",sans-serif;--font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}*,::after,::before{box-sizing:border-box}html{font-family:sans-serif;line-height:1.15;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-ms-overflow-style:scrollbar}@-ms-viewport{width:device-width}
  
