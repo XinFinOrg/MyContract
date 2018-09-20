@@ -43,6 +43,8 @@ module.exports = function(passport) {
       }
     }).then(client => {
       done(null, client.dataValues);
+    }).catch(err => {
+      console.log(err);
     });
   });
 
