@@ -9,8 +9,8 @@ var ProjectConfiguration = db.projectConfiguration;
 module.exports = {
 
   getBytecode: async function(req, res) {
-    var coinName = req.query.coinName;
-    // var coinName = "NISHANTTOKEN";
+    // var coinName = req.query.coinName;
+    var coinName = "test";
     ProjectConfiguration.find({
       where: {
         'coinName': coinName

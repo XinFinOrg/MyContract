@@ -2,7 +2,14 @@
 <html lang="en" ng-app="mewApp">
 <head>
   <meta charset="utf-8">
-  <title>MyEtherWallet.com</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+  <title>MyContract</title>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/etherwallet-master.min.css">
+  <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="assets/css/style.min.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
   <link rel="canonical" href="https://www.myetherwallet.com" />
   <meta name="description" content="MyEtherWallet.com is a free, open-source, client-side interface for generating Ethereum wallets &amp; more. Interact with the Ethereum blockchain easily &amp; securely. Double-check the URL ( myetherwallet.com ) before unlocking your wallet.">
   <meta name="author" content="">
@@ -404,13 +411,13 @@
       </div>
 
       <div ng-show="!wd">
-            <wallet-decrypt-drtv></wallet-decrypt-drtv>         
-          
+            <wallet-decrypt-drtv></wallet-decrypt-drtv>
+
       </div>
     </div>
 
     <div class="row" ng-show="wallet!=null" ng-controller='viewWalletCtrl'>
-      
+
         <article class="col-sm-8 view-wallet-content">
 
   <section class="block">
@@ -542,7 +549,7 @@
 <article class="col-sm-4">
   <wallet-balance-drtv></wallet-balance-drtv>
 </article>
-   
+
     </div>
 
   </article>
@@ -576,4 +583,3 @@
 </body>
 
 </html>
-

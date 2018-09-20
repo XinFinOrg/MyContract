@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
   <title>MyContract</title>
   <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/etherwallet-master.min.css">
+  <link rel="stylesheet" href="css/etherwallet-master.min.css">
   <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
   <!-- Custom CSS -->
   <link href="assets/css/style.min.css" rel="stylesheet">
@@ -164,6 +164,12 @@
     <div class="container-fluid">
       <div class="card" style="min-height:500px;">
         <div class="card-body">
+          <h4 class="card-title">Deploy Contract</h4>
+          <!-- <a translate="NAV_DeployContract"
+             ng-class="{'isActive': visibility=='deployView'}"
+             ng-click="setVisibility('deployView')">
+              Deploy Contract
+          </a> -->
 
           <div class="{{curNode.name}} {{curNode.service}} {{curNode.service}} nav-index-{{gService.currentTab}}" aria-label="header" ng-controller='tabsCtrl'>
 
@@ -311,11 +317,6 @@
                 <div class="block text-center">
                   <h1>
 
-      <a translate="NAV_DeployContract"
-         ng-class="{'isActive': visibility=='deployView'}"
-         ng-click="setVisibility('deployView')">
-          Deploy Contract
-      </a>
     </h1>
                 </div>
                 <!-- / Title -->
@@ -738,7 +739,7 @@
   <!-- Deploy Contract -->
   <article class="row block" ng-show="visibility=='deployView'">
 
-    <section class="col-xs-12">
+    <section class="col-sm-12">
 
       <!-- Byte Code -->
       <div class="form-group">
@@ -753,14 +754,14 @@
       </div>
 
       <!-- Gas -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <h4 translate="TRANS_gas">Gas:</h4>
         <input class="form-control"
            type="text"
            placeholder="300000"
            ng-model="tx.gasLimit"
            ng-class="Validator.isPositiveNumber(tx.gasLimit) ? 'is-valid' : 'is-invalid'"/>
-  </div>
+  </div> -->
 
         <!-- Sign TX Button (once wallet has been unlocked) -->
         <div class="form-group">
@@ -890,14 +891,17 @@
 
 
 
-  <footer class="footer" role="content" aria-label="footer" ng-controller='footerCtrl'>
+  <!-- <footer class="footer" role="content" aria-label="footer" ng-controller='footerCtrl'> -->
 
 
 
-    </div>
+  </div>
+  </div>
+  </div>
+  </div>
 
 
-  </footer>
+  <!-- </footer> -->
 
 
 
