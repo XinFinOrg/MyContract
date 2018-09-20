@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+
+    <title>MyContract</title>
+
+    <!-- CSS -->
+    <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <!-- Main wrapper -->
+    <div id="main-wrapper">
+
+        <!-- Topbar header -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->    
+                             <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- End Logo -->
+
+                    <!-- Toggle which is visible on mobile only -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- End Logo -->
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+                    <!-- toggle and nav items -->
+                    <ul class="navbar-nav float-left mr-auto pl-2">
+                        <li class="">
+                            <div class="header-price-box">
+                                <img src="assets/images/icons/xdce.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-price-box ethBalance">
+                                <img src="assets/images/icons/eth.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-buy-tokens">
+                                <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
+                            </div>
+                        </li>
+                        <!-- Balance -->
+                    </ul>
+
+                    <!-- Right side toggle and nav items -->
+                    <ul class="navbar-nav float-right">
+
+                        <!-- User profile and search -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    <div class=""><img src="assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">John Doe</h4>
+                                        <p class=" m-b-0">johndoe@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a>
+                            </div>
+                        </li>
+                        <!-- User profile and search -->
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- End Topbar header -->
+
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-input-groups.html" aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu">johndoe@gmail.com </span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-plus-circle"></i><span class="hide-menu">Create Contract </span></a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item"><a href="create-contract-erc20.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 20</span></a></li>
+                                <li class="sidebar-item"><a href="create-contract-erc721.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 721</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ongoing-projects.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="deploy-contract.html" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ico-platform.html" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="buy-package.html" data-whatever="@getbootstrap"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span class="hide-menu">Buy Tokens </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="login.html" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- End Left Sidebar -->
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <div class="card" style="min-height:500px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Frequently Asked Questions</h4>                    
+                    	<div class="row mt-5">
+                            <div class="col-md-12">
+                            	<div class="accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+    <!-- Accordion card -->
+    <div class="card shadow-none">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingOne">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <h5 class="panel-title mb-0">How can I pay for My Contract packages? <i class="fa fa-angle-down rotate-icon"></i></h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordionEx" style="">
+            <div class="card-body">Pay for your My Contract package using Ethereum. Create an account and proceed to our payment gateway by hitting 'Code My Contract'.</div>
+        </div>
+    </div>
+    <!-- Accordion card -->
+
+    <!-- Accordion card -->
+    <div class="card shadow-none">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingTwo">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="panel-title mb-0">Which blockchains are supported? <i class="fa fa-angle-down rotate-icon"></i></h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordionEx" style="">
+            <div class="card-body">Ethereum's ERC 20 token creation conventions smart contract which facilitates crowdsale and related smart contracts execution on its networks.</div>
+        </div>
+    </div>
+    <!-- Accordion card -->
+
+    <!-- Accordion card -->
+    <div class="card shadow-none">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingThree">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <h5 class="panel-title mb-0">How do I know that My contract will be secure? <i class="fa fa-angle-down rotate-icon"></i></h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordionEx" style="">
+            <div class="card-body">Our contracts have been audited by xxxxx a smart contract auditing firm that found no vulnerabilities.</div>
+        </div>
+    </div>
+    <!-- Accordion card -->
+    
+    <!-- Accordion card -->
+    <div class="card shadow-none">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingFour">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <h5 class="panel-title mb-0">Will a smart contract satisfy my use Case? <i class="fa fa-angle-down rotate-icon"></i></h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordionEx" style="">
+            <div class="card-body">To find out if a smart contract is a good fit for your business, reach out to us! We'll be happy to answer away any questions and help guide you through the process.</div>
+        </div>
+    </div>
+    <!-- Accordion card -->
+    
+    <!-- Accordion card -->
+    <div class="card shadow-none">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="headingFive">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                <h5 class="panel-title mb-0">How to test, deploy and go live with your smart contract on the Ethereum Network (ERC 20)? <i class="fa fa-angle-down rotate-icon"></i></h5>
+            </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordionEx">
+            <div class="card-body">There are several ways to deploy the smart contract with common ones being
+            <p><span>Truffle Framework</span> - Create a new folder for ERC20 token inside private-truffle-project folder and place the smart contract  inside the contract folder. Compile the smart contract and deploy using the command truffle.cmd  </p>
+            <p><span>Remix</span>– Compile the smart contract by pasting it into the editor at remix.ethereum.org and use Web3 deploy option to connect directly to an Ethereum node via HTTP. </p>
+            <p><span>My Ether Wallet</span> ("MEW")– Deploy smart contract by specifying Byte Code and Gas limit. Interact with Contract using contract address and ABI / JSON Interface</p>
+            <p><span>Node</span>- Ethereum Public network setup through a node &amp; deploying smart contract by technical commands</p></div>
+        </div>
+    </div>
+    <!-- Accordion card -->
+</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+        <!-- End Container fluid  -->
+
+        <!-- footer -->
+        <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+        <!-- End footer -->
+
+    </div>
+    <!-- End Page wrapper  -->
+
+    </div>
+    <!-- End Wrapper -->
+
+    <!-- Buy Token modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title buy-tokens" id="exampleModalLabel1"><i class="ti-wallet"></i> Buy Tokens</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="download-QRcode">
+                            <img src="assets/images/QRcode.jpg">
+                        </div>
+                    </div>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="" aria-label="" id="tokenAddress" value="0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2" />
+                            <div class="input-group-append">
+                                <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Buy Token modal -->
+
+    <!-- All Jquery -->
+    <script src="assets/libs/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+    <!-- apps -->
+
+    <script src="assets/js/app.min.js"></script>
+
+    <script>
+        $(function() {
+            "use strict";
+            $("#main-wrapper").AdminSettings({
+                Theme: false,
+                Layout: 'vertical',
+                LogoBg: 'skin1',
+                NavbarBg: 'skin6',
+                SidebarType: 'full',
+                SidebarColor: 'skin1',
+                SidebarPosition: true,
+                HeaderPosition: true,
+                BoxedLayout: false,
+            });
+        });
+    </script>
+
+    <!-- slimscrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+
+    <!--Menu sidebar -->
+    <script src="assets/js/sidebarmenu.js"></script>
+
+    <!--Custom JavaScript -->
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+</body>
+
+</html>
