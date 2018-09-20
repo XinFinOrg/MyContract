@@ -108,9 +108,13 @@ module.exports = {
         res.redirect('/generatedContract');
       },
 
-      getGeneratedContract: function(req, res) {
+      getGeneratedContract: async function(req, res) {
+        var projectArray = await getProjectArray(req.user.email);
+        var address = req.cookies['address'];
         res.render('deployedContract', {
           user: req.user,
+          address: address,
+          ProjectConfiguration: projectArray,
           contract: req.session.contract,
           coinName: req.session.coinName
         });
