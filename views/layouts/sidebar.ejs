@@ -134,8 +134,8 @@
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                  <li class="sidebar-item"><i class="mdi mdi-adjust"></i><span id="deployment" onclick="deploy()" class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% }) %>
+                  <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span id="deployment" onclick="deploy()" class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                  <% }) %>
                 <% } else { %>
                   <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
                 <% } %>
