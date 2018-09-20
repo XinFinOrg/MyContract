@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+
+    <title>MyContract</title>
+
+    <!-- CSS -->
+    <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- This Page CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/libs/prism/prism.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <!-- Main wrapper -->
+    <div id="main-wrapper">
+
+        <!-- Topbar header -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->    
+                             <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- End Logo -->
+
+                    <!-- Toggle which is visible on mobile only -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- End Logo -->
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+                    <!-- toggle and nav items -->
+                    <ul class="navbar-nav float-left mr-auto pl-2">
+                        <li class="">
+                            <div class="header-price-box">
+                                <img src="assets/images/icons/xdce.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-price-box ethBalance">
+                                <img src="assets/images/icons/eth.png"> Balance: 0000
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="header-buy-tokens">
+                                <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
+                            </div>
+                        </li>
+                        <!-- Balance -->
+                    </ul>
+
+                    <!-- Right side toggle and nav items -->
+                    <ul class="navbar-nav float-right">
+
+                        <!-- User profile and search -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    <div class=""><img src="assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">John Doe</h4>
+                                        <p class=" m-b-0">johndoe@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a>
+                            </div>
+                        </li>
+                        <!-- User profile and search -->
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- End Topbar header -->
+
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-input-groups.html" aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu">johndoe@gmail.com </span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-plus-circle"></i><span class="hide-menu">Create Contract </span></a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item"><a href="create-contract-erc20.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 20</span></a></li>
+                                <li class="sidebar-item"><a href="create-contract-erc721.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> ERC 721</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ongoing-projects.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="deploy-contract.html" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ico-platform.html" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="buy-package.html" data-whatever="@getbootstrap"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span class="hide-menu">Buy Tokens </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="login.html" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- End Left Sidebar -->
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Generated Contract</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract to review</h4>
+                                <pre class="language-markup scrollable">
+                            <code>
+pragma solidity ^0.4.4;
+
+/**
+ * @title ERC20 interface
+ * see https://github.com/ethereum/EIPs/issues/20
+ */
+contract ERC20 {
+
+  uint public totalSupply;
+  uint public decimals;
+
+  function balanceOf(address who) constant returns (uint);
+  function allowance(address owner, address spender) constant returns (uint);
+
+  function transfer(address to, uint value) returns (bool ok);
+  function transferFrom(address from, address to, uint value) returns (bool ok);
+  function approve(address spender, uint value) returns (bool ok);
+
+  event Transfer(address indexed from, address indexed to, uint value);
+  event Approval(address indexed owner, address indexed spender, uint value);
+
+}
+
+/**
+ * @title Ownable
+ * The Ownable contract has an owner address, and provides basic authorization control
+ * functions, this simplifies the implementation of "user permissions".
+ */
+contract Ownable {
+  /* Current Owner */
+  address public owner;
+
+  /* New owner which can be set in future */
+  address public newOwner;
+
+  /* event to indicate finally ownership has been succesfully transferred and accepted */
+  event OwnershipTransferred(address indexed _from, address indexed _to);
+
+  /**
+   * The Ownable constructor sets the original `owner` of the contract to the sender account.
+   */
+  function Ownable() {
+    owner = msg.sender;
+  }
+
+  /**
+   * Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner {
+    require(msg.sender == owner);
+    _;
+  }
+
+  /**
+   * Allows the current owner to transfer control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address _newOwner) onlyOwner {
+    require(_newOwner != address(0));
+    newOwner = _newOwner;
+  }
+
+  /**
+   * Allows the new owner toaccept ownership
+   */
+  function acceptOwnership() {
+    require(msg.sender == newOwner);
+    OwnershipTransferred(owner, newOwner);
+    owner = newOwner;
+  }
+
+}
+
+/*
+*This library is used to do mathematics safely
+*/
+contract SafeMathLib {
+  function safeMul(uint a, uint b) returns (uint) {
+    uint c = a * b;
+    assert(a == 0 || c / a == b);
+    return c;
+  }
+
+  function safeSub(uint a, uint b) returns (uint) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function safeAdd(uint a, uint b) returns (uint) {
+    uint c = a + b;
+    assert(c>=a);
+    return c;
+  }
+}
+
+/**
+ * Standard ERC20 token with Short Hand Attack and approve() race condition mitigation.
+ */
+contract StandardToken is ERC20, SafeMathLib {
+
+  /* Actual balances of token holders */
+  mapping(address => uint) balances;
+
+  /* approve() allowances */
+  mapping (address => mapping (address => uint)) allowed;
+
+  function transfer(address _to, uint _value) returns (bool success) {
+
+      // SafMaths will automatically handle the overflow checks
+      balances[msg.sender] = safeSub(balances[msg.sender],_value);
+      balances[_to] = safeAdd(balances[_to],_value);
+      Transfer(msg.sender, _to, _value);
+      return true;
+
+  }
+
+  function transferFrom(address _from, address _to, uint _value) returns (bool success) {
+
+    uint _allowance = allowed[_from][msg.sender];
+
+    // Check is not needed because safeSub(_allowance, _value) will already throw if this condition is not met
+    balances[_to] = safeAdd(balances[_to],_value);
+    balances[_from] = safeSub(balances[_from],_value);
+    allowed[_from][msg.sender] = safeSub(_allowance,_value);
+    Transfer(_from, _to, _value);
+    return true;
+
+  }
+
+  function balanceOf(address _owner) constant returns (uint balance) {
+    return balances[_owner];
+  }
+
+  function approve(address _spender, uint _value) returns (bool success) {
+
+    /** To change the approve amount you first have to reduce the addresses`
+    *  allowance to zero by calling `approve(_spender, 0)` if it is not
+    *  already 0 to mitigate the race condition described here:
+    *  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+    */
+    require(!((_value != 0) && (allowed[msg.sender][_spender] != 0)));
+
+    allowed[msg.sender][_spender] = _value;
+    Approval(msg.sender, _spender, _value);
+    return true;
+  }
+
+  function allowance(address _owner, address _spender) constant returns (uint remaining) {
+    return allowed[_owner][_spender];
+  }
+
+}
+
+contract Coin is ERC20,Ownable,StandardToken {
+
+  event UpdatedTokenInformation(string newName, string newSymbol);
+
+  /* name of the token */
+  string public name = "Dattatray";
+
+  /* symbol of the token */
+  string public symbol = "DTT";
+
+  /* token decimals to handle fractions */
+  uint public decimals = 18;
+
+  /* initial token supply */
+
+  uint public onSaleTokens = 1000 * (10 ** decimals);
+
+  uint256 pricePerToken = 100;
+
+  uint minETH = 0;                  // 0 ether
+  uint maxETH = 500 * 10**decimals; // 500 ether
+
+  //Crowdsale running
+  bool public isCrowdsaleOpen=false;
+
+  uint tokensForPublicSale = 0;
+
+  address contractAddress;
+
+  function Coin()  {
+    owner = msg.sender;
+    contractAddress = address(this);
+    totalSupply = 100 * (10 ** decimals);
+    //tokens are kept in contract address rather than owner
+    balances[contractAddress] = totalSupply;
+  }
+
+  /* function to update token name and symbol */
+  function updateTokenInformation(string _name, string _symbol) onlyOwner {
+    name = _name;
+    symbol = _symbol;
+    UpdatedTokenInformation(name, symbol);
+  }
+
+  function sendTokensToOwner(uint _tokens) onlyOwner returns (bool ok){
+      require(balances[contractAddress] >= _tokens);
+      balances[contractAddress] = safeSub(balances[contractAddress],_tokens);
+      balances[owner] = safeAdd(balances[owner],_tokens);
+      return true;
+  }
+
+  /* single address */
+  function sendTokensToInvestors(address _investor, uint _tokens) onlyOwner returns (bool ok){
+      require(balances[contractAddress] >= _tokens);
+      onSaleTokens = safeSub(onSaleTokens, _tokens);
+      balances[contractAddress] = safeSub(balances[contractAddress],_tokens);
+      balances[_investor] = safeAdd(balances[_investor],_tokens);
+      return true;
+  }
+
+  /* A dispense feature to allocate some addresses with tokens
+  * calculation done using token count
+  *  Can be called only by owner
+  */
+  function dispenseTokensToInvestorAddressesByValue(address[] _addresses, uint[] _value) onlyOwner returns (bool ok){
+     require(_addresses.length == _value.length);
+     for(uint256 i=0; i<_addresses.length; i++){
+        onSaleTokens = safeSub(onSaleTokens, _value[i]);
+        balances[_addresses[i]] = safeAdd(balances[_addresses[i]], _value[i]);
+        balances[contractAddress] = safeSub(balances[contractAddress], _value[i]);
+     }
+     return true;
+  }
+
+  function startCrowdSale() onlyOwner {
+     isCrowdsaleOpen=true;
+  }
+
+   function stopCrowdSale() onlyOwner {
+     isCrowdsaleOpen=false;
+  }
+
+ function setPublicSaleParams(uint _tokensForPublicSale, uint _min, uint _max, bool _crowdsaleStatus ) onlyOwner {
+    require(_tokensForPublicSale != 0);
+    require(_tokensForPublicSale <= onSaleTokens);
+    tokensForPublicSale = _tokensForPublicSale;
+    isCrowdsaleOpen=_crowdsaleStatus;
+    require(_min >= 0);
+    require(_max > _min+1);
+    minETH = _min;
+    maxETH = _max;
+ }
+
+ function setTotalTokensForPublicSale(uint _value) onlyOwner{
+      require(_value != 0);
+      tokensForPublicSale = _value;
+  }
+
+  function setMinAndMaxEthersForPublicSale(uint _min, uint _max) onlyOwner{
+      require(_min >= 0);
+      require(_max > _min+1);
+      minETH = _min;
+      maxETH = _max;
+  }
+
+  function updateTokenPrice(uint _value) onlyOwner{
+      require(_value != 0);
+      pricePerToken = _value;
+  }
+
+  function updateOnSaleSupply(uint _newSupply) onlyOwner{
+      require(_newSupply != 0);
+      onSaleTokens = _newSupply;
+  }
+
+  function buyTokens() public payable returns(uint tokenAmount) {
+    uint _tokenAmount;
+    uint multiplier = (10 ** decimals);
+    uint weiAmount = msg.value;
+
+    require(isCrowdsaleOpen);
+    require(weiAmount >= minETH);
+    require(weiAmount <= maxETH);
+
+    _tokenAmount = safeMul(weiAmount,pricePerToken);
+
+    require(_tokenAmount > 0);
+
+    //safe sub will automatically handle overflows
+    tokensForPublicSale = safeSub(tokensForPublicSale, _tokenAmount);
+    onSaleTokens = safeSub(onSaleTokens, _tokenAmount);
+    balances[contractAddress] = safeSub(balances[contractAddress],_tokenAmount);
+    //assign tokens
+    balances[msg.sender] = safeAdd(balances[msg.sender], _tokenAmount);
+
+    //send money to the owner
+    require(owner.send(weiAmount));
+    return _tokenAmount;
+
+  }
+
+  // There is no need for vesting. It will be done manually by manually releasing tokens to certain addresses
+
+  function() payable {
+      buyTokens();
+  }
+
+  function destroyToken() public onlyOwner {
+      selfdestruct(msg.sender);
+  }
+
+}
+
+                            </code>
+                        </pre>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Container fluid  -->
+
+        <!-- footer -->
+        <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+        <!-- End footer -->
+
+    </div>
+    <!-- End Page wrapper  -->
+
+    </div>
+    <!-- End Wrapper -->
+
+    <!-- Buy Token modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title buy-tokens" id="exampleModalLabel1"><i class="ti-wallet"></i> Buy Tokens</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="download-QRcode">
+                            <img src="assets/images/QRcode.jpg">
+                        </div>
+                    </div>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="" aria-label="" id="tokenAddress" value="0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2" />
+                            <div class="input-group-append">
+                                <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Buy Token modal -->
+
+    <!-- RUBM modal -->
+    <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Releasable</span></h5>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+
+                    <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Upgradeable</span></h5>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+
+                    <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+
+                    <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Mintable</span></h5>
+                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / RUBM modal -->
+
+    <!-- All Jquery -->
+    <script src="assets/libs/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+    <!-- apps -->
+
+    <script src="assets/js/app.min.js"></script>
+
+    <script>
+        $(function() {
+            "use strict";
+            $("#main-wrapper").AdminSettings({
+                Theme: false,
+                Layout: 'vertical',
+                LogoBg: 'skin1',
+                NavbarBg: 'skin6',
+                SidebarType: 'full',
+                SidebarColor: 'skin1',
+                SidebarPosition: true,
+                HeaderPosition: true,
+                BoxedLayout: false,
+            });
+        });
+    </script>
+
+    <!-- slimscrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+
+    <!--Menu sidebar -->
+    <script src="assets/js/sidebarmenu.js"></script>
+
+    <script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script>
+        $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+        var radioswitch = function() {
+            var bt = function() {
+                $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioState")
+                }), $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+                }), $(".radio-switch").on("switch-change", function() {
+                    $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+                })
+            };
+            return {
+                init: function() {
+                    bt()
+                }
+            }
+        }();
+        $(document).ready(function() {
+            radioswitch.init()
+        });
+    </script>
+
+    <!-- This page JavaScript -->
+    <script src="assets/libs/prism/prism.js"></script>
+
+    <!--Custom JavaScript -->
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+</body>
+
+</html>
