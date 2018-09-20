@@ -224,15 +224,6 @@
 
       <!-- Toastr alert -->
       <script>
-
-      function myAlert() {
-          toastr.success('You have successfully logged in.', 'Hello, <%= user.email %>', {
-              positionClass: 'toastr toast-bottom-right',
-              containerId: 'toast-bottom-right',
-              "progressBar": true
-          });
-          checkBalances();
-      }
       function checkBalances() {
         $.get('/getBalances', function(result) {
           balance = result["XDCE"];
@@ -241,7 +232,7 @@
           $("#eth").text(ethBalance);
         });
       }
-      window.onload = myAlert;
+      window.onload = checkBalances;
       window.setInterval(function() {
         checkBalances();
       }, 30000);

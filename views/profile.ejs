@@ -1,24 +1,24 @@
 <body>
   <% layout('./layouts/sidebar') -%>
 
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
-        <!-- Page wrapper  -->
-        <div class="page-wrapper">
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-            <!-- Container fluid  -->
-            <div class="container-fluid">
-                <div class="card" style="min-height:500px;">
-                    <div class="card-body">
-                      <div class="row">
-                        <!-- <div class="col-sm-6 text-center">
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card" style="min-height:500px;">
+        <div class="card-body">
+          <div class="row">
+            <!-- <div class="col-sm-6 text-center">
                           <div class="row"> -->
-                            <!-- <div class="col-sm-12 text-center">
+            <!-- <div class="col-sm-12 text-center">
                               <div class="well">
                                 <h3>Smart Contract Creation</h3>
                                 <hr size="10">
@@ -34,7 +34,7 @@
                               </div>
                             </div> -->
 
-                            <!-- <div class="col-sm-12 text-center">
+            <!-- <div class="col-sm-12 text-center">
                               <div class="well">
                                 <h3>Smart Contract Deployment</h3>
                                 <br>
@@ -45,7 +45,7 @@
 
                               </div>
                             </div> -->
-                            <!-- <div class="col-sm-12 text-center">
+            <!-- <div class="col-sm-12 text-center">
                               <div class="well">
                                 <h3>ICO platforms</h3>
                                 <br>
@@ -56,82 +56,92 @@
                                   <% }) %>
                               </div>
                             </div> -->
-                          <!-- </div>
+            <!-- </div>
                         </div> -->
-                        <div class="col-sm-6 text-center">
-                          <div class="row">
-                            <div class="col-sm-12 text-center">
-                              <div class="well">
-                                <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
+            <div class="col-sm-6 text-center">
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <div class="well">
+                    <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
 
-                                <table class="table text-left">
-                                  <thead>
-                                    <tr>
-                                      <th>Coin Name</th>
-                                      <th>Contract Address</th>
-                                      <th>Transaction Hash</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                                      <tr>
-                                        <td>
-                                          <%= ProjectConfiguration.coinName %>
-                                        </td>
-                                        <% if(ProjectConfiguration.contractAddress) {%>
-                                          <td>
-                                            <%= ProjectConfiguration.contractAddress %>
-                                          </td>
-                                          <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
-                                          <% } else { %>
-                                            <td colspan="2"> Not deployed yet
-                                          <% } %>
-                                      </tr>
-                                      <% }) %>
-                                  </tbody>
-                                </table>
-
-                              </div>
-                            </div>
-                          </div>
-                          <br><br><br>
-                          <% if (message.length >0) { %>
-                            <div class="alert alert-danger">
-                              <%= message %>
-                            </div>
-                            <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+                    <table class="table text-left">
+                      <thead>
+                        <tr>
+                          <th>Coin Name</th>
+                          <th>Contract Address</th>
+                          <th>Transaction Hash</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                        <tr>
+                          <td>
+                            <%= ProjectConfiguration.coinName %>
+                          </td>
+                          <% if(ProjectConfiguration.contractAddress) {%>
+                          <td>
+                            <%= ProjectConfiguration.contractAddress %>
+                          </td>
+                          <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
+                          <% } else { %>
+                          <td colspan="2"> Not deployed yet
                             <% } %>
-                              <br><br>
-                              <% if (contractMessage.length >0) { %>
-                                <div class="alert alert-success">
-                                  <strong>Success!</strong> Contract Mined Succefully!
-                                </div>
-                                <br>
-                                <% } %>
-                        </div>
-                      </div>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
 
-                        </div>
-                    </div>
+                  </div>
                 </div>
-
+              </div>
+              <br><br><br>
+              <% if (message.length >0) { %>
+              <div class="alert alert-danger">
+                <%= message %>
+              </div>
+              <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+              <% } %>
+              <br><br>
+              <% if (contractMessage.length >0) { %>
+              <div class="alert alert-success">
+                <strong>Success!</strong> Contract Mined Succefully!
+              </div>
+              <br>
+              <% } %>
             </div>
-            <!-- End Container fluid  -->
-
-
-            <!-- footer -->
-            <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
-            <!-- End footer -->
+          </div>
 
         </div>
-        <!-- End Page wrapper  -->
-
+      </div>
     </div>
-    <!-- End Wrapper -->
+
+  </div>
+  <!-- End Container fluid  -->
+
+
+  <!-- footer -->
+  <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+  <!-- End footer -->
+
+  </div>
+  <!-- End Page wrapper  -->
+
+  </div>
+  <!-- End Wrapper -->
 
 
 
-    <div class="chat-windows"></div>
+  <div class="chat-windows"></div>
 </body>
+<script>
+  function myAlert() {
+    toastr.success('You have successfully logged in.', 'Hello, <%= user.email %>', {
+      positionClass: 'toastr toast-bottom-right',
+      containerId: 'toast-bottom-right',
+      "progressBar": true
+    });
+  }
+  window.setTimeout(myAlert, 1000);
+</script>
 
 </html>
