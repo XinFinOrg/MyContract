@@ -10,6 +10,7 @@ module.exports = {
 
   getBytecode: async function(req, res) {
     var coinName = req.query.coinName;
+    // var coinName = "NISHANTTOKEN";
     ProjectConfiguration.find({
       where: {
         'coinName': coinName
@@ -54,7 +55,35 @@ module.exports = {
     })
   },
 
-  getDeployer: function(req, res) {
-    res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
+  getDeployer: async function(req, res) {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
+      user: req.user,
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+    // res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
   }
+};
+
+function getProjectArray(email) {
+  var projectArray = [];
+  return new Promise(async function(resolve, reject) {
+    client.find({
+      where: {
+        'email': email
+      },
+      include: [{
+        model: ProjectConfiguration,
+        attributes: ['coinName', 'contractAddress', 'contractHash']
+      }],
+    }).then(client => {
+      client.projectConfigurations.forEach(element => {
+        projectArray.push(element.dataValues);
+      });
+      // res.send({'projectArray': projectArray});
+      resolve(projectArray);
+    });
+  });
 }
