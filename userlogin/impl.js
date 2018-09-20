@@ -139,6 +139,16 @@ module.exports = {
         });
       },
 
+      getFAQ: async (req, res) => {
+        var projectArray = await getProjectArray(req.user.email);
+        var address = req.cookies['address'];
+        res.render('faq', {
+          user: req.user,
+          address: address,
+          ProjectConfiguration: projectArray,
+        });
+      }
+
 };
 
 function getProjectArray(email) {

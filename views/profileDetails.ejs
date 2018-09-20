@@ -1,27 +1,41 @@
 <body>
   <% layout('./layouts/sidebar') -%>
-  <div class="container">
-
-    <div class="page-header">
-      <h1 class="text-center"><span class="fa fa-user"></span> Profile Details Page</h1>
-      <br><br>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-    <div class="col-sm-12 text-center">
-      <div class="well">
-        <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card" style="min-height:500px;">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <div class="well">
+                <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
 
-        <p>
-          <strong>Email</strong>:
-          <%= user.email %><br><br>
-          <strong>XDCE Address</strong>:
-          <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= address %>"> -->
-          <span id="address"><%= address %></span><br><br>
+                <p>
+                  <strong>Email</strong>:
+                  <%= user.email %><br><br>
+                  <strong>XDCE Address</strong>:
+                  <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= address %>"> -->
+                  <span id="address"><%= address %></span><br><br>
 
-          <strong>Packages Bought</strong>:<br>
-          Package 1 : <%= user.package1 %> credits<br>
-          Package 2 : <%= user.package2 %> credits<br><br>
-        </p>
+                  <strong>Packages Bought</strong>:<br>
+          Package 1 :
+                  <%= user.package1 %> credits<br>
+          Package 2 :
+                  <%= user.package2 %> credits<br><br>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

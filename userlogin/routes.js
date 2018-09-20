@@ -9,6 +9,7 @@ module.exports = function (app) {
   app.post('/signup', impl.postSignup);
   app.get('/profile', isLoggedIn, impl.getProfile);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
+  app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
