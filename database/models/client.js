@@ -96,6 +96,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.BLOB
     },
+    paymentOTP:
+    {
+      type:DataTypes.NUMERIC
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,

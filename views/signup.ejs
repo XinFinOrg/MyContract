@@ -58,48 +58,50 @@
                   <div class="row">
                     <div class="col-12">
                       <% if (message.length > 0) { %>
-                      <div class="alert alert-danger">
-                        <%= message %>
-                      </div>
-                      <% } %>
-                      <form class="form-horizontal m-t-20" id="loginform" action="/signup" method="post">
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
-                                </div>
-                          <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
-                                </div>
+                        <div class="alert alert-danger">
+                          <%= message %>
+                        </div>
+                        <% } %>
+                          <form class="form-horizontal m-t-20" id="loginform" action="/signup" method="post">
+                            <div class="form-group">
+                              <label for="email">Email</label>
+                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                              <label for="password">Password</label>
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                            </div>
                             <div class="form-group">
                               <label for="retypePassword">Retype Password</label>
                               <input type="password" class="form-control" id="retypePassword" placeholder="Retype password">
-                                </div>
-                              <div class="form-group">
-                                <div class="row align-items-center">
-                                  <div class="col-md-12 p-b-20">
-                                    <button class="btn btn-lg btn-rounded btn-info" type="submit">SIGNUP</button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR continue with</span></p>
-
-                              <div class="row full-width">
-                                <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                                  <div class="social">
-                                    <a href="/auth/google" class="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab fa-google"></i> Google</a>
-                                    <a href="/auth/google" class="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title="" data-original-title="Login with GitHub"> <i aria-hidden="true" class="fab fa-github"></i> GitHub</a>
-
-                                  </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="row align-items-center">
+                                <div class="col-md-12 p-b-20">
+                                  <button class="btn btn-lg btn-rounded btn-info" type="submit">SIGNUP</button>
                                 </div>
                               </div>
-                              <div class="form-group m-b-0 m-t-15">
-                                <div class="col-sm-12">
-                                  Already have an account? <a href="/login" class="text-info m-l-5"><b>Login</b></a>
+                            </div>
+
+                            <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR continue with</span></p>
+
+                            <div class="row full-width">
+                              <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                                <div class="social">
+                                  <a href="/auth/google" class="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title="" data-original-title="Login with Google">
+                                  <i aria-hidden="true" class="fab fa-google"></i> Google</a>
+                                  <a href="/auth/google" class="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title="" data-original-title="Login with GitHub">
+                                  <i aria-hidden="true" class="fab fa-github"></i> GitHub</a>
+
                                 </div>
                               </div>
-                      </form>
+                            </div>
+                            <div class="form-group m-b-0 m-t-15">
+                              <div class="col-sm-12">
+                                Already have an account? <a href="/login" class="text-info m-l-5"><b>Login</b></a>
+                              </div>
+                            </div>
+                          </form>
                     </div>
                   </div>
                 </div>
@@ -111,20 +113,12 @@
                   </div>
                   <div class="row m-t-20">
                     <!-- Form -->
-                    <form class="col-12" action="#">
-                      <!-- email -->
-                      <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email">
-                                </div>
-                        <div class="form-group">
-                          <div class="row align-items-center">
-                            <div class="col-md-12 p-b-20">
-                              <button class="btn btn-lg btn-rounded btn-info" type="submit">Reset</button>
-                            </div>
-                          </div>
-                        </div>
+                    <form class="col-12" action="/forgotPassword" method="POST">
+                      <label for="email">Email</label> <input class="form-control" type="text" name="email" placeholder="email">
+                      <br>
+                      <input class="btn btn-lg btn-rounded btn-info" type="submit" value="Submit">
                     </form>
+
                   </div>
                 </div>
               </div>
@@ -166,7 +160,7 @@
     // ==============================================================
     // Login and Recover Password
     // ==============================================================
-    $('#to-recover').on("click", function() {
+    $('#to-recover').on("click", function () {
       $("#loginform").slideUp();
       $("#recoverform").fadeIn();
     });
@@ -202,15 +196,15 @@
 
       }
     });
-    jQuery.validator.addMethod("pwcheckallowedchars", function(value) {
+    jQuery.validator.addMethod("pwcheckallowedchars", function (value) {
       return /^[a-zA-Z0-9!@#$%^&*()_=\[\]{};':"\\|,.<>\/?+-]+$/.test(value) // has only allowed chars letter
     }, "The password contains non-admitted characters");
 
-    jQuery.validator.addMethod("pwcheckspechars", function(value) {
+    jQuery.validator.addMethod("pwcheckspechars", function (value) {
       return /[!@#$%^&*()_=\[\]{};':"\\|,.<>\/?+-]/.test(value)
     }, "The password must contain at least one special character");
 
-    jQuery.validator.addMethod("pwcheckuppercase", function(value) {
+    jQuery.validator.addMethod("pwcheckuppercase", function (value) {
       return /[A-Z]/.test(value) // has an uppercase letter
     }, "The password must contain at least one uppercase letter");
   </script>

@@ -16,6 +16,9 @@ module.exports = function (app) {
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
   app.get('/projectList', impl.getProjectList);
+  app.get('/forgotPassword',impl.forgotPassword);
+  app.get('/resetPassword',impl.resetPassword);
+  app.post('/updatePassword',impl.updatePassword);
   // app.get('/getProjectArray', impl.getProjectArray);
 
   //kyc

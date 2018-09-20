@@ -2,7 +2,7 @@ const Web3 = require('web3');
 var db = require('../database/models/index');
 var client = db.client;
 var Address = db.userCurrencyAddress;
-var ws_provider = 'wss://mainnet.infura.io/ws';
+var ws_provider = 'wss://ropsten.infura.io/ws';
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
@@ -53,7 +53,7 @@ module.exports = {
         "to": address,
         "value": amountToSend
       };
-      web3.eth.accounts.signTransaction(rawTransaction, "0xD493D7F8F82C24BBFC3FE0E0FB14F45BAA8EA421356DC2F7C2B1A9EF455AB8DF").then(result => {
+      web3.eth.accounts.signTransaction(rawTransaction, "0xAF5FDC7ED0937BF94B475681FADA00E4135BBBB1008A578DB5DD700F602ABF7D").then(result => {
         web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
           console.log("Ether receipt generated");
           var transaction = {

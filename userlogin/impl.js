@@ -5,10 +5,12 @@ var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var path = require('path');
 var paymentListener = require('../packageCart/paymentListener');
+var bcrypt = require('bcrypt-nodejs');
+var mailer = require('../emailer/impl');
 
 module.exports = {
 
-  getLogin: function(req, res) {
+  getLogin: function (req, res) {
     res.render('login', {
       message: req.flash('loginMessage')
     });
@@ -20,7 +22,7 @@ module.exports = {
     failureFlash: true // allow flash messages
   }),
 
-  getSignup: function(req, res) {
+  getSignup: function (req, res) {
     // render the page and pass in any flash data if it exists
     res.render('signup.ejs', {
       message: req.flash('signupMessage')
@@ -33,32 +35,23 @@ module.exports = {
     failureFlash: true // allow flash messages
   }),
 
-  getProfile: async function(req, res) {
-      var projectArray = await getProjectArray(req.user.email);
-      console.log(projectArray);
-      var address;
-      address = req.cookies['address'];
-      console.log("cookie is ", address);
-      if (!address) {
-        client.find({
-          where: {
-            'email': req.user.email
-          }
-        }).then(async client => {
-          var addresses = await client.getUserCurrencyAddresses();
-          address = addresses[0].address;
-          res.cookie('address', address, {
-            expire: 360000 + Date.now()
-          });
-          res.render('profile.ejs', {
-            user: req.user, // get the user out of session and pass to template
-            ProjectConfiguration: projectArray,
-            message: req.flash('package_flash'),
-            contractMessage: req.flash('contract_flash'),
-            address: address
-          });
+  getProfile: async function (req, res) {
+    var projectArray = await getProjectArray(req.user.email);
+    console.log(projectArray);
+    var address;
+    address = req.cookies['address'];
+    console.log("cookie is ", address);
+    if (!address) {
+      client.find({
+        where: {
+          'email': req.user.email
+        }
+      }).then(async client => {
+        var addresses = await client.getUserCurrencyAddresses();
+        address = addresses[0].address;
+        res.cookie('address', address, {
+          expire: 360000 + Date.now()
         });
-      } else {
         res.render('profile.ejs', {
           user: req.user, // get the user out of session and pass to template
           ProjectConfiguration: projectArray,
@@ -66,94 +59,143 @@ module.exports = {
           contractMessage: req.flash('contract_flash'),
           address: address
         });
-      }
-    },
+      });
+    } else {
+      res.render('profile.ejs', {
+        user: req.user, // get the user out of session and pass to template
+        ProjectConfiguration: projectArray,
+        message: req.flash('package_flash'),
+        contractMessage: req.flash('contract_flash'),
+        address: address
+      });
+    }
+  },
 
-    googleLogin: passport.authenticate("google", {
-      scope: ["profile ", "email"]
-    }),
+  googleLogin: passport.authenticate("google", {
+    scope: ["profile ", "email"]
+  }),
 
-    googleLoginCallback: passport.authenticate("google", {
-      successRedirect: '/profile',
-      failureRedirect: '/'
-    }),
+  googleLoginCallback: passport.authenticate("google", {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+  }),
 
-    getLogout: function(req, res) {
-      req.logout();
-      res.clearCookie('address');
-      res.redirect('/');
-    },
+  getLogout: function (req, res) {
+    req.logout();
+    res.clearCookie('address');
+    res.redirect('/');
+  },
 
-    githubLogin: passport.authenticate('github'),
+  githubLogin: passport.authenticate('github'),
 
-    githubLoginCallback: passport.authenticate('github', {
-      successRedirect: '/profile',
-      failureRedirect: '/'
-    }),
+  githubLoginCallback: passport.authenticate('github', {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+  }),
 
-    KYCpage: function(req, res) {
-      res.render('adminKYC.ejs', {
-        user: req.user,
-      })
-    },
-    KYCpagePending: function(req, res) {
-      res.render('pendingAdminKYC.ejs', {
-        user: req.user,
-      })
-    },
-    KYCdocUpload: function(req, res) {
-      client.update({
-        "name": req.body.first_name + " " + req.body.last_name,
-        "isd_code": req.body.ISD_code,
-        "mobile": req.body.number,
-        'kycDoc1': fs.readFileSync(req.files[0].path),
-        'kycDoc2': fs.readFileSync(req.files[1].path),
-        'kycDoc3': fs.readFileSync(req.files[2].path),
-        "kyc_verified": "pending"
-      }, {
+  KYCpage: function (req, res) {
+    res.render('adminKYC.ejs', {
+      user: req.user,
+    })
+  },
+  KYCpagePending: function (req, res) {
+    res.render('pendingAdminKYC.ejs', {
+      user: req.user,
+    })
+  },
+  KYCdocUpload: function (req, res) {
+    client.update({
+      "name": req.body.first_name + " " + req.body.last_name,
+      "isd_code": req.body.ISD_code,
+      "mobile": req.body.number,
+      'kycDoc1': fs.readFileSync(req.files[0].path),
+      'kycDoc2': fs.readFileSync(req.files[1].path),
+      'kycDoc3': fs.readFileSync(req.files[2].path),
+      "kyc_verified": "pending"
+    }, {
         where: {
           'email': req.user.email
         }
       }).then(() => {
         res.redirect('/KYCpage/pending');
       });
-    },
+  },
 
-    getProjectList: (req, res) => {
-      client.findAll({
-        include: [ProjectConfiguration]
-      }).then((clients) => {
-        res.render('projectList.ejs', {
-          clients: clients
-        })
-      });
-    },
+  getProjectList: (req, res) => {
+    client.findAll({
+      include: [ProjectConfiguration]
+    }).then((clients) => {
+      res.render('projectList.ejs', {
+        clients: clients
+      })
+    });
+  },
 
-    getProfileDetails: async (req, res) => {
-        var projectArray = await getProjectArray(req.user.email);
-        var address = req.cookies['address'];
-        res.render('profileDetails', {
-          user: req.user,
-          address: address,
-          ProjectConfiguration: projectArray,
-        });
-      },
+  getProfileDetails: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('profileDetails', {
+      user: req.user,
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
 
-      getFAQ: async (req, res) => {
-        var projectArray = await getProjectArray(req.user.email);
-        var address = req.cookies['address'];
-        res.render('faq', {
-          user: req.user,
-          address: address,
-          ProjectConfiguration: projectArray,
-        });
+  getFAQ: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('faq', {
+      user: req.user,
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
+
+  forgotPassword: (req, res) => {
+    client.find({
+      where: {
+        'email': req.query.email
       }
-
+    }).then(result => {
+      mailer.forgotPasswordMailer(req, req.query.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
+      res.send("sucess")
+    })
+  },
+  resetPassword: (req, res) => {
+    console.log(req.query)
+    client.find({
+      where: {
+        'email': req.query.email
+      }
+    }).then(result => {
+      console.log(bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId))
+      if (!bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId)) { console.log("false") }
+      else {
+        console.log("true")
+        res.render("resetPassword",{email:result.dataValues.email})
+      }
+    })
+  },
+  updatePassword: (req, res) => {
+    console.log(req.query)
+    client.find({
+      where: {
+        'email': req.query.email
+      }
+    }).then(result => {
+      console.log(bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId))
+      if (!bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId)) { console.log("false") }
+      else {
+        console.log("true")
+        res.render("resetPassword",{email:result.dataValues.email})
+      }
+    })
+  }
 };
 
 function getProjectArray(email) {
   var projectArray = [];
-  return new Promise(async function(resolve, reject) {
+  return new Promise(async function (resolve, reject) {
     client.find({
       where: {
         'email': email
