@@ -1,49 +1,32 @@
-<!-- views/profile.ejs -->
-<!doctype html>
-<html>
-
-<head>
-  <title>AutoCoin</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  <style>
-    body {
-      padding-top: 80px;
-      word-wrap: break-word;
-      background-image: linear-gradient(180deg,rgba(53, 53, 138, 0.623), white); /* Standard syntax (must be last) */
-
-    }
-
-
-  </style>
-</head>
+<% layout('./layouts/sidebar') -%>
 
 <body>
-  <div class="container">
-
-    <div class="page-header">
-      <h1 class="text-center">Generated Contract</h1>
-      <a href="/logout" class="btn btn-default btn-sm pull-right fa fa-power-off"> Logout</a>
-      <a href="/profile" class="btn btn-default btn-sm pull-left"> Back</a>
-
-      <br><br>
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Generated Contract</h4>
 
-    <div class="row">
-
-
-      <!-- LOCAL INFORMATION -->
-      <div class="col-sm-12 text-center">
-        <div class="well">
-          <h3 class="text-center"> Solidity Smart Contract to review</h3>
-          <textarea class="form-control" rows="25" disabled><%= contract %></textarea>
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <div class="well">
+                <h3 class="text-center"> Solidity Smart Contract to review</h3>
+                <textarea class="form-control" rows="25" disabled><%= contract %></textarea>
+              </div>
+              <a href="/deployer"+ class="btn btn-default btn-lg text-center"> Deploy your contract now !!</a>
+            </div>
+          </div>
         </div>
-	 <a href="/deployer?coinName=<%= coinName %>"+ class="btn btn-default btn-lg text-center"> Deploy your contract now !!</a>
       </div>
-
-
     </div>
-
   </div>
 </body>
 

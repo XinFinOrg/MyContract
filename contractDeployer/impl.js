@@ -9,7 +9,7 @@ var ProjectConfiguration = db.projectConfiguration;
 module.exports = {
 
   getBytecode: async function(req, res) {
-    var coinName = req.session.coinName;
+    var coinName = req.query.coinName;
     ProjectConfiguration.find({
       where: {
         'coinName': coinName
@@ -26,7 +26,6 @@ module.exports = {
       res.send({
         bytecode: byteCode
       })
-
     });
   },
 
@@ -56,7 +55,6 @@ module.exports = {
   },
 
   getDeployer: function(req, res) {
-    req.session.coinName = req.query.coinName;
     res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
   }
 }
