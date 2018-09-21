@@ -142,7 +142,7 @@
                 <% } %>
               </ul>
             </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform (ComingSoon) </span></a>
+            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"  data-toggle="modal" data-target="#comingSoonModal" data-whatever="@getbootstrap"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform (ComingSoon) </span></a>
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
@@ -182,9 +182,9 @@
               </div>
               <form>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="" aria-label="" id="website" value="<%= address %>" />
+                  <input type="text" class="form-control" placeholder="" aria-label="" id="tokenAddress" value="<%= address %>" />
                   <div class="input-group-append">
-                    <button data-copytarget="#website" class="btn btn-success" type="button">Copy</button>
+                    <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
                   </div>
                 </div>
               </form>
@@ -196,6 +196,26 @@
         </div>
       </div>
       <!-- /.modal -->
+	  
+	  
+	   <!-- / ICO Plarform Coming Soon modal -->
+       <div class="modal fade" id="comingSoonModal" tabindex="-1" role="dialog" aria-labelledby="comingSoonModalLabel1">
+       		<div class="modal-dialog modal-dialog-centered" role="document">
+       		<div class="modal-content">
+       		<div class="modal-header">
+       		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       		</div>
+       		<div class="modal-body">
+      		<h1 class="text-center mx-2 mb-3"><span>Coming Soon!</span></h1>
+       		</div>
+       		<div class="modal-footer text-center">
+       		<button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+       		</div>
+       		</div>
+       		</div>
+       </div>
+       <!-- / ICO Plarform Coming Soon modal -->
+									
 
       <!-- All Jquery -->
       <script src="assets/libs/jquery/jquery.min.js"></script>
