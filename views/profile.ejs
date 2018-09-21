@@ -15,7 +15,6 @@
     <div class="container-fluid">
       <div class="card" style="min-height:500px;">
         <div class="card-body">
-          <div class="row">
             <!-- <div class="col-sm-6 text-center">
                           <div class="row"> -->
             <!-- <div class="col-sm-12 text-center">
@@ -58,42 +57,39 @@
                             </div> -->
             <!-- </div>
                         </div> -->
-            <div class="col-sm-6 text-center">
-              <div class="row">
-                <div class="col-sm-12 text-center">
-                  <div class="well">
-                    <h3><span class="fa fa-info-circle"></span>Deployed Contract Details</h3><br>
-
-                    <table class="table text-left">
-                      <thead>
-                        <tr>
-                          <th>Coin Name</th>
-                          <th>Contract Address</th>
-                          <th>Transaction Hash</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                        <tr>
-                          <td>
-                            <%= ProjectConfiguration.coinName %>
-                          </td>
-                          <% if(ProjectConfiguration.contractAddress) {%>
-                          <td>
-                            <%= ProjectConfiguration.contractAddress %>
-                          </td>
-                          <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
-                          <% } else { %>
-                          <td colspan="2"> Not deployed yet
-                            <% } %>
-                        </tr>
-                        <% }) %>
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
-              </div>
+                        <h4 class="card-title">Deployed Contract Details</h4>
+                    	<div class="row mt-5">
+                            <div class="col-md-12">
+                            	<div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-info-table">
+                                            <tr>
+                                                <th>Coin Name</th>
+                                                <th>Contract Address</th>
+                                                <th>Transaction Hash</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                                          <tr>
+                                            <td>
+                                              <%= ProjectConfiguration.coinName %>
+                                            </td>
+                                            <% if(ProjectConfiguration.contractAddress) {%>
+                                            <td>
+                                              <%= ProjectConfiguration.contractAddress %>
+                                            </td>
+                                            <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click here</a> </td>
+                                            <% } else { %>
+                                            <td colspan="2"> Not deployed yet
+                                              <% } %>
+                                          </tr>
+                                          <% }) %>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
               <br><br><br>
               <% if (message.length >0) { %>
               <div class="alert alert-danger">

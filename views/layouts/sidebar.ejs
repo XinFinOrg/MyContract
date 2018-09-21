@@ -134,7 +134,7 @@
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                  <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span id="deployment" onclick="deploy()" class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                  <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>") class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
                   <% }) %>
                 <% } else { %>
                   <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
@@ -154,6 +154,7 @@
             </li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/buyPackage" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package</span></a></li>
 			<li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span class="hide-menu">Buy Tokens </span></a></li>
+      <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/faq" aria-expanded="false"><i class="fa fa-question-circle"></i><span class="hide-menu">FAQ</span></a></li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
           </ul>
         </nav>
@@ -236,8 +237,8 @@
       window.setInterval(function() {
         checkBalances();
       }, 30000);
-      function deploy() {
-        window.sessionStorage.setItem("deploymentName", $("#deployment").text());
+      function deploy(coinName) {
+        window.sessionStorage.setItem("deploymentName", coinName);
         window.location.href="/deployer";
       }
         // function getProjectArray(){

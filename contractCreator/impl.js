@@ -111,6 +111,7 @@ module.exports = {
       getGeneratedContract: async function(req, res) {
         var projectArray = await getProjectArray(req.user.email);
         var address = req.cookies['address'];
+        console.log(req.session.coinName);
         res.render('deployedContract', {
           user: req.user,
           address: address,

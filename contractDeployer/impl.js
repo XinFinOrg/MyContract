@@ -9,6 +9,7 @@ var ProjectConfiguration = db.projectConfiguration;
 module.exports = {
 
   getBytecode: async function(req, res) {
+    console.log("re is", req.query);
     var coinName = req.query.coinName;
     // var coinName = "test";
     ProjectConfiguration.find({
