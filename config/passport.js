@@ -56,7 +56,7 @@ module.exports = function(passport) {
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-      console.log(req.body);
+      // console.log(req.body);
       process.nextTick(function() {
         // find a user whose email is the same as the forms email
         User.find({
@@ -154,7 +154,7 @@ module.exports = function(passport) {
           'email': email
         }
       }).then(client => {
-        console.log(client);
+        // console.log(client);
 
         // if no user is found, return the message
         if (!client)

@@ -1,7 +1,8 @@
 module.exports = {
 
-  'tokenAddress': "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
+  'tokenAddress': "0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2",
   'diversionAddress': "0x920E938A80Fa1669b608166741eeb01De6C57402",
+  'amount':'1200000000000000000000000',
   'erc20ABI': [{
       "anonymous": false,
       "inputs": [{

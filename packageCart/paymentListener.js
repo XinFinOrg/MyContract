@@ -61,7 +61,7 @@ module.exports = {
             "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
             "to": config.tokenAddress,
             "value": "0x0",
-            "data": contractInstance.methods.transfer(config.diversionAddress, "1001000000000000000000").encodeABI()
+            "data": contractInstance.methods.transfer(config.diversionAddress,config.amount).encodeABI()
           };
           web3.eth.estimateGas(transaction).then(gasLimit => {
             transaction["gasLimit"] = gasLimit;

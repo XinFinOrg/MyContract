@@ -76,18 +76,18 @@
 <header class="{{curNode.name}} {{curNode.service}} {{curNode.service}} nav-index-{{gService.currentTab}}" aria-label="header" ng-controller='tabsCtrl' >
 
 
-
+  
 
 
 <section class="bg-gradient header-branding">
   <section class="container">
-
-
-
-
+    
+     
+    
+    
     <div class="tagline">
 
-
+  
 
     <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
     <span class="dropdown dropdown-node" ng-cloak>
@@ -203,7 +203,7 @@
     </section>
   </section>
 </article>
-
+ 
 
 
 </header>
@@ -213,13 +213,13 @@
 
   <div class="tab-content" >
 
-
+   
     <main class="tab-pane contracts active" ng-if="globalService.currentTab==globalService.tabs.contracts.id" ng-controller='contractsCtrl' ng-cloak>
 
   <!-- Title -->
   <div class="block text-center">
     <h1>
-
+    
       <a translate="NAV_DeployContract"
          ng-class="{'isActive': visibility=='deployView'}"
          ng-click="setVisibility('deployView')">
@@ -232,7 +232,7 @@
   <!-- Interact Contracts -->
   <article class="row block" ng-show="visibility=='interactView'" ng-init="logged_in_user = {req.session.user}">
 
-
+     
 <!-- Address -->
 <section class="col-sm-6 clearfix">
   <div class="row">
@@ -283,8 +283,8 @@
 <section class="col-xs-12 clearfix">
   <button class="btn btn-primary" ng-click="initContract()" translate="x_Access"> ACCESS </button>
 </section>
-
-
+ 
+    
 
   </article>
 
@@ -545,8 +545,8 @@
 
 
 </section>
-
-
+ 
+    
 
   </article>
 
@@ -638,8 +638,8 @@
   </section>
 </article>
 
-
-
+ 
+    
 
   </article>
   <!-- / Interact Contracts -->
@@ -746,12 +746,12 @@
     </section>
   </section>
 </article>
-
-
+ 
+  
 
 </section>
-
-
+ 
+    
 
   </article>
   <!-- / Deploy Contract -->
@@ -759,8 +759,8 @@
   <!--wallet decrypt-->
   <article class="form-group"
            ng-show="(!wd && visibility=='deployView') || (!wd && visibility=='interactView' && contract.selectedFunc && !contract.functions[contract.selectedFunc.index].constant)">
-
-        <wallet-decrypt-drtv></wallet-decrypt-drtv>
+      
+        <wallet-decrypt-drtv></wallet-decrypt-drtv>         
   </article>
 
   <article class="col-xs-12" ng-show="contract.selectedFunc!=null && visibility=='interactView'">
@@ -783,7 +783,7 @@
 </main>
 
 
-
+   
 
   </div>
 
@@ -817,3 +817,4 @@
 </main>
 </body>
 </html>
+

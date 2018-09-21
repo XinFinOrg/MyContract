@@ -24,8 +24,8 @@ module.exports = {
   },
 
   payment: function (req, res) {
-    console.log("datafromform", req.query);
-    if (!req.query.otpvalue) {
+    console.log("datafromform", req.query,req.body,req.params);
+    if (!req.query.otpValue) {
       console.log("here 1");
       client.find({
         where: {
@@ -34,30 +34,41 @@ module.exports = {
       }).then(client => {
         client.update({
           paymentOTP: Math.floor(Math.random() * 9999) + 1
-        }).then(result =>{
-          console.log(req.user.email,result.dataValues.paymentOTP);
-          otpMailer.sendConfirmationOTP(req.user.email,result.dataValues.paymentOTP)
+        }).then(result => {
+          console.log(req.user.email, result.dataValues.paymentOTP);
+          otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
         })
       });
-      res.send({result:"success"});
     } else {
       console.log("here 2");
-      var addressCookie = req.cookies['address'];
-      Address.find({
+      client.find({
         where: {
-          'address': addressCookie
+          'email': req.user.email
         }
-      }).then(address => {
-        // Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
-        //   if (balance >= 1001) {
-        //     var receipt = paymentListener.sendToParent(address.address, address.privateKey);
-        //     paymentListener.attachListener(address.address);
-        //     req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
-        //   } else {
-        //     req.flash('package_flash', 'Insufficient funds to buy Package');
-        //   }
-        //   res.redirect('/profile');
-        // });
+      }).then(client => {
+        if (client.dataValues.paymentOTP == req.query.otpValue) {
+          var addressCookie = req.cookies['address'];
+          Address.find({
+            where: {
+              'address': addressCookie
+            }
+          }).then(address => {
+            Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
+              if (balance >= 1001) {
+                var receipt = paymentListener.sendToParent(address.address, address.privateKey);
+                paymentListener.attachListener(address.address);
+                req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
+              } else {
+                req.flash('package_flash', 'Insufficient funds to buy Package');
+              }
+              res.redirect('/profile');
+            });
+          })
+        }
+        else {
+          console.log(false)
+          res.send({ status: false });
+        }
       })
     }
   },

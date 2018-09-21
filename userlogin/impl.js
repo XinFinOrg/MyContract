@@ -152,6 +152,7 @@ module.exports = {
   },
 
   forgotPassword: (req, res) => {
+    console.log(req.body,req.params)
     client.find({
       where: {
         'email': req.query.email
@@ -168,27 +169,25 @@ module.exports = {
         'email': req.query.email
       }
     }).then(result => {
-      console.log(bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId))
       if (!bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId)) { console.log("false") }
       else {
         console.log("true")
-        res.render("resetPassword",{email:result.dataValues.email})
+        res.render("resetPassword", { email: result.dataValues.email })
       }
     })
   },
   updatePassword: (req, res) => {
-    console.log(req.query)
+    console.log(req.body)
     client.find({
       where: {
-        'email': req.query.email
+        'email': req.body.email
       }
     }).then(result => {
-      console.log(bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId))
-      if (!bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId)) { console.log("false") }
-      else {
-        console.log("true")
-        res.render("resetPassword",{email:result.dataValues.email})
-      }
+      result.update({
+        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
+      }).then(result => {
+        res.redirect("/")
+      })
     })
   }
 };
