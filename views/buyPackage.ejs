@@ -36,8 +36,8 @@
                                             </div>
                                             <div class="bottom">
                                                 <div class="cl-footer">
-                                                    <div class="dolar">1200000000000000000000000 <img src="assets/images/icons/xdce.png" width="25" height="25"></div>
-                                                    <% if(balance<1200000000000000000000000) { %>
+                                                    <div class="dolar">1200000 <img src="assets/images/icons/xdce.png" width="25" height="25"></div>
+                                                    <% if(balance<1200000) { %>
                                                       <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
                                                     <% } else { %>
                                                     <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap" class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="sendOTP()">Buy Now</a>
@@ -110,11 +110,11 @@
                                 <div class="text-center">
                                 <input type="submit" class="btn btn-rounded btn-lg btn-info"  value="Submit">
                                 </div>
-                              </form> 
+                              </form>
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
         <!-- / Payment Confirmation modal End -->
@@ -124,10 +124,10 @@
     //     var otp = $("#otpvalue").val();
     //     console.log("inside otpaymentp",otp)
     //      $.get("/payment?otpvalue="+otp).then(function (result,error) {
-    //         console.log(result,error);   
+    //         console.log(result,error);
     //         if(result.status)
     //      })
-       
+
     // }
 
     function sendOTP() {
