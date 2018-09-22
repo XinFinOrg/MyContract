@@ -1,13 +1,14 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
 var client = db.client;
+var projectConfiguration = db.projectConfiguration
 
 
-module.exports = function(app) {
+module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
-  app.post("/createContract", isLoggedIn, hasPackage1, impl.createContract);
+  app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
   app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);
 }
 
@@ -21,6 +22,23 @@ function isLoggedIn(req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 
+}
+
+function coinNameExist(req, res, next) {
+  console.log(req.body)
+  projectConfiguration.find({
+    where: {
+      'coinName': req.body.token_name
+    }
+  }).then(result => {
+    // console.log(result.dataValues.coinName)
+    if (result==null) {
+      return next();
+    } else {
+      req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
+      res.redirect('/customContract');
+    }
+  })
 }
 
 // route middleware to check package 1

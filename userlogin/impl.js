@@ -152,7 +152,6 @@ module.exports = {
   },
 
   forgotPassword: (req, res) => {
-    console.log(req.body,req.params)
     client.find({
       where: {
         'email': req.query.email

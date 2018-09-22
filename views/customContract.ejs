@@ -23,6 +23,11 @@
               </div>
               <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
               <% } %>
+              <% if (message2.length >0) { %>
+                <div class="alert alert-danger">
+                  <%= message2 %>
+                </div>
+                <% } %>
               <form class="form-horizontal m-t-20" id="createContract" action="/createContract" method="post">
                 <div class="form-group">
                   <label for="tokenName">Token Name</label>

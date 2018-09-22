@@ -48,6 +48,7 @@ module.exports = {
       res.render('customContract', {
         user: req.user,
         message: req.flash('package_flash'),
+        message2: req.flash('project_flash'),
         address: address,
         ProjectConfiguration: projectArray,
       });
