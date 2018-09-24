@@ -4,7 +4,7 @@ nodes.customNode = require('./nodeHelpers/customNode');
 nodes.infuraNode = require('./nodeHelpers/infura');
 nodes.metamaskNode = require('./nodeHelpers/metamask');
 nodes.nodeTypes = {
-    // ETH: "ETH",
+    ETH: "ETH",
     ETC: "ETC",
     // MUS: "MUSIC",
     Ropsten: "ROPSTEN ETH",
@@ -35,6 +35,18 @@ nodes.domainsaleNodeTypes = [nodes.nodeTypes.ETH, nodes.nodeTypes.Ropsten];
 //     'lib': null
 // };
 nodes.nodeList = {
+    'eth_infura': {
+        'name': 'ETH',
+        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
+        'type': nodes.nodeTypes.ETH,
+        'eip155': true,
+        'chainId': 1,
+        'tokenList': require('./tokens/ethTokens.json'),
+        'abiList': require('./abiDefinitions/ethAbi.json'),
+        'service': 'infura.io',
+        'lib': new nodes.infuraNode('https://mainnet.infura.io/mew')
+    },
     // 'eth_mew': {
     //     'name': 'ETH',
     //     'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
@@ -59,18 +71,6 @@ nodes.nodeList = {
     //     'service': 'etherscan.io',
     //     'lib': require('./nodeHelpers/etherscan')
     // },
-    'eth_infura': {
-        'name': 'ETH',
-        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
-        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
-        'type': nodes.nodeTypes.ETH,
-        'eip155': true,
-        'chainId': 1,
-        'tokenList': require('./tokens/ethTokens.json'),
-        'abiList': require('./abiDefinitions/ethAbi.json'),
-        'service': 'infura.io',
-        'lib': new nodes.infuraNode('https://mainnet.infura.io/mew')
-    },
     // 'eth_giveth': {
     //     'name': 'ETH',
     //     'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
@@ -83,18 +83,18 @@ nodes.nodeList = {
     //     'service': 'giveth.io',
     //     'lib': new nodes.customNode('https://mew.giveth.io', '')
     // },
-    // 'etc_ethereum_commonwealth': {
-    //     'name': 'ETC',
-    //     'blockExplorerTX': 'https://gastracker.io/tx/[[txHash]]',
-    //     'blockExplorerAddr': 'https://gastracker.io/addr/[[address]]',
-    //     'type': nodes.nodeTypes.ETC,
-    //     'eip155': true,
-    //     'chainId': 61,
-    //     'tokenList': require('./tokens/etcTokens.json'),
-    //     'abiList': require('./abiDefinitions/etcAbi.json'),
-    //     'service': 'Ethereum Commonwealth',
-    //     'lib': new nodes.customNode('https://etc-geth.0xinfra.com', '')
-    // },
+    'etc_ethereum_commonwealth': {
+        'name': 'ETC',
+        'blockExplorerTX': 'https://gastracker.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://gastracker.io/addr/[[address]]',
+        'type': nodes.nodeTypes.ETC,
+        'eip155': true,
+        'chainId': 61,
+        'tokenList': require('./tokens/etcTokens.json'),
+        'abiList': require('./abiDefinitions/etcAbi.json'),
+        'service': 'Ethereum Commonwealth',
+        'lib': new nodes.customNode('https://etc-geth.0xinfra.com', '')
+    },
     // 'etc_epool': {
     //     'name': 'ETC',
     //     'blockExplorerTX': 'https://gastracker.io/tx/[[txHash]]',
@@ -120,18 +120,18 @@ nodes.nodeList = {
         'service': 'infura.io',
         'lib': new nodes.infuraNode('https://ropsten.infura.io/mew')
     },
-    'kov_ethscan': {
-        'name': 'Kovan(testnet)',
-        'type': nodes.nodeTypes.Kovan,
-        'blockExplorerTX': 'https://kovan.etherscan.io/tx/[[txHash]]',
-        'blockExplorerAddr': 'https://kovan.etherscan.io/address/[[address]]',
-        'eip155': true,
-        'chainId': 42,
-        'tokenList': require('./tokens/kovanTokens.json'),
-        'abiList': require('./abiDefinitions/kovanAbi.json'),
-        'service': 'etherscan.io',
-        'lib': require('./nodeHelpers/etherscanKov')
-    },
+    // 'kov_ethscan': {
+    //     'name': 'Kovan(testnet)',
+    //     'type': nodes.nodeTypes.Kovan,
+    //     'blockExplorerTX': 'https://kovan.etherscan.io/tx/[[txHash]]',
+    //     'blockExplorerAddr': 'https://kovan.etherscan.io/address/[[address]]',
+    //     'eip155': true,
+    //     'chainId': 42,
+    //     'tokenList': require('./tokens/kovanTokens.json'),
+    //     'abiList': require('./abiDefinitions/kovanAbi.json'),
+    //     'service': 'etherscan.io',
+    //     'lib': require('./nodeHelpers/etherscanKov')
+    // },
     'kov_infura': {
         'name': 'Kovan(testnet)',
         'type': nodes.nodeTypes.Kovan,
