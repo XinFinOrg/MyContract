@@ -190,7 +190,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
+        <button class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
           Cancel
         </button>
         <button class="btn btn-rounded btn-info" ng-click="saveCustomNode()" translate="NODE_CTA">
@@ -547,7 +547,7 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
+          <button type="button" class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
             Cancel
           </button>
           <button type="button" ng-show="viewWallet.nick.length>0" class="btn btn-rounded btn-info" ng-click="editSave()" translate="x_Save">
@@ -599,7 +599,7 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
+          <button type="button" class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
             Cancel
           </button>
           <button type="button" class="btn btn-warning" ng-click="decryptWallet()" translate="NAV_ViewWallet">
@@ -645,7 +645,7 @@
         </div>
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+          <button type="button" class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
             No, get me out of here!
           </button>
           <button type="button" class="btn btn-danger" ng-click="deleteWallet()" translate="MYWAL_Remove">
@@ -1314,7 +1314,7 @@
 
         <div class="modal-footer">
           <button aria-label="Cancel - Will close dialog"
-                  class="btn btn-rounded btn-info"
+                  class="btn btn-default"
                   data-dismiss="modal"
                   role="button"
                   tabindex="0"
@@ -1461,7 +1461,7 @@
           <div class="input-group-btn">
 
             <a style="min-width: 170px"
-               class="btn btn-rounded btn-info dropdown-toggle"
+               class="btn btn-default dropdown-toggle"
                class="dropdown-toggle"
                ng-click="dropdownAmount = !dropdownAmount"
                ng-class="dropdownEnabled ? '' : 'disabled'">
@@ -1867,7 +1867,7 @@
           Are you sure you want to do this?
         </p>
         <br />
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -1965,7 +1965,7 @@
          ng-class="Validator.isPositiveNumber(swapOrder.fromVal)  && verifyMinMaxValues() ? 'is-valid' : 'is-invalid'" />
 
   <span class="dropdown">
-    <a class="btn btn-rounded btn-info dropdown-toggle" ng-click="dropdownFrom = !dropdownFrom">{{swapOrder.fromCoin}}<i class="caret"></i></a>
+    <a class="btn btn-default dropdown-toggle" ng-click="dropdownFrom = !dropdownFrom">{{swapOrder.fromCoin}}<i class="caret"></i></a>
     <ul class="dropdown-menu dropdown-menu-right" ng-show="dropdownFrom">
       <li ng-repeat="coin in availableFromOptions track by $index" ng-show="showInFromList(coin)">
         <a ng-class="{true:'active'}[coin == swapOrder.fromCoin]" ng-click="setOrderCoin(true, coin)"> {{coin}} </a>
@@ -1984,7 +1984,7 @@
          ng-class="Validator.isPositiveNumber(swapOrder.toVal) && verifyMinMaxValues() ? 'is-valid' : 'is-invalid'" />
 
   <div class="dropdown">
-    <a class="btn btn-rounded btn-info dropdown-toggle" class="dropdown-toggle" ng-click="dropdownTo = !dropdownTo">{{swapOrder.toCoin}}<i class="caret"></i></a>
+    <a class="btn btn-default dropdown-toggle" class="dropdown-toggle" ng-click="dropdownTo = !dropdownTo">{{swapOrder.toCoin}}<i class="caret"></i></a>
     <ul class="dropdown-menu dropdown-menu-right" ng-show="dropdownTo">
       <li ng-repeat="coin in availableToOptions track by $index" ng-show="showInToList(coin)">
         <a ng-class="{true:'active'}[coin == swapOrder.toCoin]" ng-click="setOrderCoin(false, coin)"> {{coin}} </a>
@@ -2256,7 +2256,7 @@
           <div class="input-group-btn">
 
             <a style="min-width: 170px"
-               class="btn btn-rounded btn-info dropdown-toggle"
+               class="btn btn-default dropdown-toggle"
                class="dropdown-toggle"
                ng-click="dropdownAmount = !dropdownAmount"
                ng-class="dropdownEnabled ? '' : 'disabled'">
@@ -2662,7 +2662,7 @@
           Are you sure you want to do this?
         </p>
         <br />
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -3259,7 +3259,7 @@
                     Are you sure you want to do this?
                 </p>
                 <br/>
-                <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+                <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
                     No, get me out of here!
                 </button>
                 <button class="btn btn-rounded btn-info" ng-click="sendKyberTransaction()" translate="SENDModal_Yes">
@@ -3278,7 +3278,7 @@
                     Are you sure you want to do this?
                 </p>
                 <br/>
-                <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+                <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
                     No, get me out of here!
                 </button>
                 <button class="btn btn-rounded btn-info" ng-click="sendKyberTransaction()" translate="SENDModal_Yes">
@@ -3619,7 +3619,7 @@
         <input class="form-control" type="text" placeholder="{{'SEND_amount_short' | translate }}" ng-model="tx.value"/>
         <div class="input-group-btn">
           <a style="min-width: 150px"
-             class="btn btn-rounded btn-info dropdown-toggle"
+             class="btn btn-default dropdown-toggle"
              ng-click="dropdownAmount = !dropdownAmount"
              ng-class="dropdownEnabled ? '' : 'disabled'">
                 {{unitReadable}}
@@ -3687,7 +3687,7 @@
                ng-class="Validator.isPositiveNumber(gasPriceDec) ? 'is-valid' : 'is-invalid'" />
         <div class="input-group-btn">
           <span class="dropdown dropdown-gprice" ng-cloak>
-            <a tabindex="0" style="min-width: 170px"  aria-haspopup="true" aria-expanded="false" aria-label="gas price" class="dropdown-toggle btn btn-rounded btn-info" ng-click="gpDropdown = !gpDropdown">
+            <a tabindex="0" style="min-width: 170px"  aria-haspopup="true" aria-expanded="false" aria-label="gas price" class="dropdown-toggle btn btn-default" ng-click="gpDropdown = !gpDropdown">
               {{ gasPriceDef }}
               <i class="caret"></i>
             </a>
@@ -3877,7 +3877,7 @@
 
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -3928,7 +3928,7 @@
 
   <div class="dropdown">
 
-    <a class="btn btn-rounded btn-info dropdown-toggle"
+    <a class="btn btn-default dropdown-toggle"
        class="dropdown-toggle"
        ng-click="dropdownExistingContracts = !dropdownExistingContracts">
         {{selectedAbi.name}}
@@ -4056,7 +4056,7 @@
     </div>
 
     <div class="btn-group">
-      <a class="btn btn-rounded btn-info" ng-click="dropdownContracts = !dropdownContracts">
+      <a class="btn btn-default" ng-click="dropdownContracts = !dropdownContracts">
         {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
         <i class="caret"></i>
       </a>
@@ -4306,7 +4306,7 @@
 
 
       <div class="modal-footer" ng-show="showRaw">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -4416,7 +4416,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -4511,7 +4511,7 @@
                    ng-change="nameOnChange()"
                    ng-disabled="objENS.nameReadOnly"
                    ng-class="Validator.isValidENSName(objENS.name) && objENS.name.indexOf('.') == -1 ? 'is-valid' : 'is-invalid'"/>
-            <div class="input-group-btn"><a class="btn btn-rounded btn-info">.eth</a></div>
+            <div class="input-group-btn"><a class="btn btn-default">.eth</a></div>
           </div>
           <button class="btn btn-rounded btn-info" ng-click="checkName()">
             Check ENS Name
@@ -4900,7 +4900,7 @@
       </label>
       <div class="input-group">
         <input class="form-control" type="text" placeholder="mewtopia" readonly ng-model="objENS.name"/>
-        <div class="input-group-btn"><a class="btn btn-rounded btn-info">.eth</a></div>
+        <div class="input-group-btn"><a class="btn btn-default">.eth</a></div>
       </div>
       <!-- / Name -->
 
@@ -4929,7 +4929,7 @@
                type="number"
                placeholder="1 {{ajaxReq.type}}"
                ng-model="objENS.bidValue" ng-class="Validator.isPositiveNumber(objENS.bidValue) && objENS.bidValue >= 0.01 ? 'is-valid' : 'is-invalid'"/>
-        <div class="input-group-btn"><a class="btn btn-rounded btn-info">{{ajaxReq.type}}</a></div>
+        <div class="input-group-btn"><a class="btn btn-default">{{ajaxReq.type}}</a></div>
 
       </div>
       <!-- / Bid Amount -->
@@ -4951,7 +4951,7 @@
                  ng-model="objENS.dValue"
                  ng-class="Validator.isPositiveNumber(objENS.dValue) && objENS.dValue >= objENS.bidValue && objENS.dValue < wallet.balance ? 'is-valid' : 'is-invalid'"/>
           <div class="input-group-btn">
-            <a class="btn btn-rounded btn-info">
+            <a class="btn btn-default">
               {{ajaxReq.type}}
             </a>
           </div>
@@ -5161,7 +5161,7 @@
 
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -5391,7 +5391,7 @@
 
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -5528,7 +5528,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -5705,7 +5705,7 @@
           <div class="input-group-btn">
 
             <a style="min-width: 170px"
-               class="btn btn-rounded btn-info dropdown-toggle"
+               class="btn btn-default dropdown-toggle"
                class="dropdown-toggle"
                ng-click="dropdownAmount = !dropdownAmount"
                ng-class="dropdownEnabled ? '' : 'disabled'">
@@ -6111,7 +6111,7 @@
           Are you sure you want to do this?
         </p>
         <br />
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -6166,7 +6166,7 @@
                    ng-change="nameOnChange()"
                    ng-disabled="objDomainSale.nameReadOnly"
                    ng-class="Validator.isValidENSName(objDomainSale.name) && objDomainSale.name.indexOf('.') == -1 ? 'is-valid' : 'is-invalid'"/>
-            <div class="input-group-btn"><a class="btn btn-rounded btn-info">.eth</a></div>
+            <div class="input-group-btn"><a class="btn btn-default">.eth</a></div>
           </div>
           <button class="btn btn-rounded btn-info" ng-click="checkName()"> Check on DomainSale </button>
         </section>
@@ -6597,7 +6597,7 @@
                  ng-class="Validator.isPositiveNumber(objDomainSale.priceEth) ? 'is-valid' : 'is-invalid'"
                  ng-change="syncPrice()"/>
           <div class="input-group-btn">
-            <a class="btn btn-rounded btn-info">{{ajaxReq.type}}</a>
+            <a class="btn btn-default">{{ajaxReq.type}}</a>
           </div>
         </div>
         <!-- / Buy price -->
@@ -6617,7 +6617,7 @@
                  ng-class="Validator.isPositiveNumber(objDomainSale.reserveEth) ? 'is-valid' : 'is-invalid'"
                  ng-change="syncReserve()"/>
           <div class="input-group-btn">
-            <a class="btn btn-rounded btn-info">{{ajaxReq.type}}</a>
+            <a class="btn btn-default">{{ajaxReq.type}}</a>
           </div>
         </div>
         <!-- / Buy price -->
@@ -6772,7 +6772,7 @@
                  ng-class="Validator.isPositiveNumber(objDomainSale.bidEth) ? 'is-valid' : 'is-invalid'"
                  ng-change="syncBid()"/>
           <div class="input-group-btn">
-            <a class="btn btn-rounded btn-info">
+            <a class="btn btn-default">
               {{ajaxReq.type}}
             </a>
           </div>
@@ -7007,7 +7007,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
@@ -7340,7 +7340,7 @@
           <div class="input-group-btn">
 
             <a style="min-width: 170px"
-               class="btn btn-rounded btn-info dropdown-toggle"
+               class="btn btn-default dropdown-toggle"
                class="dropdown-toggle"
                ng-click="dropdownAmount = !dropdownAmount"
                ng-class="dropdownEnabled ? '' : 'disabled'">
@@ -7746,7 +7746,7 @@
           Are you sure you want to do this?
         </p>
         <br />
-        <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
+        <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
         <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">

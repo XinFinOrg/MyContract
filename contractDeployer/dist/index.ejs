@@ -138,6 +138,14 @@
         }
         </script>
 </head>
+<style>
+  body {
+
+      background-image: linear-gradient(180deg,rgba(53, 53, 138, 0.623), white); /* Standard syntax (must be last) */
+
+    }
+	</style>
+
 <body style="margin:0;">
   <!-- Main wrapper -->
   <% layout('./layouts/sidebar') -%>
@@ -167,40 +175,46 @@
 
 
             <!-- <section class="bg-gradient header-branding"> -->
-              <span>Select your Network:</span>
+            <!-- <section class="container"> -->
 
-              <!-- <section class="container"> -->
-                <!-- <span class="tagline"> -->
-                  <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
-                  <span class="dropdown dropdown-node" ng-cloak>
+
+
+
+            <div class="tagline">
+              <span> Select your network: </span>
+
+
+
+              <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
+              <span class="dropdown dropdown-node" ng-cloak>
       <a tabindex="0"
          aria-haspopup="true"
          aria-label="change node. current node {{curNode.name}} node by {{curNode.service}}"
          class="dropdown-toggle  btn btn-white"
          ng-click="dropdownNode = !dropdownNode">
            <!-- <span translate="X_Network"></span> -->
-                  {{curNode.name}}
-                  <small>({{curNode.service}})</small>
-                  <!-- <i class="caret"></i> -->
-                  </a>
-                  <ul class="dropdown-menu" ng-show="dropdownNode">
-                    <li ng-repeat="(key, value) in nodeList">
-                      <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
+              {{curNode.name}}
+              <small>({{curNode.service}})</small>
+              <!-- <i class="caret"></i> -->
+              </a>
+              <ul class="dropdown-menu" ng-show="dropdownNode">
+                <li ng-repeat="(key, value) in nodeList">
+                  <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
             {{value.name}}
             <small> ({{value.service}}) </small>
             <img ng-show="value.service=='Custom'" src="images/icon-remove.svg" class="node-remove" title="Remove Custom Node" ng-click="removeNodeFromLocal(value.name)"/>
           </a>
-                    </li>
-                    <li>
-                      <!-- <a ng-click="customNodeModal.open(); dropdownNode = !dropdownNode;" translate="X_Network_Custom">
+                </li>
+                <li>
+                  <a ng-click="customNodeModal.open(); dropdownNode = !dropdownNode;" translate="X_Network_Custom">
             Add Custom Network / Node
-          </a> -->
-                    </li>
-                  </ul>
-                  </span>
+          </a>
+                </li>
+              </ul>
+              </span>
 
-                <!-- </span> -->
-              <!-- </section> -->
+            </div>
+            <!-- </section> -->
             <!-- </section> -->
 
 
@@ -275,7 +289,7 @@
                   </div>
 
                   <div class="modal-footer">
-                    <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
+                    <button class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
           Cancel
         </button>
                     <button class="btn btn-rounded btn-info" ng-click="saveCustomNode()" translate="NODE_CTA">
@@ -301,11 +315,6 @@
               <main class="tab-pane contracts active" ng-if="globalService.currentTab==globalService.tabs.contracts.id" ng-controller='contractsCtrl' ng-cloak>
 
                 <!-- Title -->
-                <div class="block text-center">
-                  <h1>
-
-    </h1>
-                </div>
                 <!-- / Title -->
 
                 <!-- Interact Contracts -->
@@ -327,7 +336,7 @@
 
                     <div class="dropdown">
 
-                      <a class="btn btn-rounded btn-info dropdown-toggle"
+                      <a class="btn btn-default dropdown-toggle"
        class="dropdown-toggle"
        ng-click="dropdownExistingContracts = !dropdownExistingContracts">
         {{selectedAbi.name}}
@@ -453,7 +462,7 @@
             </div>
 
             <div class="btn-group">
-              <a class="btn btn-rounded btn-info" ng-click="dropdownContracts = !dropdownContracts">
+              <a class="btn btn-default" ng-click="dropdownContracts = !dropdownContracts">
         {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
         <i class="caret"></i>
       </a>
@@ -825,20 +834,21 @@
         </section>
       </article>
 
+      <!--wallet decrypt-->
+      <article class="form-group" ng-show="(!wd && visibility=='deployView') || (!wd && visibility=='interactView' && contract.selectedFunc && !contract.functions[contract.selectedFunc.index].constant)">
 
-
+        <wallet-decrypt-drtv></wallet-decrypt-drtv>
+      </article>
     </section>
-
-
 
   </article>
   <!-- / Deploy Contract -->
 
   <!--wallet decrypt-->
-  <article class="form-group" ng-show="(!wd && visibility=='deployView') || (!wd && visibility=='interactView' && contract.selectedFunc && !contract.functions[contract.selectedFunc.index].constant)">
+  <!-- <article class="form-group" ng-show="(!wd && visibility=='deployView') || (!wd && visibility=='interactView' && contract.selectedFunc && !contract.functions[contract.selectedFunc.index].constant)">
 
     <wallet-decrypt-drtv></wallet-decrypt-drtv>
-  </article>
+  </article> -->
 
   <article class="col-xs-12" ng-show="contract.selectedFunc!=null && visibility=='interactView'">
 
