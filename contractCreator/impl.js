@@ -54,6 +54,18 @@ module.exports = {
       });
     },
 
+    getERC721ContractForm: async (req, res) => {
+        var projectArray = await getProjectArray(req.user.email);
+        var address = req.cookies['address'];
+        res.render('erc721', {
+          user: req.user,
+          message: req.flash('package_flash'),
+          message2: req.flash('project_flash'),
+          address: address,
+          ProjectConfiguration: projectArray,
+        });
+      },
+
     checkPackage: (req, res) => {
       console.log("Here");
       client.find({
@@ -82,12 +94,12 @@ module.exports = {
         var burn = "";
         var upgradeCon = "";
 
-        var isReleasable = (req.body.isR == "on") ? true : false;
-        var isUpgradable = (req.body.isU == "on") ? true : false;
-        var isBurnable = (req.body.isB == "on") ? true : false;
-        var isMintable = (req.body.isM == "on") ? true : false;;
+        var isReleasable = (req.body.isReleasable == "on") ? true : false;
+        var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
+        var isBurnable = (req.body.isBurnable == "on") ? true : false;
+        var isMintable = (req.body.isMintable == "on") ? true : false;;
 
-        generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradable, res);
+        generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradeable, res);
         nodemailerservice.sendContractEmail(req.user.email, result);
         req.session.contract = result;
         req.session.coinName = req.body.token_name;

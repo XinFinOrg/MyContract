@@ -7,6 +7,7 @@ var projectConfiguration = db.projectConfiguration
 module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
+  app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
   app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
   app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);

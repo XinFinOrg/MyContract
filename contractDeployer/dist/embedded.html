@@ -76,7 +76,7 @@
       </div>
       <a tabindex="0"
          role="button"
-         class="btn btn-primary"
+         class="btn btn-rounded btn-info"
          ng-click="genNewWallet()"
          translate="NAV_GenerateWallet">
            Generate Wallet
@@ -99,7 +99,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary col-xs-12" ng-click="closeModal()" translate="APPLE_Mob_Notice_Understand">
+        <button class="btn btn-rounded btn-info col-xs-12" ng-click="closeModal()" translate="APPLE_Mob_Notice_Understand">
           I understand.
         </button>
       </div>
@@ -222,7 +222,7 @@
       </h1>
 
       <a tabindex="0" role="button"
-         class="btn btn-primary"
+         class="btn btn-rounded btn-info"
          href="{{blobEnc}}"
          download="{{encFileName}}"
          aria-label="{{'x_Download'|translate}} {{'x_Keystore'|translate}}"
@@ -329,7 +329,7 @@
          aria-label="{{'x_Print'|translate}}"
          aria-describedby="x_PrintDesc"
          role="button"
-         class="btn btn-primary"
+         class="btn btn-rounded btn-info"
          ng-click="printQRCode()"
          translate="x_Print">
           PRINT
@@ -404,13 +404,13 @@
       </div>
 
       <div ng-show="!wd">
-            <wallet-decrypt-drtv></wallet-decrypt-drtv>         
-          
+            <wallet-decrypt-drtv></wallet-decrypt-drtv>
+
       </div>
     </div>
 
     <div class="row" ng-show="wallet!=null" ng-controller='viewWalletCtrl'>
-      
+
         <article class="col-sm-8 view-wallet-content">
 
   <section class="block">
@@ -542,7 +542,7 @@
 <article class="col-sm-4">
   <wallet-balance-drtv></wallet-balance-drtv>
 </article>
-   
+
     </div>
 
   </article>
@@ -576,4 +576,3 @@
 </body>
 
 </html>
-
