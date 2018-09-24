@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mewApp">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>MyEtherWallet.com</title>
+<meta property="og:title" content="MyEtherWallet.com: Your Key to Ethereum">
+<meta property="og:site_name" content="MyEtherWallet.com: Your Key to Ethereum">
+<meta name="twitter:title" content="MyEtherWallet.com: Your Key to Ethereum">
+<meta name="apple-mobile-web-app-title" content="MyEtherWallet.com: Your Key to Ethereum">
+<link href="https://www.myetherwallet.com" rel="canonical">
+<meta content="https://www.myetherwallet.com" property="og:url">
+<meta content="https://www.myetherwallet.com" name="twitter:url">
+<link rel="stylesheet" href="css/etherwallet-master.min.css">
+<script type="text/javascript" src="js/etherwallet-static.min.js"></script>
+<script type="text/javascript" src="js/etherwallet-master.js"></script>
+<meta name="description" content="MyEtherWallet (MEW) is a free, open-source, client-side interface for generating Ethereum wallets & more. Interact with the Ethereum blockchain easily & securely.">
+<meta property="og:description"  content="Free, open-source, client-side Ethereum wallet. Enabling you to interact with the blockchain easily & securely.">
+<meta name="twitter:description" content="Free, open-source, client-side Ethereum wallet. Enabling you to interact with the blockchain easily & securely.">
+<meta name="robots" content="index,follow">
+<meta name="googlebot" content="index,follow">
+<meta name="google-site-verification" content="IpChQ00NYUQuNs_7Xs6xlnSdzalOlTUYbBsr8f7OpvM" />
+<link href="images/fav/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+<link href="images/fav/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="images/fav/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="images/fav/manifest.json" rel="manifest">
+<link href="images/fav/safari-pinned-tab.svg" rel="mask-icon" color="#2f99b0">
+<link href="images/fav/favicon.ico" rel="shortcut icon">
+<meta name="apple-mobile-web-app-title" content="MyEtherWallet &middot; Your Key to Ethereum">
+<meta name="application-name" content="MyEtherWallet">
+<meta name="msapplication-config" content="images/fav/browserconfig.xml">
+<meta name="theme-color" content="#1d6986">
+<meta name="apple-mobile-web-app-status-bar-style" content="#1d6986">
+<meta property="og:url" content="https://www.myetherwallet.com" />
+<meta property="og:title" content="MyEtherWallet.com  &middot; Your Key to Ethereum" />
+<meta property="og:type" content="website">
+<meta property="og:image" content="/images/myetherwallet-logo-banner.png" />
+<meta property="og:image" content="/images/myetherwallet-logo.png" />
+<meta property="og:image" content="/images/myetherwallet-logo-square.png" />
+<meta property="og:image" content="/images/myetherwallet-banner-fun.jpg" />
+<meta name="twitter:image" content="/images/myetherwallet-logo-twitter.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@MyEtherWallet">
+<meta name="twitter:creator" content="@MyEtherWallet">
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type" : "Organization",
+"name" : "MyEtherWallet",
+"legalName" : "MyEtherWallet Inc",
+"url" : "https://www.myetherwallet.com/",
+"contactPoint" : [{
+  "@type" : "ContactPoint",
+  "email" : "support@myetherwallet.com",
+  "url"   : "https://myetherwallet.com",
+  "contactType" : "customer service"
+}],
+"logo" : "https://www.myetherwallet.com/images/myetherwallet-logo.png",
+"description": "MyEtherWallet.com is a free, open-source, client-side interface for generating Ethereum wallets &amp; more. Interact with the Ethereum blockchain easily &amp; securely.",
+"sameAs" : [
+  "https://www.myetherwallet.com/",
+  "https://chrome.google.com/webstore/detail/myetherwallet-cx/nlbmnnijcnlegkjjpcfjclmcfggfefdm",
+  "https://www.facebook.com/MyEtherWallet/",
+  "https://twitter.com/myetherwallet",
+  "https://medium.com/@myetherwallet",
+  "https://myetherwallet.github.io/knowledge-base/",
+  "https://github.com/kvhnuke/etherwallet",
+  "https://github.com/MyEtherWallet",
+  "https://kvhnuke.github.io/etherwallet/","https://myetherwallet.slack.com/"
+]
+}
+</script>
+</head>
+<body>
+
+<header class="{{curNode.name}} {{curNode.service}} {{curNode.service}} nav-index-{{gService.currentTab}}" aria-label="header" ng-controller='tabsCtrl' >
+
+
+  
+
+
+<section class="bg-gradient header-branding">
+  <section class="container">
+    
+     
+    
+    
+    <div class="tagline">
+
+  
+
+    <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
+    <span class="dropdown dropdown-node" ng-cloak>
+      <a tabindex="0"
+         aria-haspopup="true"
+         aria-label="change node. current node {{curNode.name}} node by {{curNode.service}}"
+         class="dropdown-toggle  btn btn-white"
+         ng-click="dropdownNode = !dropdownNode">
+           <span translate="X_Network">Network:</span>
+           {{curNode.name}}
+           <small>({{curNode.service}})</small>
+           <i class="caret"></i>
+      </a>
+      <ul class="dropdown-menu" ng-show="dropdownNode">
+        <li ng-repeat="(key, value) in nodeList">
+          <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
+            {{value.name}}
+            <small> ({{value.service}}) </small>
+            <img ng-show="value.service=='Custom'" src="images/icon-remove.svg" class="node-remove" title="Remove Custom Node" ng-click="removeNodeFromLocal(value.name)"/>
+          </a>
+        </li>
+        <li>
+          <a ng-click="customNodeModal.open(); dropdownNode = !dropdownNode;" translate="X_Network_Custom">
+            Add Custom Network / Node
+          </a>
+        </li>
+      </ul>
+    </span>
+
+    </div>
+  </section>
+</section>
+
+
+
+ <article class="modal fade" id="customNodeModal" tabindex="-1">
+  <section class="modal-dialog">
+    <section class="modal-content">
+
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close Dialog">&times;</button>
+
+        <h2 class="modal-title text-info" translate="NODE_Title"> Set Up Your Custom Node </h2>
+
+        <p class="small"><a href="https://myetherwallet.github.io/knowledge-base/networks/run-your-own-node-with-myetherwallet.html" target="_blank" rel="noopener noreferrer"> Instructions can be found here </a></p>
+
+        <div ng-show="browserProtocol=='https:'" class="alert alert-danger small" translate="NODE_Warning">
+          Your node must be HTTPS in order to connect to it via MyEtherWallet.com. You can [download the MyEtherWallet repo & run it locally](https://github.com/kvhnuke/etherwallet/releases/latest) to connect to your local node. Or, get free SSL certificate via [LetsEncrypt](https://letsencrypt.org/)</a>.
+        </div>
+
+        <section class="row">
+          <div class="clearfix col-xs-12">
+            <label translate="NODE_Name">Node Name</label>
+            <input class="form-control"
+                   type="text"
+                   placeholder="My ETH Node"
+                   ng-model="customNode.name"
+                   ng-class="Validator.isAlphaNumericSpace(customNode.name) ? 'is-valid' : 'is-invalid'">
+          </div>
+
+          <div class="clearfix col-xs-9">
+            <label>URL</label>
+            <input class="form-control" type="text" placeholder="http://127.0.0.1" ng-model="customNode.url" ng-class="checkNodeUrl(customNode.url) ? 'is-valid' : 'is-invalid'">
+          </div>
+
+          <div class="clearfix col-xs-3">
+            <label class="NODE_Port">Port</label>
+            <input class="form-control" type="text" placeholder="8545" ng-model="customNode.port" ng-class="Validator.isPositiveNumber(customNode.port) || customNode.port=='' ? 'is-valid' : 'is-invalid'">
+          </div>
+
+          <div class="clearfix col-xs-12">
+            <label><input type="checkbox" ng-model="customNode.httpBasicAuth" ng-true-value="{user:'',password:''}" ng-false-value="null" value="false"> HTTP Basic access authentication </label>
+          </div>
+
+          <div class="clearfix col-xs-6" ng-show="customNode.httpBasicAuth">
+            <label>User</label>
+            <input class="form-control" type="text" ng-model="customNode.httpBasicAuth.user" ng-class="customNode.httpBasicAuth &amp;&amp; customNode.httpBasicAuth.user.length > 0 ? 'is-valid' : 'is-invalid'">
+          </div>
+
+          <div class="clearfix col-xs-6" ng-show="customNode.httpBasicAuth">
+            <label>Password</label>
+            <input class="form-control" type="password" ng-model="customNode.httpBasicAuth.password" ng-class="customNode.httpBasicAuth &amp;&amp; customNode.httpBasicAuth.password.length > 0 ? 'is-valid' : 'is-invalid'">
+          </div>
+
+          <div class="clearfix col-xs-12 radio">
+            <label><input name="options" type="radio" ng-model="customNode.options" value="eth"> ETH </label>
+            <label><input name="options" type="radio" ng-model="customNode.options" value="etc"> ETC </label>
+            <label><input name="options" type="radio" ng-model="customNode.options" value="rop"> Ropsten </label>
+            <label><input name="options" type="radio" ng-model="customNode.options" value="kov"> Kovan </label>
+            <label><input name="options" type="radio" ng-model="customNode.options" value="rin"> Rinkeby </label>
+            <label><input name="options" type="radio" ng-model="customNode.options" value="cus"> Custom </label>
+            <label><input type="checkbox" ng-model="customNode.eip155" value="true"> Supports EIP-155 </label>
+          </div>
+
+          <div class="clearfix col-sm-6 col-sm-offset-6" ng-show="customNode.eip155">
+            <label>Chain ID</label>
+            <input class="form-control" type="text" placeholder="" ng-model="customNode.chainId" ng-class="Validator.isPositiveNumber(customNode.chainId) ? 'is-valid' : 'is-invalid'">
+          </div>
+        </section>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
+          Cancel
+        </button>
+        <button class="btn btn-primary" ng-click="saveCustomNode()" translate="NODE_CTA">
+          Save &amp; Use Custom Node
+        </button>
+      </div>
+
+
+    </section>
+  </section>
+</article>
+ 
+
+
+</header>
+
+<section class="container contest-container">
+  <h2>MEW 100K Followers Contest Official Rules</h2>
+  <p>NO PURCHASE IS NECESSARY TO ENTER OR WIN. A PURCHASE DOES NOT INCREASE THE CHANCES OF WINNING.</p>
+  <ol type="1" class="contest-content">
+    <li>
+      Eligibility: This Campaign is open only to those
+     who sign up at the who complete
+      the contest requirements and who send an email containing the name, email,
+      telephone, city and country of residence, along with a link to their video
+      or blog post to <a href="mailto:contests@myetherwallet.com">contests@myetherwallet.com</a>
+       and who are 21 years or older
+      as of the date of entry.The Campaign is only open to legal residents of to
+      all countries, and is void where prohibited by law. Employees of MyEtherWallet
+      Inc, its affiliates, subsidiaries, advertising and promotion agencies, and suppliers,
+      (collectively the “Employees”), and immediate family members and/or those
+      living in the same household of Employees are not eligible to participate
+      in the Campaign. The Campaign is subject to all applicable federal, state,
+      and local laws and regulations. Void where prohibited.
+    </li>
+    <li>
+      Agreement to Rules: By participating, the Contestant (“You”) agree to be
+      fully unconditionally bound by these Rules, and You represent and warrant
+      that You meet the eligibility requirements. In addition, You agree to
+      accept the decisions of MyEtherWallet, Inc as final and binding as it
+      relates to the content of this Campaign.
+    </li>
+    <li>
+      Campaign Period: Entries will be accepted online starting on April 12 at
+      12:01am PDT  and ending 7 days after the 100,000 Twitter follower threshold
+      has been reached. The final date will be announced on Twitter with all
+      entries being required to be received no later than 11:59pm PDT on the
+      date specified.
+    </li>
+    <li>
+      How to Enter: The Campaign must be entered by submitting an email
+      containing the name, email, telephone, city and country of residence,
+      along with a link to their video or blog post to <a href="mailto:contests@myetherwallet.com">contests@myetherwallet.com</a> .
+      The entry must fulfill all Campaign requirements, as specified, to be
+      eligible to win a prize. Entries that are incomplete or do not adhere to
+      the rules or specifications may be disqualified at the sole discretion of
+      MyEtherWallet Inc. Optional verbiage to include: You may enter only once.
+      You must provide the information requested. You may not enter more times
+      than indicated by using multiple email addresses, identities, or devices
+      in an attempt to circumvent the rules. If you use fraudulent methods or
+      otherwise attempt to circumvent the rules, your submission may be removed
+      from eligibility at the sole discretion of MyEtherWallet Inc.
+    </li>
+    <li>
+      Prizes: The Winner(s) of the Campaign (the “Winner”) will receive First,
+      Second & Third Prize: Macbook Pro, or MS Surface Pro + top 25 prizes
+      (approx $2600 value);Top 25:Ledger Hardware wallet w/MEW Gear Pack;
+      Next 25: MEW Premium Gear Pack; Bottom 25: Standard MEW Gear Pack.
+      Actual/appraised value may differ at time of prize award. The specifics
+      of the prize shall be solely determined by MyEtherWallet Inc.  No cash or
+      other prize substitution shall be permitted except at MyEtherWallet Inc’s
+      discretion. The prize is non-transferable. Any and all prize-related
+      expenses, including without limitation any and all federal, state, and/or
+      local taxes, shall be the sole responsibility of Winner. No substitution
+      of prize or transfer/assignment of prize to others or request for the cash
+      equivalent by Winner is permitted. Acceptance of prize constitutes permission
+      for MyEtherWallet, Inc to use Winner’s name, likeness, and entry for
+      purposes of advertising and trade without further compensation, unless prohibited by law.
+    </li>
+    <li>
+      Odds: The odds of winning depend on the number of eligible entries received.
+    </li>
+    <li>
+      Winner Selection and Notification: Winner will be selected by judges
+      chosen at the discretion of MyEtherWallet Inc. Winners will be judged
+      based on merit in the areas of educational content, clarity, entertainment
+      value, and formal elements. Winner will be notified by email within five
+      (5) days following selection of Winner. MyEtherWallet, Inc shall have no
+      liability for Winner’s failure to receive notices due to spam, junk e-mail
+      or other security settings or for Winner’s provision of incorrect or
+      otherwise non-functioning contact information. If Winner cannot be
+      contacted, is ineligible, fails to claim the prize within 5 days  from the
+      time award notification was sent, or fails to timely return a completed
+      and executed declaration and release as required, the prize may be forfeited
+      and an alternate Winner selected. Receipt by Winner of the prize offered in
+      this Campaign is conditioned upon compliance with any and all federal, state,
+      and local laws and regulations. ANY VIOLATION OF THESE OFFICIAL RULES BY WINNER
+      (AT MYETHERWALLET’S  SOLE DISCRETION) WILL RESULT IN WINNER’S DISQUALIFICATION AS
+      WINNER OF THE CAMPAIGN, AND ALL PRIVILEGES AS WINNER WILL BE IMMEDIATELY TERMINATED.
+    </li>
+    <li>
+      Rights Granted by You: By entering this content (e.g., photo, video, text, etc.),
+      You understand and agree that MyEtherWallet, Inc , anyone acting on behalf of
+     MyEtherWallet, Inc, andMyEtherWallet, Inc’s  licensees, successors, and assigns,
+      shall have the right, where permitted by law, to print, publish, broadcast,
+      distribute, and use in any media now known or hereafter developed, in perpetuity
+      and throughout the World, without limitation, your entry, name, portrait,
+      picture, voice, likeness, image, statements about the Campaign, and biographical
+      information for news, publicity, information, trade, advertising, public relations,
+      and promotional purposes. without any further compensation, notice, review,
+      or consent. Optional verbiage for Contests: By entering this content, You
+      represent and warrant that your entry is an original work of authorship,
+      and does not violate any third party’s proprietary or intellectual property
+      rights. If your entry infringes upon the intellectual property right of
+      another, You will be disqualified at the sole discretion of MyEtherWallet,
+      Inc . If the content of your entry is claimed to constitute infringement of
+      any proprietary or intellectual proprietary rights of any third party, you
+      shall, at your sole expense, defend or settle against such claims. You shall
+      indemnify, defend, and hold harmless MyEtherWallet, Inc from and against any
+      suit, proceeding, claims, liability, loss, damage, costs or expense, which
+     MyEtherWallet, Inc  may incur, suffer, or be required to pay arising out of
+      such infringement or suspected infringement of any third party’s right.
+    </li>
+    <li>
+      Terms & Conditions: MyEtherWallet, Inc reserves the right, in its sole
+      discretion, to cancel, terminate, modify or suspend the Campaign should
+      virus, bug, non-authorized human intervention, fraud, or other cause beyond
+     MyEtherWallet’s  control corrupt or affect the administration, security,
+      fairness, or proper conduct of the Campaign. In such case, MyEtherWallet, Inc
+      may select the Winner from all eligible entries received prior to and/or
+      after (if appropriate) the action taken by MyEtherWallet, Inc.MyEtherWallet, Inc
+      reserves the right, in its sole discretion, to disqualify any individual who
+      tampers or attempts to tamper with the entry process or the operation of the
+      Campaign or website or violates these Terms & Conditions.MyEtherWallet, Inc has
+      the right, in its sole discretion, to maintain the integrity of the Campaign, to
+      void votes for any reason, including, but not limited to: multiple entries from
+      the same user from different IP addresses; multiple entries from the same
+      computer in excess of that allowed by Campaign rules; or the use of bots,
+      macros, scripts, or other technical means for entering. Any attempt by an
+      entrant to deliberately damage any website or undermine the legitimate
+      operation of the Campaign may be a violation of criminal and civil laws.
+      Should such attempt be made,MyEtherWallet, Inc reserves the right to seek
+      damages to the fullest extent permitted by law.
+    </li>
+    <li>
+      Limitation of Liability: By entering, You agree to release and hold
+      harmless MyEtherWallet, Inc and its subsidiaries, affiliates,
+      advertising and promotion agencies, partners, representatives,
+      agents, successors, assigns, employees, officers, and directors from any
+      liability, illness, injury, death, loss, litigation, claim, or damage that
+      may occur, directly or indirectly, whether caused by negligence or not,
+      from: (i) such entrant’s participation in the Campaign and/or his/her
+      acceptance, possession, use, or misuse of any prize or any portion thereof;
+      (ii) technical failures of any kind, including but not limited to the
+      malfunction of any computer, cable, network, hardware, or software, or
+      other mechanical equipment; (iii) the unavailability or inaccessibility
+      of any transmissions, telephone, or Internet service; (iv) unauthorized
+      human intervention in any part of the entry process or the Promotion; (v)
+      electronic or human error in the administration of the Promotion or the
+      processing of entries.
+    </li>
+    <li>
+      Disputes: THIS Campaign IS GOVERNED BY THE LAWS OF the United States of
+      America  AND the State of California,
+      WITHOUT RESPECT TO CONFLICT OF LAW  DOCTRINES. As a condition of participating in this Campaign, participant
+      agrees that any and all disputes that cannot be resolved between the parties,
+      and causes of action arising out of or connected with this Campaign, shall
+      be resolved individually, without resort to any form of class action,
+      exclusively before a court located in the State of California having
+      jurisdiction. Further, in any such dispute, under no circumstances shall
+      participant be permitted to obtain awards for, and hereby waives all rights
+      to, punitive, incidental, or consequential damages, including reasonable
+      attorney’s fees, other than participant’s actual out-of-pocket expenses
+      (i.e. costs associated with entering this Campaign). Participant further
+      waives all rights to have damages multiplied or increased.
+    </li>
+    <li>
+      Privacy Policy: Personal information of entrants will only be used for the
+      purposes of identifying and contacting the winners, as well as used as
+      necessary for the awarding of prizes. Personal information will not be
+      distributed to third parties, except as necessary to fulfill these
+      objectives. MyEtherWallet, Inc may use this information to contact
+      entrants concerning other opportunities for content creation. Entrants may
+      opt out of being contacted for purposes other than of the contest by
+      sending a request in writing to <a href="mailto:contests@myetherwallet.com">contests@myetherwallet.com</a>.
+    </li>
+    <li>
+       Winners List: To obtain a copy of the Winner’s name or a copy of these
+       Official Rules, mail your request along with a stamped, self-addressed
+       envelope to:MyEtherWallet, Inc 724 S. Spring St.,STE 1104, Los Angeles,
+       CA 90014. Requests must be received no later than June 30, 2018, 5:00pm PDT
+    </li>
+    <li>
+      Sponsor: The Sponsor of the Campaign is MyEtherWallet, Inc
+      724 S. Spring St.,STE 1104, Los Angeles, CA 90014.
+    </li>
+    <li>
+      Social Media:The Campaign hosted by MyEtherWallet, Inc is in no way
+      sponsored, endorsed, administered by, or associated with Twitter,
+      Facebook, Medium, or any other social media service employed for the
+      purposes of promoting or distributing information concerning this contest.
+    </li>
+    <li>
+      By submitting an entry, You, the Entrant, have affirmatively reviewed,
+      accepted, and agreed to all of the Official Rules.
+    </li>
+  </ol>
+</section>
+
+
+<footer class="footer" role="content" aria-label="footer" ng-controller='footerCtrl' >
+
+
+
+</div>
+
+
+</footer>
+
+
+
+</main>
+</body>
+</html>
+
