@@ -17,7 +17,7 @@ module.exports = {
   },
 
   postLogin: passport.authenticate('local-login', {
-    successRedirect: '/profile', // redirect to the secure profile section
+    successRedirect: '/dashboard', // redirect to the secure profile section
     failureRedirect: '/login', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }),
@@ -30,12 +30,12 @@ module.exports = {
   },
 
   postSignup: passport.authenticate('local-signup', {
-    successRedirect: '/profile', // redirect to the secure profile section
+    successRedirect: '/dashboard', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }),
 
-  getProfile: async function (req, res) {
+  getDashboard: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     console.log(projectArray);
     var address;
@@ -76,7 +76,7 @@ module.exports = {
   }),
 
   googleLoginCallback: passport.authenticate("google", {
-    successRedirect: '/profile',
+    successRedirect: '/dashboard',
     failureRedirect: '/'
   }),
 
@@ -89,7 +89,7 @@ module.exports = {
   githubLogin: passport.authenticate('github'),
 
   githubLoginCallback: passport.authenticate('github', {
-    successRedirect: '/profile',
+    successRedirect: '/dashboard',
     failureRedirect: '/'
   }),
 
