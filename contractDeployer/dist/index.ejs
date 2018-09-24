@@ -138,14 +138,6 @@
         }
         </script>
 </head>
-<style>
-  body {
-
-      background-image: linear-gradient(180deg,rgba(53, 53, 138, 0.623), white); /* Standard syntax (must be last) */
-
-    }
-	</style>
-
 <body style="margin:0;">
   <!-- Main wrapper -->
   <% layout('./layouts/sidebar') -%>
@@ -174,16 +166,11 @@
           <div class="{{curNode.name}} {{curNode.service}} {{curNode.service}} nav-index-{{gService.currentTab}}" aria-label="header" ng-controller='tabsCtrl'>
 
 
-            <section class="bg-gradient header-branding">
-              <section class="container">
+            <!-- <section class="bg-gradient header-branding"> -->
+              <span>Select your Network:</span>
 
-
-
-
-                <div class="tagline">
-
-
-
+              <!-- <section class="container"> -->
+                <!-- <span class="tagline"> -->
                   <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
                   <span class="dropdown dropdown-node" ng-cloak>
       <a tabindex="0"
@@ -191,10 +178,10 @@
          aria-label="change node. current node {{curNode.name}} node by {{curNode.service}}"
          class="dropdown-toggle  btn btn-white"
          ng-click="dropdownNode = !dropdownNode">
-           <span translate="X_Network">Network:</span>
+           <!-- <span translate="X_Network"></span> -->
                   {{curNode.name}}
                   <small>({{curNode.service}})</small>
-                  <i class="caret"></i>
+                  <!-- <i class="caret"></i> -->
                   </a>
                   <ul class="dropdown-menu" ng-show="dropdownNode">
                     <li ng-repeat="(key, value) in nodeList">
@@ -205,16 +192,16 @@
           </a>
                     </li>
                     <li>
-                      <a ng-click="customNodeModal.open(); dropdownNode = !dropdownNode;" translate="X_Network_Custom">
+                      <!-- <a ng-click="customNodeModal.open(); dropdownNode = !dropdownNode;" translate="X_Network_Custom">
             Add Custom Network / Node
-          </a>
+          </a> -->
                     </li>
                   </ul>
                   </span>
 
-                </div>
-              </section>
-            </section>
+                <!-- </span> -->
+              <!-- </section> -->
+            <!-- </section> -->
 
 
 
@@ -288,10 +275,10 @@
                   </div>
 
                   <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
+                    <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
           Cancel
         </button>
-                    <button class="btn btn-primary" ng-click="saveCustomNode()" translate="NODE_CTA">
+                    <button class="btn btn-rounded btn-info" ng-click="saveCustomNode()" translate="NODE_CTA">
           Save &amp; Use Custom Node
         </button>
                   </div>
@@ -340,7 +327,7 @@
 
                     <div class="dropdown">
 
-                      <a class="btn btn-default dropdown-toggle"
+                      <a class="btn btn-rounded btn-info dropdown-toggle"
        class="dropdown-toggle"
        ng-click="dropdownExistingContracts = !dropdownExistingContracts">
         {{selectedAbi.name}}
@@ -373,7 +360,7 @@
 
                   <!-- Button -->
                   <section class="col-xs-12 clearfix">
-                    <button class="btn btn-primary" ng-click="initContract()" translate="x_Access"> ACCESS </button>
+                    <button class="btn btn-rounded btn-info" ng-click="initContract()" translate="x_Access"> ACCESS </button>
                   </section>
 
 
@@ -466,7 +453,7 @@
             </div>
 
             <div class="btn-group">
-              <a class="btn btn-default" ng-click="dropdownContracts = !dropdownContracts">
+              <a class="btn btn-rounded btn-info" ng-click="dropdownContracts = !dropdownContracts">
         {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
         <i class="caret"></i>
       </a>
@@ -716,10 +703,10 @@
 
 
           <div class="modal-footer" ng-show="showRaw">
-            <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
+            <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
           No, get me out of here!
         </button>
-            <button class="btn btn-primary" ng-click="sendTx()" translate="SENDModal_Yes">
+            <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
           Yes, I am sure! Make transaction.
         </button>
           </div>
@@ -764,79 +751,79 @@
            ng-class="Validator.isPositiveNumber(tx.gasLimit) ? 'is-valid' : 'is-invalid'"/>
   </div> -->
 
-        <!-- Sign TX Button (once wallet has been unlocked) -->
-        <div class="form-group">
-          <a class="btn btn-info btn-block" ng-click="generateTx()" ng-show="wd" translate="DEP_signtx">
+      <!-- Sign TX Button (once wallet has been unlocked) -->
+      <div class="form-group">
+        <a class="btn btn-info btn-block" ng-click="generateTx()" ng-show="wd" translate="DEP_signtx">
       Sign Transaction
     </a>
-        </div>
+      </div>
 
-        <!-- TXs -->
-        <section class="row" ng-show="showRaw">
-          <!-- Raw TX -->
-          <div class="form-group col-sm-6">
-            <h4 translate="SEND_raw">
+      <!-- TXs -->
+      <section class="row" ng-show="showRaw">
+        <!-- Raw TX -->
+        <div class="form-group col-sm-6">
+          <h4 translate="SEND_raw">
         Raw Transaction
       </h4>
-            <textarea class="form-control" rows="4" readonly>{{rawTx}}</textarea>
-          </div>
-          <!-- Singed TX -->
-          <div class="form-group col-sm-6">
-            <h4 translate="SEND_signed">
+          <textarea class="form-control" rows="4" readonly>{{rawTx}}</textarea>
+        </div>
+        <!-- Singed TX -->
+        <div class="form-group col-sm-6">
+          <h4 translate="SEND_signed">
         Signed Transaction
       </h4>
-            <textarea class="form-control" rows="4" readonly>{{signedTx}}</textarea>
-          </div>
-        </section>
+          <textarea class="form-control" rows="4" readonly>{{signedTx}}</textarea>
+        </div>
+      </section>
 
-        <!-- Deploy Contract Button (once tx has been signed) -->
-        <div class="form-group" ng-show="showRaw">
-          <a class="btn btn-primary btn-block"
+      <!-- Deploy Contract Button (once tx has been signed) -->
+      <div class="form-group" ng-show="showRaw">
+        <a class="btn btn-rounded btn-info btn-block"
        data-toggle="modal"
        data-target="#deployContract"
        translate="NAV_DeployContract">
           Deploy Contract
     </a>
-        </div>
+      </div>
 
-        <article class="modal fade" id="deployContract" tabindex="-1">
-          <section class="modal-dialog">
-            <section class="modal-content">
+      <article class="modal fade" id="deployContract" tabindex="-1">
+        <section class="modal-dialog">
+          <section class="modal-content">
 
-              <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close Deploy Contract Dialog">&times;</button>
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close Deploy Contract Dialog">&times;</button>
 
-                <h2 class="modal-title text-danger" translate="SENDModal_Title">
+              <h2 class="modal-title text-danger" translate="SENDModal_Title">
           Warning!
         </h2>
 
-                <p translate="CONTRACT_Warning_1">
-                  You are about to <strong>deploy a contract</strong>.
-                </p>
-                <p>
-                  <span translate="CONTRACT_Warning_2">
+              <p translate="CONTRACT_Warning_1">
+                You are about to <strong>deploy a contract</strong>.
+              </p>
+              <p>
+                <span translate="CONTRACT_Warning_2">
             It will be deployed on the following network:
           </span>
-                  <strong>{{ajaxReq.type}}</strong>.
-                </p>
+                <strong>{{ajaxReq.type}}</strong>.
+              </p>
 
-                <p> The <strong>{{ajaxReq.type}}</strong> node you are sending through is provided by <strong>{{ajaxReq.service}}</strong>.</p>
+              <p> The <strong>{{ajaxReq.type}}</strong> node you are sending through is provided by <strong>{{ajaxReq.service}}</strong>.</p>
 
-                <h4 translate="SENDModal_Content_3"> Are you sure you want to do this? </h4>
-              </div>
+              <h4 translate="SENDModal_Content_3"> Are you sure you want to do this? </h4>
+            </div>
 
-              <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
+            <div class="modal-footer">
+              <button class="btn btn-rounded btn-info" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
           No, get me out of here!
         </button>
-                <button class="btn btn-primary" ng-click="sendTx()" translate="SENDModal_Yes">
+              <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
           Yes, I am sure! Make transaction.
         </button>
-              </div>
+            </div>
 
-            </section>
           </section>
-        </article>
+        </section>
+      </article>
 
 
 
@@ -855,13 +842,13 @@
 
   <article class="col-xs-12" ng-show="contract.selectedFunc!=null && visibility=='interactView'">
 
-    <button class="btn btn-primary btn-block"
+    <button class="btn btn-rounded btn-info btn-block"
             ng-click="readFromContract()"
             ng-show="contract.functions[contract.selectedFunc.index].constant && showRead">
       <span translate="CONTRACT_Read"> READ </span>
     </button>
 
-    <button class="btn btn-primary btn-block"
+    <button class="btn btn-rounded btn-info btn-block"
             ng-click="generateContractTx()"
             ng-show="!contract.functions[contract.selectedFunc.index].constant">
       <span translate="CONTRACT_Write"> WRITE </span>
