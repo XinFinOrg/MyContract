@@ -7,7 +7,7 @@ module.exports = function (app) {
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
-  app.get('/profile', isLoggedIn, impl.getProfile);
+  app.get('/dashboard', isLoggedIn, impl.getDashboard);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
