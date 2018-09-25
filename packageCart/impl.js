@@ -24,9 +24,7 @@ module.exports = {
   },
 
   payment: function (req, res) {
-    console.log("datafromform", req.query,req.body,req.params);
     if (!req.query.otpValue) {
-      console.log("here 1");
       client.find({
         where: {
           'email': req.user.email
@@ -40,19 +38,20 @@ module.exports = {
         })
       });
     } else {
-      console.log("here 2");
       client.find({
         where: {
           'email': req.user.email
         }
-      }).then(client => {
-        if (client.dataValues.paymentOTP == req.query.otpValue) {
+      }).then(result => {
+        if (result.dataValues.paymentOTP == req.query.otpValue) {
           var addressCookie = req.cookies['address'];
+          console.log(addressCookie)
           Address.find({
             where: {
               'address': addressCookie
             }
           }).then(address => {
+            console.log(address,"address");
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1001) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);

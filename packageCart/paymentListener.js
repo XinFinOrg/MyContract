@@ -2,7 +2,7 @@ const Web3 = require('web3');
 var db = require('../database/models/index');
 var client = db.client;
 var Address = db.userCurrencyAddress;
-var ws_provider = 'wss://mainnet.infura.io/ws';
+var ws_provider = 'wss://ropsten.infura.io/ws';
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
@@ -57,7 +57,7 @@ module.exports = {
 
   sendToParent: (address, privateKey) => {
     return new Promise(async function(resolve, reject) {
-      var amountToSend = web3.utils.toWei('0.0005', 'ether');
+      var amountToSend = web3.utils.toWei('0.0010', 'ether');
       var rawTransaction = {
         "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
         "gasLimit": web3.utils.toHex(30000),
