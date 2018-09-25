@@ -6,6 +6,7 @@ var ws_provider = 'wss://mainnet.infura.io/ws';
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
+provider.on('connect', () => console.log('WS Connected'))
 provider.on('error', e => console.log('WS Error', e));
 provider.on('end', e => {
   console.log('WS closed');
@@ -29,7 +30,7 @@ module.exports = {
       },
       fromBlock: 'pending',
       toBlock: 'latest'
-    }, function(err, res) {
+    }, (err, res) => {
       console.log(err, res.returnValues);
       Address.find({
         where: {
@@ -77,16 +78,23 @@ module.exports = {
   },
 
   checkBalance: (address) => {
-    return new Promise(async function(resolve, reject) {
-      var balance = await contractInstance.methods.balanceOf(address).call();
-      resolve(balance / 10 ** 18);
+    return new Promise(function(resolve, reject) {
+      contractInstance.methods.balanceOf(address).call().then(balance => {
+        resolve(balance / 10 ** 18);
+      }).catch(error => {
+        console.log(error);
+        reject(error);
+      });
     });
   },
 
   checkEtherBalance: (address) => {
-    return new Promise(async function(resolve, reject) {
-      var balance = await web3.eth.getBalance(address);
-      resolve(web3.utils.fromWei(balance));
+    return new Promise(function(resolve, reject) {
+      web3.eth.getBalance(address).then(balance => {
+        resolve(web3.utils.fromWei(balance));
+      }).catch(error => {
+        reject(error);
+      });
     });
   }
 }

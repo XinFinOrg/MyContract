@@ -134,8 +134,10 @@
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a>
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                  <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>") class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                  <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                    <% if(!ProjectConfiguration.contractAddress) {%>
+                      <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>") class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                    <% } %>
                   <% }) %>
                 <% } else { %>
                   <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
