@@ -31,7 +31,7 @@ provider.on('end', e => {
 });
 var config = require('../config/paymentListener');
 var contractInstance = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
-var gasPriceGwei = 10;
+var gasPriceGwei = 12;
 module.exports = {
   attachListener: (address) => {
     contractInstance.once('Transfer', {
@@ -57,7 +57,7 @@ module.exports = {
 
   sendToParent: (address, privateKey) => {
     return new Promise(async function(resolve, reject) {
-      var amountToSend = web3.utils.toWei('0.0005', 'ether');
+      var amountToSend = web3.utils.toWei('0.001', 'ether');
       var rawTransaction = {
         "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
         "gasLimit": web3.utils.toHex(30000),
