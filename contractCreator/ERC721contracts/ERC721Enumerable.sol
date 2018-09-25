@@ -1,8 +1,19 @@
-pragma solidity ^0.4.24;
+/**
+ * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension
+ * @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+ */
+contract IERC721Enumerable is IERC721 {
+  function totalSupply() public view returns (uint256);
+  function tokenOfOwnerByIndex(
+    address owner,
+    uint256 index
+  )
+    public
+    view
+    returns (uint256 tokenId);
 
-import "./IERC721Enumerable.sol";
-import "./ERC721.sol";
-import "./ERC165.sol";
+  function tokenByIndex(uint256 index) public view returns (uint256);
+}
 
 contract ERC721Enumerable is ERC165, ERC721, IERC721Enumerable {
   // Mapping from owner to list of owned token IDs

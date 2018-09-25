@@ -61,7 +61,7 @@ module.exports = {
               } else {
                 req.flash('package_flash', 'Insufficient funds to buy Package');
               }
-              res.redirect('/profile');
+              res.redirect('/dashboard');
             });
           })
         }

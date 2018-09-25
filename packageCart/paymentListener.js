@@ -7,7 +7,17 @@ var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
 provider.on('connect', () => console.log('WS Connected'))
-provider.on('error', e => console.log('WS Error', e));
+provider.on('error', e => {
+  console.log('WS error occured');
+  console.log('Attempting to reconnect...');
+  provider = new Web3.providers.WebsocketProvider(ws_provider);
+
+  provider.on('connect', function() {
+    console.log('WSS Reconnected');
+  });
+
+  web3.setProvider(provider);
+});
 provider.on('end', e => {
   console.log('WS closed');
   console.log('Attempting to reconnect...');

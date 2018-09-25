@@ -1,5 +1,3 @@
-pragma solidity ^0.4.24;
-
 /**
  * @title Roles
  * @dev Library for managing addresses assigned to a Role.
