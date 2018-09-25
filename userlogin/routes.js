@@ -19,6 +19,7 @@ module.exports = function (app) {
   app.get('/forgotPassword',impl.forgotPassword);
   app.get('/resetPassword',impl.resetPassword);
   app.post('/updatePassword',impl.updatePassword);
+  app.get('/verifyAccount',impl.verifyAccount);
   // app.get('/getProjectArray', impl.getProjectArray);
 
   //kyc

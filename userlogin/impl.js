@@ -30,7 +30,7 @@ module.exports = {
   },
 
   postSignup: passport.authenticate('local-signup', {
-    successRedirect: '/dashboard', // redirect to the secure profile section
+    successRedirect: '/login', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }),
@@ -188,6 +188,17 @@ module.exports = {
         res.redirect("/")
       })
     })
+  },
+  verifyAccount: (req, res) => {
+    console.log(req.query)
+    client.find({
+      where: {
+        'email': req.query.email
+      }
+    }).then((client) => {
+      client.status = true;
+      client.save().then(res.redirect("/"));
+    });
   }
 };
 
