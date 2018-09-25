@@ -2,13 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const nodemailerAuth = require("../config/auth").nodemailerAuth;
 var coin, templateCoin, mintableContract, burnableContract, releaseableContract, upgradeableContract;
-var filereaderservice = require('../filereader/impl');
+var fileReader = require('../filereader/impl');
 var result;
+var ejs = require("ejs");
 var db = require('../database/models/index');
 var ProjectConfiguration = db.projectConfiguration;
 var client = db.client;
 
-templateCoin = filereaderservice.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
+templateCoin = fileReader.readContract(path.resolve(__dirname, "./contracts/", "template.sol"));
 
 fs.readFile(path.resolve(__dirname, "./contracts/", "releaseTemplate.sol"), "utf8",
   function(err, data) {
@@ -97,7 +98,7 @@ module.exports = {
         var isReleasable = (req.body.isReleasable == "on") ? true : false;
         var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
         var isBurnable = (req.body.isBurnable == "on") ? true : false;
-        var isMintable = (req.body.isMintable == "on") ? true : false;;
+        var isMintable = (req.body.isMintable == "on") ? true : false;
 
         generateCustomContract(req.body, isBurnable, isMintable, isReleasable, isUpgradeable, res);
         nodemailerservice.sendContractEmail(req.user.email, result);
@@ -119,6 +120,59 @@ module.exports = {
         await clientdata.save();
         //packageremoval will be added here
         res.redirect('/generatedContract');
+      },
+
+      createERC721Contract: async (req, res) => {
+        var SafeMath = await fileReader.readEjsFile(__dirname + '/ERC721contracts/SafeMath.sol');
+        var Roles = await fileReader.readEjsFile(__dirname + '/ERC721contracts/Roles.sol');
+        var ERC721Holder = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Holder.sol');
+        var Address = await fileReader.readEjsFile(__dirname + '/ERC721contracts/Address.sol');
+        var ERC165 = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC165.sol');
+        var ERC721Mintable = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Mintable.sol');
+        var ERC721Enumerable = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Enumerable.sol');
+        var ERC721Metadata = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Metadata.sol');
+        var isPausable = (req.body.isPausable == "on") ? true : false;
+        var isBurnable = (req.body.isBurnable == "on") ? true : false;
+        var isOwnable = (req.body.isOwnable == "on") ? true : false;
+        var ERC721Burnable, ERC721Pausable, Ownable, inherits = "";
+
+        if (isBurnable){
+          ERC721Burnable = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Burnable.sol');
+          inherits+=", Burnable";
+        }
+
+        if (isPausable){
+          ERC721Pausable = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Pausable.sol');
+          inherits+=", Pausable";
+        }
+        if (isOwnable){
+          Ownable = await fileReader.readEjsFile(__dirname + '/ERC721contracts/Ownable.sol');
+          inherits+=", Ownable";
+        }
+        ejs.renderFile(__dirname + '/ERC721contracts/Coin.sol', {
+          'SafeMath': SafeMath,
+          'Roles': Roles,
+          'ERC721Holder': ERC721Holder,
+          'Address': Address,
+          'ERC165': ERC165,
+          'ERC721Enumerable': ERC721Enumerable,
+          'ERC721Metadata': ERC721Metadata,
+          'ERC721Burnable': ERC721Burnable,
+          'ERC721Mintable': ERC721Mintable,
+          'ERC721Pausable': ERC721Pausable,
+          'Ownable': Ownable,
+          'tokenName': req.body.token_name,
+          'tokenSymbol': req.body.token_symbol,
+          'inherits': inherits
+        }, (err, data) => {
+          if(err)
+            console.log(err);
+          req.session.contract = data;
+          req.session.coinName = req.body.token_name;
+          nodemailerservice.sendContractEmail(req.user.email, result);
+          res.redirect('/generatedContract');
+          // console.log("Contract", data);
+        });
       },
 
       getGeneratedContract: async function(req, res) {

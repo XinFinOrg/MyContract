@@ -1,14 +1,14 @@
 pragma solidity ^0.4.24;
 
-<%= SafeMath %>
+<%- SafeMath %>
 
-<%= Roles %>
+<%- Roles %>
 
-<%= ERC721Holder %>
+<%- ERC721Holder %>
 
-<%= Address %>
+<%- Address %>
 
-<%= ERC165 %>
+<%- ERC165 %>
 
 /**
  * @title ERC721 Non-Fungible Token Standard basic interface
@@ -374,9 +374,9 @@ contract ERC721 is ERC165, IERC721 {
   }
 }
 
-<%= ERC721Enumerable %>
+<%- ERC721Enumerable %>
 
-<%= ERC721Metadata %>
+<%- ERC721Metadata %>
 
 /**
  * @title Full ERC721 Token
@@ -390,15 +390,15 @@ contract ERC721Full is ERC721, ERC721Enumerable, ERC721Metadata {
   }
 }
 
-<%= ERC721Burnable %>
+<%- ERC721Burnable %>
 
-<%= ERC721Mintable %>
+<%- ERC721Mintable %>
 
-<%= ERC721Pausable %>
+<%- ERC721Pausable %>
 
-<%= Ownable %>
+<%- Ownable %>
 
-contract Coin is ERC721Full, ERC721Mintable, ERC721Pausable, ERC721Burnable {
-  constructor() ERC721Full("NISHANT", "NMC") public {
+contract Coin is ERC721Full<%=inherits %> {
+  constructor() ERC721Full("<%= tokenName %>", "<%= tokenSymbol %>") public {
   }
 }
