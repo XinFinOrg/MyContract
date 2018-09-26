@@ -53,7 +53,7 @@ module.exports = {
           }).then(address => {
             console.log(address,"address");
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
-              if (balance >= 1001) {
+              if (balance >= 1200000) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);
                 paymentListener.attachListener(address.address);
                 req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
