@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<!DOCTYPE html>
-<html lang="en">
-<!-- Navigation -->
-<!-- START HEADER -->
+
 <% layout('./userHeader') -%>
   <!-- END HEADER -->
   <div class="clearfix"> </div>
@@ -17,7 +12,7 @@
           <div class="col-md-12 col-sm-12 mb-4 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
             <div class="box text-center">
               <div class="box-body">
-                <span >1 BTC = ? <%=projectConfiguration.coinName %> </span>
+                <span >1 BTC = <span id="btc_conversion"> </span> <%=projectConfiguration.coinSymbol %> </span>
               </div>
             </div>
           </div>
@@ -25,7 +20,7 @@
           <div class="col-md-12 col-sm-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
             <div class="box text-center">
               <div class="box-body">
-                <span>1 ETH = ? <%=projectConfiguration.coinName %> </span>
+                <span>1 ETH = <%=projectConfiguration.ethConversionRate %> </span> <%=projectConfiguration.coinSymbol %> </span>
               </div>
             </div>
           </div>
@@ -34,7 +29,7 @@
           <div class="bg_green_light_dark radius-10 token_dt res_md_mt_30 res_xs_mt_20 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
             <div class="tk_counter_inner text-center lg_pt_10 lg_pb_10">
               <h4 class="mb-20 animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s">Pre-Sale Starts In</h4>
-              <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="<%=projectConfiguration.endDate%>-<%=projectConfiguration.startDate %>"></div>
+              <div class="tk_countdown_time p-0 transparent_bg box_shadow_none animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" data-time="2018/11/30 00:00:00"></div>
 
             </div>
           </div>
@@ -46,7 +41,7 @@
             <div class="card-header">MINIMUM CONTRIBUTION :
               <%= projectConfiguration.minimumContribution %> USD</div>
             <div class="col-md-12 pt-4">
-              <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= projectConfiguration.coinName %> with</h6>
+              <h6 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Buy <%= projectConfiguration.coinSymbol %> with</h6>
             </div>
             <div class="card-wrap">
               <ul role="tablist" id="pills-tab" class="nav nav_tab animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
@@ -64,7 +59,7 @@
                           <label>ETH</label>
 
                           <input id="second_currency" name="second_currency" value="ETH" style="display: none">
-                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
+                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinSymbol %>" style="display: none">
                           <input id="ETH_second_currency_price" type="number" name="second_currency_price" value="" onkeyup="convert_price(this.value,'ETH')" placeholder="Amount" class="form-control">
                         </div>
                         <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
@@ -72,7 +67,7 @@
                             <ul>
                               <input id="ETH_first_currency_price" name="first_currency_price" style="display: none">
                               <li class="d-flex align-items-center justify-content-between">
-                                <%= projectConfiguration.coinName %> TOTAL
+                                <%= projectConfiguration.coinSymbol %> TOTAL
 
                                   <p id="token_total"></p>
                               </li>
@@ -105,7 +100,7 @@
 
                         <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
                           <input id="second_currency" name="second_currency" value="BTC" style="display: none">
-                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinName %>" style="display: none">
+                          <input id="first_currency" name="first_currency" value="<%=projectConfiguration.coinSymbol %>" style="display: none">
                           <label>BTC</label>
 
                           <input id="BTC_second_currency_price" type="text" name="second_currency_price" value="" onkeyup="convert_price(this.value,'BTC')" class="form-control input-lg">
@@ -114,7 +109,7 @@
                           <div class="timeddss2">
                             <ul>
                               <li class="d-flex align-items-center justify-content-between">
-                                <%= projectConfiguration.coinName %> TOTAL
+                                <%= projectConfiguration.coinSymbol %> TOTAL
 
                                   <p id="token_total2"></p>
                               </li>
@@ -150,17 +145,16 @@
             <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
               <div class="box_wrap bg-white text-center">
                 <div class="line"></div>
-                <h5> <%= projectConfiguration.coinName %> </h5>
-                <p> 1
-                  <%= projectConfiguration.coinName %> =
-                    <%= projectConfiguration.usdConversionRate %> USD </p>
+                <h5> <%= projectConfiguration.coinSymbol %> </h5>
+                <p> 1 ETH =
+                    <%= projectConfiguration.ethConversionRate %> <%= projectConfiguration.coinSymbol %> </p>
               </div>
             </div>
 
             <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
               <div class="box_wrap bg-white text-center">
                 <div class="line"></div>
-                <h5> <%= projectConfiguration.coinName %> SOLD </h5>
+                <h5> <%= projectConfiguration.coinSymbol %> SOLD </h5>
                 <p><span> <%= projectConfiguration.tokenSold %>/ <%= projectConfiguration.hardCap %></span></p>
               </div>
             </div>
@@ -247,7 +241,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script>
+    DateTime dt = DateTime.parse(<%=projectConfiguration.endDate %>);
+     String utcDt = dt.format('dd-MM-yyyy', 'UTC');
+     console.log(utcDt);
+  </script>
 
   <script type="text/javascript">
     toastr.options = {
@@ -268,7 +267,7 @@
       "hideMethod": "fadeOut"
     };
     //this line works as expected
-    toastr.info("Welcome to AUTOCOIN");
+    toastr.info("Welcome to <%=projectConfiguration.coinName %>");
   </script>
 
   <script type="text/javascript">
@@ -337,7 +336,6 @@
         second_currency_price: {
           required: true,
           number: true,
-          minval: true,
           min: minBTC,
           adecimal: true
         },
@@ -352,7 +350,6 @@
         second_currency_price: {
           required: 'Amount is required',
           number: 'Enter valid number',
-          minval: 'Insufficient Balance',
           min: 'Minimum Amount is ' + minBTC,
           adecimal: 'Only decimals allowed'
         },
@@ -369,7 +366,6 @@
         second_currency_price: {
           required: true,
           number: true,
-          minval1: true,
           min: minETH,
           adecimal: true,
         },
@@ -382,7 +378,6 @@
         second_currency_price: {
           required: 'Amount is required',
           number: 'Enter valid number',
-          minval1: 'Insufficient Balance',
           min: 'Minimum Amount is ' + minETH,
           adecimal: 'Only decimals allowed'
         },
@@ -415,23 +410,24 @@
     $(document).ready(function() {
       get_usd_price();
     });
-    var eth_usd;
-    var btc_usd;
-    var token_usd = <%= projectConfiguration.usdConversionRate %>;
+    var btc_eth;
+    var token_eth = <%= projectConfiguration.ethConversionRate %>;
     var token_min = <%= projectConfiguration.minimumContribution %>;
 
     function get_usd_price() {
       $.ajax({
-        url: './getUSDPrice',
+        url: './getPrices',
         type: 'get',
         success: function(result) {
-          eth_usd = result.ETH;
-          btc_usd = result.BTC;
+          btc_eth = result.BTC;
+          btc_usd = result.BTCUSD;
+          eth_usd = result.ETHUSD;
           minETH = token_min/eth_usd;
           minBTC = token_min/btc_usd;
-          $('#ETH_second_currency_price').val(minEth.toFixed(4));
+          $('#btc_conversion').text((<%= projectConfiguration.ethConversionRate %>*btc_eth).toFixed(3));
+          $('#ETH_second_currency_price').val(minETH.toFixed(4));
           $('#BTC_second_currency_price').val(minBTC.toFixed(4));
-          convert_price(minEth, 'ETH');
+          convert_price(minETH, 'ETH');
           convert_price(minBTC, 'BTC');
 
         }
@@ -440,9 +436,9 @@
 
     function convert_price(to_spend, currency) {
       if(currency=="ETH")
-        $('#token_total').html((to_spend*eth_usd/token_usd).toFixed(2));
+        $('#token_total').html((to_spend*<%= projectConfiguration.ethConversionRate %>).toFixed(2));
       else {
-        $('#token_total2').html((to_spend*btc_usd/token_usd).toFixed(2));
+        $('#token_total2').html((to_spend*<%= projectConfiguration.ethConversionRate %>*btc_eth).toFixed(2));
       }
     }
   </script>

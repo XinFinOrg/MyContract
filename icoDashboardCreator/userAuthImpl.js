@@ -73,7 +73,7 @@ module.exports = {
     }
   },
 
-  getUSDPrice: async (req, res, next) => {
+  getPrices: async (req, res, next) => {
     console.log("Getting price");
     const binance = Binance().options({
       APIKEY: configAuth.binanceKey.apiKey,
@@ -83,9 +83,11 @@ module.exports = {
     });
 
     binance.prices((error, ticker) => {
+      console.log();
       res.send({
-        ETH: ticker.ETHUSDT,
-        BTC: ticker.BTCUSDT
+        BTC: 1/ticker.ETHBTC,
+        BTCUSD: ticker.BTCUSDT,
+        ETHUSD: ticker.ETHUSDT
       });
     });
   },

@@ -2,16 +2,12 @@ const express = require('express');
 const impl = require("./userAuthImpl");
 const router = express.Router();
 var jwt = require('jsonwebtoken');
-var passport = require('passport');
 var db = require('../database/models/index');
 var User = db.user;
 var Currency = db.currency;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
-const passportJWT = require("passport-jwt");
-const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 var configAuth = require('../config/auth');
 
 router.get('/transactions', isAuthenticated, kycVerified, impl.getTransactions);
@@ -23,7 +19,7 @@ router.get('/contact_us', isAuthenticated, kycVerified, impl.getContactPage);
 router.post('/contact_us', isAuthenticated, impl.postContactPage);
 router.get('/profile', isAuthenticated, kycVerified, impl.getProfileEditPage);
 router.post('/profile', isAuthenticated, impl.postProfileEditPage);
-router.get('/getUSDPrice', isAuthenticated, impl.getUSDPrice);
+router.get('/getPrices', isAuthenticated, impl.getPrices);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
 
 function isAuthenticated(req, res, next) {

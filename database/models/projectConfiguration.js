@@ -25,6 +25,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: true,
     },
+
+    coinSymbol: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+      allowNull: true,
+    },
+
     tokenSold: {
       type: DataTypes.FLOAT,
       defaultValue: 0
@@ -42,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
 
-    usdConversionRate: {
-      type: DataTypes.FLOAT,
+    ethConversionRate: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
 

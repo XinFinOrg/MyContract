@@ -84,5 +84,5 @@ var db = require('./database/models/index');
 db.sequelize.sync({force: false}).then(()=> {
   console.log("Sync done");
 });
-
+// require('./coinPayments/impl');
 module.exports = app;
