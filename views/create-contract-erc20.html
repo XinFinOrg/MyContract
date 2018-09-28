@@ -12,15 +12,16 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../public/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
 
     <title>MyContract</title>
 
     <!-- CSS -->
-    <link href="../public/assets/css/style.min.css" rel="stylesheet">
-    <link href="../public/assets/css/custom.css" rel="stylesheet">
+    <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
+    <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
     <!-- This Page CSS -->
-    <link href="../public/assets/libs/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="assets/libs/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,17 +56,17 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="../public/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
-                            <img src="../public/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                            <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                              <!-- dark Logo text -->
-                             <img src="../public/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                             <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                              <!-- Light Logo text -->    
-                             <img src="../public/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                             <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
                         </span>
                     </a>
                     <!-- End Logo -->
@@ -81,12 +82,12 @@
                     <ul class="navbar-nav float-left mr-auto pl-2">
                         <li class="">
                             <div class="header-price-box">
-                                <img src="../public/assets/images/icons/xdce.png"> Balance: 0000
+                                <img src="assets/images/icons/xdce.png"> Balance: 0000
                             </div>
                         </li>
                         <li class="">
                             <div class="header-price-box ethBalance">
-                                <img src="../public/assets/images/icons/eth.png"> Balance: 0000
+                                <img src="assets/images/icons/eth.png"> Balance: 0000
                             </div>
                         </li>
                         <li class="">
@@ -102,11 +103,11 @@
 
                         <!-- User profile and search -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../public/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                                    <div class=""><img src="../public/assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class=""><img src="assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">John Doe</h4>
                                         <p class=" m-b-0">johndoe@gmail.com</p>
@@ -142,8 +143,8 @@
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ongoing-projects.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="deploy-contract.html" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy Pending Contracts </span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ico-platform.html" aria-expanded="false"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="buy-package.html" data-whatever="@getbootstrap"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#comingSoonModal" data-whatever="@getbootstrap"><i class="mdi mdi-creation"></i><span class="hide-menu">ICO Platform </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="buy-package.html" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span class="hide-menu">Buy Tokens </span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="login.html" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
                     </ul>
@@ -289,8 +290,9 @@
                                             <label class="btn btn-checkbox">
                                                 <input type="checkbox" autocomplete="off"> Mintable
                                             </label>
-                                        </div>                                        
-                                        <button type="button" class="btn btn-circle btn-tooltip mt-1" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i class="ti-help-alt"></i></button>
+                                            <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i class="ti-help-alt"></i></button>
+                                        </div>
+
                                     </div>
 
                                     <div class="form-actions mb-3">
@@ -329,7 +331,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <div class="download-QRcode">
-                            <img src="../public/assets/images/QRcode.jpg">
+                            <img src="assets/images/QRcode.jpg">
                         </div>
                     </div>
                     <form>
@@ -348,8 +350,7 @@
         </div>
     </div>
     <!-- / Buy Token modal -->
-    
-    
+
     <!-- RUBM modal -->
     <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -362,15 +363,15 @@
                                                 <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Releasable</span></h5>
                                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
                                                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
-                                                
+
                                                 <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Upgradeable</span></h5>
                                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
                                                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
-                                                
+
                                                 <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
                                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
                                                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
-                                                
+
                                                 <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Mintable</span></h5>
                                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
                                                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec nulla non metus auctor fringilla.</p>
@@ -379,19 +380,57 @@
                     							<button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
                 							</div>
                                         </div>
-                                    </div>
-                                    </div>
-                                    <!-- / RUBM modal -->
+       </div>
+    </div>
+    <!-- / RUBM modal -->
 
-    
+    <!-- / ICO Plarform Coming Soon modal -->
+    <div class="modal fade" id="comingSoonModal" tabindex="-1" role="dialog" aria-labelledby="comingSoonModalLabel1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="text-center mx-2 mb-3"><span>Coming Soon!</span></h1>
+
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / ICO Plarform Coming Soon modal -->
+
+    <!-- unlock contract modal -->
+    <div class="modal fade bs-example-modal-lg" id="unlockContractModal" tabindex="-1" role="dialog" aria-labelledby="unlockContractModalLabel1">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>function buyTokens() public payable returns(uint tokenAmount) { uint _tokenAmount; uint multiplier = (10 ** decimals); uint weiAmount = msg.value; //safe sub will automatically handle overflows tokensForPublicSale = safeSub(tokensForPublicSale, _tokenAmount); onSaleTokens = safeSub(onSaleTokens, _tokenAmount); balances[contractAddress] = safeSub(balances[contractAddress],_tokenAmount); //assign tokens balances[msg.sender] = safeAdd(balances[msg.sender], _tokenAmount); //send money to the owner require(owner.send(weiAmount)); return _tokenAmount; }</p>
+                    <h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
+<button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/buyPackage';"><i class="fa fa-dollar-sign"></i> Buy Package</button></h5>
+                    <p class="blur">/** * @title ERC20 interface * see https://github.com/ethereum/EIPs/issues/20 */ contract Ownable { /* Current Owner */ address public owner; /** * The Ownable constructor sets the original `owner` of the contract to the sender account. */ function Ownable() { owner = msg.sender; } function acceptOwnership() { require(msg.sender == newOwner); OwnershipTransferred(owner, newOwner); owner = newOwner; } //safe sub will automatically handle overflows tokensForPublicSale = safeSub(tokensForPublicSale, _tokenAmount); onSaleTokens = safeSub(onSaleTokens, _tokenAmount); balances[contractAddress] = safeSub(balances[contractAddress],_tokenAmount); //assign tokens balances[msg.sender] = safeAdd(balances[msg.sender], _tokenAmount); } }</p>
+                </div>
+                <div class="modal-footer text-center no-top-border">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / unlock contract modal -->
 
     <!-- All Jquery -->
-    <script src="../public/assets/libs/jquery/jquery.min.js"></script>
+    <script src="assets/libs/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="../public/assets/libs/popper.js/popper.min.js"></script>
-    <script src="../public/assets/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/libs/popper.js/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
     <!-- apps -->
-    <script src="../public/assets/js/app.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
 
     <script>
         $(function() {
@@ -411,15 +450,15 @@
     </script>
 
     <!-- slimscrollbar JavaScript -->
-    <script src="../public/assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
 
     <!--Menu sidebar -->
-    <script src="../public/assets/js/sidebarmenu.js"></script>
+    <script src="assets/js/sidebarmenu.js"></script>
 
-    <script src="../public/assets/libs/toastr/toastr.min.js"></script>
-    <script src="../public/assets/libs/toastr/toastr-init.js"></script>
+    <script src="assets/libs/toastr/toastr.min.js"></script>
+    <script src="assets/libs/toastr/toastr-init.js"></script>
 
-    <script src="../public/assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
     <script>
         $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
         var radioswitch = function() {
@@ -444,7 +483,8 @@
     </script>
 
     <!--Custom JavaScript -->
-    <script src="../public/assets/js/custom.min.js"></script>
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/custom.js"></script>
 </body>
 
 </html>
