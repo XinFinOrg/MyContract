@@ -30,13 +30,15 @@ function coinNameExist(req, res, next) {
   console.log(req.body)
   projectConfiguration.find({
     where: {
-      'coinName': req.body.token_name
+      'coinSymbol': req.body.token_symbol
     }
   }).then(result => {
-    // console.log(result.dataValues.coinName)
+    console.log(result)
     if (result==null) {
+      console.log("next");
       return next();
     } else {
+      console.log("exist");
       req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
       res.redirect('/customContract');
     }

@@ -3,5 +3,5 @@ contractCreator/contractDirectory
 *.bak
 database/migrations/
 kycdump/
-
+database/config
 config/paymentListener.js

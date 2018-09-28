@@ -8,7 +8,7 @@ var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = {
 
-  getBytecode: async function(req, res) {
+  getBytecode: async function (req, res) {
     console.log("re is", req.query);
     var coinName = req.query.coinName;
     // var coinName = "test";
@@ -32,23 +32,22 @@ module.exports = {
     });
   },
 
-  saveDeploymentData: async function(req, res) {
-    var projectdata = await client.find({
+  saveDeploymentData: async function (req, res) {
+    console.log(req.body.resp, "dataaaaaa",req.body.resp.search("https://etherscan.io"));
+    ProjectConfiguration.find({
       where: {
-        'email': req.user.email
+        'coinName': req.query.coinName
       },
-      include: ['projectConfigurations'],
-    })
-    await ProjectConfiguration.update({
-      'contractAddress': req.body.contractAddress,
-      'contractHash': req.body.contractTxHash
-    }, {
-      where: {
-        client_id: projectdata.projectConfigurations[0].dataValues.client_id
+      attributes: ['coinName', 'contractCode', 'contractByteCode']
+    }).then(async updateddata => {
+      if (req.body.resp.search("https://etherscan.io") != -1) {
+        updateddata.networkType = "mainnet";
+      } else {
+        updateddata.networkType = "testnet"
       }
-    }).then(updateddata => {
-      if (!updateddata)
-        console.log("Project update failed !");
+      updateddata.contractHash = req.body.contractTxHash;
+      updateddata.contractAddress = req.body.contractAddress;
+      updateddata.save();
       req.session.contractAddress = req.body.contractAddress;
       req.session.contractTxHash = req.body.contractTxHash;
       req.flash('contract_flash', 'Contract mined successfully!');
@@ -57,7 +56,7 @@ module.exports = {
     })
   },
 
-  getDeployer: async function(req, res) {
+  getDeployer: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
@@ -71,7 +70,7 @@ module.exports = {
 
 function getProjectArray(email) {
   var projectArray = [];
-  return new Promise(async function(resolve, reject) {
+  return new Promise(async function (resolve, reject) {
     client.find({
       where: {
         'email': email

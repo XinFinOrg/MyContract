@@ -113,6 +113,7 @@ module.exports = {
         objdata.contractCode = result;
         objdata.coinName = req.body.token_name;
         objdata.tokenSupply = req.body.token_supply;
+        objdata.coinSymbol = req.body.token_symbol;
         objdata.hardCap = req.body.token_sale;
         var projectData = await ProjectConfiguration.create(objdata)
         clientdata.addProjectConfiguration(projectData);

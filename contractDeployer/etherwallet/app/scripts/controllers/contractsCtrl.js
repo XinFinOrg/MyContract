@@ -54,8 +54,6 @@ var contractsCtrl = function($scope, $sce, walletService) {
     }).then(function(data) {
         $scope.tx.data=data.data.bytecode;
         $scope.tx.gasLimit="4700000";
-
-       console.log("data from get");
     });
 
     $scope.$watch('tx', function(newValue, oldValue) {
@@ -139,14 +137,14 @@ var contractsCtrl = function($scope, $sce, walletService) {
                 var bExStr = $scope.ajaxReq.type != nodes.nodeTypes.Custom ? "<a href='" + $scope.ajaxReq.blockExplorerTX.replace("[[txHash]]", resp.data) + "' target='_blank' rel='noopener'> View your transaction </a>" : '';
                 var contractAddr = $scope.tx.contractAddr != '' ? " & Contract Address <a href='" + ajaxReq.blockExplorerAddr.replace('[[address]]', $scope.tx.contractAddr) + "' target='_blank' rel='noopener'>" + $scope.tx.contractAddr + "</a>" : '';
                 $scope.notifier.success(globalFuncs.successMsgs[2] + "<br />" + resp.data + "<br />" + bExStr + contractAddr);
-                // console.log(resp.data, $scope.tx.contractAddr,window.location.href,window.location.href = "profile");
-                ajaxReq.http.post(window.location.protocol+'/saveDeploymentData',{"contractAddress": $scope.tx.contractAddr,"contractTxHash":resp.data},{
+                // console.log(resp.data, $scope.tx.contractAddr,"resp",resp,bExStr);
+                ajaxReq.http.post(window.location.protocol+'/saveDeploymentData?coinName='+window.sessionStorage.getItem("deploymentName"),{"contractAddress": $scope.tx.contractAddr,"contractTxHash":resp.data,"network": $scope.ajaxReq.blockExplorerTX.replace("[[txHash]]", resp.data),"networks":window.localStorage.getItem("key")},{
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then(function() {
                    console.log("redirection on");
-                   window.location.href = "profile";
+                   window.location.href = "/dashboard";
 
                 });
             } else {
