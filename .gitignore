@@ -4,4 +4,3 @@ contractCreator/contractDirectory
 database/migrations/
 kycdump/
 database/config
-config/paymentListener.js
