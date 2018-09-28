@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
 
     coinSymbol: {
       type: DataTypes.STRING,
-      primaryKey: true,
       allowNull: true,
     },
 

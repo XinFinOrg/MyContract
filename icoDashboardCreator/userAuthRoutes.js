@@ -21,6 +21,7 @@ router.get('/profile', isAuthenticated, kycVerified, impl.getProfileEditPage);
 router.post('/profile', isAuthenticated, impl.postProfileEditPage);
 router.get('/getPrices', isAuthenticated, impl.getPrices);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
+router.post('/buyToken', isAuthenticated, impl.buyToken);
 
 function isAuthenticated(req, res, next) {
   var token = req.cookies['token'];

@@ -2,7 +2,8 @@ const Web3 = require('web3');
 var db = require('../database/models/index');
 var client = db.client;
 var Address = db.userCurrencyAddress;
-var ws_provider = 'wss://mainnet.infura.io/ws';
+var config = require('../config/paymentListener');
+var ws_provider = config.ws_provider;
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
@@ -29,7 +30,6 @@ provider.on('end', e => {
 
   web3.setProvider(provider);
 });
-var config = require('../config/paymentListener');
 var contractInstance = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
 var gasPriceGwei = 12;
 module.exports = {

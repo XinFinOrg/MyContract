@@ -1,11 +1,15 @@
 var options = require('../config/coinPayments').options;
 var Coinpayments = require('coinpayments');
 const client = new Coinpayments(options);
-client.getBasicInfo().then(info => {
-  console.log(info);
-});
+let Promise = require('bluebird');
 
+module.exports = {
 
-// client.createTransaction({'currency1' : 'USD', 'currency2' : 'LTCT', 'amount' : 1, 'buyer_email':'nishant.mitra94@gmail.com'}).then(txInfo => {
-//   console.log(txInfo);
-// });
+  buyToken: (currency1, currency2, amount, buyer_email) => {
+    return new Promise((resolve, reject) => {
+      client.createTransaction({'currency1' : currency1, 'currency2' : currency2, 'amount' : amount, 'buyer_email':buyer_email}).then(txInfo => {
+        resolve(txInfo);
+      });
+    })
+  }
+}
