@@ -55,7 +55,7 @@ function hasPackage1(req, res, next) {
       return next();
     } else {
       req.flash('package_flash', "You need to buy Package 1 by contributing 1200000 XDCe");
-      res.redirect('/customContract');
+      res.redirect('/generatedContract');
     }
   });
 }

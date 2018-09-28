@@ -19,10 +19,67 @@
               <div class="well">
                 <div class="col-md-12">
                   <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract to review</h4>
-                  <pre class="language-markup scrollable">
-                    <code><%= contract %></code>
-                  </pre>
-                  <button type="button" id="deployment" onclick=deploy("<%=coinName %>") class="btn btn-rounded btn-lg btn-info mr-1">Deploy <%= coinName %></button>
+                    <pre class="language-markup scrollable">
+                      <% if(contract) { %>
+<code><%= contract %>
+</code>
+                    </pre>
+                    <button type="button" id="deployment" onclick=deploy("<%=coinName %>") class="btn btn-rounded btn-lg btn-info mr-1">Deploy <%= coinName %></button>
+                      <% } else { %>
+
+<code>
+pragma solidity ^0.4.4;
+/**
+ * @title ERC20 interface
+ * see https://github.com/ethereum/EIPs/issues/20
+ */
+contract ERC20 {
+
+  uint public totalSupply;
+  uint public decimals;
+
+  function balanceOf(address who) constant returns (uint);
+  function allowance(address owner, address spender) constant returns (uint);
+
+  function transfer(address to, uint value) returns (bool ok);
+  function transferFrom(address from, address to, uint value) returns (bool ok);
+  function approve(address spender, uint value) returns (bool ok);
+
+  event Transfer(address indexed from, address indexed to, uint value);
+  event Approval(address indexed owner, address indexed spender, uint value);
+
+}
+</code>
+<h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
+<button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/buyPackage';"><i class="fa fa-dollar-sign"></i> Buy Package</button></h5>
+
+<code class="blur">
+/**
+* @title ERC20Detailed token
+* @dev The decimals are only for visualization purposes.
+* All the operations are done using the smallest and indivisible token unit,
+* just as on Ethereum all the operations are done in wei.
+*/
+contract ERC20Detailed is ERC20 {
+ string private _name;
+ string private _symbol;
+ uint8 private _decimals;
+
+ constructor(string name, string symbol, uint8 decimals) public {
+   _name = name;
+   _symbol = symbol;
+   _decimals = decimals;
+ }
+
+ /**
+  * @return the name of the token.
+  */
+ function name() public view returns(string) {
+   return _name;
+ }
+
+</code>
+<% } %>
                 </div>
               </div>
             </div>

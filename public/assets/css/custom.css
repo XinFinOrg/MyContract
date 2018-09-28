@@ -66,7 +66,7 @@
 
 
 
-.switch input { 
+.switch input {
     display:none;
 }
 .switch {
@@ -523,4 +523,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#607aea', end
 
 .no-top-border{border-top:none;}
 .blur{-webkit-filter: blur(4px);filter: blur(4px);}
-.blur-overlay {font-size: 22px;font-weight: 400;width: 70%;padding: 20px;position: fixed;bottom: 30%;left: 15%;margin-top: -100px;background-color: rgba(255, 255, 255, 0.7);border-radius: 5px;text-align: center;z-index: 11;border: 1px dotted #607aea;}
+.blur-overlay {font-size: 22px;font-weight: 400;width: 65%;padding: 20px;position: fixed;bottom: 30%;background-color: rgba(255, 255, 255, 0.7);border-radius: 5px;text-align: center;z-index: 11;border: 1px dotted #607aea;}
