@@ -92,7 +92,9 @@ module.exports = {
       contractInstance.methods.balanceOf(address).call().then(balance => {
         resolve(balance / 10 ** 18);
       }).catch(error => {
-        console.log(error);
+        console.log("Web3 error status", error);
+        provider = new Web3.providers.WebsocketProvider(ws_provider);
+        web3.setProvider(provider);
         reject(error);
       });
     });
