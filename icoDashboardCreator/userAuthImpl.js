@@ -3,6 +3,7 @@ var User = db.user;
 var fs = require('fs');
 var configAuth = require('../config/auth');
 const Binance = require('node-binance-api');
+var coinPaymentHandler = require('../coinPayments/impl');
 module.exports = {
 
   getTransactions: (req, res, next) => {
@@ -116,6 +117,15 @@ module.exports = {
   getCompletedKYCPage: (req, res) => {
     res.render('kycComplete', {
       user: req.user
+    });
+  },
+
+  buyToken: async (req, res) => {
+    txInfo = await coinPaymentHandler.buyToken(req.body.second_currency, req.body.second_currency, req.body.amount, req.user.email);
+    console.log(txInfo);
+    res.render('userTokenPayment', {
+      user: req.user,
+      qrCodeLink: txInfo.qrcode_url
     });
   }
 }
