@@ -20,6 +20,7 @@ module.exports = {
     }).then(async projectData => {
       byteCode = projectData.contractByteCode;
       if (byteCode == null){
+        console.log(solc.compile(projectData.contractCode, 1).contracts[':Coin'])
         byteCode = solc.compile(projectData.contractCode, 1).contracts[':Coin'].bytecode;
         projectData.contractByteCode = byteCode;
         await projectData.save();
