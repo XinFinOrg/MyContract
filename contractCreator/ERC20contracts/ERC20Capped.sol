@@ -1,6 +1,5 @@
-pragma solidity ^0.4.24;
 
-import "./ERC20Mintable.sol";
+
 
 /**
  * @title Capped token

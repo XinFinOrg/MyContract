@@ -45,6 +45,7 @@ module.exports = {
       } else {
         updateddata.networkType = "testnet"
       }
+      updateddata.networkURL = req.body.resp;
       updateddata.contractHash = req.body.contractTxHash;
       updateddata.contractAddress = req.body.contractAddress;
       updateddata.save();

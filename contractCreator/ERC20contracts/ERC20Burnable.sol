@@ -1,6 +1,4 @@
-pragma solidity ^0.4.24;
 
-import "./ERC20.sol";
 
 /**
  * @title Burnable Token

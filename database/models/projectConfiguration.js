@@ -83,6 +83,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    networkURL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     contractAddress: {
       type: DataTypes.STRING,
       allowNull: true,

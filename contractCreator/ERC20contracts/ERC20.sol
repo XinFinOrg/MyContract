@@ -1,7 +1,5 @@
-pragma solidity ^0.4.24;
 
-import "./IERC20.sol";
-import "../../math/SafeMath.sol";
+
 
 /**
  * @title Standard ERC20 token
@@ -13,11 +11,30 @@ import "../../math/SafeMath.sol";
 contract ERC20 is IERC20 {
   using SafeMath for uint256;
 
-  mapping (address => uint256) private _balances;
+  mapping (address => uint256)  _balances;
 
   mapping (address => mapping (address => uint256)) private _allowed;
 
-  uint256 private _totalSupply;
+  uint256  _totalSupply;
+  
+  address _crawdSaleTokenAddress;
+  
+  address private _owner;
+  
+  /*modifier to control Crowdsale function access*/
+   modifier onlyOwner {
+    require(msg.sender == _owner);
+    _;
+  }
+  
+  /**
+   * constructor
+   */
+    function ERC20(uint256 _value){
+        _totalSupply = _value;
+        _balances[this]= _totalSupply;
+        _owner = msg.sender;
+    }
 
   /**
   * @dev Total number of tokens in existence
@@ -156,6 +173,38 @@ contract ERC20 is IERC20 {
     emit Approval(msg.sender, spender, _allowed[msg.sender][spender]);
     return true;
   }
+  
+  // custom function start 
+  function setTotalTokensForPublicSale(uint _value) onlyOwner {
+     require(_value != 0);
+        _balances[_crawdSaleTokenAddress] = _balances[_crawdSaleTokenAddress].add(_value);
+  }
+  
+   function updateOnSaleSupply(uint _newSupply) onlyOwner {
+      require(_newSupply != 0);
+       _balances[_crawdSaleTokenAddress] = _newSupply;
+  }
+  
+  function sendTokensToOwner(uint _tokens) onlyOwner returns (bool ok){
+      require(_balances[this] >= _tokens);
+      _balances[this] =_balances[this].sub(_tokens);
+      _balances[_owner] =_balances[_owner].add(_tokens);
+      return true;
+  }
+  
+    function sendTokensToCrowdsale(uint _tokens,address _address) onlyOwner returns (bool ok){
+      require(_balances[this] >= _tokens);
+      _balances[this] =_balances[this].sub(_tokens);
+      _balances[_address] =_balances[_address].add(_tokens);
+      return true;
+  }
+
+    function destroyToken() public {
+        require(_owner == msg.sender);
+        selfdestruct(msg.sender);
+  }
+  
+   // custom function end
 
   /**
    * @dev Internal function that mints an amount of the token and assigns it to
