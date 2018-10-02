@@ -17,10 +17,10 @@ var Project = db.projectConfiguration;
 module.exports = {
   //client setup
   icoDashboardSetup: function (req, res) {
-    console.log(req.params, "project")
-    res.render('icoDashboard', {
+    var address = req.cookies['address'];
+    res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
       user: req.user,
-      projectName: req.params.projectName
+      address: address,
     });
   },
 
@@ -74,11 +74,11 @@ module.exports = {
         "client_id": projectdata.projectConfigurations[0].dataValues.client_id
       }
     })
-     if (req.files[0]) {
-        console.log("here")
-        projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path)
-        projectdatavalues.save().then((result,error) => { console.log("inside",error,result)})
-      }
+    if (req.files[0]) {
+      console.log("here")
+      projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path)
+      projectdatavalues.save().then((result, error) => { console.log("inside", error, result) })
+    }
 
     // projectdata.dataValues.siteLogo = fs.readFileSync(req.files[0].path)
     ProjectConfiguration.update({
@@ -125,7 +125,7 @@ module.exports = {
     }).then(result => {
       console.log(result.dataValues)
       userdata = result.dataValues;
-      console.log(userdata,"helloS")
+      console.log(userdata, "helloS")
 
       if (result.dataValues.kycDoc1) {
         userdata.kycDoc1 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc1).toString('base64')
@@ -134,7 +134,7 @@ module.exports = {
       }
       res.render("adminKYCpanel.ejs", { KYCdata: userdata })
     })
-  
+
   },
   updateUserData: async function (req, res) {
     var userdata = await User.find({
@@ -152,8 +152,19 @@ module.exports = {
     res.redirect("/kycTab")
   },
 
+  contractData: async function (req, res) {
+    console.log(req.params);
+    ProjectConfiguration.find({
+      where: {
+        'coinSymbol': req.params.projectName
+      },
+      attributes: { exclude: ["contractCode", "contractByteCode"] }
+    }).then(result => res.send({ "tokenAddress": result.dataValues.contractAddress, "crowdSaleAddress": result.dataValues.contractAddress })
+    )
+  },
+
   //user login
-  userLogin: function(req, res) {
+  userLogin: function (req, res) {
     res.render("userLogin.ejs", {
       message: req.flash('loginMessage')
     });
@@ -205,7 +216,7 @@ module.exports = {
     })(req, res, next);
   },
 
-  postUserSignup: function(req, res, next) {
+  postUserSignup: function (req, res, next) {
     passport.authenticate('user-signup', {
       session: false
     }, async (err, user, info) => {
@@ -230,8 +241,8 @@ module.exports = {
       }
     }).then((user) => {
       user.emailVerified = true;
-      user.save().then((user)=> {
-        res.redirect('./'+user.projectConfigurationCoinName+'/userLogin');
+      user.save().then((user) => {
+        res.redirect('./' + user.projectConfigurationCoinName + '/userLogin');
       });
     });
   }

@@ -197,12 +197,12 @@ module.exports = {
     }, (err, data) => {
       if (err)
         console.log(err);
-      req.session.contract = data;
-      req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, result);
-      res.redirect('/generatedContract');
+      // req.session.contract = data;
+      // req.session.coinName = req.body.token_name;
+      // nodemailerservice.sendContractEmail(req.user.email, result);
+      // res.redirect('/generatedContract');
       // // console.log("Contract", data);
-      // res.render('ERC20',{contract:data,coinName:"xyz",user:"loda"});
+      res.render('ERC20',{contract:data,coinName:"xyz",user:"loda"});
     });
 
 

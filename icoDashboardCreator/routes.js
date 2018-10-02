@@ -1,9 +1,12 @@
 const impl = require("./impl");
 const DataURI = require('datauri').promise;
 var db = require('../database/models/index');
+var path = require('path');
 var client = db.client;
+console.log(path.join(__dirname, './dist'),"dir")
 
-module.exports = function (app, sequelize, DataTypes) {
+
+module.exports = function (app,express) {
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
@@ -12,6 +15,7 @@ module.exports = function (app, sequelize, DataTypes) {
   app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata', impl.getICOdata);
   app.get('/icoDashboardSetup/project/:projectName/kyctab/projectName/:projectName/:userid/getUserData', impl.getUserData);
   app.post('/icoDashboardSetup/project/:projectName/kyctab/projectName/:projectName/:userid/updateUserData', impl.updateUserData);
+  app.get('/icoDashboardSetup/project/:projectName/contractData',impl.contractData);
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);
@@ -39,11 +43,11 @@ function hasPackage3(req, res, next) {
       'email': req.user.email
     }
   }).then(result => {
-    if (result.dataValues.package_id == 3) {
+    if (result.dataValues.package2 == 0) {
       return next();
     } else {
       req.flash('package_flash', 'You need to buy Package 3');
-      res.redirect('/profile');
+      res.redirect('/');
     }
   })
 }
