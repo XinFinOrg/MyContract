@@ -1,13 +1,14 @@
 var db = require('../database/models/index');
 var User = db.user;
+var Address = db.userCurrencyAddress;
 var fs = require('fs');
 var configAuth = require('../config/auth');
 const Binance = require('node-binance-api');
 var coinPaymentHandler = require('../coinPayments/impl');
+var icoListener = require('../icoHandler/listener');
 module.exports = {
 
   getTransactions: (req, res, next) => {
-    console.log(req.user);
     var projectConfiguration = req.user.projectConfiguration;
     res.render('userTransactionHistory', {
       user: req.user,
@@ -75,7 +76,6 @@ module.exports = {
   },
 
   getPrices: async (req, res, next) => {
-    console.log("Getting price");
     const binance = Binance().options({
       APIKEY: configAuth.binanceKey.apiKey,
       APISECRET: configAuth.binanceKey.apiSecret,
@@ -84,7 +84,6 @@ module.exports = {
     });
 
     binance.prices((error, ticker) => {
-      console.log();
       res.send({
         BTC: 1/ticker.ETHBTC,
         BTCUSD: ticker.BTCUSDT,
@@ -120,12 +119,49 @@ module.exports = {
     });
   },
 
-  buyToken: async (req, res) => {
-    txInfo = await coinPaymentHandler.buyToken(req.body.second_currency, req.body.second_currency, req.body.amount, req.user.email);
-    console.log(txInfo);
+  loadWallet: async (req, res) => {
+    txInfo = await coinPaymentHandler.buyToken(req.body.second_currency, req.body.second_currency, req.body.amount, req.user.email, req.user.userCurrencyAddresses[0].address);
     res.render('userTokenPayment', {
       user: req.user,
       qrCodeLink: txInfo.qrcode_url
     });
+  },
+
+  checkBalances: (req, res) => {
+    var btc_address, eth_address;
+    for(var i=0; i<req.user.userCurrencyAddresses.length; i++){
+      if(req.user.userCurrencyAddresses[i].currency_id=="Ethereum"){
+        eth_address=req.user.userCurrencyAddresses[i].address;
+      }
+      else {
+        btc_address=req.user.userCurrencyAddresses[i].address;
+      }
+    }
+    Promise.all([icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.contractAddress), icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([tokenBalance, ethBalance, btcBalance]) => {
+      res.send({
+        'tokenBalance': tokenBalance,
+        'balance': ethBalance,
+        'btcBalance': btcBalance
+      });
+    });
+  },
+
+  buyToken: async (req, res) => {
+    icoListener.buyToken(req.user.userCurrencyAddresses[0].address, req.user.projectConfiguration.contractAddress, req.user.userCurrencyAddresses[0].privateKey, req.body.amount)
+    .then((receipt)=> {
+      res.send({'receipt': receipt});
+    });
+  },
+
+  checkTokenStats: (req, res) => {
+    icoListener.checkTokenStats(req.user.projectConfiguration.contractAddress).then(onSaleTokens => {
+      res.send({'onSaleTokens': onSaleTokens});
+    });
+  },
+
+  getTransactions: (req, res) => {
+    icoListener.getTransactions(req.user.userCurrencyAddresses[0].address).then(tx => {
+      res.send(tx);
+    })
   }
 }

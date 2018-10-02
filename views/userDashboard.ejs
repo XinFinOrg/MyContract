@@ -53,7 +53,7 @@
               <div class="tab-content card-body">
                 <div class="tab-content clearfix">
                   <div class="tab-pane active" id="1b">
-                    <form id="eth_form" action="./buyToken" method="post">
+                    <form id="eth_form" action="./api/buyToken" method="post">
                       <div class="row field_form">
                         <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
                           <label>ETH</label>
@@ -95,7 +95,7 @@
                   </div>
 
                   <div class="tab-pane" id="2b">
-                    <form id="btc_form" action="./buyToken" method="post">
+                    <form id="btc_form" action="./api/buyToken" method="post">
                       <div class="row field_form">
 
                         <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
@@ -154,8 +154,8 @@
             <div class="col-12 col-lg-6 col-md-6 col-sm-6 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
               <div class="box_wrap bg-white text-center">
                 <div class="line"></div>
-                <h5> <%= projectConfiguration.coinSymbol %> SOLD </h5>
-                <p><span> <%= projectConfiguration.tokenSold %>/ <%= projectConfiguration.hardCap %></span></p>
+                <h5> <%= projectConfiguration.coinSymbol %> ON SALE</h5>
+                <p><span> <span id="onSaleTokens"> </span>/ <%= projectConfiguration.hardCap %></span></p>
               </div>
             </div>
 
@@ -242,11 +242,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-  <script>
-    DateTime dt = DateTime.parse(<%=projectConfiguration.endDate %>);
-     String utcDt = dt.format('dd-MM-yyyy', 'UTC');
-     console.log(utcDt);
-  </script>
 
   <script type="text/javascript">
     toastr.options = {
@@ -271,12 +266,6 @@
   </script>
 
   <script type="text/javascript">
-    function goTo(baseurl) {
-      token = window.localStorage.getItem('token');
-      window.location.assign(baseurl + token);
-    }
-  </script>
-  <script type="text/javascript">
     $('body').addClass('login');
     $('#root-view').addClass('auth-layout');
   </script>
@@ -291,33 +280,18 @@
     $('#root-view').addClass('page-wrapper');
   </script>
 
-  <script type="text/javascript">
-    $("#subscribe_form").validate({
-      rules: {
-        email: {
-          required: true,
-          email: true
-        },
-      },
-      messages: {
-        email: {
-          required: 'Email is required',
-          email: 'Enter valid email'
-        },
-      }
-    });
-  </script>
   <!--selectpicker ends-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
   <script type="text/javascript">
-    var minETH;
-    var minBTC;
-    var balBtc;
-    var balEth;
-    window.setInterval(function() {
-      get_usd_price();
-    }, 300000);
+  var minETH;
+  var minBTC;
+  var balBtc;
+  var balEth;
+    // window.setInterval(function() {
+    //   checkBalances();
+    //   get_usd_price();
+    // }, 3000000);
 
     $.validator.addMethod('minval', function(value, element) {
       return this.optional(element) || (value <= balBtc);
@@ -343,10 +317,8 @@
           required: true,
           regex: '^[0-9a-zA-Z]+$'
         },
-
       },
       messages: {
-
         amount: {
           required: 'Amount is required',
           number: 'Enter valid number',
@@ -357,7 +329,6 @@
           required: 'JCash Id is required',
           regex: 'Enter valid JCashId'
         },
-
       }
     });
 
@@ -366,6 +337,7 @@
         amount: {
           required: true,
           number: true,
+          balance: true,
           min: minETH,
           adecimal: true,
         },
@@ -378,27 +350,21 @@
         amount: {
           required: 'Amount is required',
           number: 'Enter valid number',
+          balance: 'Insufficient Balance',
           min: 'Minimum Amount is ' + minETH,
           adecimal: 'Only decimals allowed'
-        },
-        jcash_id: {
-          required: 'JCash Id is required',
-          regex: 'Enter valid JCashId'
-        },
+        }
       }
     });
 
     function activateButton(element, currency) {
-
       if (element.checked) {
         if (currency == 'ETH') {
           document.getElementById("eth_button").disabled = false;
         } else {
           document.getElementById("btc_button").disabled = false;
         }
-
       } else {
-
         if (currency == 'BTC') {
           document.getElementById("eth_button").disabled = true;
         } else {
@@ -408,7 +374,9 @@
     }
 
     $(document).ready(function() {
+      checkBalances();
       get_usd_price();
+      checkTokenStats();
     });
     var btc_eth;
     var token_eth = <%= projectConfiguration.ethConversionRate %>;
@@ -441,6 +409,20 @@
         $('#token_total2').html((to_spend*<%= projectConfiguration.ethConversionRate %>*btc_eth).toFixed(2));
       }
     }
+    function checkBalances() {
+      $.get('./api/checkBalances', function(result) {
+        balance = result["balance"];
+        tokenBalance = result["tokenBalance"];
+      });
+    }
+
+    function checkTokenStats() {
+      $.get('./api/checkTokenStats', function(result) {
+        var onSaleTokens = result["onSaleTokens"];
+        $('#onSaleTokens').html(onSaleTokens);
+      });
+    }
+
   </script>
 
   </body>

@@ -11,6 +11,7 @@ var Currency = db.currency;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
+var bitcoin = require("bitcoinjs-lib");
 let Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 const Web3 = require('web3');
@@ -78,11 +79,17 @@ module.exports = function (passport) {
               }
             });
 
-            var projectCurrency = await db.currency.findOrCreate({
+            var btcCurrency = await db.currency.findOrCreate({
               where: {
-                'name': req.body.projectName
+                'name': "Bitcoin"
               }
             });
+
+            // var projectCurrency = await db.currency.findOrCreate({
+            //   where: {
+            //     'name': req.body.projectName
+            //   }
+            // });
 
             console.log(req.body.projectName);
             //Find project details and map user
@@ -92,11 +99,11 @@ module.exports = function (passport) {
               }
             });
 
-            Promise.all([generateEthAddress(), generateEthAddress(), createNewUser(req)]).then(([createdEthAddress, createdCoinAddress, createdUser]) => {
+            Promise.all([generateEthAddress(), generateBTCAddress(), createNewUser(req)]).then(([createdEthAddress, createdBTCAddress, createdUser]) => {
               ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
-              projectCurrency[0].addUserCurrencyAddress(createdCoinAddress);
-              createdUser.addUserCurrencyAddresses([createdEthAddress, createdCoinAddress]);
-              project[0].addUserCurrencyAddress([createdEthAddress, createdCoinAddress]);
+              btcCurrency[0].addUserCurrencyAddress(createdBTCAddress);
+              createdUser.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+              project[0].addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
               project[0].addUser(createdUser);
               return done(null, createdUser.dataValues);
             });
@@ -317,11 +324,24 @@ function generateEthAddress() {
   return new Promise(async function (resolve, reject) {
     var newEthAddress = new Object();
     var keyStore = generateNewAccount();
-    console.log(keyStore);
     newEthAddress.privateKey = keyStore.privateKey;
     newEthAddress.address = keyStore.address;
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
+  });
+}
+
+function generateBTCAddress() {
+  return new Promise(async function (resolve, reject) {
+    var newBTCAddress = new Object();
+    const TestNet = bitcoin.networks.testnet;
+    var keyPair = bitcoin.ECPair.makeRandom();
+    let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+    console.log(address);
+    newBTCAddress.address = address;
+    newBTCAddress.privateKey = keyPair.toWIF();
+    var createdBTCAddress = await Address.create(newBTCAddress);
+    resolve(createdBTCAddress);
   });
 }
 
@@ -335,7 +355,7 @@ function createNewUser(req) {
     newUser.lastName = req.body.last_name;
     newUser.country = req.body.country_id;
     var createdUser = await User.create(newUser);
-    sendVerificationMail(req, createdUser.email, createdUser.firstName, createdUser.uniqueId);
+    sendUserVerificationMail(req, createdUser.email, createdUser.firstName, createdUser.uniqueId);
     resolve(createdUser);
   });
 }
@@ -355,4 +375,9 @@ function createNewClient(req) {
 function sendVerificationMail(req, userEmail, userName, userHash) {
   var nodemailerservice = require('../emailer/impl');
   nodemailerservice.sendVerificationMail(req, userEmail, userName, userHash);
+}
+
+function sendUserVerificationMail(req, userEmail, userName, userHash) {
+  var nodemailerservice = require('../emailer/impl');
+  nodemailerservice.sendUserVerificationMail(req, userEmail, userName, userHash);
 }

@@ -1,10 +1,7 @@
 const impl = require("./impl");
-const DataURI = require('datauri').promise;
 var db = require('../database/models/index');
 var path = require('path');
 var client = db.client;
-console.log(path.join(__dirname, './dist'),"dir")
-
 
 module.exports = function (app,express) {
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);

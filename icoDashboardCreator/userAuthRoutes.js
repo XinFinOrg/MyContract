@@ -21,7 +21,11 @@ router.get('/profile', isAuthenticated, kycVerified, impl.getProfileEditPage);
 router.post('/profile', isAuthenticated, impl.postProfileEditPage);
 router.get('/getPrices', isAuthenticated, impl.getPrices);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
-router.post('/buyToken', isAuthenticated, impl.buyToken);
+router.post('/loadWallet', isAuthenticated, impl.loadWallet);
+router.get('/api/checkBalances', isAuthenticated, impl.checkBalances);
+router.post('/api/buyToken', isAuthenticated, impl.buyToken);
+router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);
+router.get('/api/getTransactions', isAuthenticated, impl.getTransactions);
 
 function isAuthenticated(req, res, next) {
   var token = req.cookies['token'];

@@ -54,6 +54,23 @@ module.exports = {
       triggerEmail(mailOptions);
     });
   },
+
+  sendUserVerificationMail: function (req, recipientmail, name, userhash) {
+    var link = "http://" + req.get('host') + "/verifyMail?verificationId=" + userhash;
+    ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
+      name: name,
+      link: link
+    }, (err, data) => {
+      console.log(err);
+      var mailOptions = {
+        from: "emailverification@autocoin.com",
+        to: recipientmail,
+        subject: "Email Verification",
+        html: data
+      };
+      triggerEmail(mailOptions);
+    });
+  },
   //OTP
   sendConfirmationOTP: function (recipientmail, otp) {
     ejs.renderFile(__dirname + '/emailerTemplates/packageOTPMailer.ejs', {

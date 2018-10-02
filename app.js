@@ -24,6 +24,7 @@ app.use(session({
 }));
 //for static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/icoDashboardSetup/project', express.static(__dirname + '/icoDashboardCreator/dist'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions

@@ -5,9 +5,9 @@ let Promise = require('bluebird');
 
 module.exports = {
 
-  buyToken: (currency1, currency2, amount, buyer_email) => {
+  buyToken: (currency1, currency2, amount, buyer_email, address) => {
     return new Promise((resolve, reject) => {
-      client.createTransaction({'currency1' : currency1, 'currency2' : currency2, 'amount' : amount, 'buyer_email':buyer_email}).then(txInfo => {
+      client.createTransaction({'currency1' : currency1, 'currency2' : currency2, 'amount' : amount, 'buyer_email':buyer_email, 'address': address}).then(txInfo => {
         resolve(txInfo);
       });
     })

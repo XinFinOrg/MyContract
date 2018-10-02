@@ -32,8 +32,8 @@
                                 <tbody>
                                   <% for(var i=0; i<addresses.length; i++) { %>
                                 <tr>
-                                    <td class="title"><div class="item"><%= addresses[i].currency_id %></div></th>
-                                    <td><div class="item"><%= addresses[i].balance %></div></td>
+                                    <td><div class="item" ><%= addresses[i].currency_id %></div></th>
+                                    <td><div class="item" id= "<%= addresses[i].currency_id %>_balance"><%= addresses[i].balance %></div></td>
                                     <td><div class="item deposit"><a onclick="depositmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>')"><img src="https://www.whatshalal.io/front/assets1/images/deposit.png"> Deposit</a></div></td>
                                     <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>','<%= addresses[i].balance %>')" disabled="true"><img src="https://www.whatshalal.io/front/assets1/images/withdraw.png"> Withdraw</a></div></td>
                                 </tr>
@@ -356,6 +356,23 @@
                 // }
             }
         }
+
+    </script>
+
+    <script>
+    function checkBalances() {
+      $.get('./api/checkBalances', function(result) {
+        balance = result["balance"];
+        btcBalance = result["btcBalance"];
+        tokenBalance = result["tokenBalance"];
+        $("#Ethereum_balance").text(balance);
+        $("#Bitcoin_balance").text(btcBalance);
+      });
+    }
+    window.onload = checkBalances;
+    window.setInterval(function() {
+      checkBalances();
+    }, 30000);
 
     </script>
 

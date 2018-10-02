@@ -9,11 +9,13 @@
   "dependencies": {
     "base64-stream": "^0.1.3",
     "bcrypt-nodejs": "0.0.3",
+    "bitcoinjs-lib": "^4.0.2",
     "bluebird": "^3.5.2",
     "coinpayments": "^2.0.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "crypto": "^1.0.1",
+    "crypto-balances": "^2.1.3",
     "datauri": "^1.1.0",
     "dataurl": "^0.1.0",
     "debug": "~2.6.9",

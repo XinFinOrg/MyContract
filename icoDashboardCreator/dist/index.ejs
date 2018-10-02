@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>MyEtherWallet.com</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<title>MyContract</title>
 <meta property="og:title" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta property="og:site_name" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta name="twitter:title" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta name="apple-mobile-web-app-title" content="MyEtherWallet.com: Your Key to Ethereum">
-<link href="https://www.myetherwallet.com" rel="canonical">
 <meta content="https://www.myetherwallet.com" property="og:url">
 <meta content="https://www.myetherwallet.com" name="twitter:url">
 <link rel="stylesheet" href="css/etherwallet-master.min.css">
@@ -26,21 +26,10 @@
 <link href="images/fav/manifest.json" rel="manifest">
 <link href="images/fav/safari-pinned-tab.svg" rel="mask-icon" color="#2f99b0">
 <link href="images/fav/favicon.ico" rel="shortcut icon">
-<meta name="apple-mobile-web-app-title" content="MyEtherWallet &middot; Your Key to Ethereum">
-<meta name="application-name" content="MyEtherWallet">
-<meta name="msapplication-config" content="images/fav/browserconfig.xml">
-<meta name="theme-color" content="#1d6986">
-<meta name="apple-mobile-web-app-status-bar-style" content="#1d6986">
-<meta property="og:url" content="https://www.myetherwallet.com" />
-<meta property="og:title" content="MyEtherWallet.com  &middot; Your Key to Ethereum" />
-<meta property="og:type" content="website">
-<meta property="og:image" content="/images/myetherwallet-logo-banner.png" />
-<meta property="og:image" content="/images/myetherwallet-logo.png" />
-<meta property="og:image" content="/images/myetherwallet-logo-square.png" />
-<meta property="og:image" content="/images/myetherwallet-banner-fun.jpg" />
-<meta name="twitter:image" content="/images/myetherwallet-logo-twitter.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@MyEtherWallet">
+<link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="assets/css/style.min.css" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet">
 <meta name="twitter:creator" content="@MyEtherWallet">
 <script type="application/ld+json">
 {
@@ -72,7 +61,6 @@
 </script>
 </head>
 <body>
-
 <header class="{{curNode.name}} {{curNode.service}} {{curNode.service}} nav-index-{{gService.currentTab}}" aria-label="header" ng-controller='tabsCtrl' >
 
 
@@ -95,13 +83,13 @@
 
 <section class="bg-gradient header-branding">
   <section class="container">
-    
+
       <a class="brand" href="/" aria-label="Go to homepage">
         <img src="images/logo-myetherwallet.svg"   height="64px" width="245px" alt="MyEtherWallet" />
         <p class="small visible-xs">3.21.07</p>
       </a>
-    
-    
+
+
     <div class="tagline">
 
     <span class="hidden-xs">3.21.07</span>
@@ -213,7 +201,7 @@
   <a aria-hidden="true" ng-show="showLeftArrow" class="nav-arrow-left" ng-click="scrollLeft(100);" ng-mouseover="scrollHoverIn(true,2);" ng-mouseleave="scrollHoverOut()">&#171;</a>
   <div class="nav-scroll">
     <ul class="nav-inner">
-      
+
       <li ng-repeat="tab in tabNames track by $index" \
           class="nav-item {{tab.name}}" \
           ng-class="{active: $index==gService.currentTab}"
@@ -221,8 +209,8 @@
           ng-click="tabClick($index)">
             <a tabindex="0" aria-label="nav item: {{tab.name | translate}}" translate="{{tab.name}}"></a>
       </li>
-      
-      
+
+
       <li class="nav-item help">
         <a href="https://myetherwallet.github.io/knowledge-base/" target="_blank" rel="noopener noreferrer">
           <span translate="NAV_Help">
@@ -320,7 +308,7 @@
     </section>
   </section>
 </article>
- 
+
 
 
 </header>
@@ -330,13 +318,13 @@
 
   <div class="tab-content" >
 
-    
 
-    
 
-    
 
-    
+
+
+
+
 
     <main class="tab-pane contracts active" ng-if="globalService.currentTab==globalService.tabs.contracts.id" ng-controller='contractsCtrl' ng-cloak>
 
@@ -361,7 +349,7 @@
   <!-- Interact Contracts -->
   <article class="row block" ng-show="visibility=='interactView'">
 
-     
+
 <!-- Address -->
 <section class="col-sm-12 ">
  <!-- <div class="row">
@@ -373,7 +361,7 @@
 <section class="col-sm-12 " ng-init="initContractData()">
  <label translate="CONTRACT_Title_2">
     Select Existing Contract
-  </label> 
+  </label>
 
   <div class="dropdown">
 
@@ -383,7 +371,7 @@
         {{selectedAbi.name}}
         <small class="mono">{{selectedAbi.address}}</small>
         <i class="caret"></i>
-    </a> 
+    </a>
 
     <ul class="dropdown dropdown-menu" ng-show="dropdownExistingContracts">
       <li ng-repeat="abi in contractList.abiList track by $index">
@@ -412,8 +400,8 @@
 <section class="col-xs-12 clearfix">
   <button class="btn btn-primary" ng-click="initContract()" translate="x_Access"> ACCESS CONTRACT </button>
 </section>
- 
-    
+
+
 
   </article>
 
@@ -674,8 +662,8 @@
 
 
 </section>
- 
-    
+
+
 
   </article>
 
@@ -767,8 +755,8 @@
   </section>
 </article>
 
- 
-    
+
+
 
   </article>
   <!-- / Interact Contracts -->
@@ -875,12 +863,12 @@
     </section>
   </section>
 </article>
- 
-  
+
+
 
 </section>
- 
-    
+
+
 
   </article>
   <!-- / Deploy Contract -->
@@ -888,8 +876,8 @@
   <!--wallet decrypt-->
   <article class="form-group"
            ng-show="(!wd && visibility=='deployView') || (!wd && visibility=='interactView' && contract.selectedFunc && !contract.functions[contract.selectedFunc.index].constant)">
-      
-        <wallet-decrypt-drtv></wallet-decrypt-drtv>         
+
+        <wallet-decrypt-drtv></wallet-decrypt-drtv>
   </article>
 
   <article class="col-xs-12" ng-show="contract.selectedFunc!=null && visibility=='interactView'">
@@ -912,17 +900,17 @@
 </main>
 
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
+
+
+
+
+
+
 
   </div>
 
@@ -939,5 +927,3 @@
 
 
 </section>
-
-

@@ -92,9 +92,6 @@ module.exports = {
       contractInstance.methods.balanceOf(address).call().then(balance => {
         resolve(balance / 10 ** 18);
       }).catch(error => {
-        console.log("Web3 error status", error);
-        provider = new Web3.providers.WebsocketProvider(ws_provider);
-        web3.setProvider(provider);
         reject(error);
       });
     });
@@ -105,6 +102,9 @@ module.exports = {
       web3.eth.getBalance(address).then(balance => {
         resolve(web3.utils.fromWei(balance));
       }).catch(error => {
+        console.log("Web3 error status", error);
+        provider = new Web3.providers.WebsocketProvider(ws_provider);
+        web3.setProvider(provider);
         reject(error);
       });
     });
