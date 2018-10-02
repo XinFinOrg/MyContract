@@ -22,7 +22,7 @@
                         <%= message2 %>
                       </div>
                       <% } %>
-                        <form class="form-horizontal m-t-20" id="createContract" action="/createContract" method="post">
+                        <form class="form-horizontal m-t-20" id="createContract" action="/createERC20Contract" method="post">
                           <div class="form-group">
                             <label for="tokenName">Token Name</label>
                             <div class="input-group mb-3">
@@ -100,7 +100,7 @@
                           <div class="row mb-4 ml-1">
                             <div class="checkbox-btn" data-toggle="buttons">
                               <label class="btn btn-checkbox mr-2 active">
-                                <input type="checkbox" name="isReleasable" checked autocomplete="on"> Releaseable
+                                <input type="checkbox" name="isPausable" checked autocomplete="on"> Pausable
                               </label>
                               <label class="btn btn-checkbox mr-2 active">
                                 <input type="checkbox" name="isUpgradeable" checked autocomplete="on"> Upgradeable

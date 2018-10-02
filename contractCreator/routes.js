@@ -9,12 +9,11 @@ module.exports = function (app) {
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
   app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
-  app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
+  // app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
   app.post("/createERC721", isLoggedIn,coinNameExist, hasPackage1, impl.createERC721Contract);
-  app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);
+  // app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);
 
-  app.get('/createERC20Contract', impl.createERC20Contract);
-
+  app.post('/createERC20Contract',isLoggedIn,coinNameExist,hasPackage1,impl.createERC20Contract);
 }
 
 // route middleware to make sure a user is logged in

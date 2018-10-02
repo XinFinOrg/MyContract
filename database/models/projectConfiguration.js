@@ -87,20 +87,40 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    contractAddress: {
+    tokenContractAddress: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    contractCode: {
+    tokenContractCode: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    contractByteCode: {
+    tokenByteCode: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    contractHash: {
+    tokenContractHash: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    crowdsaleContractAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    crowdsaleContractCode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    crowdsaleByteCode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    crowdsaleContractHash: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    ETHRate: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     createdAt: {
@@ -130,16 +150,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         onDelete: 'CASCADE'
       });
-      projectConfiguration.hasMany(models.userCurrencyAddress, {
-        foreignKey: 'project_id',
-        onDelete: 'CASCADE',
-      });
+    projectConfiguration.hasMany(models.userCurrencyAddress, {
+      foreignKey: 'project_id',
+      onDelete: 'CASCADE',
+    });
 
-      projectConfiguration.hasMany(models.icotransactions, {
-        foreignKey: 'project_id',
-        allowNull: true,
-        onDelete: 'CASCADE'
-      });
+    projectConfiguration.hasMany(models.icotransactions, {
+      foreignKey: 'project_id',
+      allowNull: true,
+      onDelete: 'CASCADE'
+    });
   };
   return projectConfiguration;
 };

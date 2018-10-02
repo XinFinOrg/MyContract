@@ -76,14 +76,10 @@ contract Crowdsale {
    * @param wallet Address where collected funds will be forwarded to
    * @param token Address of the token being sold
    */
-  constructor(uint256 rate, address wallet, Coin token) public {
-    require(rate > 0);
-    require(wallet != address(0));
-    require(token != address(0));
-
-    _rate = rate;
-    _wallet = wallet;
-    _token = token;
+  constructor() public {
+    _rate = <%- rate %>;
+    _wallet = <%- walletAddress %>;
+    _token = <%- TokenContractAddress %>;
     _owner = msg.sender;
     
     //initiating Crowdsale
