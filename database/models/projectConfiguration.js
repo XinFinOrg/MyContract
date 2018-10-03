@@ -48,11 +48,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
 
-    ethConversionRate: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-
     minimumContribution: {
       type: DataTypes.FLOAT,
       allowNull: true
@@ -136,13 +131,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   projectConfiguration.associate = function (models) {
     // associations can be defined here
-
-    //currency define
-    projectConfiguration.hasOne(models.currency,
-      {
-        foreignKey: 'project_id',
-        allowNull: true,
-      });
 
     projectConfiguration.hasMany(models.user,
       {

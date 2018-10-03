@@ -7,7 +7,6 @@ var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
-var Currency = db.currency;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
@@ -73,23 +72,6 @@ module.exports = function (passport) {
           } else {
             // if there is no user with that email
             // create the user
-            var ethCurrency = await db.currency.findOrCreate({
-              where: {
-                'name': "Ethereum"
-              }
-            });
-
-            var btcCurrency = await db.currency.findOrCreate({
-              where: {
-                'name': "Bitcoin"
-              }
-            });
-
-            // var projectCurrency = await db.currency.findOrCreate({
-            //   where: {
-            //     'name': req.body.projectName
-            //   }
-            // });
 
             console.log(req.body.projectName);
             //Find project details and map user
@@ -100,8 +82,6 @@ module.exports = function (passport) {
             });
 
             Promise.all([generateEthAddress(), generateBTCAddress(), createNewUser(req)]).then(([createdEthAddress, createdBTCAddress, createdUser]) => {
-              ethCurrency[0].addUserCurrencyAddress(createdEthAddress);
-              btcCurrency[0].addUserCurrencyAddress(createdBTCAddress);
               createdUser.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
               project[0].addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
               project[0].addUser(createdUser);
@@ -204,13 +184,7 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status=false;
-            var currencyname = await db.currency.findOrCreate({
-              where: {
-                'name': "Ethereum"
-              }
-            });
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
-              currencyname[0].addUserCurrencyAddress(createdEthAddress);
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
@@ -253,13 +227,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status=true;
-            var currencyname = await Currency.findOrCreate({
-              where: {
-                'name': "Ethereum"
-              }
-            });
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
-              currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
               return done(null, createdClient.dataValues);
@@ -302,11 +270,6 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status=true;
-            var currencyname = await Currency.findOrCreate({
-              where: {
-                'name': "Ethereum"
-              }
-            });
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);

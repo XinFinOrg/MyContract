@@ -129,16 +129,22 @@ module.exports = {
     });
   },
 
-  checkBalances: (req, res) => {
+  checkBalances: async (req, res) => {
     var btc_address, eth_address;
-    for(var i=0; i<req.user.userCurrencyAddresses.length; i++){
-      if(req.user.userCurrencyAddresses[i].currency_id=="Ethereum"){
-        eth_address=req.user.userCurrencyAddresses[i].address;
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
       }
-      else {
-        btc_address=req.user.userCurrencyAddresses[i].address;
+    });
+    eth_address = eth_addresses[0].address;
+
+    var btc_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Bitcoin'
       }
-    }
+    });
+
+    btc_address = btc_addresses[0].address;
     Promise.all([icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress), icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([tokenBalance, ethBalance, btcBalance]) => {
       res.send({
         'tokenBalance': tokenBalance,
@@ -149,20 +155,25 @@ module.exports = {
   },
 
   buyToken: async (req, res) => {
-    var btc_address, eth_address;
-    for(var i=0; i<req.user.userCurrencyAddresses.length; i++){
-      if(req.user.userCurrencyAddresses[i].currency_id=="Ethereum"){
-        eth_address=req.user.userCurrencyAddresses[i].address;
-        icoListener.buyToken(req.user.userCurrencyAddresses[i].address, req.user.projectConfiguration.crowdsaleContractAddress, req.user.userCurrencyAddresses[i].privateKey, req.body.amount)
-        .then((receipt)=> {
-          res.send({'receipt': receipt});
-        });
+    var eth_address;
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
       }
-      else {
-        btc_address=req.user.userCurrencyAddresses[i].address;
-      }
-    }
+    });
+    eth_address = eth_addresses[0].address;
 
+    var masterETHList = await req.user.projectConfiguration.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'masterEthereum'
+      }
+    });
+    var masterETHAddress = masterETHList[0].address;
+    console.log(masterETHList);
+    icoListener.buyToken(eth_address, masterETHAddress, eth_addresses[0].privateKey, req.body.amount)
+    .then((receipt)=> {
+        res.send({'receipt': receipt});
+    });
   },
 
   checkTokenStats: (req, res) => {

@@ -59,6 +59,7 @@ module.exports = {
 
   buyToken: (fromAddress, toAddress, privateKey, value) => {
     var amountToSend = web3.utils.toWei(value, 'ether');
+    console.log(fromAddress, toAddress, privateKey, value);
     return new Promise((resolve, reject) => {
       var transaction = {
         "from": fromAddress,

@@ -32,17 +32,17 @@
                                 <tbody>
                                   <% for(var i=0; i<addresses.length; i++) { %>
                                 <tr>
-                                    <td><div class="item" ><%= addresses[i].currency_id %></div></th>
-                                    <td><div class="item" id= "<%= addresses[i].currency_id %>_balance">Fetching Balance ...</div></td>
-                                    <td><div class="item deposit"><a onclick="depositmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>')"><img src="../../icoAssets/images/deposit.png"> Deposit</a></div></td>
-                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[i].currency_id %>','<%= addresses[i].address %>','<%= addresses[i].balance %>')" disabled="true"><img src="../../icoAssets/images/withdraw.png"> Export</a></div></td>
+                                    <td><div class="item" ><%= addresses[i].currencyType %></div></th>
+                                    <td><div class="item" id= "<%= addresses[i].currencyType %>_balance">Fetching Balance ...</div></td>
+                                    <td><div class="item deposit"><a onclick="depositmodal('<%= addresses[i].currencyType %>','<%= addresses[i].address %>')"><img src="../../icoAssets/images/deposit.png"> Deposit</a></div></td>
+                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[i].currencyType %>','<%= addresses[i].address %>','<%= addresses[i].balance %>')" disabled="true"><img src="../../icoAssets/images/withdraw.png"> Export</a></div></td>
                                 </tr>
                                 <% } %>
                                 <tr>
                                     <td><div class="item" ><%= projectConfiguration.coinSymbol %></div></th>
                                     <td><div class="item" id= "token_balance">Fetching Balance ...</div></td>
                                     <td><div class="item deposit">NOT APPLICABLE</div></td>
-                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[1].currency_id %>','<%= addresses[1].address %>','<%= addresses[1].balance %>')" disabled="true"><img src="../../icoAssets/images/withdraw.png"> Export</a></div></td>
+                                    <td><div class="item withdraw"><a onclick="withdrawalmodal('<%= addresses[1].currencyType %>','<%= addresses[1].address %>','<%= addresses[1].balance %>')" disabled="true"><img src="../../icoAssets/images/withdraw.png"> Export</a></div></td>
                                 </tr>
 
                                 </tbody>

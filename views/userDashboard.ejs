@@ -333,11 +333,11 @@
     }, "Please enter a correct number");
 
     $.validator.addMethod('minval', function(value, element) {
-      return this.optional(element) || (value+0.0002 <= balBtc);
+      return this.optional(element) || (value+0.00002 <= balBtc);
     }, "Please enter a correct number");
 
     $.validator.addMethod('minval1', function(value, element) {
-      return this.optional(element) || (value+0.005 <= balEth);
+      return this.optional(element) || (value+0.0001 <= balEth);
     }, "Please enter a correct number");
 
     $.validator.addMethod('adecimal', function(value, element) {
@@ -358,7 +358,7 @@
         amount: {
           required: 'Amount is required',
           number: 'Enter valid number',
-          minval: 'Insufficient Balance. Please note that you need to keep 0.0002 BTC as spare for fueling transactions',
+          minval: 'Insufficient Balance. Please note that you need to keep 0.00002 BTC as spare for fueling transactions',
           minBTC: 'Minimum Amount is ' + minBTC,
           adecimal: 'Only decimals allowed'
         }
@@ -379,7 +379,7 @@
         amount: {
           required: 'Amount is required',
           number: 'Enter valid number',
-          minval1: 'Insufficient Balance. Please note that you need to keep 0.005 ETH as spare for fueling transactions',
+          minval1: 'Insufficient Balance. Please note that you need to keep 0.0001 ETH as spare for fueling transactions',
           minETH: 'Minimum Amount is ' + minETH,
           adecimal: 'Only decimals allowed'
         }
