@@ -25,14 +25,13 @@ router.post('/loadWallet', isAuthenticated, impl.loadWallet);
 router.get('/api/checkBalances', isAuthenticated, impl.checkBalances);
 router.post('/api/buyToken', isAuthenticated, impl.buyToken);
 router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);
-router.get('/api/getTransactions', isAuthenticated, impl.getTransactions);
+router.get('/api/getTransactions', isAuthenticated, impl.getTransactionList);
 
 function isAuthenticated(req, res, next) {
   var token = req.cookies['token'];
   // JWT enabled login strategy for end user
   jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
     if (err) {
-      console.log(err);
       return res.redirect('../userLogin');
     } else {
       User.find({
@@ -61,14 +60,16 @@ function kycVerified(req, res, next) {
     case "pending":
       {
         res.render('userKYCPending', {
-          user: req.user
+          user: req.user,
+          projectConfiguration: req.user.projectConfiguration
         });
       }
       break;
     case "notInitiated":
       {
         res.render('userKYCPage', {
-          user: req.user
+          user: req.user,
+          projectConfiguration: req.user.projectConfiguration
         });
       }
       break;

@@ -24,6 +24,7 @@ app.use(session({
 }));
 //for static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname , 'icoDashboardCreator')));
 app.use('/icoDashboardSetup/project', express.static(__dirname + '/icoDashboardCreator/dist'));
 app.use(cookieParser());
 app.use(passport.initialize());

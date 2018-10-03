@@ -36,7 +36,7 @@ module.exports = {
     });
   },
 
-  buyToken: async (address, tokenAddress, privateKey, value) => {
+  buyTokenIdeal: async (address, tokenAddress, privateKey, value) => {
     var amountToSend = web3.utils.toWei(value, 'ether');
     return new Promise(function(resolve, reject) {
       var tokenContractInstance = new web3.eth.Contract(config.erc20ABI, tokenAddress);
@@ -45,6 +45,25 @@ module.exports = {
         "to": tokenAddress,
         "value": amountToSend,
         "data": tokenContractInstance.methods.buyTokens().encodeABI()
+      };
+      web3.eth.estimateGas(transaction).then(gasLimit => {
+        transaction["gasLimit"] = gasLimit;
+        web3.eth.accounts.signTransaction(transaction, privateKey).then(result => {
+          web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
+            resolve(receipt);
+          });
+        });
+      });
+    });
+  },
+
+  buyToken: (fromAddress, toAddress, privateKey, value) => {
+    var amountToSend = web3.utils.toWei(value, 'ether');
+    return new Promise((resolve, reject) => {
+      var transaction = {
+        "from": fromAddress,
+        "to": toAddress,
+        "value": amountToSend
       };
       web3.eth.estimateGas(transaction).then(gasLimit => {
         transaction["gasLimit"] = gasLimit;

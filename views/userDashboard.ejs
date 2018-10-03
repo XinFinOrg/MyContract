@@ -12,7 +12,7 @@
           <div class="col-md-12 col-sm-12 mb-4 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">
             <div class="box text-center">
               <div class="box-body">
-                <span >1 BTC = <span id="btc_conversion"> </span> <%=projectConfiguration.coinSymbol %> </span>
+                <span>1 BTC = <span id="btc_conversion"> </span> <%=projectConfiguration.coinSymbol %> </span>
               </div>
             </div>
           </div>
@@ -20,7 +20,7 @@
           <div class="col-md-12 col-sm-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
             <div class="box text-center">
               <div class="box-body">
-                <span>1 ETH = <%=projectConfiguration.ethConversionRate %> </span> <%=projectConfiguration.coinSymbol %> </span>
+                <span>1 ETH = <%=projectConfiguration.ETHRate %> </span> <%=projectConfiguration.coinSymbol %> </span>
               </div>
             </div>
           </div>
@@ -80,15 +80,18 @@
                         </div>
 
                         <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
+                          <a href="./wallets" >Click here to Top Up your wallet</a></label>
+                        </div>
+
+
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
                           <div class="form-check">
                             <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" onchange="activateButton(this,'ETH')"> I have read and agree with the <a href="https://www.whatshalal.io/terms" target="_blank">Terms &amp; Condition</a></label>
+                            <input class="form-check-input" type="checkbox" onchange="activateButton(this,'ETH')"> I have read and agree with the <a href="https://www.whatshalal.io/terms" target="_blank">Terms &amp; Condition</a></label>
                           </div>
                         </div>
                         <div class="col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">
-
                           <button class="btn btn-default" type="submit" id="eth_button" disabled>CONTRIBUTE</button>
-
                         </div>
                       </div>
                     </form>
@@ -121,6 +124,10 @@
                           </div>
                         </div>
                         <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
+                                                         <a href="./wallets" >Click here to Top Up your wallet</a></label>
+
+                                                </div>
+                        <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.3s" style="animation-delay: 0.3s; opacity: 1;">
                           <div class="form-check">
                             <label class="form-check-label">
                                                             <input class="form-check-input" type="checkbox" onchange="activateButton(this,'BTC')"> I have read and agree with the <a href="https://www.whatshalal.io/terms" target="_blank">Terms &amp; Condition</a></label>
@@ -147,7 +154,7 @@
                 <div class="line"></div>
                 <h5> <%= projectConfiguration.coinSymbol %> </h5>
                 <p> 1 ETH =
-                    <%= projectConfiguration.ethConversionRate %> <%= projectConfiguration.coinSymbol %> </p>
+                    <%= projectConfiguration.ETHRate %> <%= projectConfiguration.coinSymbol %> </p>
               </div>
             </div>
 
@@ -212,58 +219,11 @@
   <!-- / latest exchanges -->
 
 
-  <!-- / footer -->
-  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-  <a href="#" class="scrollup btn-default"><i class="fa fa-angle-up"></i></a>
-
-  <!-- Latest jQuery -->
-  <script src="https://www.whatshalal.io/front/assets1/js/jquery-1.12.4.min.js"></script>
-  <!-- Latest compiled and minified Bootstrap -->
-  <script src="https://www.whatshalal.io/front/assets1/bootstrap/js/bootstrap.min.js"></script>
-  <!-- owl-carousel min js  -->
-  <script src="https://www.whatshalal.io/front/assets1/owlcarousel/js/owl.carousel.min.js"></script>
-  <!-- magnific-popup min js  -->
-  <script src="https://www.whatshalal.io/front/assets1/js/magnific-popup.min.js"></script>
-  <!-- waypoints min js  -->
-  <script src="https://www.whatshalal.io/front/assets1/js/waypoints.min.js"></script>
-  <!-- parallax js  -->
-  <script src="https://www.whatshalal.io/front/assets1/js/parallax.js"></script>
-  <!-- countdown js -->
-  <script src="https://www.whatshalal.io/front/assets1/js/jquery.countdown.min.js"></script>
-  <!-- scripts js -->
-  <script src="https://www.whatshalal.io/front/assets1/js/jquery.dd.min.js"></script>
-  <!-- jquery.counterup.min js -->
-  <script src="https://www.whatshalal.io/front/assets1/js/jquery.counterup.min.js"></script>
-  <!-- scripts js -->
-  <script src="https://www.whatshalal.io/front/assets1/js/scripts.js"></script>
-
-  <script src="https://www.whatshalal.io/front/assets1/js/toastr-2.1.3.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-
-  <script type="text/javascript">
-    toastr.options = {
-      "closeButton": true,
-      "debug": false,
-      "newestOnTop": false,
-      "progressBar": true,
-      "positionClass": "toast-bottom-right",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    };
-    //this line works as expected
-    toastr.info("Welcome to <%=projectConfiguration.coinName %>");
-  </script>
+<% include partials/icoScripts %>
+<script type="text/javascript">
+  //this line works as expected
+  toastr.info("Welcome to <%=projectConfiguration.coinName %>");
+</script>
 
   <script type="text/javascript">
     $('body').addClass('login');
@@ -284,78 +244,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
   <script type="text/javascript">
-  var minETH;
-  var minBTC;
-  var balBtc;
-  var balEth;
-    // window.setInterval(function() {
-    //   checkBalances();
-    //   get_usd_price();
-    // }, 3000000);
-
-    $.validator.addMethod('minval', function(value, element) {
-      return this.optional(element) || (value <= balBtc);
-    }, "Please enter a correct number");
-
-    $.validator.addMethod('minval1', function(value, element) {
-      return this.optional(element) || (value <= balEth);
-    }, "Please enter a correct number");
-
-    $.validator.addMethod('adecimal', function(value, element) {
-      return this.optional(element) || (value > 0);
-    }, "Please enter a correct number");
-
-    $("#btc_form").validate({
-      rules: {
-        amount: {
-          required: true,
-          number: true,
-          min: minBTC,
-          adecimal: true
-        },
-        jcash_id: {
-          required: true,
-          regex: '^[0-9a-zA-Z]+$'
-        },
-      },
-      messages: {
-        amount: {
-          required: 'Amount is required',
-          number: 'Enter valid number',
-          min: 'Minimum Amount is ' + minBTC,
-          adecimal: 'Only decimals allowed'
-        },
-        jcash_id: {
-          required: 'JCash Id is required',
-          regex: 'Enter valid JCashId'
-        },
-      }
-    });
-
-    $("#eth_form").validate({
-      rules: {
-        amount: {
-          required: true,
-          number: true,
-          balance: true,
-          min: minETH,
-          adecimal: true,
-        },
-        jcash_id: {
-          required: true,
-          regex: '^[0-9a-zA-Z]+$'
-        },
-      },
-      messages: {
-        amount: {
-          required: 'Amount is required',
-          number: 'Enter valid number',
-          balance: 'Insufficient Balance',
-          min: 'Minimum Amount is ' + minETH,
-          adecimal: 'Only decimals allowed'
-        }
-      }
-    });
+    var minETH;
+    var minBTC;
+    var balBtc;
+    var balEth;
+    window.setInterval(function() {
+      checkBalances();
+      get_usd_price();
+    }, 3000000);
 
     function activateButton(element, currency) {
       if (element.checked) {
@@ -379,7 +275,7 @@
       checkTokenStats();
     });
     var btc_eth;
-    var token_eth = <%= projectConfiguration.ethConversionRate %>;
+    var token_eth = <%= projectConfiguration.ETHRate %>;
     var token_min = <%= projectConfiguration.minimumContribution %>;
 
     function get_usd_price() {
@@ -392,7 +288,7 @@
           eth_usd = result.ETHUSD;
           minETH = token_min/eth_usd;
           minBTC = token_min/btc_usd;
-          $('#btc_conversion').text((<%= projectConfiguration.ethConversionRate %>*btc_eth).toFixed(3));
+          $('#btc_conversion').text((<%= projectConfiguration.ETHRate %>*btc_eth).toFixed(3));
           $('#ETH_amount').val(minETH.toFixed(4));
           $('#BTC_amount').val(minBTC.toFixed(4));
           convert_price(minETH, 'ETH');
@@ -404,15 +300,20 @@
 
     function convert_price(to_spend, currency) {
       if(currency=="ETH")
-        $('#token_total').html((to_spend*<%= projectConfiguration.ethConversionRate %>).toFixed(2));
+        $('#token_total').html((to_spend*<%= projectConfiguration.ETHRate %>).toFixed(2));
       else {
-        $('#token_total2').html((to_spend*<%= projectConfiguration.ethConversionRate %>*btc_eth).toFixed(2));
+        $('#token_total2').html((to_spend*<%= projectConfiguration.ETHRate %>*btc_eth).toFixed(2));
       }
     }
     function checkBalances() {
       $.get('./api/checkBalances', function(result) {
         balance = result["balance"];
         tokenBalance = result["tokenBalance"];
+        btcBalance = result["btcBalance"];
+        balBtc = btcBalance;
+        balEth = balance;
+        // balBtc =5;
+        // balEth=5;
       });
     }
 
@@ -422,6 +323,68 @@
         $('#onSaleTokens').html(onSaleTokens);
       });
     }
+
+    $.validator.addMethod('minETH', function(value, element) {
+      return this.optional(element) || (value <= minETH);
+    }, "Please enter a correct number");
+
+    $.validator.addMethod('minBTC', function(value, element) {
+      return this.optional(element) || (value <= minBTC);
+    }, "Please enter a correct number");
+
+    $.validator.addMethod('minval', function(value, element) {
+      return this.optional(element) || (value+0.0002 <= balBtc);
+    }, "Please enter a correct number");
+
+    $.validator.addMethod('minval1', function(value, element) {
+      return this.optional(element) || (value+0.005 <= balEth);
+    }, "Please enter a correct number");
+
+    $.validator.addMethod('adecimal', function(value, element) {
+      return this.optional(element) || (value > 0);
+    }, "Please enter a correct number");
+
+    $("#btc_form").validate({
+      rules: {
+        amount: {
+          required: true,
+          number: true,
+          minval: true,
+          minBTC: minBTC,
+          adecimal: true
+        }
+      },
+      messages: {
+        amount: {
+          required: 'Amount is required',
+          number: 'Enter valid number',
+          minval: 'Insufficient Balance. Please note that you need to keep 0.0002 BTC as spare for fueling transactions',
+          minBTC: 'Minimum Amount is ' + minBTC,
+          adecimal: 'Only decimals allowed'
+        }
+      }
+    });
+
+    $("#eth_form").validate({
+      rules: {
+        amount: {
+          required: true,
+          number: true,
+          minval1: true,
+          minETH: minETH,
+          adecimal: true,
+        }
+      },
+      messages: {
+        amount: {
+          required: 'Amount is required',
+          number: 'Enter valid number',
+          minval1: 'Insufficient Balance. Please note that you need to keep 0.005 ETH as spare for fueling transactions',
+          minETH: 'Minimum Amount is ' + minETH,
+          adecimal: 'Only decimals allowed'
+        }
+      }
+    });
 
   </script>
 

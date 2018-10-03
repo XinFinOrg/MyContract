@@ -36,7 +36,8 @@ module.exports = {
 
   getProfileEditPage: (req, res, next) => {
     res.render('userProfileEdit', {
-      user: req.user
+      user: req.user,
+      projectConfiguration: req.user.projectConfiguration
     });
   },
 
@@ -115,7 +116,8 @@ module.exports = {
 
   getCompletedKYCPage: (req, res) => {
     res.render('kycComplete', {
-      user: req.user
+      user: req.user,
+      projectConfiguration: req.user.projectConfiguration
     });
   },
 
@@ -137,7 +139,7 @@ module.exports = {
         btc_address=req.user.userCurrencyAddresses[i].address;
       }
     }
-    Promise.all([icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.contractAddress), icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([tokenBalance, ethBalance, btcBalance]) => {
+    Promise.all([icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress), icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([tokenBalance, ethBalance, btcBalance]) => {
       res.send({
         'tokenBalance': tokenBalance,
         'balance': ethBalance,
@@ -147,20 +149,30 @@ module.exports = {
   },
 
   buyToken: async (req, res) => {
-    icoListener.buyToken(req.user.userCurrencyAddresses[0].address, req.user.projectConfiguration.contractAddress, req.user.userCurrencyAddresses[0].privateKey, req.body.amount)
-    .then((receipt)=> {
-      res.send({'receipt': receipt});
-    });
+    var btc_address, eth_address;
+    for(var i=0; i<req.user.userCurrencyAddresses.length; i++){
+      if(req.user.userCurrencyAddresses[i].currency_id=="Ethereum"){
+        eth_address=req.user.userCurrencyAddresses[i].address;
+        icoListener.buyToken(req.user.userCurrencyAddresses[i].address, req.user.projectConfiguration.crowdsaleContractAddress, req.user.userCurrencyAddresses[i].privateKey, req.body.amount)
+        .then((receipt)=> {
+          res.send({'receipt': receipt});
+        });
+      }
+      else {
+        btc_address=req.user.userCurrencyAddresses[i].address;
+      }
+    }
+
   },
 
   checkTokenStats: (req, res) => {
-    icoListener.checkTokenStats(req.user.projectConfiguration.contractAddress).then(onSaleTokens => {
+    icoListener.checkTokenStats(req.user.projectConfiguration.tokenContractAddress).then(onSaleTokens => {
       res.send({'onSaleTokens': onSaleTokens});
     });
   },
 
-  getTransactions: (req, res) => {
-    icoListener.getTransactions(req.user.userCurrencyAddresses[0].address).then(tx => {
+  getTransactionList: (req, res) => {
+    icoListener.getTransactions(req.user.userCurrencyAddresses[1].address).then(tx => {
       res.send(tx);
     })
   }

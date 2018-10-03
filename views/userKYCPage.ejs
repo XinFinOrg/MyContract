@@ -399,82 +399,8 @@
 <!-- / latest exchanges -->
 <!-- footer -->
 
-<!-- / footer -->
-<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-<a href="#" class="scrollup btn-default"><i class="fa fa-angle-up"></i></a>
+<% include partials/icoScripts %>
 
-<!-- Latest jQuery -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery-1.12.4.min.js"></script>
-<!-- Latest compiled and minified Bootstrap -->
-<script src="https://www.whatshalal.io/front/assets1/bootstrap/js/bootstrap.min.js"></script>
-<!-- owl-carousel min js  -->
-<script src="https://www.whatshalal.io/front/assets1/owlcarousel/js/owl.carousel.min.js"></script>
-<!-- magnific-popup min js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/magnific-popup.min.js"></script>
-<!-- waypoints min js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/waypoints.min.js"></script>
-<!-- parallax js  -->
-<script src="https://www.whatshalal.io/front/assets1/js/parallax.js"></script>
-<!-- countdown js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.countdown.min.js"></script>
-<!-- scripts js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.dd.min.js"></script>
-<!-- jquery.counterup.min js -->
-<script src="https://www.whatshalal.io/front/assets1/js/jquery.counterup.min.js"></script>
-<!-- scripts js -->
-<script src="https://www.whatshalal.io/front/assets1/js/scripts.js"></script>
-
-<script src="https://www.whatshalal.io/front/assets1/js/toastr-2.1.3.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
-
-
-<script type="text/javascript">
-
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-
-
-    function change_captcha()
-    {
-        $("#capimg").html('Loading....');
-        $.post('https://jcash.jiojio.io/ajax/refresh_capcha',function(data,result)
-        {
-            $("#capimg").html(data);
-        });
-    }
-
-
-</script>
-
-<script>
-    function change_captcha()
-    {
-        $("#capimg").html('Loading....');
-        $.post('https://jcash.jiojio.io/ajax/refresh_capcha',function(data,result)
-        {
-            $("#capimg").html(data);
-        });
-    }
-
-
-</script>
 <script type="text/javascript">
     $('body').addClass('login');
     $('#root-view').addClass('auth-layout');
