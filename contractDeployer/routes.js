@@ -13,7 +13,6 @@ module.exports = function (app, express) {
   app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
 
   app.get('/crowdsaleDeployer',isLoggedIn,impl.crowdsaleDeployer);
-  app.get('/solc',impl.test);
 }
 
 

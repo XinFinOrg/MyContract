@@ -6,6 +6,13 @@ var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
 var ejs = require("ejs");
+var fileReader = require('../filereader/impl');
+var config = require('../config/paymentListener');
+const Web3 = require('web3');
+var ws_provider = config.ws_provider;
+var provider = new Web3.providers.WebsocketProvider(ws_provider);
+var web3 = new Web3(provider);
+
 
 module.exports = {
   getBytecode: async function (req, res) {
@@ -20,22 +27,27 @@ module.exports = {
       // console.log(projectData.dataValues)
       if (projectData.tokenContractAddress != null) {
         console.log("here 1");
+        var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+        var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+        var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
         ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-          "TokenContractAddress": projectData.tokenContractAddress,
-          "walletAddress": address,
-          "rate": projectData.ETHRate
+          "SafeERC20": SafeERC20,
+          "SafeMath": SafeMath,
+          "IERC20": IERC20,
         }, async (err, data) => {
           if (err)
             console.log(err);
-          byteCode = solc.compile(data, 1).contracts[':Coin'].bytecode;
-          projectData.crowdsaleByteCode = byteCode;
+          byteCode = solc.compile(data, 1).contracts[':Crowdsale'].bytecode;
+          var params = web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
+          projectData.crowdsaleByteCode = byteCode + params;
+          projectData.crowdsaleContractCode = data;
           await projectData.save();
-        });
+        })
       } else {
         console.log("here 2");
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
-          console.log("here 3",solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']);
+          console.log("here 3", solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']);
           byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
           projectData.tokenByteCode = byteCode;
           await projectData.save();
@@ -47,25 +59,36 @@ module.exports = {
     });
   },
   saveDeploymentData: async function (req, res) {
-    console.log(req.body.resp, "dataaaaaa", req.body.resp.search("https://etherscan.io"));
+    console.log(req.body)
     ProjectConfiguration.find({
       where: {
         'coinName': req.query.coinName
       },
-      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']    }).then(async updateddata => {
-      if (req.body.resp.search("https://etherscan.io") != -1) {
+      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+    }).then(async updateddata => {
+      if (req.body.network.search("https://etherscan.io") != -1) {
         updateddata.networkType = "mainnet";
       } else {
         updateddata.networkType = "testnet"
       }
-      updateddata.networkURL = req.body.resp;
-      updateddata.tokenContractHash = req.body.contractTxHash;
-      updateddata.tokenContractAddress = req.body.contractAddress;
-      updateddata.save();
-      req.session.contractAddress = req.body.contractAddress;
-      req.session.contractTxHash = req.body.contractTxHash;
-      req.flash('contract_flash', 'Contract mined successfully!');
-      res.redirect('/crowdsaleDeployer');
+      updateddata.networkURL = req.body.network;
+      if (updateddata.tokenContractAddress == null) {
+        updateddata.tokenContractHash = req.body.contractTxHash;
+        updateddata.tokenContractAddress = req.body.contractAddress;
+        updateddata.save();
+        req.session.contractAddress = req.body.contractAddress;
+        req.session.contractTxHash = req.body.contractTxHash;
+        req.flash('contract_flash', 'Contract mined successfully!');
+        res.send("crowdsaleDeployer");
+      } else {
+        updateddata.crowdsaleContractHash = req.body.contractTxHash;
+        updateddata.crowdsaleContractAddress = req.body.contractAddress;
+        updateddata.save();
+        req.session.contractAddress = req.body.contractAddress;
+        req.session.contractTxHash = req.body.contractTxHash;
+        res.send("dashboard");
+      }
+      // res.redirect('/crowdsaleDeployer');
 
     })
   },
@@ -90,16 +113,6 @@ module.exports = {
     });
     // res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
   },
-  test: async function (req,res) {
-    ProjectConfiguration.find({
-      where: {
-        'coinName': "XDC"
-      },
-      attributes: ['coinName']
-    }).then(async projectData => {
-      res.send(a);
-    })
-  }
 };
 
 function getProjectArray(email) {

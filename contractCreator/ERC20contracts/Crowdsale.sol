@@ -1,4 +1,8 @@
 pragma solidity ^0.4.24;
+<%- SafeMath %>
+<%- IERC20 %>
+<%- SafeERC20 %>
+
 
 
 /**
@@ -76,16 +80,15 @@ contract Crowdsale {
    * @param wallet Address where collected funds will be forwarded to
    * @param token Address of the token being sold
    */
-  constructor() public {
-    _rate = <%- rate %>;
-    _wallet = <%- walletAddress %>;
-    _token = <%- TokenContractAddress %>;
+    constructor(uint256 rate,address wallet,IERC20 token) public {
+    _rate = rate;
+    _wallet = wallet;
+    _token = token;
     _owner = msg.sender;
     
     //initiating Crowdsale
     _isCrowdsaleOpen = true;
   }
-
   // -----------------------------------------
   // Crowdsale external interface
   // -----------------------------------------
