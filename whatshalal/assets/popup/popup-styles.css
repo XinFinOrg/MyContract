@@ -1,0 +1,249 @@
+@charset "UTF-8";
+
+<!--------------------------- My Wallet css ---------------------------->
+.my-wallet-table thead tr th {
+    background-color: #314050;
+    padding: 18px 15px !important;
+    font-weight: 600;
+    border-bottom: none;
+}
+.my-wallet-table thead tr th:first-child {
+    border-radius: 4px 0 0 4px;
+}
+.my-wallet-table thead tr th:last-child {
+    border-radius: 0 4px 4px 0;
+}
+.my-wallet-table tbody tr td,
+.my-wallet-table tbody tr th {
+    padding: 2px 0 !important; 
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.my-wallet-table tbody tr td:first-child .item {
+    border-radius: 4px 0 0 4px;
+}
+.my-wallet-table tbody tr td:last-child .item {
+    border-radius: 0 4px 4px 0;
+}
+.my-wallet-table tr img {
+    margin-right: 5px; 
+}
+.my-wallet-table tbody tr td.title {
+    font-weight: bold;
+}
+
+.item {
+    height: 54px;
+    vertical-align: middle;
+    padding: 15px 8px; 
+}
+.deposit-block {
+    width: 620px;
+    background-color: #0b2c2c;
+    padding: 30px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+    z-index: 9999;
+}
+.is-active.deposit-block {
+    display: block;
+}
+.deposit-title {
+    color: #5bad48;
+    font-size: 18px;
+    padding-bottom: 17px;
+    margin-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+    margin-bottom: 23px;
+}
+.deposit-title img {
+    margin-right: 10px;
+}
+.download-graph {
+    padding: 14px;
+    display: inline-block;
+    border: 1px dashed #505b68;
+    background-color: #1c2030;
+    margin-bottom: 30px;
+}
+
+.graph-copy {
+    background-color: #072626;
+    border: 1px solid #114444;
+    padding: 17px 20px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 15px;
+}
+.graph-copy p {
+    margin-bottom: 0;
+}
+.graph-copy a {
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.destination h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.destination h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.destination p {
+    font-size: 14px;
+    color: #b4b8bc;
+}
+.graph-copy p:focus {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+.deposit-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: .6;
+    z-index: 9999;
+    display: none;
+}
+.deposit-overlay.is-active {
+    display: block;
+}
+
+.withdraw-block {
+    width: 620px;
+    background-color: #0b2c2c;
+    padding: 30px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+    z-index: 9999;
+}
+.is-active.withdraw-block {
+    display: block;
+}
+.withdraw-title {
+    color: #eb1e26;
+    font-size: 18px;
+    padding-bottom: 17px;
+    margin-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+    margin-bottom: 23px;
+}
+.withdraw-block h4 {color: #FFF;}
+.withdraw-block p {color: #aaadb1;margin: 0 0 10px;}
+.graph-copy p {margin: 0;}
+.withdraw-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: .6;
+    z-index: 9999;
+    display: none;
+}
+.withdraw-overlay.is-active {
+    display: block;
+}
+.wallet_balance {
+	float: right;
+	font-size: 15px;
+	line-height: 30px;
+	color: #5bad48;
+	background-color: #f5f5f5;
+	border-radius: 3px;
+	padding:5px;
+	border: 1px solid #FFF;
+}
+
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+.green-btn {
+    background-color: #05a9b8 !important;
+    border-color: #05a9b8 !important;
+	color:#FFF;
+	font-weight:600 !important;
+}
+.green-btn:hover {
+    background-color: #36c6d3 !important;
+    border-color: #36c6d3 !important;
+	color:#025259;
+}
+.min-width-btn {
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 40px;
+	width:inherit;
+}
+.withdraw-block .form-control {
+	background-color: #072626;
+    border-color: #114444;
+    color: #a9aeb2;
+    border-radius: .25rem;
+    height: 50px;
+    padding: 0 10px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+.send-otp {
+	color:#ff5e2c;
+	float: right;
+	position: relative;
+	bottom: 46px;
+	right: 10px;
+}
+.send-otp a {color:#ff5e2c;}
+.send-otp a:hover {color:#ff5e2c; text-decoration:underline;}
+
+
+
+@media screen and (max-width: 767px) {
+        .deposit-block {
+            width: 100%;
+            padding: 20px;
+        }
+        .withdraw-block {
+            width: 100%;
+            padding: 20px;
+        }
+		.form-group {
+    		margin-bottom: 15px;
+		}
+		.graph-copy {
+    		font-size: 12px;
+			margin-bottom:0px;
+		}
+}
+
+
+
