@@ -18,7 +18,7 @@
 <link href="images/fav/favicon.ico" rel="shortcut icon">
 <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
 <!-- Custom CSS -->
-<link href="assets/css/style.min.css" rel="stylesheet">
+<!-- <link href="assets/css/style.min.css" rel="stylesheet"> -->
 <link href="assets/css/custom.css" rel="stylesheet">
 <meta name="twitter:creator" content="@MyEtherWallet">
 <script type="application/ld+json">
@@ -51,7 +51,7 @@
 </script>
 </head>
 <body>
-  <% layout('./layouts/sidebar') -%>
+  <!-- <% layout('./layouts/sidebar') -%> -->
 
   <!-- Topbar header -->
   <div class="preloader">
@@ -79,7 +79,7 @@
 
               <!-- <span class="hidden-xs">3.21.07</span> -->
 
-              <span class="dropdown dropdown-lang" ng-cloak>
+              <!-- <span class="dropdown dropdown-lang" ng-cloak>
                 <a tabindex="0"  aria-haspopup="true" aria-expanded="false" aria-label="change language. current language {{curLang}}" class="dropdown-toggle  btn btn-white" ng-click="dropdown = !dropdown">{{curLang}}</a>
                 <ul class="dropdown-menu" ng-show="dropdown">
                   <li><a ng-class="{true:'active'}[curLang=='Català']"          ng-click="changeLanguage('ca','Català'         )"> Català          </a></li>
@@ -109,26 +109,26 @@
                   <li role="separator" class="divider"></li>
                   <li><a data-toggle="modal" data-target="#disclaimerModal" translate="FOOTER_4"> Disclaimer </a></li>
                 </ul>
-              </span>
+              </span> -->
 
-              <span class="dropdown dropdown-gas" ng-cloak>
+              <!-- <span class="dropdown dropdown-gas" ng-cloak>
                 <a tabindex="0" aria-haspopup="true" aria-label="adjust gas price" class="dropdown-toggle  btn btn-white" ng-click="dropdownGasPrice = !dropdownGasPrice">
                   <span translate="OFFLINE_Step2_Label_3">Gas Price</span>:
                     {{gas.value}} Gwei
-                    <!-- <i class="caret"></i> -->
+                    <i class="caret"></i>
                 </a>
                 <ul class="dropdown-menu" ng-show="dropdownGasPrice">
                   <div class="header--gas">
                     <span translate="OFFLINE_Step2_Label_3">Gas Price</span>:
                     {{gas.value}} Gwei
                     <input type="range" ng-model="gas.value" min="{{gas.min}}" max="{{gas.max}}" step="{{gas.step}}" ng-change="gasChanged()"/>
-                    <p class="small col-xs-4 text-left"> <!--translate="GAS_Price_1"-->
+                    <p class="small col-xs-4 text-left"> translate="GAS_Price_1"
                       Really, really slow
                     </p>
-                    <p class="small col-xs-4 text-center"> <!--translate="GAS_Price_2"-->
+                    <p class="small col-xs-4 text-center"> translate="GAS_Price_2"
                       Maybe Fast?
                     </p>
-                    <p class="small col-xs-4 text-right"> <!--translate="GAS_Price_3"-->
+                    <p class="small col-xs-4 text-right"> translate="GAS_Price_3"
                       Fast
                     </p>
                     <br />
@@ -140,15 +140,15 @@
                        rel="noopener noreferrer"></a>
                   </div>
                 </ul>
-                <!-- <p class="dropdown-gas__msg"
+                <p class="dropdown-gas__msg"
                    ng-show="gasPriceMsg"
                    ng-hide="ajaxReq.type!='ETH'">
                   The network is really full right now. Check
                   <a href="https://ethgasstation.info/"
                      target="_blank" rel="noopener noreferrer">Eth Gas Station</a>
                   for gas price to use.
-                </p> -->
-              </span>
+                </p>
+              </span> -->
 
               <!-- Warning: The separators you see on the frontend are in styles/etherwallet-custom.less. If you add / change a node, you have to adjust these. Ping tayvano if you're not a CSS wizard -->
               <span class="dropdown dropdown-node" ng-cloak>
@@ -182,7 +182,7 @@
             <!-- </section>
           </section> -->
 
-          <nav role="navigation" aria-label="main navigation" class="container nav-container overflowing">
+          <!-- <nav role="navigation" aria-label="main navigation" class="container nav-container overflowing">
             <a aria-hidden="true" ng-show="showLeftArrow" class="nav-arrow-left" ng-click="scrollLeft(100);" ng-mouseover="scrollHoverIn(true,2);" ng-mouseleave="scrollHoverOut()">&#171;</a>
             <div class="nav-scroll">
               <ul class="nav-inner">
@@ -196,13 +196,13 @@
                 </li>
 
 
-                <!-- <li class="nav-item help">
+                 <li class="nav-item help">
                   <a href="https://myetherwallet.github.io/knowledge-base/" target="_blank" rel="noopener noreferrer">
                     <span translate="NAV_Help">
                       Help
                     </span>
                   </a>
-                </li> -->
+                </li> 
               </ul>
             </div>
             <a aria-hidden="true"
@@ -211,7 +211,7 @@
                ng-click="scrollRight(100);"
                ng-mouseover="scrollHoverIn(false,2);"
                ng-mouseleave="scrollHoverOut()">&#187;</a>
-          </nav>
+          </nav> -->
 
            <article class="modal fade" id="customNodeModal" tabindex="-1">
             <section class="modal-dialog">
@@ -480,7 +480,7 @@
                   {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
                   <i class="caret"></i>
                 </a>
-                <ul class="dropdown-menu" ng-show="dropdownContracts">
+                <ul class="dropdown" ng-show="dropdownContracts">
                   <li ng-repeat="func in contract.functions track by $index">
                     <a ng-click="selectFunc($index)">
                       {{func.name}}
