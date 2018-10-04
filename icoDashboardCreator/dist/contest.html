@@ -95,20 +95,20 @@
 
 <section class="bg-gradient header-branding">
   <section class="container">
-
+    
       <a class="brand" href="/" aria-label="Go to homepage">
         <img src="images/logo-myetherwallet.svg"   height="64px" width="245px" alt="MyEtherWallet" />
         <p class="small visible-xs">3.21.07</p>
       </a>
-
-
+    
+    
     <div class="tagline">
 
     <span class="hidden-xs">3.21.07</span>
 
     <span class="dropdown dropdown-lang" ng-cloak>
       <a tabindex="0"  aria-haspopup="true" aria-expanded="false" aria-label="change language. current language {{curLang}}" class="dropdown-toggle  btn btn-white" ng-click="dropdown = !dropdown">{{curLang}}<i class="caret"></i></a>
-      <ul class="dropdown-menu2" ng-show="dropdown">
+      <ul class="dropdown-menu" ng-show="dropdown">
         <li><a ng-class="{true:'active'}[curLang=='Català']"          ng-click="changeLanguage('ca','Català'         )"> Català          </a></li>
         <li><a ng-class="{true:'active'}[curLang=='Deutsch']"         ng-click="changeLanguage('de','Deutsch'        )"> Deutsch         </a></li>
         <li><a ng-class="{true:'active'}[curLang=='Ελληνικά']"        ng-click="changeLanguage('el','Ελληνικά'       )"> Ελληνικά        </a></li>
@@ -144,7 +144,7 @@
           {{gas.value}} Gwei
           <i class="caret"></i>
       </a>
-      <ul class="dropdown-menu2" ng-show="dropdownGasPrice">
+      <ul class="dropdown-menu" ng-show="dropdownGasPrice">
         <div class="header--gas">
           <span translate="OFFLINE_Step2_Label_3">Gas Price</span>:
           {{gas.value}} Gwei
@@ -189,7 +189,7 @@
            <small>({{curNode.service}})</small>
            <i class="caret"></i>
       </a>
-      <ul class="dropdown-menu2" ng-show="dropdownNode">
+      <ul class="dropdown-menu" ng-show="dropdownNode">
         <li ng-repeat="(key, value) in nodeList">
           <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
             {{value.name}}
@@ -213,7 +213,7 @@
   <a aria-hidden="true" ng-show="showLeftArrow" class="nav-arrow-left" ng-click="scrollLeft(100);" ng-mouseover="scrollHoverIn(true,2);" ng-mouseleave="scrollHoverOut()">&#171;</a>
   <div class="nav-scroll">
     <ul class="nav-inner">
-
+      
       <li ng-repeat="tab in tabNames track by $index" \
           class="nav-item {{tab.name}}" \
           ng-class="{active: $index==gService.currentTab}"
@@ -221,8 +221,8 @@
           ng-click="tabClick($index)">
             <a tabindex="0" aria-label="nav item: {{tab.name | translate}}" translate="{{tab.name}}"></a>
       </li>
-
-
+      
+      
       <li class="nav-item help">
         <a href="https://myetherwallet.github.io/knowledge-base/" target="_blank" rel="noopener noreferrer">
           <span translate="NAV_Help">
@@ -320,7 +320,7 @@
     </section>
   </section>
 </article>
-
+ 
 
 
 </header>
@@ -742,7 +742,7 @@
     </section>
   </section>
 </article>
-
+ 
 
 
  <article class="modal fade" id="onboardingModal" tabindex="-1" ng-controller='onboardingCtrl'>
@@ -1173,7 +1173,7 @@
                 <li translate="ONBOARD_secure_3_content__5">
                   If you have more than 1-week's worth of pay worth of cryptocurrency, get a hardware wallet. No excuses. It's worth it. I promise.
                 </li>
-
+                
               </ul>
             </div>
             <div class="col-xs-12 col-sm-4 onboarding__image">
@@ -1279,10 +1279,11 @@
     </div>
   </div>
 </article>
-
+ 
 
 
 
 </main>
 </body>
 </html>
+
