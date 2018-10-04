@@ -27,27 +27,31 @@ module.exports = {
       // console.log(projectData.dataValues)
       if (projectData.tokenContractAddress != null) {
         console.log("here 1");
-        var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
-        var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
-        var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
-        ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-          "SafeERC20": SafeERC20,
-          "SafeMath": SafeMath,
-          "IERC20": IERC20,
-        }, async (err, data) => {
-          if (err)
-            console.log(err);
-          byteCode = solc.compile(data, 1).contracts[':Crowdsale'].bytecode;
-          var params = web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
-          projectData.crowdsaleByteCode = byteCode + params;
-          projectData.crowdsaleContractCode = data;
-          await projectData.save();
-        })
+        byteCode = projectData.crowdsaleByteCode;
+        console.log("here 3",byteCode);
+        if (byteCode == null) {
+          var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+          var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+          var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+          ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+            "SafeERC20": SafeERC20,
+            "SafeMath": SafeMath,
+            "IERC20": IERC20,
+          }, async (err, data) => {
+            if (err)
+              console.log(err);
+            byteCode = solc.compile(data, 1).contracts[':Crowdsale'].bytecode;
+            byteCode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
+            console.log(projectData.ETHRate, address, projectData.tokenContractAddress);
+            projectData.crowdsaleByteCode = byteCode;
+            projectData.crowdsaleContractCode = data;
+            await projectData.save();
+          })
+        }
       } else {
         console.log("here 2");
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
-          console.log("here 3", solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']);
           byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
           projectData.tokenByteCode = byteCode;
           await projectData.save();
