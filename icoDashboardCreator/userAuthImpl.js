@@ -1,5 +1,6 @@
 var db = require('../database/models/index');
 var User = db.user;
+const axios = require('axios');
 var Address = db.userCurrencyAddress;
 var fs = require('fs');
 var configAuth = require('../config/auth');
@@ -8,12 +9,27 @@ var coinPaymentHandler = require('../coinPayments/impl');
 var icoListener = require('../icoHandler/listener');
 module.exports = {
 
-  getTransactions: (req, res, next) => {
+  getTransactions: async (req, res, next) => {
+    var btc_address, eth_address;
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
+      }
+    });
+    eth_address = eth_addresses[0].address;
+
+    var btc_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Bitcoin'
+      }
+    });
+    btc_address = btc_addresses[0].address;
     var projectConfiguration = req.user.projectConfiguration;
     res.render('userTransactionHistory', {
       user: req.user,
       projectConfiguration: projectConfiguration,
-      transactions: req.user.icotransactions
+      eth_address: eth_address,
+      btc_address: btc_address
     });
   },
 
@@ -176,15 +192,69 @@ module.exports = {
     });
   },
 
+  buyTokenBTC: async (req, res) => {
+    var btc_address;
+    var btc_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Bitcoin'
+      }
+    });
+    btc_address = btc_addresses[0].address;
+
+    // var masterBTCList = await req.user.projectConfiguration.getUserCurrencyAddresses({
+    //   where: {
+    //     currencyType: 'masterBitcoin'
+    //   }
+    // });
+    // var masterBTCAddress = masterBTCList[0].address;
+    var bitcoinTransaction = require('bitcoin-transaction');
+    //Send all my money from wallet1 to wallet2 on the bitcoin testnet
+    var from = btc_address;
+    // var to = masterBTCAddress;
+    var privKeyWIF = btc_addresses[0].privateKey;
+    bitcoinTransaction.sendTransaction({
+  		from: from,
+  		to: "1DWte2xutqpHGJPfggmJmJX8NEjwrLKf7r",
+  		privKeyWIF: privKeyWIF,
+  		btc: req.body.amount,
+  		network: "mainnet",
+      fee: "fastest",
+      dryrun: true
+	  }).then(receipt => {
+      console.log(receipt);
+    });
+  },
+
   checkTokenStats: (req, res) => {
     icoListener.checkTokenStats(req.user.projectConfiguration.tokenContractAddress).then(onSaleTokens => {
       res.send({'onSaleTokens': onSaleTokens});
     });
   },
 
-  getTransactionList: (req, res) => {
-    icoListener.getTransactions(req.user.userCurrencyAddresses[1].address).then(tx => {
-      res.send(tx);
-    })
+  getTransactionList: async (req, res) => {
+    var eth_address;
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
+      }
+    });
+    eth_address = eth_addresses[0].address;
+
+    axios.get("http://api.etherscan.io/api?module=account&action=txlist&address="+eth_address+"&startblock=0&endblock=99999999&sort=asc&apikey=DSH5B24BQYKD1AD8KUCDY3SAQSS6ZAU175").then(response => {
+      res.send(response.data.result)
+    });
+  },
+
+  getBitcoinTransactionList: async (req, res) => {
+    var btc_address;
+    var btc_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Bitcoin'
+      }
+    });
+    btc_address = btc_addresses[0].address;
+    axios.get("https://blockchain.info/unspent?active="+btc_address).then(response => {
+      res.send(response.data.unspent_outputs)
+    });
   }
 }

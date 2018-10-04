@@ -24,8 +24,10 @@ router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
 router.post('/loadWallet', isAuthenticated, impl.loadWallet);
 router.get('/api/checkBalances', isAuthenticated, impl.checkBalances);
 router.post('/api/buyToken', isAuthenticated, impl.buyToken);
+router.post('/api/buyTokenBTC', isAuthenticated, impl.buyTokenBTC);
 router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);
 router.get('/api/getTransactions', isAuthenticated, impl.getTransactionList);
+router.get('/api/getBitcoinTransactions', isAuthenticated, impl.getBitcoinTransactionList);
 
 function isAuthenticated(req, res, next) {
   var token = req.cookies['token'];

@@ -1,47 +1,48 @@
 <% layout('./userHeader') -%>
-    <!-- END HEADER -->
+<!-- END HEADER -->
 <div class="clearfix"> </div>
-    <!-- START SECTION KYC -->
-    <section class="section_token small_pt small_pb">
-        <div class="container">
+<!-- START SECTION KYC -->
+<section class="section_token small_pt small_pb">
+  <div class="container">
 
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <div class="content_box">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Sr.No</th>
-                                    <th>Transaction Id</th>
-                                    <th>Contribution Method</th>
-                                    <th>Amount Contributed</th>
-                                    <th>Total WHT</th>
-                                    <th>Time</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                  <% if(transactions){ %>
-                                    <% for(var i=0; i<transactions.length; i++) { %>
-                                      <tr>
-                                          <td>1</td>
-                                          <td>TXD1491534946349</td>
-                                          <td>ETH</td>
-                                          <td>6.00000000</td>
-                                          <td>52483.66000000</td>
-                                          <td>2018-08-22 19:29:09</td>
-                                      </tr>
-                                    <% } %>
-                                  <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <div class="content_box">
+          <div class="table-responsive">
+            <table class="table">
+              <h4>Ethereum</h4>
+              <thead>
+                <tr>
+                  <th>Transaction Hash</th>
+                  <th>Value</th>
+                  <th>Type</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="transactionTable">
+              </tbody>
+            </table>
+            <table class="table">
+              <h4>Bitcoin Unspent Transactions</h4>
+              <thead>
+                <tr>
+                  <th>Transaction Hash</th>
+                  <th>Value</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody id="bitcoinTransactionTable">
+              </tbody>
+            </table>
+          </div>
         </div>
-    </section>
-    <!-- END SECTION KYC -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END SECTION KYC -->
 <!-- / latest exchanges -->
 <!-- footer -->
 
@@ -51,29 +52,60 @@
 <script type="text/javascript">
   $(document).ready(function() {
     getTransactions();
+    getBitcoinTransactions();
   });
+
   function getTransactions() {
     $.get('./api/getTransactions', function(result) {
-      // var onSaleTokens = result["onSaleTokens"];
-      // $('#onSaleTokens').html(onSaleTokens);
+      var trHTML = '';
+
+      $.each(result, function(i, item) {
+        trHTML += '<tr><td>' + item.hash + '</td>';
+        trHTML += '<td>' + item.value/(10 **18) + " Ether"+'</td>';
+        if(item.from == <%= eth_address %>){
+          trHTML += '<td>' + "OUT" +'</td>';
+        }
+        else{
+          trHTML += '<td>' + "IN" +'</td>';
+        }
+        trHTML += '<td>' + item.from + '</td>';
+        trHTML += '<td>' + item.to + '</td>';
+        trHTML += '<td>' + item.timeStamp + '</td></tr>';
+      });
+
+      $('#transactionTable').append(trHTML);
     });
   }
 
+  function getBitcoinTransactions() {
+    $.get('./api/getBitcoinTransactions', function(result) {
+      var trHTML = '';
+
+      $.each(result, function(i, item) {
+        trHTML += '<tr><td>' + item.tx_hash_big_endian + '</td>';
+        trHTML += '<td>' + item.value/(10 ** 8) +" BTC" + '</td>';
+        trHTML += '<td>' + "IN" +'</td>';
+      });
+
+      $('#bitcoinTransactionTable').append(trHTML);
+    });
+  }
 </script>
 <script type="text/javascript">
-    $('body').addClass('login');
-    $('#root-view').addClass('auth-layout');
+  $('body').addClass('login');
+  $('#root-view').addClass('auth-layout');
 </script>
 
 <style type="text/css">
-    .login-box-body {
-        position: relative;
-    }
+  .login-box-body {
+    position: relative;
+  }
 </style>
 <script>
-    $('body').addClass('page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white');
-    $('#root-view').addClass('page-wrapper');
+  $('body').addClass('page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white');
+  $('#root-view').addClass('page-wrapper');
 </script>
 
 </body>
+
 </html>

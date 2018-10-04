@@ -98,7 +98,7 @@
                   </div>
 
                   <div class="tab-pane" id="2b">
-                    <form id="btc_form" action="./api/buyToken" method="post">
+                    <form id="btc_form" action="./api/buyTokenBTC" method="post">
                       <div class="row field_form">
 
                         <div class="form-group leftsd col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
@@ -349,7 +349,7 @@
         amount: {
           required: true,
           number: true,
-          minval: true,
+          // minval: true,
           minBTC: minBTC,
           adecimal: true
         }
