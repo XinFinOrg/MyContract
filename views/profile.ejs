@@ -1,122 +1,136 @@
 <body>
   <% layout('./layouts/sidebar') -%>
 
-    <!-- Preloader -->
-    <div class="preloader">
-      <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-      </div>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
-    <!-- Page wrapper  -->
-    <div class="page-wrapper">
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-      <!-- Container fluid  -->
-      <div class="container-fluid">
-        <div class="card" style="min-height:100px;">
-          <div class="card-body">
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card" style="min-height:100px;">
+        <div class="card-body">
 
-            <h4 class="card-title text-center">Create your smart contract without coding</h4>
-            <hr size="5">
-            <div class="row">
-              <div class="col-sm-6 text-center">
-                <div class="well">
-                  <br>
-                  <span>CrowdSale Token Creation (ERC20)</span><br><br>
-                  <a href="/customContract" class="btn btn-md btn-rounded btn-info">Create Token</a>
-                  <br>
-                </div>
+          <h4 class="card-title text-center">Create your smart contract without coding</h4>
+          <hr size="5">
+          <div class="row">
+            <div class="col-sm-6 text-center">
+              <div class="well">
+                <br>
+                <span>CrowdSale Token Creation (ERC20)</span><br><br>
+                <a href="/customContract" class="btn btn-md btn-rounded btn-info">Create Token</a>
+                <br>
               </div>
-              <div class="col-sm-6 text-center">
-                <div class="well">
-                  <br>
-                  <span>CrowdSale Token Creation With Additional Security (ERC223)</span><br><br>
-                  <a href="/customContractWith223" class="btn btn-md btn-rounded btn-info disabled">Coming Soon</a>
-                  <br>
-                </div>
+            </div>
+            <div class="col-sm-6 text-center">
+              <div class="well">
+                <br>
+                <span>CrowdSale Token Creation With Additional Security (ERC223)</span><br><br>
+                <a href="/customContractWith223" class="btn btn-md btn-rounded btn-info disabled">Coming Soon</a>
+                <br>
               </div>
+            </div>
 
-            </div>
-            </div>
-            </div>
-            <div class="card" style="min-height:500px;">
-            <div class="card-body">
-
-
-              <h4 class="card-title text-center">Deployed Contract Details</h4>
-              <hr size="5">
-              <div class="row mt-5">
-                <div class="col-md-12">
-                  <% if(ProjectConfiguration.length >0 ) {%>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead class="bg-info-table">
-                          <tr>
-                            <th>Coin Name</th>
-                            <th>Contract Address</th>
-                            <th>Transaction Hash</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                            <tr>
-                              <td>
-                                <%= ProjectConfiguration.coinName %>
-                              </td>
-                              <% if(ProjectConfiguration.contractAddress) {%>
-                                <td>
-                                  <%= ProjectConfiguration.contractAddress %>
-                                </td>
-                                <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.contractHash %>" target="_blank">Click
-                                    here
-                                  </a> </td>
-                                <% } else { %>
-                                  <td colspan="2"> Not deployed yet
-                                    <% } %>
-                            </tr>
-                            <% }) %>
-                        </tbody>
-                      </table>
-                    </div>
-                    <% } else { %>
-                      <h3 class="text-center">No Contracts Yet.</h3>
-                      <% } %>
-                </div>
-              </div>
-              <br><br><br>
-              <% if (message.length >0) { %>
-                <div class="alert alert-danger">
-                  <%= message %>
-                </div>
-                <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
-                <% } %>
-                  <br><br>
-                  <% if (contractMessage.length >0) { %>
-                    <div class="alert alert-success">
-                      <strong>Success!</strong> Contract Mined Succefully!
-                    </div>
-                    <br>
-                    <% } %>
-            </div>
           </div>
-
         </div>
       </div>
-    </div>
+      <div class="card" style="min-height:500px;">
+        <div class="card-body">
+
+
+          <h4 class="card-title text-center">Deployed Contract Details</h4>
+          <hr size="5">
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <% if(ProjectConfiguration.length >0 ) {%>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="bg-info-table">
+                    <tr>
+                      <th>Network Type</th>
+                      <th>Coin Name</th>
+                      <th>Token Contract Address</th>
+                      <th>Token Contract Tx Hash</th>
+                      <th>Crowdsale Contract Address</th>
+                      <th>CrowdSale Contract Tx Hash</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                    <tr>
+                      <td>
+                        <%= ProjectConfiguration.networkType %>
+                      </td>
+                      <td>
+                        <%= ProjectConfiguration.coinName %>
+                      </td>
+                      <% if(ProjectConfiguration.tokenContractAddress) {%>
+                      <td>
+                        <%= ProjectConfiguration.tokenContractAddress %>
+                      </td>
+                      <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>" target="_blank">Click here</a> </td>
+                      <% } else { %>
+                      <td colspan="2"> Not deployed yet
+                        <% } %>
+                        <% if(ProjectConfiguration.crowdsaleContractAddress) {%>
+                      <td>
+                        <%= ProjectConfiguration.crowdsaleContractAddress %>
+                      </td>
+                      <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>" target="_blank">Click
+                          here
+                        </a> </td>
+                      <% } else { %>
+                      <td colspan="2"> Not deployed yet
+                        <% } %>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+              <% } else { %>
+              <h3 class="text-center">No Contracts Yet.</h3>
+              <% } %>
+            </div>
+          </div>
+          <br><br><br>
+          <% if (message.length >0) { %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+          <% } %>
+          <br><br>
+          <% if (contractMessage.length >0) { %>
+          <div class="alert alert-success">
+            <strong>Success!</strong> Contract Mined Succefully!
+          </div>
+          <br>
+          <% } %>
+        </div>
+      </div>
 
     </div>
-    <!-- End Container fluid  -->
+  </div>
+  </div>
+
+  </div>
+  <!-- End Container fluid  -->
 
 
-    </div>
-    <!-- End Page wrapper  -->
+  </div>
+  <!-- End Page wrapper  -->
 
-    </div>
-    <!-- End Wrapper -->
+  </div>
+  <!-- End Wrapper -->
 
 
 
-    <div class="chat-windows"></div>
+  <div class="chat-windows"></div>
 </body>
 <script>
   function myAlert() {
