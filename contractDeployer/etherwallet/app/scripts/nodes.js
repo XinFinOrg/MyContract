@@ -17,23 +17,23 @@ nodes.nodeTypes = {
     // TOMO: "TOMO",
     // ELLA: "ELLA",
     // ETSC: "ETSC",
-    // Custom: "CUSTOM ETH"
+    Custom: "CUSTOM ETH"
 };
 nodes.ensNodeTypes = [nodes.nodeTypes.ETH, nodes.nodeTypes.Ropsten];
 nodes.ensSubNodeTypes = [nodes.nodeTypes.ETH];
 nodes.domainsaleNodeTypes = [nodes.nodeTypes.ETH, nodes.nodeTypes.Ropsten];
-// nodes.customNodeObj = {
-//     'name': 'CUS',
-//     'blockExplorerTX': '',
-//     'blockExplorerAddr': '',
-//     'type': nodes.nodeTypes.Custom,
-//     'eip155': false,
-//     'chainId': '',
-//     'tokenList': [],
-//     'abiList': [],
-//     'service': 'Custom',
-//     'lib': null
-// };
+nodes.customNodeObj = {
+    'name': 'CUS',
+    'blockExplorerTX': '',
+    'blockExplorerAddr': '',
+    'type': nodes.nodeTypes.Custom,
+    'eip155': false,
+    'chainId': '',
+    'tokenList': [],
+    'abiList': [],
+    'service': 'Custom',
+    'lib': null
+};
 nodes.nodeList = {
     'eth_infura': {
         'name': 'ETH',

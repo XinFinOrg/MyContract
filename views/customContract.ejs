@@ -17,111 +17,102 @@
             <h4 class="card-title">Create Contract</h4>
             <div class="row">
               <div class="col-md-8">
-                    <% if (message2.length >0) { %>
-                      <div class="alert alert-danger">
-                        <%= message2 %>
+                <% if (message2.length >0) { %>
+                  <div class="alert alert-danger">
+                    <%= message2 %>
+                  </div>
+                  <% } %>
+                    <form class="form-horizontal m-t-20" id="createContract" action="/createERC20Contract" method="post">
+                      <div class="form-group">
+                        <label for="tokenName">Token Name</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" id="token_name" name="token_name" placeholder="Enter Token Name">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
                       </div>
-                      <% } %>
-                        <form class="form-horizontal m-t-20" id="createContract" action="/createERC20Contract" method="post">
-                          <div class="form-group">
-                            <label for="tokenName">Token Name</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="token_name" name="token_name" placeholder="Enter Token Name">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"><i
-                                    class="ti-help-alt"></i></button>
 
-                              </div>
-                            </div>
+                      <div class="form-group">
+                        <label for="tokenSymbol">Token Symbol</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Symbol (eg. ETH, BTC, XDC)"><i
+                                class="ti-help-alt"></i></button>
+
                           </div>
+                        </div>
+                      </div>
 
-                          <div class="form-group">
-                            <label for="tokenSymbol">Token Symbol</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Symbol (eg. ETH, BTC, XDC)"><i
-                                    class="ti-help-alt"></i></button>
+                      <div class="form-group">
+                        <label for="tokenDecimals">Token Decimals</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_decimals" id="token_decimals" value="18">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Decimals (eg. 18)"><i
+                                class="ti-help-alt"></i></button>
 
-                              </div>
-                            </div>
                           </div>
+                        </div>
+                      </div>
 
-                          <div class="form-group">
-                            <label for="tokenDecimals">Token Decimals</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" name="token_decimals" id="token_decimals" value="18">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Decimals (eg. 18)"><i
-                                    class="ti-help-alt"></i></button>
+                      <hr>
 
-                              </div>
-                            </div>
+                      <div class="form-group">
+                        <label for="totalSupply">Total Supply</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Total Supply (eg. 1000000000000)"><i
+                                class="ti-help-alt"></i></button>
+
                           </div>
+                        </div>
+                      </div>
 
-                          <hr>
+                      <div class="form-group">
+                        <label for="1ETHTokens">1 ETH = ? <span id="tokenname"></span></label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="How many tokens will you be able to buy using 1 Eth ?"><i
+                                class="ti-help-alt"></i></button>
 
-                          <div class="form-group">
-                            <label for="totalSupply">Total Supply</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Total Supply (eg. 1000000000000)"><i
-                                    class="ti-help-alt"></i></button>
-
-                              </div>
-                            </div>
                           </div>
+                        </div>
+                      </div>
+                      <hr>
 
-                          <div class="form-group">
-                            <label for="saleTokenlimit">Sale Token limit</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" name="token_sale" id="token_sale" placeholder="How token many will be availabe on crowdsale ?">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Sale Token limit (This will be your soft cap for your ICO)"><i
-                                    class="ti-help-alt"></i></button>
+                      <h4>Advanced Functionalities</h4><br>
+                      <div class="row mb-4 ml-1">
+                        <div class="checkbox-btn" data-toggle="buttons">
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isPausable" checked autocomplete="on"> Pausable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isUpgradeable" checked autocomplete="on"> Upgradeable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isBurnable" checked autocomplete="on"> Burnable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isMintable" checked autocomplete="on"> Mintable
+                          </label>
+                          <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
+                              class="ti-help-alt"></i></button>
+                        </div>
+                      </div>
+                      <hr>
 
-                              </div>
-                            </div>
-                          </div>
+                      <div class="form-actions mb-3">
+                        <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
+                        <!-- <button type="button" class="btn btn-rounded btn-lg btn-light">Cancel</button> -->
+                      </div>
 
-                          <div class="form-group">
-                            <label for="1ETHTokens">1 ETH = ? Tokens</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens">
-                              <div class="input-group-append">
-                                <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="How many tokens will you be able to buy using 1 Eth ?"><i
-                                    class="ti-help-alt"></i></button>
-
-                              </div>
-                            </div>
-                          </div>
-                          <h4>Advanced Functionalities</h4>
-                          <div class="row mb-4 ml-1">
-                            <div class="checkbox-btn" data-toggle="buttons">
-                              <label class="btn btn-checkbox mr-2 active">
-                                <input type="checkbox" name="isPausable" checked autocomplete="on"> Pausable
-                              </label>
-                              <label class="btn btn-checkbox mr-2 active">
-                                <input type="checkbox" name="isUpgradeable" checked autocomplete="on"> Upgradeable
-                              </label>
-                              <label class="btn btn-checkbox mr-2 active">
-                                <input type="checkbox" name="isBurnable" checked autocomplete="on"> Burnable
-                              </label>
-                              <label class="btn btn-checkbox mr-2 active">
-                                <input type="checkbox" name="isMintable" checked autocomplete="on"> Mintable
-                              </label>
-                              <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
-                                  class="ti-help-alt"></i></button>
-                            </div>
-                          </div>
-
-                          <div class="form-actions mb-3">
-                            <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
-                            <!-- <button type="button" class="btn btn-rounded btn-lg btn-light">Cancel</button> -->
-                          </div>
-
-                        </form>
+                    </form>
               </div>
             </div>
           </div>
@@ -142,11 +133,13 @@
           <div class="modal-body">
             <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Releasable</span></h5>
             <p>Pausing token transfer during some initial period (e.g. while a crowdsale is taking place), to enable pause/release
-              transfers</p>
+              transfers
+            </p>
 
             <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Upgradeable</span></h5>
             <p>Token issuer may wish to upgrade or migrate the token to a new address to comply with a upgraded or new token
-              standard.</p>
+              standard.
+            </p>
             <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
             <p>Keeps the token’s “totalSupply” value up to date, Useful in case someone wants to burn some tokens to reduce
               the supply for their project or burn unsold tokens</p>
@@ -209,6 +202,13 @@
   $(document).ready(function () {
     radioswitch.init()
   });
+</script>
+<script>
+  var myInput = document.getElementById("token_symbol");
+  // When the user starts to type something inside the password field
+  myInput.onkeyup = function () {
+  document.getElementById("tokenname").innerHTML=myInput.value;
+  }
 </script>
 
 </html>

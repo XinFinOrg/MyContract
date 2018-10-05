@@ -73,15 +73,10 @@ module.exports = {
   // },
   createERC20Contract: async (req, res) => {
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
-    var CapperRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/CapperRole.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
-    var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Capped.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
     var IERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/IERC20.sol');
-    var MinterRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/MinterRole.sol');
     var Ownable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Ownable.sol');
-    var Pausable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Pausable.sol');
-    var PauserRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/PauserRole.sol');
     var SafeERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/SafeERC20.sol');
     var SafeMath = await fileReader.readEjsFile(__dirname + '/ERC20contracts/SafeMath.sol');
     var SignerRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/SignerRole.sol');
@@ -89,6 +84,7 @@ module.exports = {
     var isBurnable = (req.body.isBurnable == "on") ? true : false;
     var isMintable = (req.body.isMintable == "on") ? true : false;
     var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
+    var ERC20CappedSign = "";
     inherits = "";
 
     if (isBurnable) {
@@ -96,12 +92,20 @@ module.exports = {
       inherits += ", ERC20Burnable";
     }
     if (isPausable) {
+      var Pausable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Pausable.sol');
+      var PauserRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/PauserRole.sol');
       var ERC20Pausable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Pausable.sol');
       inherits += " , ERC20Pausable";
     }
     if (isMintable) {
+      var MinterRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/MinterRole.sol');
+      var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Capped.sol');
       var ERC20Mintable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Mintable.sol');
-      inherits += " , ERC20Mintable";
+      var CapperRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/CapperRole.sol');
+      var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Capped.sol');
+
+      ERC20CappedSign = "ERC20Capped(" + req.body.token_supply * 10 + "000000000000000000)"
+      inherits += ", ERC20Mintable,ERC20Capped";
     }
     if (isUpgradeable) {
       var Upgradable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Upgradable.sol');
@@ -125,16 +129,14 @@ module.exports = {
       "ERC20Pausable": ERC20Pausable,
       "Upgradable": Upgradable,
       "ERC20Mintable": ERC20Mintable,
-
-
       //data from form
       totalSupply: req.body.token_supply,
       name: req.body.token_name,
       symbol: req.body.token_symbol,
       decimal: req.body.token_decimals,
       decimalInZero: "000000000000000000",
-      cap: req.body.token_supply * 10
-    }, async(err, data) => {
+      ERC20CappedSign: ERC20CappedSign
+    }, async (err, data) => {
       if (err)
         console.log(err);
       req.session.contract = data;
@@ -151,12 +153,12 @@ module.exports = {
       objdata.tokenSupply = req.body.token_supply;
       objdata.coinSymbol = req.body.token_symbol;
       objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate= req.body.eth_tokens;
-      objdata.tokenContractCode=data;
+      objdata.ETHRate = req.body.eth_tokens;
+      objdata.tokenContractCode = data;
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
-       clientdata.save();
+      clientdata.save();
       res.redirect('/generatedContract');
     });
   },
@@ -235,7 +237,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash','crowdsaleContractCode']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'crowdsaleContractCode']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {
