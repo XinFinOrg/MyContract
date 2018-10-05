@@ -14,6 +14,7 @@
 <link href="images/fav/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
 <link href="images/fav/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
 <link href="images/fav/manifest.json" rel="manifest">
+<link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
 <link href="images/fav/safari-pinned-tab.svg" rel="mask-icon" color="#2f99b0">
 <link href="images/fav/favicon.ico" rel="shortcut icon">
 <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
@@ -348,7 +349,7 @@
 
             <div class="dropdown">
 
-              <a class="btn btn-default dropdown-toggle"
+              <a class="btn btn-rounded btn-info dropdown-toggle"
                  class="dropdown-toggle"
                  ng-click="dropdownExistingContracts = !dropdownExistingContracts">
                   {{selectedAbi.name}}
@@ -373,7 +374,7 @@
               ABI / JSON Interface
             </label>
             <textarea class="form-control"
-                      rows="6"
+                      rows="8"
                       placeholder='[{ "type":"contructor", "inputs": [{ "name":"param1", "type":"uint256", "indexed":true }], "name":"Event" }, { "type":"function", "inputs": [{"name":"a", "type":"uint256"}], "name":"foo", "outputs": [] }] '
                       ng-class="Validator.isJSON(contract.abi) ? 'is-valid' : 'is-invalid'"
                       ng-model="contract.abi"></textarea>
@@ -381,7 +382,7 @@
 
           <!-- Button -->
           <section class="col-xs-12 clearfix">
-            <button class="btn btn-primary" ng-click="initContract()" translate="x_Access"> ACCESS CONTRACT </button>
+            <button class="btn btn-rounded btn-info" ng-click="initContract()" translate="x_Access"> ACCESS CONTRACT </button>
           </section>
 
 
@@ -476,7 +477,7 @@
               </div>
 
               <div class="btn-group">
-                <a class="btn btn-default" ng-click="dropdownContracts = !dropdownContracts">
+                <a class="btn btn-rounded btn-info" ng-click="dropdownContracts = !dropdownContracts">
                   {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
                   <i class="caret"></i>
                 </a>
