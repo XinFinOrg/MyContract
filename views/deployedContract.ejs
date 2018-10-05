@@ -15,6 +15,11 @@
         <div class="card-body">
           <h4 class="card-title">Generated Contract</h4>
           <div class="row">
+              <% if(message1.length == 0) { %>
+               <h4>This contract will be used to handle your crowdsale!Please do not close this tab.</h4>
+                <% } else { %>
+                  <h4><%- message1 %></h4> 
+                <% } %> 
             <div class="col-sm-12 text-center">
               <div class="well">
                 <div class="col-md-12">
@@ -24,7 +29,7 @@
 <code><%= contract %>
 </code>
                     </pre>
-                    <button type="button" id="deployment" onclick=deploy("<%=coinName %>") class="btn btn-rounded btn-lg btn-info mr-1">Deploy <%= coinName %></button>
+                    <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Deploy <%= coinName %></button>
                       <% } else { %>
 
 <code>

@@ -219,6 +219,7 @@ module.exports = {
     var address = req.cookies['address'];
     console.log(req.session.coinName);
     res.render('deployedContract', {
+      message1:"This is your token contract and this will hold all your tokens.Please do not close this tab.",
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,

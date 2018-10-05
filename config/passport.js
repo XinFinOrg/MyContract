@@ -188,7 +188,7 @@ module.exports = function (passport) {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
-              return done(null, createdClient.dataValues,req.flash('loginMessage', 'Please verify your email address by Clicking link from mail that we have to you!'));
+              return done(null, createdClient.dataValues,req.flash('loginMessage', 'Please verify your email address by clicking the link that we have mailed  you!'));
             });
           }
         });

@@ -105,6 +105,7 @@ module.exports = {
         projectData.crowdsaleContractCode = data;
         await projectData.save();
         res.render('deployedContract', {
+          message1: "",
           user: req.user,
           address: address,
           contract: data,
@@ -124,15 +125,21 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
+
   getDeployer: async function (req, res) {
+    console.log(req.query);
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
-      user: req.user,
-      address: address,
-      ProjectConfiguration: projectArray,
-    });
-    // res.sendFile(path.join(__dirname, './', 'dist', 'index.html'));
+  if(req.query.coinName == null){
+        res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
+          user: req.user,
+          address: address,
+          ProjectConfiguration: projectArray,
+        });
+      } else {
+        req.session.coinName = req.query.coinName;
+        res.redirect("/generatedCrowdsaleContract");
+      }
   },
 };
 
