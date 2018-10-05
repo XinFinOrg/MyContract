@@ -11,7 +11,7 @@ module.exports = function (app, express) {
   app.get('/deployer', isLoggedIn, impl.getDeployer);
   app.get('/getBytecode', isLoggedIn, impl.getBytecode);
   app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
-
+  app.get('/generatedCrowdsaleContract', isLoggedIn, impl.generatedContract);
   app.get('/crowdsaleDeployer',isLoggedIn,impl.crowdsaleDeployer);
 }
 

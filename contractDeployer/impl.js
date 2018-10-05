@@ -24,29 +24,16 @@ module.exports = {
       },
       attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }).then(async projectData => {
-      // console.log(projectData.dataValues)
       if (projectData.tokenContractAddress != null) {
         console.log("here 1");
         byteCode = projectData.crowdsaleByteCode;
-        console.log("here 3",byteCode);
+        console.log("here 3", byteCode);
         if (byteCode == null) {
-          var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
-          var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
-          var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
-          ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-            "SafeERC20": SafeERC20,
-            "SafeMath": SafeMath,
-            "IERC20": IERC20,
-          }, async (err, data) => {
-            if (err)
-              console.log(err);
-            byteCode = solc.compile(data, 1).contracts[':Crowdsale'].bytecode;
-            byteCode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
-            console.log(projectData.ETHRate, address, projectData.tokenContractAddress);
-            projectData.crowdsaleByteCode = byteCode;
-            projectData.crowdsaleContractCode = data;
-            await projectData.save();
-          })
+          byteCode = solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'].bytecode;
+          byteCode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
+          console.log(projectData.ETHRate, address, projectData.tokenContractAddress);
+          projectData.crowdsaleByteCode = byteCode;
+          await projectData.save();
         }
       } else {
         console.log("here 2");
@@ -83,7 +70,8 @@ module.exports = {
         req.session.contractAddress = req.body.contractAddress;
         req.session.contractTxHash = req.body.contractTxHash;
         req.flash('contract_flash', 'Contract mined successfully!');
-        res.send("crowdsaleDeployer");
+        req.session.coinName = req.query.coinName;
+        res.send("generatedCrowdsaleContract");
       } else {
         updateddata.crowdsaleContractHash = req.body.contractTxHash;
         updateddata.crowdsaleContractAddress = req.body.contractAddress;
@@ -92,8 +80,38 @@ module.exports = {
         req.session.contractTxHash = req.body.contractTxHash;
         res.send("dashboard");
       }
-      // res.redirect('/crowdsaleDeployer');
-
+    })
+  },
+  generatedContract: async function (req, res) {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    console.log("here in code")
+    ProjectConfiguration.find({
+      where: {
+        'coinName': req.session.coinName
+      },
+      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+    }).then(async projectData => {
+      var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+      var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+      var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+      ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+        "SafeERC20": SafeERC20,
+        "SafeMath": SafeMath,
+        "IERC20": IERC20,
+      }, async (err, data) => {
+        if (err)
+          console.log(err);
+        projectData.crowdsaleContractCode = data;
+        await projectData.save();
+        res.render('deployedContract', {
+          user: req.user,
+          address: address,
+          contract: data,
+          ProjectConfiguration: projectArray,
+          coinName: req.session.coinName
+        });
+      })
     })
   },
 
@@ -106,7 +124,6 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
-
   getDeployer: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
