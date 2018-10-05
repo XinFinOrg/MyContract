@@ -83,7 +83,7 @@ app.use(function(err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({force: fasle}).then(()=> {
+db.sequelize.sync({force: false}).then(()=> {
   console.log("Sync done");
 });
 // require('./coinPayments/impl');
