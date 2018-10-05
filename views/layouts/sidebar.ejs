@@ -146,7 +146,7 @@
                   <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                     <% if(ProjectConfiguration.networkType != "mainnet") {%>
                       <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                            id="deployment" onclick=deploy( "<%= ProjectConfiguration.coinName %>") class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                            id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>",false) class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
                       <% }else{%>
                         <% } %>
 
