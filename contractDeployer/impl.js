@@ -25,9 +25,7 @@ module.exports = {
       attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }).then(async projectData => {
       if (projectData.tokenContractAddress != null) {
-        console.log("here 1");
         byteCode = projectData.crowdsaleByteCode;
-        console.log("here 3", byteCode);
         if (byteCode == null) {
           byteCode = solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'].bytecode;
           byteCode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
@@ -36,7 +34,6 @@ module.exports = {
           await projectData.save();
         }
       } else {
-        console.log("here 2");
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
           byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
@@ -50,7 +47,6 @@ module.exports = {
     });
   },
   saveDeploymentData: async function (req, res) {
-    console.log(req.body)
     ProjectConfiguration.find({
       where: {
         'coinName': req.query.coinName
@@ -85,7 +81,6 @@ module.exports = {
   generatedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    console.log("here in code")
     ProjectConfiguration.find({
       where: {
         'coinName': req.session.coinName
@@ -127,7 +122,6 @@ module.exports = {
   },
 
   getDeployer: async function (req, res) {
-    console.log(req.query);
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
   if(req.query.coinName == null){
