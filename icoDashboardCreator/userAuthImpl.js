@@ -214,7 +214,7 @@ module.exports = {
     var privKeyWIF = btc_addresses[0].privateKey;
     bitcoinTransaction.sendTransaction({
   		from: from,
-  		to: "1DWte2xutqpHGJPfggmJmJX8NEjwrLKf7r",
+  		to: "3Hd5iUpWJw4yeAi5pGGADKw2AFAmYTSXAV",
   		privKeyWIF: privKeyWIF,
   		btc: req.body.amount,
   		network: "mainnet",

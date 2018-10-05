@@ -1,11 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-    },
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,

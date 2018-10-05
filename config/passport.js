@@ -300,7 +300,6 @@ function generateBTCAddress() {
     const TestNet = bitcoin.networks.testnet;
     var keyPair = bitcoin.ECPair.makeRandom();
     let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
-    console.log(address);
     newBTCAddress.address = address;
     newBTCAddress.privateKey = keyPair.toWIF();
     var createdBTCAddress = await Address.create(newBTCAddress);

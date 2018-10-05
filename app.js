@@ -25,7 +25,7 @@ app.use(session({
 //for static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname , 'icoDashboardCreator')));
-app.use('/icoDashboardSetup/project', express.static(__dirname + '/icoDashboardCreator/dist'));
+app.use('/contractInteraction/project', express.static(__dirname + '/icoDashboardCreator/dist'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -83,7 +83,7 @@ app.use(function(err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({force: false}).then(()=> {
+db.sequelize.sync({force: fasle}).then(()=> {
   console.log("Sync done");
 });
 // require('./coinPayments/impl');

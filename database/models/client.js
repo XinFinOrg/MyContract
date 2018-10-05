@@ -1,15 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const client = sequelize.define('client', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
     uniqueId:
     {
       allowNull:false,
+      primaryKey: true,
       type:DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
     },

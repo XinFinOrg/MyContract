@@ -14,15 +14,23 @@ var Project = db.projectConfiguration;
 
 
 
+
 module.exports = {
-  //client setup
-  icoDashboardSetup: async function (req, res) {
+  //client setup 
+  contractInteraction: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,
+    });
+  },
+  icoDashboardSetup: async function (req, res) {
+    console.log(req.params, "project")
+    res.render('icoDashboard', {
+      user: req.user,
+      projectName: req.params.projectName
     });
   },
 
@@ -34,16 +42,14 @@ module.exports = {
     });
   },
   getSiteConfiguration: function (req, res) {
-    client.findAll({
+    console.log(req.params.projectName)
+    ProjectConfiguration.find({
       where: {
-        'email': req.user.email,
+        'coinName': req.params.projectName
       },
-      include: [{
-        model: ProjectConfiguration,
-        where: {
-          coinName: req.params.projectName
-        }
-      }],
+      attributes: {
+        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+      }
     }).then(values => {
       if (!values) {
         res.send({
@@ -51,84 +57,77 @@ module.exports = {
         });
       } else {
         var dataobj = new Object();
-        dataobj = values[0].projectConfigurations[0].dataValues;
-        if (values[0].projectConfigurations[0].dataValues.siteLogo) {
-          dataobj.siteLogo = 'data:image/bmp;base64,' + Buffer.from(values[0].projectConfigurations[0].dataValues.siteLogo).toString('base64')
-        } else {
-          dataobj.siteLogo = null;
-        }
+        dataobj = values.dataValues;
+        // if (values.dataValues.siteLogo) {
+        //   dataobj.siteLogo ='data:image/bmp;base64,' + Buffer.from(values.dataValues.siteLogo).toString('base64')
+        // } else {
+        //   dataobj.siteLogo = null;
+        // }
         res.send({
           data: dataobj,
-          message: "updated!"
+          message: "updated!",
+          Buffer:values.dataValues.siteLogo
         })
       }
     });
   },
   updateSiteConfiguration: async function (req, res) {
-    var projectdata = await client.find({
-      where: {
-        'email': req.user.email
-      },
-      include: ['projectConfigurations'],
-    })
     var projectdatavalues = await ProjectConfiguration.find({
       where: {
-        "client_id": projectdata.projectConfigurations[0].dataValues.client_id
+        "coinName": req.params.projectName
       }
     })
-    if (req.files[0]) {
-      console.log("here")
-      projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path)
-      projectdatavalues.save().then((result, error) => {
-        console.log("inside", error, result)
-      })
-    }
-
-    // projectdata.dataValues.siteLogo = fs.readFileSync(req.files[0].path)
-    ProjectConfiguration.update({
-      "siteName": req.body.site_name,
-      "coinName": req.body.coin_name,
-      "softCap": req.body.soft_cap,
-      "hardCap": req.body.hard_cap,
-      "startDate": req.body.start_date,
-      "endDate": req.body.end_date,
-      "homeURL": req.body.website_url,
-      "usdConversionRate": req.body.usd_conversion_rate,
-      "minimumContribution": req.body.minimum_contribution,
-    }, {
-        where: {
-          "client_id": projectdata.projectConfigurations[0].dataValues.client_id
-        }
-      }).then(updatedata => {
-        if (!updatedata)
-          console.log("Project update failed !");
-        console.log("Project updated successfully!");
-        res.redirect("/icoDashboardSetup/project/" + req.body.coin_name)
-      });
+    await ImageDataURI.encodeFromFile(req.files[0].path)
+    .then(imgurl => {
+      // console.log(imgurl);
+     projectdatavalues.siteLogo = imgurl ; 
+    // if (req.files[0]) {
+    //   projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path); 
+    // }
+    projectdatavalues.siteName = req.body.site_name
+    projectdatavalues.softCap = req.body.soft_cap
+    projectdatavalues.hardCap = req.body.hard_cap
+    projectdatavalues.startDate = req.body.start_date
+    projectdatavalues.endDate = req.body.end_date
+    projectdatavalues.homeURL = req.body.website_url
+    projectdatavalues.minimumContribution = req.body.minimum_contribution
+    })
+    projectdatavalues.save().then(() => {
+      console.log("Project updated successfully!");
+      res.redirect("/siteConfiguration/project/" +req.params.projectName)
+    });
   },
 
   getKYCPage: async function (req, res) {
-    res.render("kyctab.ejs")
+    res.render("kyctab.ejs",{
+      user: req.user,
+        projectName: req.params.projectName
+    })
   },
   getICOdata: async function (req, res) {
-    var userdata = await User.find({
+    userdata = new Object();
+    userdata = await User.findAll({
       where: {
-        "projectConfigurationCoinName": "don"
+        "projectConfigurationCoinName": req.params.projectName
       },
       attributes: {
         exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password", "uniqueId"]
       }
     })
-
+    userdata.forEach(element => {
+      element.dataValues.link="<a href='/icoDashboardSetup/project/"+ req.params.projectName+"/kyctab/"+ element.dataValues.id+"/getUserData'>click Here</a>"
+      // console.log(element) 
+    });
+    console.log(userdata)
     res.send({
-      data: [userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues, userdata.dataValues]
+      data:userdata
     });
   },
   getUserData: async function (req, res) {
     var userdata = new Object();
     User.find({
       where: {
-        "projectConfigurationCoinName": "don",
+        "projectConfigurationCoinName": req.params.projectName,
         "id": req.params.userid
       },
     }).then(result => {
@@ -142,7 +141,8 @@ module.exports = {
         userdata.kycDoc3 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc3).toString('base64')
       }
       res.render("adminKYCpanel.ejs", {
-        KYCdata: userdata
+        KYCdata: userdata,
+        projectName: req.params.projectName
       })
     })
 
@@ -150,7 +150,7 @@ module.exports = {
   updateUserData: async function (req, res) {
     var userdata = await User.find({
       where: {
-        "projectConfigurationCoinName": "don",
+        "projectConfigurationCoinName": req.params.projectName,
         "id": req.params.userid
       },
     })
@@ -161,7 +161,7 @@ module.exports = {
         console.log("not updated");
       console.log("updated");
     })
-    res.redirect("/kycTab")
+    res.redirect("/icoDashboardSetup/project/"+req.params.projectName+"/kyctab")
   },
 
   contractData: async function (req, res) {
@@ -175,9 +175,9 @@ module.exports = {
       }
     }).then(result =>
       res.send({
-      "tokenAddress": result.dataValues.tokenContractAddress,
-      "crowdSaleAddress": result.dataValues.crowdsaleContractAddress
-    })
+        "tokenAddress": result.dataValues.tokenContractAddress,
+        "crowdSaleAddress": result.dataValues.crowdsaleContractAddress
+      })
     )
   },
 

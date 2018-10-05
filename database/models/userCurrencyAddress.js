@@ -1,13 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const userCurrencyAddress = sequelize.define('userCurrencyAddress', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-
     currencyType: {
       type: DataTypes.STRING
     },
@@ -26,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     uniqueId: {
       allowNull: false,
       type: DataTypes.UUID,
+      primaryKey: true,
       defaultValue: DataTypes.UUIDV1,
     },
     createdAt: {

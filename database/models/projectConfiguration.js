@@ -1,11 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const projectConfiguration = sequelize.define('projectConfiguration', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-    },
     uniqueId:
     {
       allowNull: true,
@@ -17,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     siteLogo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     coinName: {

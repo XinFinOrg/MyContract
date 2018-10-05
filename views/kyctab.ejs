@@ -1,225 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<% include layouts/adminSidebar %>
 
-<head>
-    <title>Admin | WHT</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/cdn-cgi/apps/head/lf7pRreZSj1Ob_rNBjPMzJCbyXs.js"></script>
-    <link rel="shortcut icon" href="https://whatshalal.io/front/assets2/images/favicon/favicon-57x57.png">
-    <link rel="apple-touch-icon" href="https://whatshalal.io/control/images/icons/favicon.png">
+    <!--BEGIN PAGE WRAPPER-->
+    <div id="page-wrapper">
+        <!--BEGIN TITLE & BREADCRUMB PAGE-->
+        <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+            <div class="page-header pull-left">
+                <div class="page-title">KYC Status</div>
+            </div>
+            <ol class="breadcrumb page-breadcrumb pull-right">
+                <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
+                        class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
 
-    <!--Loading bootstrap css-->
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/font-awesome/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/bootstrap/css/bootstrap.min.css">
-    <!--LOADING STYLESHEET FOR PAGE-->
-
-    <!-- <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/calendar/zabuto_calendar.min.css"> -->
-    <!--Loading style vendors-->
+                <li class="active">KYC</li>
+            </ol>
+            <div class="clearfix"></div>
+        </div>
 
 
-
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.css">
-    <!--Loading style-->
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/css/themes/style3/orange-blue.css" id="theme-change"
-        class="style-change color-change">
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/css/style-responsive.css">
-    <link href="https://whatshalal.io/control/css/patternLock.css" rel="stylesheet" type="text/css" />
-
-    <link type="text/css" rel="stylesheet" href="https://whatshalal.io/control/vendors/dataTables.bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
-</head>
-
-<body>
-        <div>
-                <!--END THEME SETTING-->
-                <!--BEGIN BACK TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
-                <!--END BACK TO TOP-->
-                <!--BEGIN TOPBAR-->
-                <div id="header-topbar-option-demo" class="page-header-topbar">
-                    <input type="hidden" id="datetime" value="https://whatshalal.io/datetime">
-                    <nav id="topbar" role="navigation" style="margin-bottom: 0;" data-step="3" data-intro="&lt;b&gt;Topbar&lt;/b&gt; has other styles with live demo. Go to &lt;b&gt;Layouts-&gt;Header&amp;Topbar&lt;/b&gt; and check it out."
-                        class="navbar navbar-default navbar-static-top">
-                        <div class="navbar-header">
-                            <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span
-                                    class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                                    class="icon-bar"></span></button>
-        
-                            <a id="logo" href="https://whatshalal.io/prashaasak/home" class="navbar-brand"><span class="fa fa-rocket"></span><span
-                                    class="logo-text">!!</span><span style="display: none" class="logo-text-icon">µ</span></a></div>
-                        <div class="topbar-main"><a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
-        
-        
-                            <ul class="nav navbar navbar-top-links navbar-right mbn">
-                                <li class="topbar-user"><label style="color: whitesmoke" id="dateid"></label></li>&nbsp;
-                                <li><a href="/logout"><i class=""></i>Log Out</a></li>
-        
-        
-                            </ul>
-                        </div>
-                    </nav>
-        
-                </div>
-                <!--END TOPBAR-->
-                <div id="wrapper">
-                    <!--BEGIN SIDEBAR MENU-->
-                    <nav id="sidebar" role="navigation" data-step="2" data-intro="Template has &lt;b&gt;many navigation styles&lt;/b&gt;" data-position="right"
-                        class="navbar-default navbar-static-side">
-                        <div class="sidebar-collapse menu-scroll">
-                            <ul id="side-menu" class="nav">
-                                    <div class="clearfix"></div>
-        
-        
-                                <li class=""><a href="/icoDashboardSetup/project/!!"><i class="fa fa-tachometer fa-fw">
-                                            <div class="icon-bg bg-orange"></div>
-                                        </i><span class="menu-title">Dashboard</span></a></li>
-        
-                                        <li class=""><a href="#"><i class="fa fa-tachometer fa-fw">
-                                                <div class="icon-bg bg-orange"></div>
-                                            </i><span class="menu-title">Site Configuration</span></a></li>
-        
-        
-        
-                                <li class=""><a href="#"><i class="fa fa-user fa-fw"><div class="icon-bg bg-pink"></div>
-                                        </i><span class="menu-title">Manage Users</span><span class="fa arrow"></span></a>
-                                    <ul class="nav nav-second-level collapse " style="height: 0 px;">
-                                        <li><a href="/"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">User List</span></a></li>
-        
-                                        <li><a href="http://localhost/icoDashboardSetup/project//userbalance"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">User Balance</span></a></li>
-                                        <li><a href="https://whatshalal.io/prashaasak/kyc_users"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">KYC verfication</span></a></li>
-        
-                                    </ul>
-        
-        
-                                </li>
-        
-        
-        
-                                <li class=""><a href="#"><i class="fa fa-exchange fa-fw"><div class="icon-bg bg-pink"></div>
-                                        </i><span class="menu-title">Transactions</span><span class="fa arrow"></span></a>
-                                    <ul class="nav nav-second-level collapse " style="height: 0 px;">
-                                        <!--  <li ><a href="https://whatshalal.io/prashaasak/transactions"  ><i class="fa fa-align-left"></i><span class="submenu-title">Exchange Transactions</span></a></li> -->
-                                        <li><a href="https://whatshalal.io/prashaasak/deposit_history"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">Deposit Transactions</span></a></li>
-        
-                                        <li><a href="https://whatshalal.io/prashaasak/updated_history"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">Updated Transactions</span></a></li>
-                                        <li><a href="https://whatshalal.io/prashaasak/withdraw_history"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">Send Transactions (Cryptocurrency)</span></a></li>
-                                        <li><a href="https://whatshalal.io/prashaasak/ico_history"><i class="fa fa-align-left"></i><span
-                                                    class="submenu-title">ICO Transaction</span></a></li>
-        
-        
-        
-                                    </ul>
-        
-        
-                                </li>
-        
-                                <li class=""><a href="https://whatshalal.io/prashaasak/user_activity"><i class="fa fa-user fa-fw">
-                                            <div class="icon-bg bg-orange"></div>
-                                        </i><span class="menu-title">User Activity</span></a></li>
-        
-        
-                                <li class=""><a href="https://whatshalal.io/prashaasak/mail_template"><i class="fa fa-envelope fa-fw">
-                                            <div class="icon-bg bg-orange"></div>
-                                        </i><span class="menu-title">Manage Email Template</span></a></li>
-        
-        
-        
-        
-        
-        
-                                        <li class=""><a href="/profile"><i class="fa fa-envelope fa-fw">
-                                                <div class="icon-bg bg-orange"></div>
-                                            </i><span class="menu-title">Admin Dashboard</span></a></li>
-        
-        
-        
-        
-        
-        
-        
-        
-                            </ul>
-                        </div>
-                    </nav>
-                    <!--END SIDEBAR MENU-->
-        
-            <!--BEGIN PAGE WRAPPER-->
-            <div id="page-wrapper">
-                <!--BEGIN TITLE & BREADCRUMB PAGE-->
-                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-                    <div class="page-header pull-left">
-                        <div class="page-title">KYC Status</div>
-                    </div>
-                    <ol class="breadcrumb page-breadcrumb pull-right">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
-                                class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-
-                        <li class="active">KYC</li>
-                    </ol>
-                    <div class="clearfix"></div>
-                </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-12">
 
 
-                <div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div id="tableactionTabContent" class="tab-content">
+                        <div id="table-table-tab" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-lg-12">
 
+                                    <div class="table-container">
 
-                            <div id="tableactionTabContent" class="tab-content">
-                                <div id="table-table-tab" class="tab-pane fade in active">
-                                    <div class="row">
-                                        <div class="col-lg-12">
+                                        <table id="example" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>verifiation status</th>
+                                                    <th>User status</th>
+                                                    <th>view KYC Documents</th>
 
-                                            <div class="table-container">
+                                                </tr>
+                                            </thead>
+                                        </table>
 
-                                                <table id="example" class="display" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
-                                                            <th>Email</th>
-                                                            <th>verifiation status</th>
-                                                            <th>User status</th>
-                                                            <th>view KYC Documents</th>
-
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-
-                                            </div>
-
-
-                                        </div>
                                     </div>
+
+
                                 </div>
                             </div>
-
                         </div>
                     </div>
+
                 </div>
-
-
-
-                <!--END CONTENT-->
-                <!--BEGIN FOOTER-->
-                <div id="footer">
-                </div>
-                <!--END FOOTER-->
             </div>
-            <!--END PAGE WRAPPER-->
         </div>
+
+
+
+        <!--END CONTENT-->
+        <!--BEGIN FOOTER-->
+        <div id="footer">
+        </div>
+        <!--END FOOTER-->
+    </div>
+    <!--END PAGE WRAPPER-->
+    </div>
     </div>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
@@ -252,7 +98,7 @@
                 $('#example').DataTable({
                     "scrollCollapse": true,
                     "paging": false,
-                    "ajax": "/kyctab/getICOdata",
+                    "ajax": "/icoDashboardSetup/project/<%= projectName %>/kyctab/getICOdata",
                     "columns": [
                         { "data": "id" },
                         { "data": "firstName" },
@@ -260,14 +106,13 @@
                         { "data": "email" },
                         { "data": "kyc_verified" },
                         { "data": "status" },
-                        { 
-                            "defaultContent": "<a href='/kyctab/projectName/don/1/getUserData'>click Here</a>"
-                        }
-                    ]
+                        { "data": "link" },
+                    ],
                 });
+                
             });
-        });
 
+        });
     </script>
 
     <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
@@ -291,10 +136,12 @@
 
             });
 
+        });
 
 
         });
     </script>
+
     <!--LOADING SCRIPTS FOR PAGE-->
 
 
@@ -302,6 +149,6 @@
 
 
 
-</body>
+    </body>
 
-</html>
+    </html>
