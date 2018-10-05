@@ -96,7 +96,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'contractAddress', 'contractHash']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash','networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {
