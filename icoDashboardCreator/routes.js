@@ -5,7 +5,7 @@ var client = db.client;
 
 module.exports = function (app,express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.contractInteraction);
-  app.get('/icoDashboardSetup/project/:projectName/contractData',impl.contractData);
+  app.get('/contractInteraction/project/:projectName/contractData',impl.contractData);
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
