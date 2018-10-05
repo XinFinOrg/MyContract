@@ -81,7 +81,7 @@
 
               <!-- <span class="dropdown dropdown-lang" ng-cloak>
                 <a tabindex="0"  aria-haspopup="true" aria-expanded="false" aria-label="change language. current language {{curLang}}" class="dropdown-toggle  btn btn-white" ng-click="dropdown = !dropdown">{{curLang}}</a>
-                <ul class="dropdown-menu2" ng-show="dropdown">
+                <ul class="dropdown-menu22" ng-show="dropdown">
                   <li><a ng-class="{true:'active'}[curLang=='Català']"          ng-click="changeLanguage('ca','Català'         )"> Català          </a></li>
                   <li><a ng-class="{true:'active'}[curLang=='Deutsch']"         ng-click="changeLanguage('de','Deutsch'        )"> Deutsch         </a></li>
                   <li><a ng-class="{true:'active'}[curLang=='Ελληνικά']"        ng-click="changeLanguage('el','Ελληνικά'       )"> Ελληνικά        </a></li>
@@ -117,7 +117,7 @@
                     {{gas.value}} Gwei
                     <i class="caret"></i>
                 </a>
-                <ul class="dropdown-menu2" ng-show="dropdownGasPrice">
+                <ul class="dropdown-menu22" ng-show="dropdownGasPrice">
                   <div class="header--gas">
                     <span translate="OFFLINE_Step2_Label_3">Gas Price</span>:
                     {{gas.value}} Gwei
@@ -162,7 +162,7 @@
                      <small>({{curNode.service}})</small>
                      <!-- <i class="caret"></i> -->
                 </a>
-                <ul class="dropdown-menu2" ng-show="dropdownNode">
+                <ul class="dropdown-menu22" ng-show="dropdownNode">
                   <li ng-repeat="(key, value) in nodeList">
                     <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
                       {{value.name}}
@@ -356,7 +356,7 @@
                   <!-- <i class="caret"></i> -->
               </a>
 
-              <ul class="dropdown dropdown-menu2" ng-show="dropdownExistingContracts">
+              <ul class="dropdown dropdown-menu22" ng-show="dropdownExistingContracts">
                 <li ng-repeat="abi in contractList.abiList track by $index">
                   <a ng-click="selectExistingAbi($index)">
                     {{abi.name}}
@@ -480,7 +480,7 @@
                   {{contract.selectedFunc==null ? "Select a function" : contract.selectedFunc.name}}
                   <i class="caret"></i>
                 </a>
-                <ul class="dropdown-menu2" ng-show="dropdownContracts">
+                <ul class="dropdown-menu22" ng-show="dropdownContracts">
                   <li ng-repeat="func in contract.functions track by $index">
                     <a ng-click="selectFunc($index)">
                       {{func.name}}
