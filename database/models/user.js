@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     //transaction relation
-    user.hasMany(models.icotransactions, {
+    user.hasMany(models.tokenTransferLog, {
       foreignKey: 'user_id',
       allowNull: true,
     });

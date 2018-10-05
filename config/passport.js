@@ -271,7 +271,6 @@ module.exports = function (passport) {
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status=true;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
-              currencyname[0].addUserCurrencyAddress(createdEthAddress);
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
               return done(null, createdClient.dataValues);
@@ -289,6 +288,7 @@ function generateEthAddress() {
     var keyStore = generateNewAccount();
     newEthAddress.privateKey = keyStore.privateKey;
     newEthAddress.address = keyStore.address;
+    newEthAddress.currencyType = "Ethereum";
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
   });
@@ -302,6 +302,7 @@ function generateBTCAddress() {
     let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
     newBTCAddress.address = address;
     newBTCAddress.privateKey = keyPair.toWIF();
+    newBTCAddress.currencyType = "Bitcoin";
     var createdBTCAddress = await Address.create(newBTCAddress);
     resolve(createdBTCAddress);
   });

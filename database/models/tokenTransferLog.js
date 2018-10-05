@@ -1,31 +1,37 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const icotransactions = sequelize.define('icotransactions', {
-    type:
-    {
+  const tokenTransferLog = sequelize.define('tokenTransferLog', {
+    uniqueId: {
+      allowNull:false,
+      primaryKey: true,
+      type:DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+    },
+
+    paymentMethod: {
       type:DataTypes.STRING,
       allowNull: false,
     },
-    amount:
-    {
+
+    tokenAmount: {
       type:DataTypes.FLOAT,
       allowNull:false,
     },
-    crypto_address:
-    {
+
+    address: {
       type:DataTypes.STRING,
       allowNull:true,
     },
-    icotransactions_hash:
-    {
+
+    transaction_hash: {
       type:DataTypes.STRING,
       allowNull:true,
     },
-    blockNumber:
-    {
+    tokenTransferStatus: {
       type:DataTypes.STRING,
       allowNull:true,
     },
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
@@ -38,6 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   }, {});
-  icotransactions.associate = function(models){};
-  return icotransactions;
+  tokenTransferLog.associate = function(models){};
+  return tokenTransferLog;
 };

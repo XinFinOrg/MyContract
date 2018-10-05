@@ -1,8 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const client = sequelize.define('client', {
-    uniqueId:
-    {
+    uniqueId:{
       allowNull:false,
       primaryKey: true,
       type:DataTypes.UUID,
@@ -112,13 +111,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'client_id',
       onDelete: 'CASCADE',
     });
-
-    //transaction
-    client.hasMany(models.icotransactions,
-      {
-        foreignKey:'client_id',
-        onDelete: 'CASCADE',
-      });
 
     //currencyaddress
     client.hasMany(models.userCurrencyAddress,

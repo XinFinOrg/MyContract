@@ -1,5 +1,6 @@
 var db = require('../database/models/index');
 var User = db.user;
+var tokenTransferLog = db.tokenTransferLog;
 const axios = require('axios');
 var Address = db.userCurrencyAddress;
 var fs = require('fs');
@@ -29,7 +30,8 @@ module.exports = {
       user: req.user,
       projectConfiguration: projectConfiguration,
       eth_address: eth_address,
-      btc_address: btc_address
+      btc_address: btc_address,
+      tokenTransferLogs: req.user.tokenTransferLogs
     });
   },
 
@@ -85,9 +87,16 @@ module.exports = {
       });
     } else {
       var projectConfiguration = req.user.projectConfiguration;
+      var startDate = new Date(projectConfiguration.startDate).toLocaleDateString();
+      var endDate = new Date(projectConfiguration.endDate).toLocaleDateString();
+      var startTime = new Date(projectConfiguration.startDate).toLocaleTimeString();
+      var datetime = startDate+ " "+ startTime;
       res.render('userDashboard', {
         user: req.user,
         projectConfiguration: projectConfiguration,
+        startDate: startDate,
+        endDate: endDate,
+        datetime: datetime
       });
     }
   },
@@ -101,6 +110,10 @@ module.exports = {
     });
 
     binance.prices((error, ticker) => {
+      if(error){
+        console.log(error);
+      }
+
       res.send({
         BTC: 1/ticker.ETHBTC,
         BTCUSD: ticker.BTCUSDT,
@@ -177,6 +190,7 @@ module.exports = {
         currencyType: 'Ethereum'
       }
     });
+    console.log(req.body.token_ETH);
     eth_address = eth_addresses[0].address;
 
     var masterETHList = await req.user.projectConfiguration.getUserCurrencyAddresses({
@@ -185,14 +199,21 @@ module.exports = {
       }
     });
     var masterETHAddress = masterETHList[0].address;
-    console.log(masterETHList);
     icoListener.buyToken(eth_address, masterETHAddress, eth_addresses[0].privateKey, req.body.amount)
     .then((receipt)=> {
-        res.send({'receipt': receipt});
+        initiateTokenTransfer(req.user, req.user.projectConfiguration, req.body.token_ETH, eth_address, "ETH");
     });
+    res.redirect('../../user/dashboard');
   },
 
   buyTokenBTC: async (req, res) => {
+    var eth_address;
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
+      }
+    });
+    eth_address = eth_addresses[0].address;
     var btc_address;
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
@@ -201,34 +222,36 @@ module.exports = {
     });
     btc_address = btc_addresses[0].address;
 
-    // var masterBTCList = await req.user.projectConfiguration.getUserCurrencyAddresses({
-    //   where: {
-    //     currencyType: 'masterBitcoin'
-    //   }
-    // });
-    // var masterBTCAddress = masterBTCList[0].address;
+    var masterBTCList = await req.user.projectConfiguration.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'masterBitcoin'
+      }
+    });
+    var masterBTCAddress = masterBTCList[0].address;
     var bitcoinTransaction = require('bitcoin-transaction');
     //Send all my money from wallet1 to wallet2 on the bitcoin testnet
     var from = btc_address;
-    // var to = masterBTCAddress;
+    console.log("From", from);
+    var to = masterBTCAddress;
     var privKeyWIF = btc_addresses[0].privateKey;
     bitcoinTransaction.sendTransaction({
   		from: from,
-  		to: "3Hd5iUpWJw4yeAi5pGGADKw2AFAmYTSXAV",
+  		to: to,
   		privKeyWIF: privKeyWIF,
   		btc: req.body.amount,
   		network: "mainnet",
       fee: "fastest",
-      dryrun: true
 	  }).then(receipt => {
-      console.log(receipt);
+      initiateTokenTransfer(req.user, req.user.projectConfiguration, req.body.token_BTC, eth_address, "BTC");
     });
+    res.redirect('../../user/dashboard');
   },
 
   checkTokenStats: (req, res) => {
-    icoListener.checkTokenStats(req.user.projectConfiguration.tokenContractAddress).then(onSaleTokens => {
-      res.send({'onSaleTokens': onSaleTokens});
-    });
+    // icoListener.checkTokenStats(req.user.projectConfiguration.tokenContractAddress).then(onSaleTokens => {
+    //   res.send({'onSaleTokens': onSaleTokens});
+    // });
+    res.send("Hey")
   },
 
   getTransactionList: async (req, res) => {
@@ -242,6 +265,8 @@ module.exports = {
 
     axios.get("http://api.etherscan.io/api?module=account&action=txlist&address="+eth_address+"&startblock=0&endblock=99999999&sort=asc&apikey=DSH5B24BQYKD1AD8KUCDY3SAQSS6ZAU175").then(response => {
       res.send(response.data.result)
+    }).catch(err => {
+      res.send("Failed");
     });
   },
 
@@ -255,6 +280,23 @@ module.exports = {
     btc_address = btc_addresses[0].address;
     axios.get("https://blockchain.info/unspent?active="+btc_address).then(response => {
       res.send(response.data.unspent_outputs)
+    }).catch(err => {
+      res.send("Failed");
     });
   }
+}
+
+function initiateTokenTransfer(user, project, amount, address, currencyType){
+  console.log("Token amount is ",amount);
+  var newTokenTransferLog = new Object();
+  // set the user's local credentials
+  newTokenTransferLog.tokenAmount = amount;
+  newTokenTransferLog.address = address;
+  newTokenTransferLog.paymentMethod = currencyType;
+  newTokenTransferLog.tokenTransferStatus = "Pending";
+  tokenTransferLog.create(newTokenTransferLog).then(log=> {
+    console.log("New Transfer Log Created");
+    user.addTokenTransferLog(log);
+    project.addTokenTransferLog(log);
+  });
 }

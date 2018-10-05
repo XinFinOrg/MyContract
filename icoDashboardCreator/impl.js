@@ -9,14 +9,10 @@ var User = db.user;
 var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var Address = db.userCurrencyAddress;
-var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
 
-
-
-
 module.exports = {
-  //client setup 
+  //client setup
   contractInteraction: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
@@ -80,9 +76,9 @@ module.exports = {
     await ImageDataURI.encodeFromFile(req.files[0].path)
     .then(imgurl => {
       // console.log(imgurl);
-     projectdatavalues.siteLogo = imgurl ; 
+     projectdatavalues.siteLogo = imgurl ;
     // if (req.files[0]) {
-    //   projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path); 
+    //   projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path);
     // }
     projectdatavalues.siteName = req.body.site_name
     projectdatavalues.softCap = req.body.soft_cap
@@ -116,7 +112,7 @@ module.exports = {
     })
     userdata.forEach(element => {
       element.dataValues.link="<a href='/icoDashboardSetup/project/"+ req.params.projectName+"/kyctab/"+ element.dataValues.id+"/getUserData'>click Here</a>"
-      // console.log(element) 
+      // console.log(element)
     });
     console.log(userdata)
     res.send({

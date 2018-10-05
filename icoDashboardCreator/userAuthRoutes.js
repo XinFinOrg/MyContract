@@ -6,7 +6,7 @@ var db = require('../database/models/index');
 var User = db.user;
 var Currency = db.currency;
 var Address = db.userCurrencyAddress;
-var Transactions = db.icotransactions;
+var Transactions = db.tokenTransferLog;
 var Project = db.projectConfiguration;
 var configAuth = require('../config/auth');
 

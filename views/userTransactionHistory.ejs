@@ -10,6 +10,30 @@
         <div class="content_box">
           <div class="table-responsive">
             <table class="table">
+              <h4>Token Transactions</h4>
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>Payment Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(var i=0; i< tokenTransferLogs.length; i++) { %>
+                <tr>
+                  <td><%= i+1 %> </td>
+                  <td><%= tokenTransferLogs[i].paymentMethod %> </td>
+                  <td><%= tokenTransferLogs[i].tokenAmount %> </td>
+                  <td><%= tokenTransferLogs[i].tokenTransferStatus %> </td>
+                  <td><%= tokenTransferLogs[i].createdAt %> </td>
+                </tr>
+                <% } %>
+
+              </tbody>
+            </table>
+            <table class="table">
               <h4>Ethereum</h4>
               <thead>
                 <tr>
@@ -58,7 +82,7 @@
   function getTransactions() {
     $.get('./api/getTransactions', function(result) {
       var trHTML = '';
-
+      console.log("<%= tokenTransferLogs %>");
       $.each(result, function(i, item) {
         trHTML += '<tr><td>' + item.hash + '</td>';
         trHTML += '<td>' + item.value/(10 **18) + " Ether"+'</td>';

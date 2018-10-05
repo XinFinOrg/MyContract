@@ -1,8 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const projectConfiguration = sequelize.define('projectConfiguration', {
-    uniqueId:
-    {
+    uniqueId: {
       allowNull: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
@@ -138,7 +137,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
 
-    projectConfiguration.hasMany(models.icotransactions, {
+    projectConfiguration.hasMany(models.tokenTransferLog, {
       foreignKey: 'project_id',
       allowNull: true,
       onDelete: 'CASCADE'
