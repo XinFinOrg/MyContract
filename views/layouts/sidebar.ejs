@@ -134,6 +134,8 @@
               <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item"><a href="/customContract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
                       class="hide-menu"> CrowdSale(ERC 20)</span></a></li>
+                <li class="sidebar-item"><a href="/ERC223Contract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
+                      class="hide-menu"> CrowdSale(ERC 223)</span></a></li>
                 <li class="sidebar-item"><a href="/erc721Contract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
                       class="hide-menu"> Asset Tokenization (NFT)</span></a></li>
               </ul>
@@ -146,7 +148,11 @@
                   <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                     <% if(ProjectConfiguration.networkType != "mainnet") {%>
                       <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
+<<<<<<< Updated upstream
                             id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>",false) class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+=======
+                            id="deployment" onclick=deploy( "<%= ProjectConfiguration.coinName %>",false) class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+>>>>>>> Stashed changes
                       <% }else{%>
                         <% } %>
 
@@ -164,10 +170,10 @@
                   <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                     <% if (ProjectConfiguration.crowdsaleContractAddress>0) { %>
                       <li class="sidebar-item"><a href="/contractInteraction/project/<%= ProjectConfiguration.coinName %>"
-                        class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                          class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
                       <% } else { %>
                         <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                          class="hide-menu">No Projects Yet </span></a></li>
+                              class="hide-menu">No Projects Yet </span></a></li>
                         <% } %>
                           <% }) %>
                             <% } else { %>
