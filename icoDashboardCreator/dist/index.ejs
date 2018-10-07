@@ -357,7 +357,7 @@
                   <!-- <i class="caret"></i> -->
               </a>
 
-              <ul class="dropdown dropdown-menu2" ng-show="dropdownExistingContracts">
+              <ul class="dropdown dropdown-toogle" ng-show="dropdownExistingContracts">
                 <li ng-repeat="abi in contractList.abiList track by $index">
                   <a ng-click="selectExistingAbi($index)">
                     {{abi.name}}

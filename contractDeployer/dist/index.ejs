@@ -193,7 +193,7 @@
                   <small>({{curNode.service}})</small>
                   <!-- <i class="caret"></i> -->
                 </a>
-                <ul class="dropdown-toggle" ng-show="dropdownNode">
+                <ul class="dropdown-menu2" ng-show="dropdownNode">
                   <li ng-repeat="(key, value) in nodeList">
                     <a ng-class="{true:'active'}[curNode == key]" ng-click="changeNode(key)">
                       {{value.name}}
