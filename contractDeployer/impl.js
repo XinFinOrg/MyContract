@@ -16,6 +16,7 @@ var web3 = new Web3(provider);
 
 module.exports = {
   getBytecode: async function (req, res) {
+    console.log( req.query.coinName," req.query.coinName")
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
     ProjectConfiguration.find({
@@ -34,9 +35,12 @@ module.exports = {
           await projectData.save();
         }
       } else {
+        console.log("here1",byteCode);
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
+          console.log("here",byteCode);
           byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
+          console.log("here2");
           projectData.tokenByteCode = byteCode;
           await projectData.save();
         }
