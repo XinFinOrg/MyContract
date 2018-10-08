@@ -227,6 +227,8 @@ contract ERC20 is IERC20 {
     _balances[account] = _balances[account].add(amount);
     emit Transfer(address(0), account, amount);
   }
+  
+  function()payable external{}
 
   /**
    * @dev Internal function that burns an amount of the token of a given

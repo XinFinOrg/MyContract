@@ -16,35 +16,39 @@ var web3 = new Web3(provider);
 
 module.exports = {
   getBytecode: async function (req, res) {
-    console.log( req.query.coinName," req.query.coinName")
+    console.log("hello");
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
     ProjectConfiguration.find({
       where: {
         'coinName': coinName
       },
-      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
     }).then(async projectData => {
       if (projectData.tokenContractAddress != null) {
         byteCode = projectData.crowdsaleByteCode;
         if (byteCode == null) {
-          byteCode = solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'].bytecode;
-          byteCode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
-          console.log(projectData.ETHRate, address, projectData.tokenContractAddress);
-          projectData.crowdsaleByteCode = byteCode;
+          byteCode = await solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'];
+          byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
+          projectData.crowdsaleByteCode = byteCode.bytecode; 
+          projectData.crowdsaleABICode = byteCode.interface;
+          byteCode = byteCode.bytecode
           await projectData.save();
         }
       } else {
-        console.log("here1",byteCode);
+        console.log("hello2");
         byteCode = projectData.tokenByteCode;
+        console.log("here3", byteCode);
         if (byteCode == null) {
-          console.log("here",byteCode);
-          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
+          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']    //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
           console.log("here2");
-          projectData.tokenByteCode = byteCode;
+          projectData.tokenByteCode = byteCode.bytecode;
+          projectData.tokenABICode = byteCode.interface;
+          byteCode = byteCode.bytecode
           await projectData.save();
         }
       }
+      console.log("here3");
       res.send({
         bytecode: byteCode
       })
@@ -128,16 +132,16 @@ module.exports = {
   getDeployer: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-  if(req.query.coinName == null){
-        res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
-          user: req.user,
-          address: address,
-          ProjectConfiguration: projectArray,
-        });
-      } else {
-        req.session.coinName = req.query.coinName;
-        res.redirect("/generatedCrowdsaleContract");
-      }
+    if (req.query.coinName == null) {
+      res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
+        user: req.user,
+        address: address,
+        ProjectConfiguration: projectArray,
+      });
+    } else {
+      req.session.coinName = req.query.coinName;
+      res.redirect("/generatedCrowdsaleContract");
+    }
   },
 };
 

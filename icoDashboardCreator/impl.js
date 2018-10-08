@@ -167,12 +167,14 @@ module.exports = {
         'coinName': req.params.projectName
       },
       attributes: {
-        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash','crowdsaleABICode','tokenABICode']
       }
     }).then(result =>
       res.send({
         "tokenAddress": result.dataValues.tokenContractAddress,
-        "crowdSaleAddress": result.dataValues.crowdsaleContractAddress
+        "crowdSaleAddress": result.dataValues.crowdsaleContractAddress,
+        "crowdsaleABICode":result.dataValues.crowdsaleABICode,
+        "tokenABICode":result.dataValues.tokenABICode
       })
     )
   },

@@ -88,6 +88,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    tokenABICode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     tokenContractHash: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -101,6 +105,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     crowdsaleByteCode: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    crowdsaleABICode: {
       type: DataTypes.TEXT,
       allowNull: true,
     },

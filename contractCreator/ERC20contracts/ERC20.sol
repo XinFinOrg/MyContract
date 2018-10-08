@@ -175,16 +175,6 @@ contract ERC20 is IERC20 {
   }
   
   // custom function start 
-  function setTotalTokensForPublicSale(uint _value) onlyOwner {
-     require(_value != 0);
-        _balances[_crawdSaleTokenAddress] = _balances[_crawdSaleTokenAddress].add(_value);
-  }
-  
-   function updateOnSaleSupply(uint _newSupply) onlyOwner {
-      require(_newSupply != 0);
-       _balances[_crawdSaleTokenAddress] = _newSupply;
-  }
-  
   function sendTokensToOwner(uint _tokens) onlyOwner returns (bool ok){
       require(_balances[this] >= _tokens);
       _balances[this] =_balances[this].sub(_tokens);
