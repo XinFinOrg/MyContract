@@ -4,7 +4,7 @@ contract UpgradeAgent {
   uint public originalSupply;
 
   /** Interface marker */
-  function isUpgradeAgent() public constant returns (bool) {
+  function isUpgradeAgent() pure public returns (bool) {
     return true;
   }
 
@@ -84,7 +84,7 @@ contract Upgradeable is ERC20{
 
       // Upgrade agent reissues the tokens
       upgradeAgent.upgradeFrom(msg.sender, value);
-      Upgrade(msg.sender, upgradeAgent, value);
+      emit Upgrade(msg.sender, upgradeAgent, value);
   }
 
   /**
@@ -109,7 +109,7 @@ contract Upgradeable is ERC20{
       // Make sure that token supplies match in source and target
       require(upgradeAgent.originalSupply() == _totalSupply);
 
-      UpgradeAgentSet(upgradeAgent);
+      emit UpgradeAgentSet(upgradeAgent);
   }
 
   /**
@@ -136,7 +136,7 @@ contract Upgradeable is ERC20{
   /**
    * Child contract can enable to provide the condition when the upgrade can begun.
    */
-  function canUpgrade() public constant returns(bool) {
+  function canUpgrade() public pure returns(bool) {
      return true;
   }
 

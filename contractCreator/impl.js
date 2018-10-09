@@ -149,7 +149,7 @@ module.exports = {
     var isPausable = (req.body.isPausable == "on") ? true : false;
     var isBurnable = (req.body.isBurnable == "on") ? true : false;
     var isMintable = (req.body.isMintable == "on") ? true : false;
-    var isUpgradeable = ""; //(req.body.isUpgradeable == "on") ? true : false;
+    var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
     var ERC20CappedSign = "";
     inherits = "";
 

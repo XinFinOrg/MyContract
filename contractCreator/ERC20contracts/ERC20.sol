@@ -11,11 +11,11 @@
 contract ERC20 is IERC20 {
   using SafeMath for uint256;
 
-  mapping (address => uint256)  _balances;
+  mapping (address => uint256) internal  _balances;
 
   mapping (address => mapping (address => uint256)) private _allowed;
 
-  uint256  _totalSupply;
+  uint256 internal _totalSupply;
   
   address _crawdSaleTokenAddress;
   

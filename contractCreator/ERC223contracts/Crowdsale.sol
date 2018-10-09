@@ -3,6 +3,8 @@ pragma solidity ^0.4.24;
 <%- SafeMath %>
 <%- IERC20 %>
 <%- SafeERC20 %>
+<%- ERC223_receiving_contract %>
+
 
 /**
  * @title Crowdsale
@@ -16,7 +18,7 @@ pragma solidity ^0.4.24;
  * the methods to add functionality. Consider using 'super' where appropriate to concatenate
  * behavior.
  */
-contract Crowdsale {
+contract Crowdsale{
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
 
@@ -75,7 +77,17 @@ contract Crowdsale {
    * @dev fallback function ***DO NOT OVERRIDE***
    */
   function () external payable {
-    buyTokens(msg.sender);
+     uint codeLength;
+        assembly {
+            // Retrieve the size of the code on target address, this needs assembly .
+            codeLength := extcodesize(msg.sender)
+        }
+          if(codeLength>0) {
+          revert();
+        } else {
+          buyTokens(msg.sender);
+        }
+    
   }
 
   /**

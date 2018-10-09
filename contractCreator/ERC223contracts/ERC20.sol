@@ -9,13 +9,13 @@
 contract ERC20 is IERC20 {
   using SafeMath for uint256;
 
-  mapping (address => uint256) private _balances;
+  mapping (address => uint256) internal _balances;
 
   mapping (address => mapping (address => uint256)) private _allowed;
 
-  uint256 private _totalSupply;
+  uint256 internal _totalSupply;
   
-   address private _owner;
+   address internal _owner;
   
   /*modifier to control Crowdsale function access*/
    modifier onlyOwner {
@@ -124,6 +124,23 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+    function() public{
+       uint codeLength;
+      //bytes memory empty;
+       address _from = msg.sender;
+
+        assembly {
+            // Retrieve the size of the code on target address, this needs assembly .
+            codeLength := extcodesize(_from)
+        }
+          if(codeLength>0) {
+           // ERC223ReceivingContract receiver = ERC223ReceivingContract(address(this));
+           // receiver.tokenFallback(msg.sender, value, empty);
+           revert();
+        }
+
+    }
+
   /**
    * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
    * Beware that changing an allowance with this method brings the risk that someone may use both the old
@@ -228,8 +245,6 @@ contract ERC20 is IERC20 {
     emit Transfer(address(0), account, amount);
   }
   
-  function()payable external{}
-
   /**
    * @dev Internal function that burns an amount of the token of a given
    * account.
@@ -244,19 +259,6 @@ contract ERC20 is IERC20 {
     _balances[account] = _balances[account].sub(amount);
     emit Transfer(account, address(0), amount);
   }
-  
-  //start custom Internal
-   function upgrade(uint256 value) internal {
-          // Validate input value.
-      require(value != 0);
-
-      _balances[msg.sender] = _balances[msg.sender].sub(value);
-
-      // Take tokens out from circulation
-      _totalSupply = _totalSupply.add(value);
-   }
-  //end custom Internal
-
   /**
    * @dev Internal function that burns an amount of the token of a given
    * account, deducting from the sender's allowance for said account. Uses the
@@ -291,7 +293,6 @@ contract ERC20 is IERC20 {
 
     function destroyToken() public {
         require(_owner == msg.sender);
-        0xBDa39e89DF49c4Ae5Ffc7a8361331C61d939f159.transfer(address(this).balance);
         selfdestruct(msg.sender);
   }
   
