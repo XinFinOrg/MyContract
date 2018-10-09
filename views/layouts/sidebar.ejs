@@ -17,6 +17,16 @@
   <!-- Custom CSS -->
   <link href="assets/css/style.min.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
+  <!-- All Jquery -->
+  <script src="assets/libs/jquery/jquery.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/xdce_abi.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="assets/libs/popper.js/popper.min.js"></script>
+  <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+  <!-- apps -->
+  <script src="assets/js/app.min.js"></script>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -147,8 +157,7 @@
                 <% if (ProjectConfiguration.length>0) { %>
                   <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                     <% if(ProjectConfiguration.networkType != "mainnet") {%>
-                      <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                            id="deployment" onclick=deploy("<%= ProjectConfiguration.coinName %>",false) class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
+                      <li id="deployment" onclick='deploy("<%- ProjectConfiguration.coinName %>",false)' class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a></li>
                       <% }else{%>
                         <% } %>
 
@@ -169,7 +178,7 @@
                           class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
                       <% } else { %>
                         <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                              class="hide-menu">No Projects Yet </span></a></li>
+                              class="hide-menu"><%= ProjectConfiguration.coinName %> (Not Deployed Yet) </span></a></li>
                         <% } %>
                           <% }) %>
                             <% } else { %>
@@ -262,14 +271,6 @@
       <!-- End footer -->
       <!-- / ICO Plarform Coming Soon modal -->
 
-
-      <!-- All Jquery -->
-      <script src="assets/libs/jquery/jquery.min.js"></script>
-      <!-- Bootstrap tether Core JavaScript -->
-      <script src="assets/libs/popper.js/popper.min.js"></script>
-      <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
-      <!-- apps -->
-      <script src="assets/js/app.min.js"></script>
 
       <script>
         $(function () {

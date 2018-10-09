@@ -4,7 +4,9 @@ module.exports = function(app) {
   app.get('/buyPackage', isLoggedIn, impl.buyPackage);
   app.get('/payment', isLoggedIn, impl.payment);
   app.get('/buyToken', isLoggedIn, impl.buyToken);
-  app.get('/getBalances', isLoggedIn, impl.getBalances)
+  app.get('/getBalances', isLoggedIn, impl.getBalances);
+  app.post('/api/getPaymentToken', isLoggedIn, impl.getPaymentToken);
+  app.post('/api/sendPaymentInfo', isLoggedIn, impl.sendPaymentInfo);
 }
 
 // route middleware to make sure a user is logged in

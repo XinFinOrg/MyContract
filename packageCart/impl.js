@@ -1,4 +1,5 @@
-var QRCode = require('qrcode');
+const jwt = require('jsonwebtoken');
+var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
 var paymentListener = require('./paymentListener');
@@ -84,6 +85,28 @@ module.exports = {
         'ETH': ethBalance
       });
     });
+  },
+
+  getPaymentToken: (req, res) => {
+    console.log(req.user.uniqueId);
+    console.log(req.body.address);
+    const token = jwt.sign({
+      userHash: req.user.uniqueId,
+      address: req.body.hash
+    }, configAuth.jwtAuthKey.secret, {
+        expiresIn: 60*5
+      });
+    //Send back the token to the user
+    res.cookie('paymentToken', token, {
+      expire: 3600 + Date.now()
+    });
+    return res.json({
+      'token': "success"
+    });
+  },
+
+  sendPaymentInfo: (req, res) => {
+
   }
 }
 
