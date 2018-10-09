@@ -57,6 +57,7 @@
   
                             </div>
                           </div>
+                          <span class="alert-danger" id="token_decimals_error"></span>
                         </div>
   
                         <hr>
@@ -71,6 +72,7 @@
   
                             </div>
                           </div>
+                          <span class="alert-danger" id="token_supply_error"></span>
                         </div>
   
                         <div class="form-group">
@@ -84,6 +86,7 @@
                             </div>
                           </div>
                         </div>
+                        <span class="alert-danger" id="eth_tokens_error"></span>
                         <hr>
   
                         <h4>Advanced Functionalities</h4><br>
@@ -210,5 +213,44 @@
     document.getElementById("tokenname").innerHTML=myInput.value;
     }
   </script>
+  <script>
+      var myInput = document.getElementById("token_symbol");
+      myInput.onkeyup = function () {
+        document.getElementById("tokenname").innerHTML = myInput.value;
+      }
+      var myInput2 = document.getElementById("eth_tokens");
+      myInput2.onkeyup = function () {
+        if (myInput2.value % 1 != 0 || myInput2.value < 0) {
+          submitButton
+          document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+          document.getElementById("submitButton").disabled = "disabled";
+        } else {
+          document.getElementById("eth_tokens_error").innerHTML = '';
+          document.getElementById("submitButton").disabled = "";
+        }
+      }
+      var myInput3 = document.getElementById("token_supply");
+      myInput3.onkeyup = function () {
+        if (myInput3.value % 1 != 0 || myInput3.value < 0) {
+          submitButton
+          document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+          document.getElementById("submitButton").disabled = "disabled";
+        } else {
+          document.getElementById("token_supply_error").innerHTML = '';
+          document.getElementById("submitButton").disabled = "";
+        }
+      }
+      var myInput4 = document.getElementById("token_decimals");
+      myInput4.onkeyup = function () {
+        if (myInput4.value % 1 != 0 || myInput4.value < 0) {
+          submitButton
+          document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+          document.getElementById("submitButton").disabled = "disabled";
+        } else {
+          document.getElementById("token_decimals_error").innerHTML = '';
+          document.getElementById("submitButton").disabled = "";
+        }
+      }
+    </script>
   
   </html>
