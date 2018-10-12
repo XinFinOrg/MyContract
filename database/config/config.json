@@ -12,7 +12,7 @@
   },
   "test": {
     "username": "postgres",
-    "password": 123,
+    "password": 1234,
     "database": "autoCoin",
     "host": "localhost",
     "dialect": "postgres"
