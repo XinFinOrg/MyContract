@@ -10,6 +10,7 @@ var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var Address = db.userCurrencyAddress;
 var Project = db.projectConfiguration;
+var transactionLog = db.tokenTransferLog;
 
 module.exports = {
   //client setup
@@ -62,7 +63,7 @@ module.exports = {
         res.send({
           data: dataobj,
           message: "updated!",
-          Buffer:values.dataValues.siteLogo
+          Buffer: values.dataValues.siteLogo
         })
       }
     });
@@ -74,30 +75,26 @@ module.exports = {
       }
     })
     await ImageDataURI.encodeFromFile(req.files[0].path)
-    .then(imgurl => {
-      // console.log(imgurl);
-     projectdatavalues.siteLogo = imgurl ;
-    // if (req.files[0]) {
-    //   projectdatavalues.siteLogo = fs.readFileSync(req.files[0].path);
-    // }
-    projectdatavalues.siteName = req.body.site_name
-    projectdatavalues.softCap = req.body.soft_cap
-    projectdatavalues.hardCap = req.body.hard_cap
-    projectdatavalues.startDate = req.body.start_date
-    projectdatavalues.endDate = req.body.end_date
-    projectdatavalues.homeURL = req.body.website_url
-    projectdatavalues.minimumContribution = req.body.minimum_contribution
-    })
+      .then(imgurl => {
+        projectdatavalues.siteLogo = imgurl;
+        projectdatavalues.siteName = req.body.site_name
+        projectdatavalues.softCap = req.body.soft_cap
+        projectdatavalues.hardCap = req.body.hard_cap
+        projectdatavalues.startDate = req.body.start_date
+        projectdatavalues.endDate = req.body.end_date
+        projectdatavalues.homeURL = req.body.website_url
+        projectdatavalues.minimumContribution = req.body.minimum_contribution
+      })
     projectdatavalues.save().then(() => {
       console.log("Project updated successfully!");
-      res.redirect("/siteConfiguration/project/" +req.params.projectName)
+      res.redirect("/siteConfiguration/project/" + req.params.projectName)
     });
   },
 
   getKYCPage: async function (req, res) {
-    res.render("kyctab.ejs",{
+    res.render("kyctab.ejs", {
       user: req.user,
-        projectName: req.params.projectName
+      projectName: req.params.projectName
     })
   },
   getICOdata: async function (req, res) {
@@ -107,16 +104,15 @@ module.exports = {
         "projectConfigurationCoinName": req.params.projectName
       },
       attributes: {
-        exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password", "uniqueId"]
+        exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password"]
       }
     })
     userdata.forEach(element => {
-      element.dataValues.link="<a href='/icoDashboardSetup/project/"+ req.params.projectName+"/kyctab/"+ element.dataValues.id+"/getUserData'>click Here</a>"
+      element.dataValues.link = "<a href='/icoDashboardSetup/project/" + req.params.projectName + "/kyctab/" + element.dataValues.uniqueId + "/getUserData'>click Here</a>"
       // console.log(element)
     });
-    console.log(userdata)
     res.send({
-      data:userdata
+      data: userdata
     });
   },
   getUserData: async function (req, res) {
@@ -124,18 +120,10 @@ module.exports = {
     User.find({
       where: {
         "projectConfigurationCoinName": req.params.projectName,
-        "id": req.params.userid
+        "uniqueId": req.params.uniqueId
       },
-    }).then(result => {
-      console.log(result.dataValues)
+    }).then(async result => {
       userdata = result.dataValues;
-      console.log(userdata, "helloS")
-
-      if (result.dataValues.kycDoc1) {
-        userdata.kycDoc1 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc1).toString('base64')
-        userdata.kycDoc2 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc2).toString('base64')
-        userdata.kycDoc3 = 'data:image/bmp;base64,' + Buffer.from(result.dataValues.kycDoc3).toString('base64')
-      }
       res.render("adminKYCpanel.ejs", {
         KYCdata: userdata,
         projectName: req.params.projectName
@@ -144,10 +132,11 @@ module.exports = {
 
   },
   updateUserData: async function (req, res) {
+    console.log(req.params)
     var userdata = await User.find({
       where: {
         "projectConfigurationCoinName": req.params.projectName,
-        "id": req.params.userid
+        "uniqueId": req.params.uniqueId
       },
     })
     userdata.kyc_verified = req.body.kyc_verified;
@@ -157,7 +146,7 @@ module.exports = {
         console.log("not updated");
       console.log("updated");
     })
-    res.redirect("/icoDashboardSetup/project/"+req.params.projectName+"/kyctab")
+    res.redirect("/icoDashboardSetup/project/" + req.params.projectName + "/kyctab")
   },
 
   contractData: async function (req, res) {
@@ -167,14 +156,14 @@ module.exports = {
         'coinName': req.params.projectName
       },
       attributes: {
-        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash','crowdsaleABICode','tokenABICode']
+        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
       }
     }).then(result =>
       res.send({
         "tokenAddress": result.dataValues.tokenContractAddress,
         "crowdSaleAddress": result.dataValues.crowdsaleContractAddress,
-        "crowdsaleABICode":result.dataValues.crowdsaleABICode,
-        "tokenABICode":result.dataValues.tokenABICode
+        "crowdsaleABICode": result.dataValues.crowdsaleABICode,
+        "tokenABICode": result.dataValues.tokenABICode
       })
     )
   },
@@ -261,6 +250,24 @@ module.exports = {
         res.redirect('./' + user.projectConfigurationCoinName + '/userLogin');
       });
     });
+  },
+  getTransaction: (req, res) => {
+    res.render("transaction.ejs", {
+      user: req.user,
+      projectName: "XDC"
+    });
+  },
+  getTransactionData: async (req, res) => {
+    transactionLog = await db.projectConfiguration.find({
+      where: {
+        'coinName': "XDC"
+      },
+      exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode'],
+      include: [{
+        model: transactionLog,
+      }]
+    });
+    res.send(transactionLog);
   }
 
 }

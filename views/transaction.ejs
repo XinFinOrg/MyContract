@@ -5,7 +5,7 @@
         <!--BEGIN TITLE & BREADCRUMB PAGE-->
         <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
             <div class="page-header pull-left">
-                <div class="page-title">KYC Status</div>
+                <div class="page-title">Transaction Logs</div>
             </div>
             <ol class="breadcrumb page-breadcrumb pull-right">
                 <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
@@ -33,12 +33,13 @@
                                             <thead>
                                                 <tr>
                                                     <!-- <th>ID</th> -->
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Email</th>
-                                                    <th>verifiation status</th>
-                                                    <th>User status</th>
-                                                    <th>view KYC Documents</th>
+                                                    <th>Payment Method</th>
+                                                    <th>Token Amount</th>
+                                                    <th>Address</th>
+                                                    <th>Transaction Hash</th>
+                                                    <th>Transfer Status</th>
+                                                    <th>Created At</th>
+                                                    <th>Updated At</th>
 
                                                 </tr>
                                             </thead>
@@ -98,15 +99,16 @@
                 $('#example').DataTable({
                     "scrollCollapse": true,
                     "paging": false,
-                    "ajax": "/icoDashboardSetup/project/<%= projectName %>/kyctab/getICOdata",
+                    "ajax": "/transactionData",
                     "columns": [
                         // { "data": "id" },
-                        { "data": "firstName" },
-                        { "data": "lastName" },
-                        { "data": "email" },
-                        { "data": "kyc_verified" },
-                        { "data": "status" },
-                        { "data": "link" },
+                        { "data": "paymentMethod" },
+                        { "data": "tokenAmount" },
+                        { "data": "address" },
+                        { "data": "transaction_hash" },
+                        { "data": "tokenTransferStatus" },
+                        { "data": "createdAt" },
+                        { "data": "updatedAt" },
                     ],
                 });
 

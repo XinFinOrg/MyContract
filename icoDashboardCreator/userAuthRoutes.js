@@ -52,6 +52,7 @@ function isAuthenticated(req, res, next) {
 }
 
 function kycVerified(req, res, next) {
+  console.log(req.user.kyc_verified)
 
   switch (req.user.kyc_verified) {
     case "active":

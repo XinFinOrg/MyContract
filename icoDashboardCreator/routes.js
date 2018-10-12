@@ -6,14 +6,19 @@ var client = db.client;
 module.exports = function (app,express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   app.get('/contractInteraction/project/:projectName/contractData',impl.contractData);
+
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
+  app.get('/transaction', impl.getTransaction)
+  app.get('/transactionData', impl.getTransactionData)
+
   app.get('/icoDashboardSetup/project/:projectName/kyctab', impl.getKYCPage);
   app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata', impl.getICOdata);
-  app.get('/icoDashboardSetup/project/:projectName/kyctab/:userid/getUserData', impl.getUserData);
-  app.post('/icoDashboardSetup/project/:projectName/kyctab/:userid/updateUserData', impl.updateUserData);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData', impl.getUserData);
+  app.post('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', impl.updateUserData);
+  
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);
