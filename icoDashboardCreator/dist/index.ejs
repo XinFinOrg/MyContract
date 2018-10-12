@@ -156,12 +156,12 @@
                 <a tabindex="0"
                    aria-haspopup="true"
                    aria-label="change node. current node {{curNode.name}} node by {{curNode.service}}"
-                   class="dropdown-toggle  btn btn-white"
+                   class="dropdown-toggle2  btn btn-info btn-rounded"
                    ng-click="dropdownNode = !dropdownNode">
                      <span translate="X_Network">Network:</span>
                      {{curNode.name}}
                      <small>({{curNode.service}})</small>
-                     <!-- <i class="caret"></i> -->
+                     <i class="caret"></i>
                 </a>
                 <ul class="dropdown-menu2" ng-show="dropdownNode">
                   <li ng-repeat="(key, value) in nodeList">
@@ -215,8 +215,8 @@
           </nav> -->
 
            <article class="modal fade" id="customNodeModal" tabindex="-1">
-            <section class="modal-dialog">
-              <section class="modal-content">
+            <section class="modal-dialog2">
+              <section class="modal-content2">
 
                 <div class="modal-body">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close Dialog">&times;</button>
@@ -282,10 +282,10 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button class="btn btn-default" data-dismiss="modal" translate="x_Cancel">
+                  <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="x_Cancel">
                     Cancel
                   </button>
-                  <button class="btn btn-primary" ng-click="saveCustomNode()" translate="NODE_CTA">
+                  <button class="btn btn-rounded btn-info" ng-click="saveCustomNode()" translate="NODE_CTA">
                     Save &amp; Use Custom Node
                   </button>
                 </div>
@@ -349,15 +349,15 @@
 
             <div class="dropdown">
 
-              <a class="btn btn-rounded btn-info dropdown-toggle"
-                 class="dropdown-toggle"
+              <a class="btn btn-rounded btn-info dropdown-toggle2"
+                 class="dropdown-toggle2"
                  ng-click="dropdownExistingContracts = !dropdownExistingContracts">
                   {{selectedAbi.name}}
                   <small class="mono">{{selectedAbi.address}}</small>
-                  <!-- <i class="caret"></i> -->
+                  <i class="caret"></i>
               </a>
 
-              <ul class="dropdown dropdown-toogle" ng-show="dropdownExistingContracts">
+              <ul class="dropdown dropdown-toogle2" ng-show="dropdownExistingContracts">
                 <li ng-repeat="abi in contractList.abiList track by $index">
                   <a ng-click="selectExistingAbi($index)">
                     {{abi.name}}
@@ -654,8 +654,8 @@
             <article ng-show="visibility=='interactView'">
 
                <article class="modal fade" id="sendContract" tabindex="-1">
-            <section class="modal-dialog">
-              <section class="modal-content">
+            <section class="modal-dialog2">
+              <section class="modal-content2">
 
                 <div class="modal-body">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close Dialog">&times;</button>
@@ -700,7 +700,7 @@
                            ng-model="tx.gasLimit"
                            ng-class="Validator.isPositiveNumber(tx.gasLimit) ? 'is-valid' : 'is-invalid'"/>
 
-                    <a class="btn btn-info btn-block" ng-click="generateTx()" translate="SEND_generate">
+                    <a class="btn btn-info btn-block btn-rounded" ng-click="generateTx()" translate="SEND_generate">
                       Generate Transaction
                     </a>
 
@@ -727,10 +727,10 @@
 
 
                 <div class="modal-footer" ng-show="showRaw">
-                  <button class="btn btn-default" data-dismiss="modal" translate="SENDModal_No">
+                  <button class="btn btn-rounded btn-info" data-dismiss="modal" translate="SENDModal_No">
                     No, get me out of here!
                   </button>
-                  <button class="btn btn-primary" ng-click="sendTx()" translate="SENDModal_Yes">
+                  <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
                     Yes, I am sure! Make transaction.
                   </button>
                 </div>
@@ -801,7 +801,7 @@
 
             <!-- Deploy Contract Button (once tx has been signed) -->
             <div class="form-group" ng-show="showRaw">
-              <a class="btn btn-primary btn-block"
+              <a class="btn btn-rounded btn-info btn-block"
                  data-toggle="modal"
                  data-target="#deployContract"
                  translate="NAV_DeployContract">
@@ -810,8 +810,8 @@
             </div>
 
              <article class="modal fade" id="deployContract" tabindex="-1">
-            <section class="modal-dialog">
-              <section class="modal-content">
+            <section class="modal-dialog2">
+              <section class="modal-content2">
 
                 <div class="modal-body">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close Deploy Contract Dialog">&times;</button>
@@ -836,10 +836,10 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button class="btn btn-default" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
+                  <button class="btn btn-rounded btn-info" data-dismiss="modal" aria-label="Close Deploy Contract Dialog" translate="SENDModal_No">
                     No, get me out of here!
                   </button>
-                  <button class="btn btn-primary" ng-click="sendTx()" translate="SENDModal_Yes">
+                  <button class="btn btn-rounded btn-info" ng-click="sendTx()" translate="SENDModal_Yes">
                     Yes, I am sure! Make transaction.
                   </button>
                 </div>
@@ -866,13 +866,13 @@
 
             <article class="col-xs-12" ng-show="contract.selectedFunc!=null && visibility=='interactView'">
 
-              <button class="btn btn-primary btn-block"
+              <button class="btn btn-rounded btn-info btn-block"
                       ng-click="readFromContract()"
                       ng-show="contract.functions[contract.selectedFunc.index].constant && showRead">
                 <span translate="CONTRACT_Read"> READ </span>
               </button>
 
-              <button class="btn btn-primary btn-block"
+              <button class="btn btn-rounded btn-info btn-block"
                       ng-click="generateContractTx()"
                       ng-show="!contract.functions[contract.selectedFunc.index].constant">
                 <span translate="CONTRACT_Write"> WRITE </span>
