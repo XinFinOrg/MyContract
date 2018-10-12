@@ -51,14 +51,10 @@
   <!-- START SECTION SIGN UP -->
   <section class="small_pt small_pb">
     <div class="container">
-      <% if (message.length > 0) { %>
-        <div class="alert alert-danger">
-          <%= message %>
-        </div>
-        <% } %>
           <div class="row">
             <div class="col-lg-12">
               <div class="authorize_box">
+                <div class="alert alert-danger" style="display:none" id="message"></div>
                 <div class="title_dark title_border text-center">
                   <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Welcome</h4>
                   <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Sign in to your Account</p>
@@ -183,7 +179,9 @@
           } else {
             var res = JSON.parse(xhttp.responseText);
             if (res.token == "failure") {
-              window.location.assign('./userLogin');
+              console.log(res);
+              $('#message').get(0).style.display="";
+              $('#message').html(res.message);
             } else {
               window.location.assign('./user/dashboard');
             }

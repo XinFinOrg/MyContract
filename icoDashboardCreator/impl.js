@@ -175,10 +175,21 @@ module.exports = {
     });
   },
   getUserSignup: function (req, res) {
-    res.render("userSignup.ejs", {
-      projectName: req.params.projectName,
-      message: req.flash('signupMessage')
-    });
+    ProjectConfiguration.find({
+      where: {
+        coinName: req.params.projectName
+      }
+    }).then(project => {
+      if(project){
+        res.render("userSignup.ejs", {
+          projectName: req.params.projectName,
+          message: req.flash('signupMessage')
+        });
+      }
+      else{
+        res.send("404 Not Found");
+      }
+    })
   },
 
   getUserLogin: function (req, res) {
@@ -192,14 +203,14 @@ module.exports = {
     passport.authenticate('user-login', {
       session: false
     }, async (err, user, info) => {
-      console.log("This is :" + user);
+      console.log("Info" + info);
       try {
         if (err || !user) {
           const error = new Error('An Error occured')
           console.log();
           return res.json({
             'token': "failure",
-            'message': req.flash('loginMessage')
+            'message': info
           });
         }
         const token = jwt.sign({

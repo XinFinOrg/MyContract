@@ -23,6 +23,7 @@ router.get('/getPrices', isAuthenticated, impl.getPrices);
 router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
 router.post('/loadWallet', isAuthenticated, impl.loadWallet);
 router.get('/api/checkBalances', isAuthenticated, impl.checkBalances);
+router.get('/api/checkTokenBalances', isAuthenticated, impl.checkTokenBalances);
 router.post('/api/buyToken', isAuthenticated, impl.buyToken);
 router.post('/api/buyTokenBTC', isAuthenticated, impl.buyTokenBTC);
 router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);

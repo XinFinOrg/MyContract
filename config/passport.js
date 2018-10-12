@@ -75,7 +75,7 @@ module.exports = function (passport) {
 
             console.log(req.body.projectName);
             //Find project details and map user
-            var project = await Project.findOrCreate({
+            var project = await Project.find({
               where: {
                 'coinName': req.body.projectName
               }
@@ -83,8 +83,8 @@ module.exports = function (passport) {
 
             Promise.all([generateEthAddress(), generateBTCAddress(), createNewUser(req)]).then(([createdEthAddress, createdBTCAddress, createdUser]) => {
               createdUser.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-              project[0].addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-              project[0].addUser(createdUser);
+              project.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+              project.addUser(createdUser);
               return done(null, createdUser.dataValues);
             });
           }
@@ -110,17 +110,16 @@ module.exports = function (passport) {
         },
         attributes: ['email', 'password', 'projectConfigurationCoinName', 'emailVerified']
       }).then(user => {
-        console.log("Hey there", user);
 
         // if no user is found, return the message
         if (!user) {
-          return done(null, false, req.flash('loginMessage', 'No user found.'));
+          return done(null, false, 'No user found.');
         } else if (!user.emailVerified) {
-          return done(null, false, req.flash('loginMessage', 'That email is yet to be verified.'));
+          return done(null, false, 'That email is yet to be verified.');
         }
         // if the user is found but the password is wrong
         if (!bcrypt.compareSync(password, user.password))
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+          return done(null, false, 'Oops! Wrong password.');
         // all is well, return successful user
         return done(null, user.dataValues);
       });

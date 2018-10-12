@@ -291,6 +291,10 @@
         $("#Bitcoin_balance").text(btcBalance);
         $("#token_balance").text(tokenBalance);
       });
+      $.get('./api/checkTokenBalances', function(result) {
+        tokenBalance = result["tokenBalance"];
+        $("#token_balance").text(tokenBalance);
+      });
     }
     window.onload = checkBalances;
     // window.setInterval(function() {

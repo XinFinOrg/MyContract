@@ -9,6 +9,8 @@ const Binance = require('node-binance-api');
 var coinPaymentHandler = require('../coinPayments/impl');
 var icoListener = require('../icoHandler/listener');
 const ImageDataURI = require('image-data-uri');
+var privateIcoListener = require('../icoHandler/privateListener');
+
 module.exports = {
 
   getTransactions: async (req, res, next) => {
@@ -181,12 +183,29 @@ module.exports = {
     });
 
     btc_address = btc_addresses[0].address;
-    Promise.all([icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress), icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([tokenBalance, ethBalance, btcBalance]) => {
+    Promise.all([icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([ethBalance, btcBalance]) => {
       res.send({
-        'tokenBalance': tokenBalance,
         'balance': ethBalance,
         'btcBalance': btcBalance
       });
+    });
+  },
+
+  checkTokenBalances: async (req, res) => {
+    var eth_addresses = await req.user.getUserCurrencyAddresses({
+      where: {
+        currencyType: 'Ethereum'
+      }
+    });
+    eth_address = eth_addresses[0].address;
+    if(req.user.projectConfiguration.networkType=="testnet"){
+      var tokenBalance = await privateIcoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
+    }
+    else{
+      var tokenBalance = await icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
+    }
+    res.send({
+      'tokenBalance': tokenBalance
     });
   },
 
