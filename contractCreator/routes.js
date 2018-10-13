@@ -4,7 +4,7 @@ var client = db.client;
 var projectConfiguration = db.projectConfiguration
 
 
-module.exports = function (app) { 
+module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
@@ -58,7 +58,9 @@ function hasPackage1(req, res, next) {
     where: {
       'email': req.user.email
     }
-  }).then(result => {
+  }).then(async result => {
+    result.attemptsCount = result.attemptsCount + 1;
+    await result.save().then(console.log("attmpt added",result.package1 ));
     if (result.package1 > 0) {
       return next();
     } else {

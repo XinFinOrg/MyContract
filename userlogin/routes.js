@@ -1,4 +1,5 @@
 var impl = require('./impl');
+var superAdminimpl = require('./superAdminimpl');
 var db = require('../database/models/index');
 var client = db.client;
 module.exports = function (app) {
@@ -26,6 +27,12 @@ module.exports = function (app) {
   app.get('/KYCpage', isLoggedIn, impl.KYCpage);
   app.get('/KYCpage/pending', isLoggedIn, impl.KYCpagePending);
   app.post('/KYCpage/KYCdocUpload', isLoggedIn, impl.KYCdocUpload);
+
+  //superUser
+  app.get('/adminLogin', superAdminimpl.adminLogin);
+  app.post('/adminLogin', superAdminimpl.postadminLogin);
+  app.get('/adminDashboard', superAdminimpl.adminDashboard);
+
 };
 
 // route middleware to make sure a user is logged in
