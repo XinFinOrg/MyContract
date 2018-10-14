@@ -55,6 +55,27 @@ module.exports = {
     });
   },
 
+  attachListenerWithUserHash: (userHash, address) => {
+    contractInstance.once('Transfer', {
+      filter: {
+        from: address,
+        value: '1200000000000000000000000'
+      },
+      fromBlock: 'pending',
+      toBlock: 'latest'
+    }, (err, res) => {
+      console.log(err, res.returnValues);
+      client.find({
+        where: {
+          uniqueId: userHash
+        }
+      }).then(async client => {
+        client.package1 += 1;
+        await client.save();
+      });
+    });
+  },
+
   sendToParent: (address, privateKey) => {
     return new Promise(async function(resolve, reject) {
       var amountToSend = web3.utils.toWei('0.001', 'ether');
@@ -72,7 +93,7 @@ module.exports = {
             "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
             "to": config.tokenAddress,
             "value": "0x0",
-            "data": contractInstance.methods.transfer(config.diversionAddress,config.amount).encodeABI()
+            "data": contractInstance.methods.transfer(config.diversionAddress, config.amount).encodeABI()
           };
           web3.eth.estimateGas(transaction).then(gasLimit => {
             transaction["gasLimit"] = gasLimit;

@@ -41,7 +41,7 @@
 
 .header-price-box{line-height:25px;background:#eef5f9;margin:8px;padding:8px;border-radius:10px;}
 .header-price-box img {max-width:22px;}
-.header-buy-tokens{margin:12px;}
+.header-buy-tokens{}
 
 .modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #206EFF;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
 .modal-title.buy-tokens i{margin-right:10px;}

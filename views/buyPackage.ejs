@@ -43,8 +43,12 @@
                                                     <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap" class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="sendOTP()">Buy Now</a>
                                                     <% } %>
                                                 </div>
-
-                          </div>
+                                                <div id="metamaskButton" style="display:none" >
+                                                  <br>
+                                                  <h5> You seem to be using Metamask wallet </h5>
+                                                  <a data-whatever="@getbootstrap" class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="buyMetamask()">Buy Using Metamask</a>
+                                              </div>
+                                            </div>
                         </div>
                       </div>
                       <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
@@ -135,5 +139,80 @@
         $.get("/payment")
     }
 
+</script>
+<script>
+$(document).keydown(function (event) {
+  if (event.keyCode == 123) { // Prevent F12
+      return false;
+  } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I
+      return false;
+  }
+});
+$(document).on("contextmenu", function (e) {
+    e.preventDefault();
+});
+</script>
+<script>
+  checkMetamask();
+  function checkMetamask(){
+    if (typeof web3 !== 'undefined') {
+      window.web3 = new Web3(web3.currentProvider)
+      $("#metamaskButton").get(0).style.display='';
+
+    }
+  }
+  function buyMetamask(){
+    window.web3.eth.net.getNetworkType().then(networkType => {
+      if(networkType!='main'){
+        window.alert("Please change network in your Metamask to Mainnet");
+      }
+      else {
+        getPaymentToken(window.web3.currentProvider.publicConfigStore.getState().selectedAddress);
+      }
+    });
+  }
+
+  function sendPaymentInfo(){
+    $.ajax({
+      type: 'POST',
+      url: '/api/sendPaymentInfo',
+      success: function(data) {
+        console.log("Success");
+      },
+      contentType: "application/json",
+      dataType: 'json'
+    });
+  }
+
+  function getPaymentToken(address){
+    $.ajax({
+      type: 'POST',
+      url: '/api/getPaymentToken',
+      data: JSON.stringify({"address": address}),
+      success: function(data) {
+        sendTransaction();
+      },
+      contentType: "application/json",
+      dataType: 'json'
+    });
+  }
+
+  function sendTransaction(){
+    var contractInstance = new window.web3.eth.Contract(xdce_abi, xdce_address);
+    var transaction = {
+      "from": window.web3.currentProvider.publicConfigStore.getState().selectedAddress,
+      "to": "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
+      "value": "0x0",
+      "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402","1200000000000000000000000").encodeABI()
+    };
+    window.web3.eth.sendTransaction(transaction, (err, data) => {
+        if  (err) {
+          console.log("Failed");
+        } else {
+          sendPaymentInfo();
+          console.log("Successful");
+        }
+      });
+  }
 </script>
 </html>

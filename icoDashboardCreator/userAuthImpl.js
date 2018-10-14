@@ -183,7 +183,7 @@ module.exports = {
     });
 
     btc_address = btc_addresses[0].address;
-    Promise.all([icoListener.checkBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([ethBalance, btcBalance]) => {
+    Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([ethBalance, btcBalance]) => {
       res.send({
         'balance': ethBalance,
         'btcBalance': btcBalance

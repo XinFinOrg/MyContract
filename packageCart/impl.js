@@ -92,9 +92,9 @@ module.exports = {
     console.log(req.body.address);
     const token = jwt.sign({
       userHash: req.user.uniqueId,
-      address: req.body.hash
+      address: req.body.address
     }, configAuth.jwtAuthKey.secret, {
-        expiresIn: 60*5
+        expiresIn: 60*3
       });
     //Send back the token to the user
     res.cookie('paymentToken', token, {
@@ -106,7 +106,11 @@ module.exports = {
   },
 
   sendPaymentInfo: (req, res) => {
-
+    // console.log(req.cookies['paymentToken']);
+    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function(err, decoded) {
+      console.log(decoded);
+      paymentListener.attachListenerWithUserHash(decoded.userHash, decoded.address);
+    });
   }
 }
 

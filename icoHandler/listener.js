@@ -22,6 +22,19 @@ module.exports = {
     });
   },
 
+  checkEtherBalance: (address) => {
+    return new Promise(function(resolve, reject) {
+      web3.eth.getBalance(address).then(balance => {
+        resolve(web3.utils.fromWei(balance));
+      }).catch(error => {
+        console.log("Web3 error status", error);
+        provider = new Web3.providers.WebsocketProvider(ws_provider);
+        web3.setProvider(provider);
+        reject(error);
+      });
+    });
+  },
+
   checkTokenBalance: async (address, tokenAddress) => {
     console.log(tokenAddress);
     return new Promise(async function(resolve, reject) {
