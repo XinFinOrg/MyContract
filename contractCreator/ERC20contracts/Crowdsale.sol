@@ -4,7 +4,6 @@ pragma solidity ^0.4.24;
 <%- SafeERC20 %>
 
 
-
 /**
  * @title Crowdsale
  * @dev Crowdsale is a base contract for managing a token crowdsale,
@@ -41,6 +40,12 @@ contract Crowdsale {
   
   //sale status
   bool private _isCrowdsaleOpen; 
+  
+  //bouns rate
+  uint256 private _bonusRate;
+  
+  //bool for bouns status
+  bool private _isBonusOn;
 
   /**
    * Event for token purchase logging
@@ -80,12 +85,12 @@ contract Crowdsale {
    * @param wallet Address where collected funds will be forwarded to
    * @param token Address of the token being sold
    */
-    constructor(uint256 rate,address wallet,IERC20 token) public {
+    constructor(uint256 rate,uint256 bonusRate,address wallet,IERC20 token) public {
     _rate = rate;
     _wallet = wallet;
     _token = token;
     _owner = msg.sender;
-    
+    _bonusRate = bonusRate;
     //initiating Crowdsale
     _isCrowdsaleOpen = true;
   }
@@ -109,8 +114,15 @@ contract Crowdsale {
    function updateTokenPrice(uint _value) onlyOwner{
       require(_value != 0);
       _rate = _value;
-  }
+  } 
   
+    function updateBounsRate(uint _value) onlyOwner{
+      require(_value != 0);
+      _bonusRate = _value;
+  }
+    function updateBounsStatus(bool _value) onlyOwner{
+      _isBonusOn = _value;
+  }
     /* A dispense feature to allocate some addresses with tokens
   * calculation done using token count
   *  Can be called only by owner
@@ -147,6 +159,18 @@ contract Crowdsale {
   function token() public view returns(IERC20) {
     return _token;
   }
+  /**
+   * @return the token bonus status.
+   */
+  function isBonusOn() public view returns(bool) {
+    return _isBonusOn;
+  }
+  /**
+   * @return the token bonus Rate.
+   */
+  function bonusRate() public view returns(uint256) {
+    return _bonusRate;
+  }
 
   /**
    * @return the address where funds are collected.
@@ -180,7 +204,11 @@ contract Crowdsale {
 
     // calculate token amount to be created
     uint256 tokens = _getTokenAmount(weiAmount);
-
+    
+    if(_isBonusOn == true){
+    //add Bonus tokens to total tokens
+    tokens = _addBonusTokens(tokens);
+    }
     // update state
     _weiRaised = _weiRaised.add(weiAmount);
 
@@ -285,6 +313,16 @@ contract Crowdsale {
     internal view returns (uint256)
   {
     return weiAmount.mul(_rate);
+  }
+   /**
+   * @dev Determines how ETH is stored/forwarded on purchases.
+   */
+  function _addBonusTokens(uint256 tokens)
+   internal view returns (uint256)
+   {
+    uint256 totalTokens;
+    totalTokens = tokens.mul(_bonusRate).div(100) ;
+    return tokens.add(totalTokens);
   }
 
   /**

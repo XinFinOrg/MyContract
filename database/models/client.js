@@ -50,6 +50,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.BOOLEAN,
       defaultValue:false,
     },
+    attemptsCount:
+    {
+      type:DataTypes.INTEGER,
+      defaultValue: 0
+    },
     package1:
     {
       type:DataTypes.INTEGER,

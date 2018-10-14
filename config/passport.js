@@ -149,7 +149,7 @@ module.exports = function (passport) {
         // if the user is found but the password is wrong
         if (client.password == null || (!bcrypt.compareSync(password, client.password)))
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-          if (client.status == false)
+        if (client.status == false)
           return done(null, false, req.flash('loginMessage', 'Oops! Active your Account! Check Your email for Activation Link.'));
         // all is well, return successful user
         return done(null, client.dataValues);
@@ -182,12 +182,12 @@ module.exports = function (passport) {
             // set the user's local credentials
             newUser.email = email;
             newUser.password = generateHash(password);
-            newUser.status=false;
+            newUser.status = false;
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
-              return done(null, createdClient.dataValues,req.flash('loginMessage', 'Please verify your email address by clicking the link that we have mailed  you!'));
+              return done(null, createdClient.dataValues, req.flash('loginMessage', 'Please verify your email address by clicking the link that we have mailed  you!'));
             });
           }
         });
@@ -215,7 +215,7 @@ module.exports = function (passport) {
         }).then(async result => {
           if (result) {
             result.google_id = profile.id;
-            result.status= true;
+            result.status = true;
             await result.save();
             return done(null, result.dataValues);
           } else {
@@ -225,7 +225,7 @@ module.exports = function (passport) {
             newUser.google_id = profile.id;
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
-            newUser.status=true;
+            newUser.status = true;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -258,7 +258,7 @@ module.exports = function (passport) {
         }).then(async result => {
           if (result) {
             result.github_id = profile.id;
-            result.status= true;
+            result.status = true;
             await result.save();
             return done(null, result.dataValues);
           } else {
@@ -268,7 +268,7 @@ module.exports = function (passport) {
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
-            newUser.status=true;
+            newUser.status = true;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
