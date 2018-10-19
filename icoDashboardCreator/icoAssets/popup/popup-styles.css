@@ -39,7 +39,7 @@
 }
 .deposit-block {
     width: 620px;
-    background-color: #0b2c2c;
+    background-color: #4a5eb2;
     padding: 30px;
     position: fixed;
     right: 0;
@@ -49,6 +49,10 @@
     overflow-y: auto;
     display: none;
     z-index: 9999;
+}
+.deposit-block p {
+    color: #bbc8fe;
+    margin: 0 0 10px;
 }
 .is-active.deposit-block {
     display: block;
@@ -73,8 +77,8 @@
 }
 
 .graph-copy {
-    background-color: #072626;
-    border: 1px solid #114444;
+    background-color: #384faf;
+    border: 1px solid #2f4292;
     padding: 17px 20px;
     font-size: 16px;
     color: #fff;
@@ -106,7 +110,7 @@
 }
 .destination p {
     font-size: 14px;
-    color: #b4b8bc;
+    color: #bbc8fe;
 }
 .graph-copy p:focus {
     -webkit-user-select: all;
@@ -131,7 +135,7 @@
 
 .withdraw-block {
     width: 620px;
-    background-color: #0b2c2c;
+    background-color: #4a5eb2;
     padding: 30px;
     position: fixed;
     right: 0;
@@ -154,7 +158,7 @@
     margin-bottom: 23px;
 }
 .withdraw-block h4 {color: #FFF;}
-.withdraw-block p {color: #aaadb1;margin: 0 0 10px;}
+.withdraw-block p {color: #bbc8fe;margin: 0 0 10px;}
 .graph-copy p {margin: 0;}
 .withdraw-overlay {
     position: fixed;
@@ -204,9 +208,9 @@
 	width:inherit;
 }
 .withdraw-block .form-control {
-	background-color: #072626;
-    border-color: #114444;
-    color: #a9aeb2;
+	background-color: #384faf;
+    border-color: #2f4292;
+    color: #bbc8fe;
     border-radius: .25rem;
     height: 50px;
     padding: 0 10px;

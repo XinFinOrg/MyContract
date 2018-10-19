@@ -5,7 +5,7 @@ html {
 body {
 	overflow-x: hidden;
 	font-family: 'Poppins', sans-serif;
-	background-color: #f5f5f5;
+	background-color: #eef5f9;
 }
 .dropdown-content-body  .dropdown-message {
 	overflow: hidden;
@@ -141,8 +141,7 @@ body {
 	margin:0;
 }
 .box {
-	/*background-color: #1c1d2a;*/
-	border:2px solid #005753;
+	border:2px solid #607aea;
 	border-radius: 10px;
 	color: #ffffff;
 	padding: 20px 15px;
@@ -162,7 +161,7 @@ body {
 .box-body {
 	margin: 10px 0 10px;
 	font-size: calc(1.8vw + 1.8vh + 1.8vmin);
-	color: #19ad69;
+	color: #38393c;
 }
 .bg_primary {
 	background-color: #f7931a;
@@ -177,7 +176,11 @@ body {
 	background-color: #58bf00;
 }
 .bg_blue {
-	background-color: #1e75bb;
+	background: #212121;
+    background: -moz-linear-gradient(top, #607aea 10%, #17d9ea 100%);
+    background: -webkit-linear-gradient(top, #607aea 10%,#17d9ea 100%);
+    background: linear-gradient(to bottom, #607aea 10%,#17d9ea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#607aea', endColorstr='#17d9ea',GradientType=0 );
 }
 .bg_orange {
 	background-color: #FF6501;
@@ -186,7 +189,7 @@ body {
 	background-color: #37A0E1;
 }
 .bg_green_dark {
-	background-color :#005753!important;#19ad69
+	background-color: #005753
 }
 .text_green {
 	color :#19ad69;
@@ -204,7 +207,7 @@ body {
 	color: #58bf00;
 }
 .text_blue {
-	color: #1e75bb;
+	color: #607aea;
 }
 .text_orange {
 	color: #FF6501;
@@ -213,7 +216,8 @@ body {
 	color: #37A0E1;
 }
 .box:hover {
-    -webkit-transform: translateY(-4px) scale(1.02);
+    border:2px solid #fec12c;
+	-webkit-transform: translateY(-4px) scale(1.02);
     -moz-transform: translateY(-4px) scale(1.02);
     -ms-transform: translateY(-4px) scale(1.02);
     -o-transform: translateY(-4px) scale(1.02);
@@ -229,7 +233,7 @@ body {
     box-shadow: 0 0 20px -5px rgba(0, 0, 0, 0.1);
 }
 .card-header {
-	background-color: #005753;
+	background-color: #607aea;
 	color: #ffffff;
 	font-size: 18px;
 	font-weight: 500;
@@ -271,8 +275,8 @@ body {
 
 .nav_tab .nav-link.active, .nav_tab .show > .nav-link {
     background-size: 200% auto;
-    background-image: -webkit-linear-gradient(left, #92d852 0%,#24bc98 51%,#92d852)!important;
-    background-image: linear-gradient(to right, #92d852 0%,#24bc98 51%,#92d852);
+    background-image: -webkit-linear-gradient(left, #607aea 10%,#17d9ea 51%,#607aea);
+    background-image: linear-gradient(to right, #607aea 10%,#17d9ea 51%,#607aea);
     color: #fff;
     outline: none;
     text-transform: uppercase;

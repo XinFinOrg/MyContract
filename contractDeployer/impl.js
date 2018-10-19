@@ -16,7 +16,6 @@ var web3 = new Web3(provider);
 
 module.exports = {
   getBytecode: async function (req, res) {
-    console.log("hello");
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
     ProjectConfiguration.find({
@@ -30,25 +29,21 @@ module.exports = {
         if (byteCode == null) {
           byteCode = await solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'];
           byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
-          projectData.crowdsaleByteCode = byteCode.bytecode; 
+          projectData.crowdsaleByteCode = byteCode.bytecode;
           projectData.crowdsaleABICode = byteCode.interface;
           byteCode = byteCode.bytecode
           await projectData.save();
         }
       } else {
-        console.log("hello2");
         byteCode = projectData.tokenByteCode;
-        console.log("here3", byteCode);
         if (byteCode == null) {
           byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']    //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
-          console.log("here2");
           projectData.tokenByteCode = byteCode.bytecode;
           projectData.tokenABICode = byteCode.interface;
           byteCode = byteCode.bytecode
           await projectData.save();
         }
       }
-      console.log("here3");
       res.send({
         bytecode: byteCode
       })
@@ -143,6 +138,11 @@ module.exports = {
       res.redirect("/generatedCrowdsaleContract");
     }
   },
+
+  getAutomaticDeployer: function(req, res) {
+    var address = req.cookies['address'];
+
+  }
 };
 
 function getProjectArray(email) {
