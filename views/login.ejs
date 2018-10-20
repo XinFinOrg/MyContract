@@ -122,7 +122,8 @@
                                         <form class="col-12">
                                             <label for="email">Email</label> <input class="form-control" type="text" name="email"
                                                 id="emailid" placeholder="email">
-                                            <br>
+                                            <br> <span class="alert-danger" id="inputVal_error"></span>
+                                            <br><br>
                                             <button class="btn btn-lg btn-rounded btn-info" type="button" onsubmit="forgotPassword()" value="Submit" id="to-recoveremailsent">Submit</button>
                                         </form>
 
@@ -136,6 +137,21 @@
                                     </div>
 
                                 </div>
+                                <div id="noUserFound">
+                                    <div class="logo">
+                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20"> No user found with this email address!</h2>
+                                    </div>
+
+                                </div>
+                                <div id="noPassword">
+                                    <div class="logo">
+                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20"> Opps! it seems you have already logged in
+                                            using github or google!</h2>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,9 +159,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-7">
                         <div class="auth-wrapper-bg">
                             <div class="auth-box_content">
-                                <p class="font-bold">Create your
-smart contract
-without coding</p>
+                                <p class="font-bold">Create your smart contract without coding</p>
                             </div>
                         </div>
                     </div>
@@ -168,6 +182,8 @@ without coding</p>
 
     <script>
         $("#recoverformSend").hide();
+        $("#noUserFound").hide();
+        $("#noPassword").hide();
         $('[data-toggle="tooltip"]').tooltip();
         $(".preloader").fadeOut();
         // ==============================================================
@@ -178,16 +194,39 @@ without coding</p>
             $("#recoverform").fadeIn();
         });
         $('#to-recoveremailsent').on("click", function () {
-            console.log( $('#emailid').val())
-            $("#recoverform").slideUp();
-            $("#recoverformSend").show();
-            $.get("/forgotPassword?email=" + $('#emailid').val())
-        });
-        // function forgotPassword() {
-        //     console.log("inside forgotPassword")
-        //     $.get("/forgotPassword")
-        // }
+            $.get("/forgotPassword?email=" + $('#emailid').val()).then(
+                result => {
+                    if (result === "success") {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#recoverformSend").show();
+                    } else if (result === "Password") {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#noPassword").show();
+                    } else {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#noUserFound").show();
+                    }
 
+                }
+            )
+        });
+    </script>
+    <script>
+        document.getElementById("to-recoveremailsent").disabled = "disabled";
+        var myInput = document.getElementById("emailid");
+        myInput.onkeyup = function () {
+            console.log(myInput.value.indexOf(" "))
+            if (myInput.value === '' || myInput.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
+                document.getElementById("to-recoveremailsent").disabled = "disabled";
+            } else {
+                document.getElementById("inputVal_error").innerHTML = '';
+                document.getElementById("to-recoveremailsent").disabled = "";
+            }
+        }
     </script>
 </body>
 

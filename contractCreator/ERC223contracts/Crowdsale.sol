@@ -1,9 +1,7 @@
 pragma solidity ^0.4.24;
-
 <%- SafeMath %>
 <%- IERC20 %>
 <%- SafeERC20 %>
-<%- ERC223_receiving_contract %>
 
 
 /**
@@ -18,7 +16,7 @@ pragma solidity ^0.4.24;
  * the methods to add functionality. Consider using 'super' where appropriate to concatenate
  * behavior.
  */
-contract Crowdsale{
+contract Crowdsale {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
 
@@ -36,6 +34,18 @@ contract Crowdsale{
 
   // Amount of wei raised
   uint256 private _weiRaised;
+  
+  //Owner
+  address private _owner;
+  
+  //sale status
+  bool private _isCrowdsaleOpen; 
+  
+  //bouns rate
+  uint256 private _bonusRate;
+  
+  //bool for bouns status
+  bool private _isBonusOn;
 
   /**
    * Event for token purchase logging
@@ -50,6 +60,22 @@ contract Crowdsale{
     uint256 value,
     uint256 amount
   );
+  
+  event TokensPurchased( 
+    address indexed beneficiary,
+    uint256 amount);
+  
+  /*modifier to control Crowdsale function access*/
+   modifier onlyOwner {
+    require(msg.sender == _owner);
+    _;
+  }
+  
+   modifier isSaleOn {
+    require(_isCrowdsaleOpen == true);
+    _;
+  }
+
 
   /**
    * @param rate Number of token units a buyer gets per wei
@@ -59,16 +85,15 @@ contract Crowdsale{
    * @param wallet Address where collected funds will be forwarded to
    * @param token Address of the token being sold
    */
-  constructor(uint256 rate, address wallet, IERC20 token) public {
-    require(rate > 0);
-    require(wallet != address(0));
-    require(token != address(0));
-
+    constructor(uint256 rate,uint256 bonusRate,address wallet,IERC20 token,bool isBonusOn) public {
     _rate = rate;
     _wallet = wallet;
     _token = token;
+    _owner = msg.sender;
+    _bonusRate = bonusRate;
+    _isCrowdsaleOpen = true;
+    _isBonusOn = isBonusOn;
   }
-
   // -----------------------------------------
   // Crowdsale external interface
   // -----------------------------------------
@@ -76,18 +101,56 @@ contract Crowdsale{
   /**
    * @dev fallback function ***DO NOT OVERRIDE***
    */
+   
+   //custom start
+   function startCrowdSale() onlyOwner {
+     _isCrowdsaleOpen=true;
+  }
+
+   function stopCrowdSale() onlyOwner {
+     _isCrowdsaleOpen=false;
+  }
+  
+   function updateTokenPrice(uint _value) onlyOwner{
+      require(_value != 0);
+      _rate = _value;
+  } 
+  
+    function updateBounsRate(uint _value) onlyOwner{
+      require(_value != 0);
+      _bonusRate = _value;
+  }
+    function updateBounsStatus(bool _value) onlyOwner{
+      _isBonusOn = _value;
+  }
+    /* A dispense feature to allocate some addresses with tokens
+  * calculation done using token count
+  *  Can be called only by owner
+  */
+  function dispenseTokensToInvestorAddressesByValue(address[] _addresses, uint[] _value) onlyOwner returns (bool ok){
+     require(_addresses.length == _value.length);
+     for(uint256 i=0; i<_addresses.length; i++){
+        _preValidatePurchase(_addresses[i], _value[i]);
+        _processPurchase(_addresses[i], _value[i]);
+        emit TokensPurchased(_addresses[i], _value[i]);
+     }
+     return true;
+  }
+  
+  /* single address */
+  function sendTokensToInvestors(address _investor, uint _tokens) onlyOwner returns (bool ok){
+        _preValidatePurchase(_investor,_tokens);
+        _processPurchase(_investor,_tokens);
+        emit TokensPurchased(_investor,_tokens);
+      return true;
+  }
+
+  
+  //custom end
+   
+   
   function () external payable {
-     uint codeLength;
-        assembly {
-            // Retrieve the size of the code on target address, this needs assembly .
-            codeLength := extcodesize(msg.sender)
-        }
-          if(codeLength>0) {
-          revert();
-        } else {
-          buyTokens(msg.sender);
-        }
-    
+    buyTokens(msg.sender);
   }
 
   /**
@@ -95,6 +158,18 @@ contract Crowdsale{
    */
   function token() public view returns(IERC20) {
     return _token;
+  }
+  /**
+   * @return the token bonus status.
+   */
+  function isBonusOn() public view returns(bool) {
+    return _isBonusOn;
+  }
+  /**
+   * @return the token bonus Rate.
+   */
+  function bonusRate() public view returns(uint256) {
+    return _bonusRate;
   }
 
   /**
@@ -122,14 +197,18 @@ contract Crowdsale{
    * @dev low level token purchase ***DO NOT OVERRIDE***
    * @param beneficiary Address performing the token purchase
    */
-  function buyTokens(address beneficiary) public payable {
+  function buyTokens(address beneficiary) public isSaleOn payable {
 
     uint256 weiAmount = msg.value;
     _preValidatePurchase(beneficiary, weiAmount);
 
     // calculate token amount to be created
     uint256 tokens = _getTokenAmount(weiAmount);
-
+    
+    if(_isBonusOn == true){
+    //add Bonus tokens to total tokens
+    tokens = _addBonusTokens(tokens);
+    }
     // update state
     _weiRaised = _weiRaised.add(weiAmount);
 
@@ -234,6 +313,16 @@ contract Crowdsale{
     internal view returns (uint256)
   {
     return weiAmount.mul(_rate);
+  }
+   /**
+   * @dev Determines how ETH is stored/forwarded on purchases.
+   */
+  function _addBonusTokens(uint256 tokens)
+   internal view returns (uint256)
+   {
+    uint256 totalTokens;
+    totalTokens = tokens.mul(_bonusRate).div(100) ;
+    return tokens.add(totalTokens);
   }
 
   /**

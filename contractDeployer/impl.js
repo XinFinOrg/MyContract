@@ -22,13 +22,14 @@ module.exports = {
       where: {
         'coinName': coinName
       },
-      attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
+      attributes: ['coinName','bonusRate','bonusStatus', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
     }).then(async projectData => {
       if (projectData.tokenContractAddress != null) {
         byteCode = projectData.crowdsaleByteCode;
         if (byteCode == null) {
+          // console.log(projectData.ETHRate, projectData.bonusRate=="" ? 0:projectData.bonusRate, address, projectData.tokenContractAddress, projectData.bonusStatus,"hello");
           byteCode = await solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'];
-          byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'address', 'address'], [projectData.ETHRate, address, projectData.tokenContractAddress]).slice(2)
+          byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, address, projectData.tokenContractAddress, projectData.bonusStatus]).slice(2)
           projectData.crowdsaleByteCode = byteCode.bytecode;
           projectData.crowdsaleABICode = byteCode.interface;
           byteCode = byteCode.bytecode

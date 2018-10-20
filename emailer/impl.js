@@ -95,9 +95,9 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@autocoin.com",
+        from: "forgotPassword@autocoin.com",
         to: recipientmail,
-        subject: "Email Verification",
+        subject: "reset Password link",
         html: data
       };
       triggerEmail(mailOptions);

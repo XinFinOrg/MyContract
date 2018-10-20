@@ -157,8 +157,14 @@ module.exports = {
         'email': req.query.email
       }
     }).then(result => {
-      mailer.forgotPasswordMailer(req, req.query.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
-      res.send("sucess")
+      if (result == null) {
+        res.send("User not found")
+      } else if (result.password == null) {
+        res.send("Password")
+      } else {
+        mailer.forgotPasswordMailer(req, req.query.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
+        res.send("success")
+      }
     })
   },
   resetPassword: (req, res) => {
@@ -211,7 +217,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash','networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {

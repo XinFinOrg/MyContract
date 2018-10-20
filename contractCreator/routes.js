@@ -33,22 +33,27 @@ function isLoggedIn(req, res, next) {
 }
 
 function coinNameExist(req, res, next) {
-  console.log(req.body)
-  projectConfiguration.find({
-    where: {
-      'coinSymbol': req.body.token_symbol
-    }
-  }).then(result => {
-    console.log(result)
-    if (result == null) {
-      console.log("next");
-      return next();
-    } else {
-      console.log("exist");
-      req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
-      res.redirect('/customContract');
-    }
-  })
+  if (req.body.token_symbol == "XDC" || req.body.token_symbol == "XDCE") {
+    console.log("exist");
+    req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
+    res.redirect('/customContract');
+  } else {
+    projectConfiguration.find({
+      where: {
+        'coinSymbol': req.body.token_symbol
+      }
+    }).then(result => {
+      console.log(result)
+      if (result == null) {
+        console.log("next");
+        return next();
+      } else {
+        console.log("exist");
+        req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
+        res.redirect('/customContract');
+      }
+    })
+  }
 }
 
 // route middleware to check package 1
@@ -60,7 +65,7 @@ function hasPackage1(req, res, next) {
     }
   }).then(async result => {
     result.attemptsCount = result.attemptsCount + 1;
-    await result.save().then(console.log("attmpt added",result.package1 ));
+    await result.save().then(console.log("attmpt added", result.package1));
     if (result.package1 > 0) {
       return next();
     } else {

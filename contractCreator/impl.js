@@ -46,6 +46,7 @@ module.exports = {
     });
   },
   createERC20Contract: async (req, res) => {
+    console.log(req.body);
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
@@ -129,6 +130,9 @@ module.exports = {
       objdata.hardCap = req.body.token_sale;
       objdata.ETHRate = req.body.eth_tokens;
       objdata.tokenContractCode = data;
+      objdata.bonusRate = req.body.bonus_rate == ''  ? 0 : req.body.bonus_rate;
+      objdata.bonusStatus= req.body.bonus_rate == null ? true : false ;
+      console.log("here");
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
@@ -222,6 +226,8 @@ module.exports = {
       objdata.hardCap = req.body.token_sale;
       objdata.ETHRate = req.body.eth_tokens;
       objdata.tokenContractCode = data;
+      objdata.bonusRate = req.body.bonus_rate == ''  ? 0 : req.body.bonus_rate;
+      objdata.bonusStatus= req.body.bonus_rate == null ? true : false ;
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
@@ -286,7 +292,7 @@ module.exports = {
     var address = req.cookies['address'];
     console.log(req.session.coinName);
     res.render('deployedContract', {
-      message1: "This is your token contract and this will hold all your tokens.Please do not close this tab.",
+      message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,

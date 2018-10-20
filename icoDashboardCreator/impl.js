@@ -156,7 +156,7 @@ module.exports = {
         'coinName': req.params.projectName
       },
       attributes: {
-        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
+        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
       }
     }).then(result =>
       res.send({
@@ -180,13 +180,13 @@ module.exports = {
         coinName: req.params.projectName
       }
     }).then(project => {
-      if(project){
+      if (project) {
         res.render("userSignup.ejs", {
           projectName: req.params.projectName,
           message: req.flash('signupMessage')
         });
       }
-      else{
+      else {
         res.send("404 Not Found");
       }
     })

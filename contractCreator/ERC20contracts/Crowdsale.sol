@@ -85,14 +85,14 @@ contract Crowdsale {
    * @param wallet Address where collected funds will be forwarded to
    * @param token Address of the token being sold
    */
-    constructor(uint256 rate,uint256 bonusRate,address wallet,IERC20 token) public {
+    constructor(uint256 rate,uint256 bonusRate,address wallet,IERC20 token,bool isBonusOn) public {
     _rate = rate;
     _wallet = wallet;
     _token = token;
     _owner = msg.sender;
     _bonusRate = bonusRate;
-    //initiating Crowdsale
     _isCrowdsaleOpen = true;
+    _isBonusOn = isBonusOn;
   }
   // -----------------------------------------
   // Crowdsale external interface

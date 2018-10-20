@@ -33,6 +33,7 @@
 
                           </div>
                         </div>
+                        <span class="alert-danger" id="token_name_error"></span>
                       </div>
 
                       <div class="form-group">
@@ -45,6 +46,7 @@
 
                           </div>
                         </div>
+                        <span class="alert-danger" id="token_symbol_error"></span>
                       </div>
 
                       <div class="form-group">
@@ -87,9 +89,22 @@
                         </div>
                         <span class="alert-danger" id="eth_tokens_error"></span>
                       </div>
+                      <div class="form-group">
+                        <label for="bonus_rate">Bonus Rate</label>
+                        <div class="input-group mb-3">
+
+                          <input type="text" class="form-control" name="bonus_rate" id="bonus_rate" placeholder="please enter bonus rate in whole Number."><br>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="bonus rate if required. in future you can change bouns rate with contract interaction"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="bonus_rate_error"></span>
+                      </div>
                       <hr>
 
-                      <h4>Advanced Functionalities</h4><br>
+                      <h4>Advanced Functionalities (all are seleted as a default.)</h4><br>
                       <div class="row mb-4 ml-1">
                         <div class="checkbox-btn" data-toggle="buttons">
                           <label class="btn btn-checkbox mr-2 active">
@@ -213,8 +228,7 @@
   }
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
-    if (myInput2.value % 1 != 0 || myInput2.value < 0) {
-      submitButton
+    if (myInput2.value % 1 != 0 || myInput2.value < 0 || myInput2.value.indexOf(" ") == 0) {
       document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -224,8 +238,7 @@
   }
   var myInput3 = document.getElementById("token_supply");
   myInput3.onkeyup = function () {
-    if (myInput3.value % 1 != 0 || myInput3.value < 0) {
-      submitButton
+    if (myInput3.value % 1 != 0 || myInput3.value < 0 || myInput3.value.indexOf(" ") == 0) {
       document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -235,12 +248,42 @@
   }
   var myInput4 = document.getElementById("token_decimals");
   myInput4.onkeyup = function () {
-    if (myInput4.value % 1 != 0 || myInput4.value < 0) {
-      submitButton
+    if (myInput4.value % 1 != 0 || myInput4.value < 0 || myInput4.value.indexOf(" ") == 0) {
       document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
       document.getElementById("token_decimals_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  var myInput5 = document.getElementById("bonus_rate");
+  str = myInput5.value.toString();
+  myInput5.onkeyup = function () {
+    if (myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+      document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("bonus_rate_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  var myInput6 = document.getElementById("token_symbol");
+  myInput6.onkeyup = function () {
+    if (myInput6.value.indexOf(" ") == 0) {
+      document.getElementById("token_symbol_error").innerHTML = 'Enter Valid String';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("token_symbol_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  var myInput7 = document.getElementById("token_name");
+  myInput7.onkeyup = function () {
+    if (myInput7.value.indexOf(" ") == 0) {
+      document.getElementById("token_name_error").innerHTML = 'Enter Valid String';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("token_name_error").innerHTML = '';
       document.getElementById("submitButton").disabled = "";
     }
   }

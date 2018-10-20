@@ -46,6 +46,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: true
     },
+    bonusRate: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
+    },
+    bonusStatus: {
+      type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    },
 
     startDate: {
       type: DataTypes.DATE,
