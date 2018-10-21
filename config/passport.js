@@ -133,7 +133,6 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
-      console.log(req.body);
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       client.find({
@@ -183,6 +182,7 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status = false;
+            newUser.package1 = 1 ;
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
@@ -226,6 +226,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
+            newUser.package1 = 1 ;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -269,6 +270,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
+            newUser.package1 = 1 ;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);

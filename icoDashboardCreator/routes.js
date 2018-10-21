@@ -2,6 +2,8 @@ const impl = require("./impl");
 var db = require('../database/models/index');
 var path = require('path');
 var client = db.client;
+var ProjectConfiguration = db.projectConfiguration;
+
 
 module.exports = function (app,express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
@@ -46,7 +48,7 @@ function hasPackage3(req, res, next) {
       'email': req.user.email
     }
   }).then(result => {
-    if (result.dataValues.package2 == 0) {
+    if (result.dataValues.package2 == 10) {
       return next();
     } else {
       req.flash('package_flash', 'You need to buy Package 3');

@@ -112,8 +112,12 @@
                             </form> -->
                 <form action="/payment">
                   <label class="col-12 col-form-label">Confirmation Email is sent. Please enter OTP sent to you on your Registerd
+<<<<<<< Updated upstream
                     Email
                   </label>
+=======
+                    Email</label>
+>>>>>>> Stashed changes
                   <label for="example-text-input" class="col-2 col-form-label">OTP</label>
                   <input type="text" class="form-control" name="otpValue"><br>
                   <div class="text-center">
@@ -164,14 +168,21 @@
       window.web3 = new Web3(web3.currentProvider)
       $("#metamaskButton").get(0).style.display = '';
       $('#bancor-wc-id-1').hide();
+<<<<<<< Updated upstream
     } else {
+=======
+    }else{
+>>>>>>> Stashed changes
       $('#bancor-wc-id-1').show();
     }
   }
   function buyMetamask() {
     window.web3.eth.net.getNetworkType().then(networkType => {
       if (networkType != 'main') {
+<<<<<<< Updated upstream
         console.log(networkType, "networkType")
+=======
+>>>>>>> Stashed changes
         window.alert("Please change network in your Metamask to Mainnet");
       }
       else {

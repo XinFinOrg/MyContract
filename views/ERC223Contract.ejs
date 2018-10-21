@@ -33,7 +33,10 @@
 
                           </div>
                         </div>
+<<<<<<< Updated upstream
                         <span class="alert-danger" id="token_name_error"></span>
+=======
+>>>>>>> Stashed changes
                       </div>
 
                       <div class="form-group">
@@ -46,7 +49,10 @@
 
                           </div>
                         </div>
+<<<<<<< Updated upstream
                         <span class="alert-danger" id="token_symbol_error"></span>
+=======
+>>>>>>> Stashed changes
                       </div>
 
                       <div class="form-group">
@@ -235,7 +241,12 @@
   }
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
+<<<<<<< Updated upstream
     if (myInput2.value % 1 != 0 || myInput2.value < 0  ||  myInput2.value.indexOf(" ") == 0) {
+=======
+    if (myInput2.value % 1 != 0 || myInput2.value < 0) {
+      submitButton
+>>>>>>> Stashed changes
       document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {

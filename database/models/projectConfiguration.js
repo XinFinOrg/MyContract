@@ -54,7 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.BOOLEAN,
       defaultValue:false,
     },
-
+    isAllowedForICO: {
+      type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    },
     startDate: {
       type: DataTypes.DATE,
       allowNull: true,
