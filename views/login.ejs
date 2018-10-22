@@ -65,16 +65,18 @@
                                                     <form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">
                                                         <div class="form-group">
                                                             <label for="email">Email</label>
-                                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                                                            <input type="emailid" class="form-control" id="emailid" name="email" placeholder="Enter email">
                                                         </div>
+                                                        <span class="alert-danger" id="inputVal_error"></span>
                                                         <div class="form-group">
                                                             <label for="password">Password</label>
                                                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                                                         </div>
+                                                         <span class="alert-danger" id="inputVal_error1"></span>
                                                         <div class="form-group">
                                                             <div class="row align-items-center">
                                                                 <div class="col-md-12 p-b-20">
-                                                                    <button class="btn btn-lg btn-rounded btn-info" type="submit">LOGIN</button>
+                                                                    <button class="btn btn-lg btn-rounded btn-info" id="loginButton" type="submit">LOGIN</button>
                                                                     <span class="pl-5"><a href="javascript:void(0)" id="to-recover"
                                                                             class="text-dark"><i class="fa fa-lock m-r-5"></i>
                                                                             Forgot password?</a></span>
@@ -218,13 +220,28 @@
         document.getElementById("to-recoveremailsent").disabled = "disabled";
         var myInput = document.getElementById("emailid");
         myInput.onkeyup = function () {
-            console.log(myInput.value.indexOf(" "))
             if (myInput.value === '' || myInput.value.indexOf(" ") == 0) {
                 document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
                 document.getElementById("to-recoveremailsent").disabled = "disabled";
+                document.getElementById("loginButton").disabled = "disabled";
             } else {
                 document.getElementById("inputVal_error").innerHTML = '';
                 document.getElementById("to-recoveremailsent").disabled = "";
+                document.getElementById("loginButton").disabled = "";
+
+            }
+        }
+        var myInput2 = document.getElementById("password");
+        myInput2.onkeyup = function () {
+            if (myInput2.value === '' || myInput2.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error1").innerHTML = 'Please enter valid password';
+                document.getElementById("to-recoveremailsent").disabled = "disabled";
+                document.getElementById("loginButton").disabled = "disabled";
+            } else {
+                document.getElementById("inputVal_error1").innerHTML = '';
+                document.getElementById("to-recoveremailsent").disabled = "";
+                document.getElementById("loginButton").disabled = "";
+
             }
         }
     </script>

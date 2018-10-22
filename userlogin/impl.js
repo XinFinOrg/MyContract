@@ -37,10 +37,10 @@ module.exports = {
 
   getDashboard: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
-    console.log(projectArray);
+    // console.log(projectArray);
     var address;
     address = req.cookies['address'];
-    console.log("cookie is ", address);
+    // console.log("cookie is ", address);
     if (!address) {
       client.find({
         where: {
@@ -83,7 +83,7 @@ module.exports = {
   getLogout: function (req, res) {
     req.logout();
     res.clearCookie('address');
-    res.redirect('/');
+    res.redirect('/dashboard');
   },
 
   githubLogin: passport.authenticate('github'),

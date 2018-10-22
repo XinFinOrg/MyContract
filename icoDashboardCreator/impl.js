@@ -24,7 +24,6 @@ module.exports = {
     });
   },
   icoDashboardSetup: async function (req, res) {
-    console.log(req.params, "project")
     res.render('icoDashboard', {
       user: req.user,
       projectName: req.params.projectName

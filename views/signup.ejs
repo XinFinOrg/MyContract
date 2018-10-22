@@ -104,6 +104,7 @@
                             <div class="form-group">
                               <label for="email">Email</label>
                               <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                              <span class="alert-danger" id="inputVal_error"></span>
                             </div>
                             <div class="form-group">
                               <label for="password">Password</label>
@@ -119,7 +120,7 @@
                                 <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
                                 <p id="number" class="invalid">A <b>number</b></p>
                                 <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                                <p id="passwordcheck" class="invalid">password should be<b>  same in both fields</b></p>
+                                <p id="passwordcheck" class="invalid">Password should be<b>  same in both fields</b></p>
                               </div>
                             <div class="form-group">
                               <div class="row align-items-center">
@@ -212,6 +213,7 @@
     });
   </script>
  <script>
+    var myInput3 = document.getElementById("email");
     var myInput = document.getElementById("password");
     var myInput2 = document.getElementById("retypePassword");
     var letter = document.getElementById("letter");
@@ -228,7 +230,16 @@
     myInput.onblur = function() {
         document.getElementById("message").style.display = "none";
     }
-    
+    myInput3.onkeyup = function() {
+      if (myInput3.value === '' || myInput3.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
+                document.getElementById("send").disabled="disabled";
+
+            } else {
+                document.getElementById("inputVal_error").innerHTML = '';
+                document.getElementById("send").disabled="";
+            }
+    }
     // When the user starts to type something inside the password field
     myInput.onkeyup = function() {
       // Validate lowercase letters

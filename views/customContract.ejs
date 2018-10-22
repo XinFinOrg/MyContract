@@ -228,7 +228,7 @@
   }
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
-    if (myInput2.value % 1 != 0 || myInput2.value < 0 || myInput2.value.indexOf(" ") == 0) {
+    if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
       document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -238,7 +238,7 @@
   }
   var myInput3 = document.getElementById("token_supply");
   myInput3.onkeyup = function () {
-    if (myInput3.value % 1 != 0 || myInput3.value < 0 || myInput3.value.indexOf(" ") == 0) {
+    if (myInput3.value % 1 != 0 || myInput3.value < 1 || myInput3.value.indexOf(" ") == 0) {
       document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -248,7 +248,7 @@
   }
   var myInput4 = document.getElementById("token_decimals");
   myInput4.onkeyup = function () {
-    if (myInput4.value % 1 != 0 || myInput4.value < 0 || myInput4.value.indexOf(" ") == 0) {
+    if (myInput4.value % 1 != 0 || myInput4.value < 1 || myInput4.value.indexOf(" ") == 0) {
       document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {

@@ -1,38 +1,98 @@
 <% layout('./layouts/sidebar') -%>
   <link rel="stylesheet" type="text/css" href="assets/libs/prism/prism.css">
-<body>
-  <div class="preloader">
-    <div class="lds-ripple">
-      <div class="lds-pos"></div>
-      <div class="lds-pos"></div>
+
+  <body>
+    <div class="preloader">
+      <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+      </div>
     </div>
-  </div>
-  <!-- Page wrapper  -->
-  <div class="page-wrapper">
-    <!-- Container fluid  -->
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Generated Contract</h4>
-          <div class="row">
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+      <!-- Container fluid  -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Generated Contract</h4>
+            <div class="row">
               <% if(message1.length == 0) { %>
-               <h4>This contract will be used to handle your crowdsale!Please do not close this tab.</h4>
+                <h4>This contract will be used to handle your crowdsale! Please do not close this tab.</h4>
                 <% } else { %>
-                  <h4><%- message1 %></h4> 
-                <% } %> 
-            <div class="col-sm-12 text-center">
-              <div class="well">
-                <div class="col-md-12">
-                  <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract to review</h4>
-                    <pre class="language-markup scrollable">
+                  <h4>
+                    <%- message1 %>
+                  </h4>
+                  <% } %>
+                    <div class="col-sm-12 text-center">
+                      <div class="well">
+                        <div class="col-md-12">
+                          <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract to review</h4>
+                          <pre class="language-markup scrollable">
                       <% if(contract) { %>
 <code><%= contract %>
 </code>
                     </pre>
-                    <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Deploy <%= coinName %></button>
-                      <% } else { %>
+                          <!-- <button type="button" id="deployment" onclick=autoDeploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Automatic
+                            Deploy
+                            <%= coinName %></button> -->
+                            <button type="button" id="deployment" data-toggle="modal"  disabled="disabled" data-target="#networkModal" data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1">Automatic
+                                Deploy
+                                <%= coinName %></button>
+                          <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
+                            Deploy
+                            <%= coinName %></button>
+                          <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
+                              class="ti-help-alt"></i></button>
+                          <!-- RUBM modal -->
+                          <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Automatic Deployment</span></h5>
+                                  <p>Automatic deployment is where the user doesn't need to go through the hassle of deploying
+                                    the contract. The deployment will be handled by the platform itself. you can check the
+                                    status of Deployment on the Dashboard.
+                                  </p>
 
-<code>
+                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Manual Deployment</span></h5>
+                                  <p>Manual deployment is where user have to deploy smart contract with help of any digital
+                                    wallet, metamask , keystore , private key. this option will require 0.5 ETH approx in
+                                    your account in order to deploy the smart contract.
+                                  </p>
+                                </div>
+                                <div class="modal-footer text-center">
+                                  <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>  
+                          </div>
+                          <!-- / RUBM modal -->
+                          <!-- RUBM modal -->
+                          <div class="modal fade bs-example-modal-lg" id="networkModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Choose your network type</span></h5>
+                                  <button type="button" class="btn btn-rounded btn-info" disabled="disabled" onclick=autoDeploy("<%=coinName %>",true,true)>Ethereum main network</button>
+                                  <button type="button" class="btn btn-rounded btn-info" disabled="disabled" onclick=autoDeploy("<%=coinName %>",true,false)>Ropsten test network</button>
+                                </div>
+                                <div class="modal-footer text-center">
+                                  <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- / RUBM modal -->
+
+                          <% } else { %>
+
+                            <code>
 pragma solidity ^0.4.4;
 /**
  * @title ERC20 interface
@@ -55,10 +115,11 @@ contract ERC20 {
 
 }
 </code>
-<h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
-<button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/buyPackage';"><i class="fa fa-dollar-sign"></i> Buy Package</button></h5>
+                            <h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
+                                <button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/buyPackage';"><i
+                                    class="fa fa-dollar-sign"></i> Buy Package</button></h5>
 
-<code class="blur">
+                            <code class="blur">
 /**
 * @title ERC20Detailed token
 * @dev The decimals are only for visualization purposes.
@@ -84,14 +145,15 @@ contract ERC20Detailed is ERC20 {
  }
 
 </code>
-<% } %>
-                </div>
-              </div>
+                            <% } %>
+                        </div>
+                      </div>
+                    </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-</body>
-<script>sessionStorage.clear();</script>
-</html>
+  </body>
+  <script>sessionStorage.clear();</script>
+
+  </html>

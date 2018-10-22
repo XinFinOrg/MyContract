@@ -157,7 +157,8 @@
                 <% if (ProjectConfiguration.length>0) { %>
                   <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                     <% if(ProjectConfiguration.networkType != "mainnet") {%>
-                      <li id="deployment" onclick='deploy("<%- ProjectConfiguration.coinName %>",false)' class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a></li>
+                      <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)' class="sidebar-item"><a
+                          href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a></li>
                       <% }else{%>
                         <% } %>
                           <% }) %>
@@ -304,10 +305,22 @@
           checkBalances();
         }, 30000);
         function deploy(coinName, istoken) {
-          console.log(istoken, "is here")
+          console.log(istoken, "is in here")
           window.sessionStorage.setItem("deploymentName", coinName);
           if (!istoken) { window.location.href = "/deployer"; }
           else { window.location.href = "/deployer?coinName=" + coinName; }
+        }
+        function autoDeploy(coinName, istoken, isMainnet) {
+          console.log(istoken, "is here",isMainnet)
+          window.sessionStorage.setItem("deploymentName", coinName);
+          if (!istoken) { window.location.href = "/deployer"; }
+          else {
+            if (isMainnet) {
+              window.location.href = "/api/automaticDeployment?network=main&coinName=" + coinName;
+            } else {
+              window.location.href = "/api/automaticDeployment?network=test&coinName=" + coinName;
+            }
+          }
         }
         // function getProjectArray(){
         //   $.get('/getProjectArray', function(result){

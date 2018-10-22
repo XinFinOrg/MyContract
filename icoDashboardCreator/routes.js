@@ -5,13 +5,13 @@ var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
 
 
-module.exports = function (app,express) {
+module.exports = function (app, express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
-  app.get('/contractInteraction/project/:projectName/contractData',impl.contractData);
+  app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
 
-  app.get('/icoDashboardSetup/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.icoDashboardSetup);
-  app.get('/siteConfiguration/project/:projectName', isLoggedIn,hasVerified, hasPackage3, impl.siteConfiguration);
-  app.get('/siteConfiguration/project/:projectName/getSiteConfiguration',hasVerified, isLoggedIn, impl.getSiteConfiguration);
+  app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
+  app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
+  app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
   app.get('/transaction', impl.getTransaction)
   app.get('/transactionData', impl.getTransactionData)
@@ -20,7 +20,7 @@ module.exports = function (app,express) {
   app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata', impl.getICOdata);
   app.get('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData', impl.getUserData);
   app.post('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', impl.updateUserData);
-  
+
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);
@@ -43,16 +43,17 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to check package 2
 function hasPackage3(req, res, next) {
-  client.find({
+  ProjectConfiguration.find({
     where: {
-      'email': req.user.email
+      'client_id': req.user.uniqueId,
+      'coinName': req.params.projectName
     }
   }).then(result => {
-    if (result.dataValues.package2 == 10) {
+    if (result.dataValues.isAllowedForICO == true) {
       return next();
     } else {
       req.flash('package_flash', 'You need to buy Package 3');
-      res.redirect('/');
+      res.redirect('/dashboard');
     }
   })
 }
@@ -75,7 +76,7 @@ function hasVerified(req, res, next) {
         { res.redirect('/KYCpage'); }
         break;
       default:
-        {  res.redirect('/'); }
+        { res.redirect('/'); }
         break;
     }
   })

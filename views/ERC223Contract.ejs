@@ -33,10 +33,7 @@
 
                           </div>
                         </div>
-<<<<<<< Updated upstream
                         <span class="alert-danger" id="token_name_error"></span>
-=======
->>>>>>> Stashed changes
                       </div>
 
                       <div class="form-group">
@@ -49,10 +46,7 @@
 
                           </div>
                         </div>
-<<<<<<< Updated upstream
                         <span class="alert-danger" id="token_symbol_error"></span>
-=======
->>>>>>> Stashed changes
                       </div>
 
                       <div class="form-group">
@@ -84,9 +78,9 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="1ETHTokens">1 ETH = ? <span id="tokenname"></span></label>
+                        <label for="1ETHTokens">1 ETH = ? <span id="tokenname">Tokens</span></label>
                         <div class="input-group mb-3">
-                          <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens">
+                          <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="Enter token value in ETH">
                           <div class="input-group-append">
                             <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="How many tokens will you be able to buy using 1 Eth ?"><i
                                 class="ti-help-alt"></i></button>
@@ -229,24 +223,13 @@
 </script>
 <script>
   var myInput = document.getElementById("token_symbol");
-  // When the user starts to type something inside the password field
   myInput.onkeyup = function () {
-    document.getElementById("tokenname").innerHTML = myInput.value;
-  }
-</script>
-<script>
-  var myInput = document.getElementById("token_symbol");
-  myInput.onkeyup = function () {
+    console.log(myInput.value,"here")
     document.getElementById("tokenname").innerHTML = myInput.value;
   }
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
-<<<<<<< Updated upstream
-    if (myInput2.value % 1 != 0 || myInput2.value < 0  ||  myInput2.value.indexOf(" ") == 0) {
-=======
-    if (myInput2.value % 1 != 0 || myInput2.value < 0) {
-      submitButton
->>>>>>> Stashed changes
+    if (myInput2.value % 1 != 0 || myInput2.value < 1  ||  myInput2.value.indexOf(" ") == 0) {
       document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -256,7 +239,7 @@
   }
   var myInput3 = document.getElementById("token_supply");
   myInput3.onkeyup = function () {
-    if (myInput3.value % 1 != 0 || myInput3.value < 0  ||  myInput3.value.indexOf(" ") == 0) {
+    if (myInput3.value % 1 != 0 || myInput3.value < 1  ||  myInput3.value.indexOf(" ") == 0) {
       document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
@@ -266,7 +249,7 @@
   }
   var myInput4 = document.getElementById("token_decimals");
   myInput4.onkeyup = function () {
-    if (myInput4.value % 1 != 0 || myInput4.value < 0  ||  myInput4.value.indexOf(" ") == 0 ) {
+    if (myInput4.value % 1 != 0 || myInput4.value < 1  ||  myInput4.value.indexOf(" ") == 0 ) {
       document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
       document.getElementById("submitButton").disabled = "disabled";
     } else {

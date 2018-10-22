@@ -14,6 +14,9 @@ module.exports = function (app, express) {
   app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
   app.get('/generatedCrowdsaleContract', isLoggedIn, impl.generatedContract);
   app.get('/crowdsaleDeployer',isLoggedIn,impl.crowdsaleDeployer);
+
+  app.post('/test',impl.test);
+
 }
 
 
