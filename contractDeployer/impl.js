@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 const solc = require("solc");
 var byteCode;
+var byteCode2;
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
@@ -142,88 +143,110 @@ module.exports = {
   },
 
   getAutomaticDeployer: async function (req, res) {
-    var address = req.cookies['address'];
+    let r1, r2;
     console.log(req.query) // network: 'test', coinName: 'pilankarcoin' 
-    let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.session.coinName } });
+    let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.query.coinName } });
     let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum' } })
-    if (projectData.tokenByteCode == null) {
-      byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
-      projectData.tokenByteCode = byteCode.bytecode;
-      projectData.tokenABICode = byteCode.interface;
-      byteCode = byteCode.bytecode
-      await projectData.save();
-    }
-    if (req.query.network == "test") {
-      let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
-      let web3 = new Web3(provider);
-      var privateKey = new Buffer(accountData.privateKey, 'hex')
-      let txData = {
-        "nonce": await web3.eth.getTransactionCount(address),
-        "gasPrice": "0x170cdc1e00",
-        "gasLimit": "0x2dc6c0",
-        "to": "", "value": "0x00",
-        "data": projectData.tokenByteCode,
-        "chainId": 3
-      }
-      var tx = new Tx(txData);
-      tx.sign(privateKey);
-      var serializedTx = tx.serialize();
-      console.log("in here")
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('receipt', function (receipt) { res.send(receipt) });
-    } else {
-      let provider = new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws');
-      let web3 = new Web3(provider);
-      var privateKey = new Buffer('', 'hex')
-      // let txData = {
-      //   "nonce": await web3.eth.getTransactionCount(address),
-      //   "gasPrice": "0x170cdc1e00",
-      //   "gasLimit": "0x2dc6c0",
-      //   "to": "", "value": "0x00",
-      //   "data": req.body.data, "chainId": 3
-      // }
-      let txData
-      var tx = new Tx(txData);
-      tx.sign(privateKey);
-      var serializedTx = tx.serialize();
-      console.log("in here")
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('receipt', function (receipt) { res.send(receipt) });
-    }
+
   },
 
   test: async function (req, res) {
-    //console.log(req.query) // network: 'test', coinName: 'pilankarcoin' 
-    let projectData = await ProjectConfiguration.find({ where: { 'coinName': 'pilankarcoin' } });
+    let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
+    let web3 = new Web3(provider);
+    let r1, r2;
+    let projectData = await ProjectConfiguration.find({ where: { 'coinName': 'SPD' } });
     let accountData = await userCurrencyAddress.find({ where: { 'client_id': '9cdeae50-d458-11e8-a2ce-5d8d68895880', 'currencyType': 'Ethereum' } })
-    console.log(projectData.dataValues, accountData.dataValues)
-    byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
-    projectData.tokenByteCode = byteCode.bytecode;
-    projectData.tokenABICode = byteCode.interface;
-    res.send(projectData.tokenByteCode);
-  //   let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
-  //   let web3 = new Web3(provider);
-  //   var privateKey = new Buffer('25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142', 'hex')
-  //   let txData = {
-  //     "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
-  //     "gasPrice": "0x170cdc1e00",
-  //     "gasLimit": "0x2dc6c0",
-  //     "to": "",
-  //     "value": "0x00",
-  //     "data": byteCode.bytecode,
-  //     "chainId": 3
-  //   }
-  //   var tx = new Tx(txData);
-  //   tx.sign(privateKey);
-  //   var serializedTx = tx.serialize();
-  //   console.log("in here")
-  //   web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-  //     .on('receipt', async function (receipt) {
-  //       projectData.tokenContractAddress = receipt.contractAddress;
-  //       projectData.tokenContractHash = receipt.transactionHash;
-  //       await projectData.save();
-  //       res.send(receipt);
-  //     });
+    r1 = projectData.dataValues;
+    r2 = accountData.dataValues;
+    res.send({ r1: r1.crowdsaleContractAddress, r2: r1.tokenContractAddress })
+    var mainPrivateKey = new Buffer('25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142', 'hex')
+    let txData = {
+      "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
+      "gasPrice": "0x170cdc1e00",
+      "gasLimit": "0x5208",
+      "to": accountData.address,
+      "value": "0x06f05b59d3b20000",
+      "data": '0x',
+      "chainId": 3
+    }
+    var tx = new Tx(txData);
+    tx.sign(mainPrivateKey);
+    var serializedTx = tx.serialize();
+    console.log("in here")
+    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+      .on('receipt', async function (receipt) {
+        if (receipt.status == true) {
+          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+          projectData.tokenByteCode = byteCode.bytecode;
+          projectData.tokenABICode = byteCode.interface;
+          var privateKey = new Buffer(accountData.privateKey, 'hex')
+          let txData = {
+            "nonce": await web3.eth.getTransactionCount(accountData.address),
+            "gasPrice": "0x170cdc1e00",
+            "gasLimit": "0x2dc6c0",
+            "to": "",
+            "value": "0x00",
+            "data": '0x' + byteCode.bytecode,
+            "chainId": 3
+          }
+          var tx = new Tx(txData);
+          tx.sign(privateKey);
+          var serializedTx = tx.serialize();
+          console.log("in here")
+          web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+            .on('receipt', async function (receipt) {
+              if (receipt.status == false) {
+                res.send("Network error!");
+              } else {
+                r1 = receipt;
+                projectData.tokenContractAddress = receipt.contractAddress;
+                projectData.tokenContractHash = receipt.transactionHash;
+                var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+                var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+                var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+                ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+                  "SafeERC20": SafeERC20,
+                  "SafeMath": SafeMath,
+                  "IERC20": IERC20,
+                }, async (err, data) => {
+                  byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                  byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', receipt.contractAddress, projectData.bonusStatus]).slice(2)
+                  projectData.crowdsaleByteCode = byteCode2.bytecode;
+                  projectData.crowdsaleABICode = byteCode2.interface;
+                  let txData = {
+                    "nonce": await web3.eth.getTransactionCount(accountData.address),
+                    "gasPrice": "0x170cdc1e00",
+                    "gasLimit": "0x2dc6c0",
+                    "to": "",
+                    "value": "0x00",
+                    "data": '0x' + byteCode2.bytecode,
+                    "chainId": 3
+                  }
+                  var tx = new Tx(txData);
+                  tx.sign(privateKey);
+                  var serializedTx = tx.serialize();
+                  console.log("in here")
+                  web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+                    .on('receipt', async function (receipt) {
+                      if (receipt.status == false) {
+                        res.send("Network error!");
+                      } else {
+                        r2 = receipt;
+                        projectData.crowdsaleContractHash = receipt.transactionHash;
+                        projectData.crowdsaleContractAddress = receipt.contractAddress;
+                        await projectData.save();
+                        res.send({r1, r2});
+                      }
+                    })
+                })
+              }
+            });
+        }
+        else {
+          res.send("fund trasfer error! check main account")
+        }
+
+      });
   },
 };
 

@@ -149,22 +149,29 @@ module.exports = {
   },
 
   contractData: async function (req, res) {
-    console.log(req.params);
     ProjectConfiguration.find({
       where: {
-        'coinName': req.params.projectName
+        'coinName': req.params.projectName,
+        'client_id': req.user.uniqueId
       },
       attributes: {
         exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
       }
-    }).then(result =>
-      res.send({
-        "tokenAddress": result.dataValues.tokenContractAddress,
-        "crowdSaleAddress": result.dataValues.crowdsaleContractAddress,
-        "crowdsaleABICode": result.dataValues.crowdsaleABICode,
-        "tokenABICode": result.dataValues.tokenABICode
-      })
-    )
+    }).then(result => {
+      if (result == undefined) {
+        res.send({
+          "tokenAddress":"you are not allowed to access this page",
+          "crowdSaleAddress": "you are not allowed to access this page",
+        })
+      } else {
+        res.send({
+          "tokenAddress": result.dataValues.tokenContractAddress,
+          "crowdSaleAddress": result.dataValues.crowdsaleContractAddress,
+          "crowdsaleABICode": result.dataValues.crowdsaleABICode,
+          "tokenABICode": result.dataValues.tokenABICode
+        })
+      }
+    })
   },
 
   //user login
