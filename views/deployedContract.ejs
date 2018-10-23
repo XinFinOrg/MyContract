@@ -32,61 +32,65 @@
 <code><%= contract %>
 </code>
                     </pre>
-                        
-                            <button type="button" id="deployment" data-toggle="modal"  disabled="disabled" data-target="#networkModal" data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1">Automatic
-                                Deploy
-                                <%= coinName %></button>
-                          <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
+                    <% if(message1.length == 0) { %>
+                      <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">
                             Deploy
                             <%= coinName %></button>
-                          <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
-                              class="ti-help-alt"></i></button>
-                          <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body">
-                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Automatic Deployment</span></h5>
-                                  <p>Automatic deployment is where the user doesn't need to go through the hassle of deploying
-                                    the contract. The deployment will be handled by the platform itself. you can check the
-                                    status of Deployment on the Dashboard.
-                                  </p>
-
-                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Manual Deployment</span></h5>
-                                  <p>Manual deployment is where user have to deploy smart contract with help of any digital
-                                    wallet, metamask , keystore , private key. this option will require 0.5 ETH approx in
-                                    your account in order to deploy the smart contract.
-                                  </p>
-                                </div>
-                                <div class="modal-footer text-center">
-                                  <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-                            </div>  
-                          </div>
-                         
-                          <div class="modal fade bs-example-modal-lg" id="networkModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body">
-                                  <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Choose your network type</span></h5>
-                                  <button type="button" class="btn btn-rounded btn-info" disabled="disabled" onclick=autoDeploy("<%=coinName %>",true,true)>Ethereum main network</button>
-                                  <button type="button" class="btn btn-rounded btn-info" disabled="disabled" onclick=autoDeploy("<%=coinName %>",true,false)>Ropsten test network</button>
-                                </div>
-                                <div class="modal-footer text-center">
-                                  <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
-                                </div>
-                              </div>
+                      <% } else { %>
+                        <button type="button" id="deployment" data-toggle="modal" data-target="#networkModal" data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1">Automatic
+                            Deploy
+                            <%= coinName %></button>
+                      <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
+                        Deploy
+                        <%= coinName %></button>
+                      <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
+                          class="ti-help-alt"></i></button>
+                      <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                              <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Automatic Deployment</span></h5>
+                              <p>Automatic deployment is where the user doesn't need to go through the hassle of deploying
+                                the contract. The deployment will be handled by the platform itself. you can check the
+                                status of Deployment on the Dashboard.
+                              </p>
+                              <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Manual Deployment</span></h5>
+                              <p>Manual deployment is where user have to deploy smart contract with help of any digital
+                                wallet, metamask , keystore , private key. this option will require 0.5 ETH approx in
+                                your account in order to deploy the smart contract.
+                              </p>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
                             </div>
                           </div>
-
+                        </div>  
+                      </div>
+                     
+                      <div class="modal fade bs-example-modal-lg" id="networkModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                              <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Choose your network type</span></h5>
+                              <button type="button" class="btn btn-rounded btn-info" disabled="disabled" onclick=autoDeploy("<%=coinName %>",true,true)>Ethereum main network</button>
+                              <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,false)>Ropsten test network</button>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        <% } %>
+                      
+                          
                           <% } else { %>
-
                             <code>
 pragma solidity ^0.4.4;
 /**
@@ -94,26 +98,20 @@ pragma solidity ^0.4.4;
  * see https://github.com/ethereum/EIPs/issues/20
  */
 contract ERC20 {
-
   uint public totalSupply;
   uint public decimals;
-
   function balanceOf(address who) constant returns (uint);
   function allowance(address owner, address spender) constant returns (uint);
-
   function transfer(address to, uint value) returns (bool ok);
   function transferFrom(address from, address to, uint value) returns (bool ok);
   function approve(address spender, uint value) returns (bool ok);
-
   event Transfer(address indexed from, address indexed to, uint value);
   event Approval(address indexed owner, address indexed spender, uint value);
-
 }
 </code>
                             <h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
                                 <button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/buyPackage';"><i
                                     class="fa fa-dollar-sign"></i> Buy Package</button></h5>
-
                             <code class="blur">
 /**
 * @title ERC20Detailed token
@@ -125,20 +123,17 @@ contract ERC20Detailed is ERC20 {
  string private _name;
  string private _symbol;
  uint8 private _decimals;
-
  constructor(string name, string symbol, uint8 decimals) public {
    _name = name;
    _symbol = symbol;
    _decimals = decimals;
  }
-
  /**
   * @return the name of the token.
   */
  function name() public view returns(string) {
    return _name;
  }
-
 </code>
                             <% } %>
                         </div>
@@ -150,5 +145,4 @@ contract ERC20Detailed is ERC20 {
       </div>
   </body>
   <script>sessionStorage.clear();</script>
-
   </html>

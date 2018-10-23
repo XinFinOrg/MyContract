@@ -8,6 +8,7 @@ var ProjectConfiguration = db.projectConfiguration;
 module.exports = function (app, express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
+  // app.get('/contractInteraction/project', (req,res) => { console.log("here"); res.redirect('/'); });
 
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);

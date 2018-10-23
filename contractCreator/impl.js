@@ -130,8 +130,8 @@ module.exports = {
       objdata.hardCap = req.body.token_sale;
       objdata.ETHRate = req.body.eth_tokens;
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == ''  ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus= req.body.bonus_rate == null ? true : false ;
+      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
+      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
       console.log("here");
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
@@ -226,8 +226,8 @@ module.exports = {
       objdata.hardCap = req.body.token_sale;
       objdata.ETHRate = req.body.eth_tokens;
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == ''  ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus= req.body.bonus_rate == null ? true : false ;
+      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
+      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
@@ -299,7 +299,7 @@ module.exports = {
       contract: req.session.contract,
       coinName: req.session.coinName
     });
-  }
+  },
 }
 
 function getProjectArray(email) {
