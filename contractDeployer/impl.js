@@ -215,7 +215,7 @@ module.exports = {
                     let txData = {
                       "nonce": await web3.eth.getTransactionCount(accountData.address),
                       "gasPrice": "0x170cdc1e00",
-                      "gasLimit": "0x2dc6c0",
+                      "gasLimit": "0xD19A9",
                       "to": "",
                       "value": "0x00",
                       "data": '0x' + byteCode2.bytecode,
