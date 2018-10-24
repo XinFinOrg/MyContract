@@ -53,7 +53,7 @@ function hasPackage3(req, res, next) {
     if (result.dataValues.isAllowedForICO == true) {
       return next();
     } else {
-      req.flash('package_flash', 'You need to buy Package 3');
+      req.flash('package_flash', 'You need to buy this package ');
       res.redirect('/dashboard');
     }
   })
