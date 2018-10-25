@@ -23,6 +23,7 @@ module.exports = function (app) {
   app.get('/verifyAccount',impl.verifyAccount);
   // app.get('/getProjectArray', impl.getProjectArray);
 
+
   //kyc
   app.get('/KYCpage', isLoggedIn, impl.KYCpage);
   app.get('/KYCpage/pending', isLoggedIn, impl.KYCpagePending);

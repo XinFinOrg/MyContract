@@ -10,6 +10,8 @@ var coinPaymentHandler = require('../coinPayments/impl');
 var icoListener = require('../icoHandler/listener');
 const ImageDataURI = require('image-data-uri');
 var privateIcoListener = require('../icoHandler/privateListener');
+const readChunk = require('read-chunk');
+const fileType = require('file-type');
 
 module.exports = {
 
@@ -126,24 +128,25 @@ module.exports = {
   },
 
   uploadKYC: async (req, res, next) => {
-    let doc1,doc2,doc3;
-    await ImageDataURI.encodeFromFile(req.files[0].path).then(imgurl => { doc1 = imgurl })
-    await ImageDataURI.encodeFromFile(req.files[1].path).then(imgurl => { doc2 = imgurl })
-    await ImageDataURI.encodeFromFile(req.files[2].path).then(imgurl => { doc3 = imgurl })
-    // console.log(doc1,doc2,doc3)
-    User.update({
-      'kycDoc1': doc1,//fs.readFileSync(req.files[0].path),
-      'kycDoc2': doc2,//fs.readFileSync(req.files[1].path),
-      'kycDoc3': doc3,//fs.readFileSync(req.files[2].path),
-      // 'kyc_verified': 'pending'
-    }, {
-        where: {
-          'email': req.user.email,
-          'projectConfigurationCoinName': req.user.projectConfiguration.coinName
-        }
-      }).then(() => {
-        res.redirect('/' + req.user.projectConfiguration.coinName + '/user/dashboard');
-      });
+
+    let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
+    let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
+    let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
+    if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
+      User.update({
+        'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
+        'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
+        'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+        'kyc_verified': 'pending'
+      }, {
+          where: {
+            'email': req.user.email,
+            'projectConfigurationCoinName': req.user.projectConfiguration.coinName
+          }
+        }).then(() => {
+          res.redirect('/' + req.user.projectConfiguration.coinName + '/user/dashboard');
+        });
+    }
   },
 
   postContactPage: (req, res, next) => {
@@ -198,10 +201,10 @@ module.exports = {
       }
     });
     eth_address = eth_addresses[0].address;
-    if(req.user.projectConfiguration.networkType=="testnet"){
+    if (req.user.projectConfiguration.networkType == "testnet") {
       var tokenBalance = await privateIcoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
     }
-    else{
+    else {
       var tokenBalance = await icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
     }
     res.send({

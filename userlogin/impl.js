@@ -2,14 +2,14 @@ var passport = require('passport');
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
-var fs = require('fs');
+// var fs = require('fs');
 var path = require('path');
-var paymentListener = require('../packageCart/paymentListener');
+// var paymentListener = require('../packageCart/paymentListener');
 var bcrypt = require('bcrypt-nodejs');
 var mailer = require('../emailer/impl');
 const ImageDataURI = require('image-data-uri');
-
-
+const readChunk = require('read-chunk');
+const fileType = require('file-type');
 module.exports = {
 
   getLogin: function (req, res) {
@@ -105,22 +105,30 @@ module.exports = {
       user: req.user,
     })
   },
-  KYCdocUpload: async function (req, res) {
-    client.update({
-      "name": req.body.first_name + " " + req.body.last_name,
-      "isd_code": req.body.ISD_code,
-      "mobile": req.body.number,
-      'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path), //fs.readFileSync(req.files[0].path),
-      'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),//fs.readFileSync(req.files[1].path),
-      'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),//fs.readFileSync(req.files[2].path),
-      "kyc_verified": "pending"
-    }, {
-        where: {
-          'email': req.user.email
-        }
-      }).then(() => {
-        res.redirect('/KYCpage/pending');
-      });
+  KYCdocUpload: async function (req, res) { //{ ext: 'jpg', mime: 'image/jpeg' }
+
+    let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
+    let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
+    let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
+    if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
+      client.update({
+        "name": req.body.first_name + " " + req.body.last_name,
+        "isd_code": req.body.ISD_code,
+        "mobile": req.body.number,
+        'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
+        'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
+        'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+        "kyc_verified": "pending"
+      }, {
+          where: {
+            'email': req.user.email
+          }
+        }).then(() => {
+          res.redirect('/KYCpage/pending');
+        });
+    } else {
+      res.send("Error occured while uploading! Please check your images!")
+    }
   },
 
   getProjectList: (req, res) => {

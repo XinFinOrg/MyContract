@@ -1,79 +1,79 @@
 <% include layouts/adminSidebar %>
 
-        
-            <!--BEGIN PAGE WRAPPER-->
-            <div id="page-wrapper">
-                <!--BEGIN TITLE & BREADCRUMB PAGE-->
 
-                <div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
+    <!--BEGIN PAGE WRAPPER-->
+    <div id="page-wrapper">
+        <!--BEGIN TITLE & BREADCRUMB PAGE-->
+
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-12">
 
 
-                            <div id="tableactionTabContent" class="tab-content">
-                                <div id="table-table-tab" class="tab-pane fade in active">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <form action="  /icoDashboardSetup/project/<%= KYCdata.projectConfigurationCoinName %>/kyctab/<%= KYCdata.uniqueId %>/updateUserData" method="post"
-                                                class="form-horizontal" enctype="multipart/form-data">
-                                                <h3>User KYC Data</h3>
+                    <div id="tableactionTabContent" class="tab-content">
+                        <div id="table-table-tab" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form action="  /icoDashboardSetup/project/<%= KYCdata.projectConfigurationCoinName %>/kyctab/<%= KYCdata.uniqueId %>/updateUserData"
+                                        method="post" class="form-horizontal" enctype="multipart/form-data">
+                                        <h3>User KYC Data</h3>
 
-                                                <div class="form-group"><label class="col-sm-3 control-label">id</label>
-                                                    <input type="hidden" class="form-control" value="<%= KYCdata %>" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <label type="text" class="form-control"><%= KYCdata.id %></label>
-                                                            </div>
-                                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">id</label>
+                                            <input type="hidden" class="form-control" value="<%= KYCdata %>" />
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label type="text" class="form-control"><%= KYCdata.id %></label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">First Name</label>
-                                                    <input type="hidden" class="form-control" value="" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <label type="text" class="form-control"><%= KYCdata.firstName %>
-                                                                        <%= KYCdata.lastName %></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">First Name</label>
+                                            <input type="hidden" class="form-control" value="" />
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label type="text" class="form-control"><%= KYCdata.firstName %>
+                                                                <%= KYCdata.lastName %></label>
 
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">Email</label>
-                                                    <input type="hidden" class="form-control" value="" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <label type="text" class="form-control"><%= KYCdata.email %></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">Email</label>
+                                            <input type="hidden" class="form-control" value="" />
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label type="text" class="form-control"><%= KYCdata.email %></label>
 
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">Country</label>
-                                                    <input type="hidden" class="form-control" value="" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <label type="text" class="form-control"><%= KYCdata.country %></label>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">Country</label>
+                                            <input type="hidden" class="form-control" value="" />
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label type="text" class="form-control"><%= KYCdata.country %></label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">Contact Number</label>
-                                                    <input type="hidden" class="form-control" value="" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <label type="text" class="form-control"><%= KYCdata.isd_code %>-
-                                                                        <%= KYCdata.mobile %></label>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">Contact Number</label>
+                                            <input type="hidden" class="form-control" value="" />
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label type="text" class="form-control"><%= KYCdata.isd_code %>-
+                                                                <%= KYCdata.mobile %></label>
                                                     </div>
                                                 </div>
-                                                <hr>
-                                                <!-- <div class="form-group col-sm-4 control-label"><label>Document Name</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <!-- <div class="form-group col-sm-4 control-label"><label>Document Name</label>
                                                 </div>
                                                 <div class="form-group col-sm-4 control-label"><label>Document Name</label>
                                                 </div>
@@ -90,85 +90,88 @@
                                                         width="42">
                                                 </div>
                                                  -->
-                                                <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName1 %></label>
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><img id="KYCimg1" src="<%= KYCdata.kycDoc1 %>" alt="Smiley face" height="42"
-                                                                    width="42">
-                                                            </div>
-                                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName1 %></label>
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6"><img id="KYCimg1" src="<%= KYCdata.kycDoc1 %>"
+                                                            data-zoom-image="<%= KYCdata.kycDoc1 %>" alt="Smiley face" height="300px"
+                                                            width="450px">
                                                     </div>
                                                 </div>
-                                                <br><br><br>
-                                                <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName2 %></label>
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><img id="KYCimg1" src="<%= KYCdata.kycDoc2 %>" alt="Smiley face" height="42"
-                                                                    width="42">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br><br><br>
-                                                <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName3 %></label>
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><img id="KYCimg1" src="<%= KYCdata.kycDoc3 %>" alt="Smiley face" height="42"
-                                                                    width="42">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="form-group"><label class="col-sm-3 control-label">KYC status</label>
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <select name="kyc_verified" class="form-control" value="<%= KYCdata.kyc_verified %>">
-                                                                    <option value="active">Approve</option>
-                                                                    <option value="rejected">Reject</option>
-                                                                    <option value="pending">Pending</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">User status</label>
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <select name="status" class="form-control" value="<%= KYCdata.status %>">
-                                                                    <option value="false">Deactive</option>
-                                                                    <option value="true">Active</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-green btn-block">Update Status</button>
-                                            </form>
-
+                                            </div>
                                         </div>
+                                        <br><br><br>
+                                        <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName2 %></label>
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6"><img id="KYCimg2" src="<%= KYCdata.kycDoc2 %>"
+                                                            data-zoom-image="<%= KYCdata.kycDoc2 %>" alt="Smiley face" height="300px"
+                                                            width="450px">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br><br><br>
+                                        <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName3 %></label>
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6"><img id="KYCimg3" src="<%= KYCdata.kycDoc3 %>"
+                                                            data-zoom-image="<%= KYCdata.kycDoc3 %>" alt="Smiley face" height="300px"
+                                                            width="450px">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group"><label class="col-sm-3 control-label">KYC status</label>
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <select name="kyc_verified" class="form-control" value="<%= KYCdata.kyc_verified %>">
+                                                            <option value="active">Approve</option>
+                                                            <option value="rejected">Reject</option>
+                                                            <option value="pending">Pending</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-3 control-label">User status</label>
+                                            <div class="col-sm-9 controls">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <select name="status" class="form-control" value="<%= KYCdata.status %>">
+                                                            <option value="false">Deactive</option>
+                                                            <option value="true">Active</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-green btn-block">Update Status</button>
+                                    </form>
 
-
-                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-
-
-
-                <!--END CONTENT-->
-                <!--BEGIN FOOTER-->
-
-                <!--END FOOTER-->
             </div>
-            <!--END PAGE WRAPPER-->
         </div>
+
+
+
+
+        <!--END CONTENT-->
+        <!--BEGIN FOOTER-->
+
+        <!--END FOOTER-->
+    </div>
+    <!--END PAGE WRAPPER-->
+    </div>
     </div>
     <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
     <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
@@ -196,10 +199,13 @@
         });
 
 
-    </script> 
-
-    
-    document.getElementById("country").value = "
+    </script>
+    <script src='../../../../../vendors/elevatezoom-master/jquery-1.8.3.min.js'></script>
+    <script src="../../../../../vendors/elevatezoom-master/jquery.elevateZoom.js">
+        $("#KYCimg1").elevateZoom({ zoomType: "inner" });
+        $("#KYCimg2").elevateZoom({ zoomType: "inner" });
+        $("#KYCimg3").elevateZoom({ zoomType: "inner" });
+    </script>
     <!--LOADING SCRIPTS FOR PAGE-->
 
 
@@ -207,6 +213,6 @@
 
 
 
-</body>
+    </body>
 
-</html>
+    </html>

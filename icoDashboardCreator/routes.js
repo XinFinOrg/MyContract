@@ -8,19 +8,17 @@ var ProjectConfiguration = db.projectConfiguration;
 module.exports = function (app, express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
-  // app.get('/contractInteraction/project', (req,res) => { console.log("here"); res.redirect('/'); });
 
   app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
-  app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration', isLoggedIn, impl.updateSiteConfiguration)
-  app.get('/transaction', impl.getTransaction)
-  app.get('/transactionData', impl.getTransactionData)
+  app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
+  app.get('/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
 
-  app.get('/icoDashboardSetup/project/:projectName/kyctab', impl.getKYCPage);
-  app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata', impl.getICOdata);
-  app.get('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData', impl.getUserData);
-  app.post('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', impl.updateUserData);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata',isLoggedIn, impl.getICOdata);
+  app.get('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData',isLoggedIn, impl.getUserData);
+  app.post('/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', isLoggedIn,impl.updateUserData);
 
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);

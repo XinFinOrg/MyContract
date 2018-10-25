@@ -10,7 +10,6 @@ var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var Address = db.userCurrencyAddress;
 var Project = db.projectConfiguration;
-var transactionLog = db.tokenTransferLog;
 
 module.exports = {
   //client setup
@@ -123,12 +122,12 @@ module.exports = {
       },
     }).then(async result => {
       userdata = result.dataValues;
+      console.log("done")
       res.render("adminKYCpanel.ejs", {
         KYCdata: userdata,
         projectName: req.params.projectName
       })
     })
-
   },
   updateUserData: async function (req, res) {
     console.log(req.params)
@@ -160,7 +159,7 @@ module.exports = {
     }).then(result => {
       if (result == undefined) {
         res.send({
-          "tokenAddress":"you are not allowed to access this page",
+          "tokenAddress": "you are not allowed to access this page",
           "crowdSaleAddress": "you are not allowed to access this page",
         })
       } else {
@@ -268,25 +267,17 @@ module.exports = {
       });
     });
   },
-  getTransaction: (req, res) => {
+  getTransaction: async (req, res) => {
+    transactionLog = await db.tokenTransferLog.findAll(
+      { where: { 'project_id': req.params.projectName }, raw: true }
+    );
+    console.log(transactionLog)
     res.render("transaction.ejs", {
       user: req.user,
-      projectName: "XDC"
+      projectName: req.params.projectName,
+      transactionLog:transactionLog
     });
   },
-  getTransactionData: async (req, res) => {
-    transactionLog = await db.projectConfiguration.find({
-      where: {
-        'coinName': "XDC"
-      },
-      exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode'],
-      include: [{
-        model: transactionLog,
-      }]
-    });
-    res.send(transactionLog);
-  }
-
 }
 
 function getProjectArray(email) {

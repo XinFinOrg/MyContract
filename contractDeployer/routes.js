@@ -15,7 +15,7 @@ module.exports = function (app, express) {
   app.get('/generatedCrowdsaleContract', isLoggedIn, impl.generatedContract);
   app.get('/crowdsaleDeployer',isLoggedIn,impl.crowdsaleDeployer);
 
-  app.get('/test',impl.test);
+  // app.get('/test',impl.test);
 
 }
 
