@@ -271,7 +271,7 @@ module.exports = {
     transactionLog = await db.tokenTransferLog.findAll(
       { where: { 'project_id': req.params.projectName }, raw: true }
     );
-    console.log(transactionLog)
+    // console.log(transactionLog)
     res.render("transaction.ejs", {
       user: req.user,
       projectName: req.params.projectName,

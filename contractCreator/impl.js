@@ -46,7 +46,6 @@ module.exports = {
     });
   },
   createERC20Contract: async (req, res) => {
-    console.log(req.body);
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
@@ -116,10 +115,10 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      nodemailerservice.sendContractEmail(req.body.email, data);
       var clientdata = await client.find({
         where: {
-          'email': req.user.email
+          'email': req.body.email
         }
       });
       var objdata = new Object();
@@ -132,12 +131,15 @@ module.exports = {
       objdata.tokenContractCode = data;
       objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
       objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      console.log("here");
       var projectData = await ProjectConfiguration.create(objdata)
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
       clientdata.save();
-      res.redirect('/generatedContract');
+      // res.send({smartcontract:objdata.tokenContractCode.toString()})
+      res.setHeader('Content-Type', 'text/plain');
+      res.writeHead("200");
+      res.write(objdata.tokenContractCode);
+      res.end();
     });
   },
   createERC223Contract: async (req, res) => {
@@ -212,10 +214,10 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      nodemailerservice.sendContractEmail(req.body.email, data);
       var clientdata = await client.find({
         where: {
-          'email': req.user.email
+          'email': req.body.email
         }
       });
       var objdata = new Object();
@@ -232,7 +234,10 @@ module.exports = {
       await clientdata.addProjectConfiguration(projectData);
       clientdata.package1 -= 1;
       clientdata.save();
-      res.redirect('/generatedContract');
+      res.setHeader('Content-Type', 'text/plain');
+      res.writeHead("200");
+      res.write(objdata.tokenContractCode);
+      res.end();
     });
   },
   createERC721Contract: async (req, res) => {
@@ -277,13 +282,27 @@ module.exports = {
       'tokenName': req.body.token_name,
       'tokenSymbol': req.body.token_symbol,
       'inherits': inherits
-    }, (err, data) => {
+    }, async (err, data) => {
       if (err)
         console.log(err);
-      req.session.contract = data;
-      req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, result);
-      res.redirect('/generatedContract');
+      var objdata = new Object();
+      objdata.contractCode = result;
+      objdata.coinName = req.body.token_name;
+      objdata.coinSymbol = req.body.token_symbol;
+      var clientdata = await client.find({
+        where: {
+          'email': req.body.email
+        }
+      });
+      var projectData = await ProjectConfiguration.create(objdata)
+      await clientdata.addProjectConfiguration(projectData);
+      clientdata.package1 -= 1;
+      clientdata.save();
+      nodemailerservice.sendContractEmail(req.body.email, result);
+      res.setHeader('Content-Type', 'text/plain');
+      res.writeHead("200");
+      res.write(data);
+      res.end();
     });
   },
 

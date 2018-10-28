@@ -5,19 +5,9 @@ var projectConfiguration = db.projectConfiguration
 
 
 module.exports = function (app) {
-
-  app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
-  app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
-
-  app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
-  app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract); 
-   // app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
-  app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
-  // app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);
-
-  app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
-  app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
-
+  app.post("/createERC721Contract", coinNameExist, impl.createERC721Contract);
+  app.post('/createERC20Contract', coinNameExist, impl.createERC20Contract);
+  app.post('/createERC223Contract', coinNameExist, impl.createERC223Contract);
 }
 
 // route middleware to make sure a user is logged in
@@ -43,14 +33,15 @@ function coinNameExist(req, res, next) {
         'coinSymbol': req.body.token_symbol
       }
     }).then(result => {
-      console.log(result)
+      // console.log(result)
       if (result == null) {
         console.log("next");
         return next();
       } else {
-        console.log("exist");
-        req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
-        res.redirect('/customContract');
+        res.send({error:"SMC01",message:"coin name already exist"})
+        // console.log("exist");
+        // req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
+        // res.redirect('/customContract');
       }
     })
   }
