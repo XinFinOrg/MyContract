@@ -6,11 +6,11 @@ var ProjectConfiguration = db.projectConfiguration;
 
 
 module.exports = function (app, express) {
-  app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
-  app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
+  // app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
+  app.get('/api/contractInteraction/contractData', impl.contractData);
 
-  app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
-  app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
+  // app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
+  // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
   app.get('/transaction/project/:projectName',isLoggedIn, impl.getTransaction)

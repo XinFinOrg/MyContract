@@ -150,7 +150,7 @@ module.exports = {
   contractData: async function (req, res) {
     ProjectConfiguration.find({
       where: {
-        'coinName': req.params.projectName,
+        'coinName': req.body.projectName,
         'client_id': req.user.uniqueId
       },
       attributes: {
