@@ -29,6 +29,7 @@ router.post('/api/buyTokenBTC', isAuthenticated, impl.buyTokenBTC);
 router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);
 router.get('/api/getTransactions', isAuthenticated, impl.getTransactionList);
 router.get('/api/getBitcoinTransactions', isAuthenticated, impl.getBitcoinTransactionList);
+router.get('/api/getTokenTransactions', isAuthenticated, impl.getTokenTransactionList);
 
 function isAuthenticated(req, res, next) {
   var token = req.cookies['token'];

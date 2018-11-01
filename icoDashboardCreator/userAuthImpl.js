@@ -40,6 +40,12 @@ module.exports = {
     });
   },
 
+  getTokenTransactionList: async (req, res) => {
+    res.send({
+      tokenTransferLogs: req.user.tokenTransferLogs
+    });
+  },
+
   getWallets: (req, res, next) => {
     var projectConfiguration = req.user.projectConfiguration;
     res.render('userWalletPage', {
@@ -156,6 +162,7 @@ module.exports = {
   },
 
   getCompletedKYCPage: (req, res) => {
+    console.log("Hello");
     res.render('kycComplete', {
       user: req.user,
       projectConfiguration: req.user.projectConfiguration
@@ -280,7 +287,7 @@ module.exports = {
     // icoListener.checkTokenStats(req.user.projectConfiguration.tokenContractAddress).then(onSaleTokens => {
     //   res.send({'onSaleTokens': onSaleTokens});
     // });
-    res.send("Hey")
+    res.send("Hey");
   },
 
   getTransactionList: async (req, res) => {
