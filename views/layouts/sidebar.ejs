@@ -236,7 +236,7 @@
               </div>
               <form>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="" aria-label="" id="tokenAddress" value="<%= address %>" />
+                  <input type="text" class="form-control" placeholder="" disabled="disabled" aria-label="" id="tokenAddress" value="<%= address %>" />
                   <div class="input-group-append">
                     <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
                   </div>
@@ -294,12 +294,14 @@
 
       <!-- Toastr alert -->
       <script>
+        var globalEthBalance;
         function checkBalances() {
           $.get('/getBalances', function (result) {
             balance = result["XDCE"];
             ethBalance = result["ETH"];
             $("#xdce").text(balance);
             $("#eth").text(ethBalance);
+            globalEthBalance = result["ETH"];
           });
         }
         window.onload = checkBalances;
@@ -313,12 +315,17 @@
           else { window.location.href = "/deployer?coinName=" + coinName; }
         }
         function autoDeploy(coinName, istoken, isMainnet) {
-          console.log(istoken, "is here",isMainnet)
+          console.log(istoken, "is here", isMainnet)
           window.sessionStorage.setItem("deploymentName", coinName);
           if (!istoken) { window.location.href = "/deployer"; }
           else {
             if (isMainnet) {
-              window.location.href = "/api/automaticDeployment?network=main&coinName=" + coinName;
+              if (globalEthBalance == 0.5) {
+                window.location.href = "/api/automaticDeployment?network=main&coinName=" + coinName;
+              } else {
+                $('#networkModal').modal('hide'); 
+                $('#mainnetBalanceError').modal('show');
+              }
             } else {
               window.location.href = "/api/automaticDeployment?network=test&coinName=" + coinName;
             }

@@ -13,7 +13,9 @@ module.exports = function (app, express) {
   app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
+
   app.get('/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
+  app.post('/transaction/project/:projectName/initiateTransferReq',impl.initiateTransferReq)
 
   app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
   app.get('/icoDashboardSetup/project/:projectName/kyctab/getICOdata',isLoggedIn, impl.getICOdata);

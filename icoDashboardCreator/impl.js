@@ -8,8 +8,13 @@ var client = db.client;
 var User = db.user;
 var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
-var Address = db.userCurrencyAddress;
-var Project = db.projectConfiguration;
+// var config = require('../config/paymentListener');
+var Tx = require('ethereumjs-tx');
+const Web3 = require('web3');
+// var ws_provider = config.ws_provider;
+// var provider = new Web3.providers.WebsocketProvider(ws_provider);
+let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
+var web3 = new Web3(provider);
 
 module.exports = {
   //client setup
@@ -271,13 +276,74 @@ module.exports = {
     transactionLog = await db.tokenTransferLog.findAll(
       { where: { 'project_id': req.params.projectName }, raw: true }
     );
-    console.log(transactionLog)
+    // console.log(transactionLog)
     res.render("transaction.ejs", {
       user: req.user,
       projectName: req.params.projectName,
-      transactionLog:transactionLog
+      transactionLog: transactionLog
     });
   },
+  initiateTransferReq: async (req, res) => {
+    let address = []
+    let values = [];
+    let projectdatavalues = await ProjectConfiguration.find({
+      where: {
+        "coinName": req.params.projectName
+      }
+    })
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.body.client_id, 'currencyType': 'Ethereum' } })
+    let tokenLogs = await db.tokenTransferLog.findAll({
+      where: {
+        "project_id": req.params.projectName
+      }, raw: true
+    })
+    for (let index = 0; index < tokenLogs.length; index++) {
+      address.push(tokenLogs[index].address)
+      values.push(tokenLogs[index].tokenAmount * projectdatavalues.ETHRate)
+    }
+    var escrowAbi = [{
+      "constant": false,
+      "inputs": [{
+        "name": "_addresses",
+        "type": "address[]"
+      }, {
+        "name": "_value",
+        "type": "uint256[]"
+      }],
+      "name": "dispenseTokensToInvestorAddressesByValue",
+      "outputs": [{
+        "name": "ok",
+        "type": "bool"
+      }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }]
+    console.log(accountData.privateKey);
+    var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
+    let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue([address], [values])
+    var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
+    let txData = {
+      "nonce": await web3.eth.getTransactionCount(accountData.address),
+      "gasPrice": "0x170cdc1e00",
+      "gasLimit": "0x2dc6c0",
+      "to": projectdatavalues.crowdsaleContractAddress,
+      "value": "0x0",
+      "data": data,
+      "chainId": 3
+    }
+    var tx = new Tx(txData);
+    console.log(tx)
+    tx.sign(mainPrivateKey);
+    var serializedTx = tx.serialize();
+    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+      .on('confirmation', async function (confirmationNumber, receipt) {
+        res.send(receipt);
+        console.log(confirmationNumber, receipt);
+      });
+
+
+  }
 }
 
 function getProjectArray(email) {

@@ -8,8 +8,7 @@
                 <div class="page-title">Transaction Logs</div>
             </div>
             <ol class="breadcrumb page-breadcrumb pull-right">
-                <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
-                        class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                <li><i class="fa fa-home"></i>&nbsp;<a href="#">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
 
                 <li class="active">
                     <%- projectName %>
@@ -41,6 +40,7 @@
                                                     <th>Transfer Status</th>
                                                     <th>Created At</th>
                                                     <th>Updated At</th>
+                                                    <th>Complete Transfer</th>
 
                                                 </tr>
                                             </thead>
@@ -71,6 +71,20 @@
                                                         <td>
                                                             <%=   Date(transactionLog[i].updatedAt) %>
                                                         </td>
+                                                        <td>
+                                                            <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
+                                                            <script>
+                                                                $("#<%= transactionLog[i].uniqueId %>").click(function () {
+                                                                    if ($(this).is(":checked")) {
+                                                                        console.log("checked <%= transactionLog[i].address %>")
+                                                                        accounts.push({"uniqueId":"<%= transactionLog[i].uniqueId %>"});
+                                                                    } else {
+                                                                        console.log("unchecked <%= transactionLog[i].address %>")
+                                                                        accounts.pop({"uniqueId":"<%= transactionLog[i].uniqueId %>"});
+                                                                    }
+                                                                });
+                                                            </script>
+                                                        </td>
                                                     </tr>
                                                     <% } %>
                                             </tbody>
@@ -87,99 +101,109 @@
 
                     <div class="row">
                         <div class="col-sm-4">
-                                <div id="tableactionTabContent" class="tab-content">
-                                <li><a href="#">
-                                        Initiate Trasfer
-                                    </a></li>
-                                    </div>
+                            <div id="tableactionTabContent" class="tab-content">
+                                <button class="button" id="initiateTrasfer">InitiateTrasfer</button>
                             </div>
-                            <!-- <div class="col-sm-4">
+                        </div>
+                        <!-- <div class="col-sm-4">
                                     <div id="tableactionTabContent" class="tab-content">
                                     <li><a href="/icoDashboardSetup/project/<%= projectName %>/kyctab">
                                             verfication
                                         </a></li>
                                                 </div>
                                 </div> -->
-                                <!-- <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                                         <div id="tableactionTabContent" class="tab-content">
                                         <li><a href="/icoDashboardSetup/project/<%= projectName %>/kyctab">
                                                 verfication
                                             </a></li>
                                             </div>
                                     </div> -->
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!--END CONTENT-->
-                        <!--BEGIN FOOTER-->
-                        <div id="footer">
-                        </div>
-                        <!--END FOOTER-->
                     </div>
-                    <!--END PAGE WRAPPER-->
                 </div>
             </div>
-            <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-            <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-            <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
-            <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
-            <!--loading bootstrap js-->
-            <script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
-            <script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-
-            <script src="https://whatshalal.io/control/js/respond.min.js"></script>
-            <script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
-            <script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
-            <script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
 
 
-            <script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-            <script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
+            <!--END CONTENT-->
+            <!--BEGIN FOOTER-->
+            <div id="footer">
+            </div>
+            <!--END FOOTER-->
+        </div>
+        <!--END PAGE WRAPPER-->
+    </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
+    <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
+    <!--loading bootstrap js-->
+    <script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
 
-            <script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
-            <script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
-
-            <script src="https://whatshalal.io/control/js/main.js"></script>
-
-            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
-            <script type="text/javascript">
-
-                $(document).ready(function () {
-                    $('#example').DataTable();
-                });
-            </script>
-
-            <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
-            <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
-            <script>
-                $(function () {
-
-                    $("#max,#min").datepicker({
-                        changeMonth: true,
-                        changeYear: true,
-                        dateFormat: 'yy-mm-dd',
-                        onSelect: function (selectedDate) {
-                            if (this.id == 'min') {
-                                var dateMin = $('#min').datepicker("getDate");
-                                var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
-                                $('#max').datepicker("option", "minDate", rMin);
-                            }
-                        }
-                    });
-                });
-            </script>
-
-            <!--LOADING SCRIPTS FOR PAGE-->
+    <script src="https://whatshalal.io/control/js/respond.min.js"></script>
+    <script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
+    <script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
+    <script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
 
 
+    <script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
+    <script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
+
+    <script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
+    <script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
+
+    <script src="https://whatshalal.io/control/js/main.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+    <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
+    <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
+    <script>
+        $(function () {
+
+            $("#max,#min").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd',
+                onSelect: function (selectedDate) {
+                    if (this.id == 'min') {
+                        var dateMin = $('#min').datepicker("getDate");
+                        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
+                        $('#max').datepicker("option", "minDate", rMin);
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        var accounts = [];
+        $("#initiateTrasfer").click(function () {
+            console.log(accounts);
+            $.ajax({
+                url:"/transaction/project/<%- projectName %>/initiateTransferReq",
+                type:"POST",
+                 data:{"account":accounts.serializeArray()}, success: function (result) {
+                    console.log(result, accounts, "hello");
+                }
+            });
+        });
+    </script>
+    <!--LOADING SCRIPTS FOR PAGE-->
 
 
 
 
-            </body>
 
-            </html>
+
+    </body>
+
+    </html>
