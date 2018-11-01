@@ -5,9 +5,9 @@ var projectConfiguration = db.projectConfiguration
 
 
 module.exports = function (app) {
-  app.post("/createERC721Contract", coinNameExist, impl.createERC721Contract);
-  app.post('/createERC20Contract', coinNameExist, impl.createERC20Contract);
-  app.post('/createERC223Contract', coinNameExist, impl.createERC223Contract);
+  app.post("/api/createERC721Contract", checkSecret, coinNameExist, impl.createERC721Contract);
+  app.post("/api/createERC20Contract", checkSecret, coinNameExist, impl.createERC20Contract);
+  app.post("/api/createERC223Contract", checkSecret, coinNameExist, impl.createERC223Contract);
 }
 
 // route middleware to make sure a user is logged in
@@ -20,6 +20,10 @@ function isLoggedIn(req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 
+}
+
+function checkSecret(req, res, next) {
+  return next();
 }
 
 function coinNameExist(req, res, next) {
@@ -38,7 +42,7 @@ function coinNameExist(req, res, next) {
         console.log("next");
         return next();
       } else {
-        res.send({error:"SMC01",message:"coin name already exist"})
+        res.send({ error: "SMC01", message: "coin name already exist" })
         // console.log("exist");
         // req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
         // res.redirect('/customContract');

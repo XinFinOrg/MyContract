@@ -3,7 +3,10 @@ module.exports = {
   'tokenAddress': "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
   'diversionAddress': "0x920E938A80Fa1669b608166741eeb01De6C57402",
   'amount':'1200000000000000000000000',
+  'testnetFaucetAddress':'0x14649976AEB09419343A54ea130b6a21Ec337772',
+  'testnetFaucetPrivatekey':'25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142',
   'ws_provider' : 'wss://mainnet.infura.io/ws',
+  'ws_testnet':'wss://ropsten.infura.io/ws',
   'erc20ABI': [{
       "anonymous": false,
       "inputs": [{
