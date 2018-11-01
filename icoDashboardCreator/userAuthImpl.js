@@ -40,6 +40,12 @@ module.exports = {
     });
   },
 
+  getTokenTransactionList: async (req, res) => {
+    res.send({
+      tokenTransferLogs: req.user.tokenTransferLogs
+    });
+  },
+
   getWallets: (req, res, next) => {
     var projectConfiguration = req.user.projectConfiguration;
     res.render('userWalletPage', {
