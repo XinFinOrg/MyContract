@@ -40,10 +40,10 @@ module.exports = {
     console.log(req.params.projectName)
     ProjectConfiguration.find({
       where: {
-        'coinName': req.params.projectName
+        'coinSymbol': req.params.projectName
       },
       attributes: {
-        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+        exclude: ['coinName', 'ETHRate', 'networkURL', 'client_id', 'isAllowedForICO', 'bonusStatus', 'tokenContractCode', "tokenABICode", "crowdsaleABICode", 'networkType', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
       }
     }).then(values => {
       if (!values) {
@@ -59,9 +59,7 @@ module.exports = {
         //   dataobj.siteLogo = null;
         // }
         res.send({
-          data: dataobj,
-          message: "updated!",
-          Buffer: values.dataValues.siteLogo
+          data: dataobj
         })
       }
     });
@@ -150,8 +148,8 @@ module.exports = {
   contractData: async function (req, res) {
     ProjectConfiguration.find({
       where: {
-        'coinName': req.body.projectName,
-        'client_id': req.user.uniqueId
+        'coinSymbol': req.body.coinSymbol,
+        'client_id': req.body.uniqueId
       },
       attributes: {
         exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
@@ -275,7 +273,7 @@ module.exports = {
     res.render("transaction.ejs", {
       user: req.user,
       projectName: req.params.projectName,
-      transactionLog:transactionLog
+      transactionLog: transactionLog
     });
   },
 }
