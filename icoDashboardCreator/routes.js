@@ -48,9 +48,12 @@ function hasPackage3(req, res, next) {
     where: {
       'client_id': req.user.uniqueId,
       'coinName': req.params.projectName
+    },
+    attributes: {
+      exclude: ['coinName', 'ETHRate', 'tokenContractCode','tokenABICode','crowdsaleABICode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }
   }).then(result => {
-    if (result.dataValues.isAllowedForICO == true) {
+    if (result.isAllowedForICO == true) {
       return next();
     } else {
       req.flash('package_flash', 'You need to buy this package ');
@@ -65,7 +68,6 @@ function hasVerified(req, res, next) {
       'email': req.user.email
     }
   }).then(result => {
-    console.log(result.dataValues.kyc_verified, "hello");
     switch (result.dataValues.kyc_verified) {
       case "active":
         { next(); }

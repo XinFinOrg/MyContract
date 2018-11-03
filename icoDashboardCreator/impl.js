@@ -48,7 +48,7 @@ module.exports = {
         'coinName': req.params.projectName
       },
       attributes: {
-        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+        exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenABICode', 'crowdsaleABICode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
       }
     }).then(values => {
       if (!values) {
@@ -56,20 +56,13 @@ module.exports = {
           message: "null!"
         });
       } else {
-        var dataobj = new Object();
-        dataobj = values.dataValues;
-        // if (values.dataValues.siteLogo) {
-        //   dataobj.siteLogo ='data:image/bmp;base64,' + Buffer.from(values.dataValues.siteLogo).toString('base64')
-        // } else {
-        //   dataobj.siteLogo = null;
-        // }
         res.send({
-          data: dataobj,
+          data: values.dataValues,
           message: "updated!",
           Buffer: values.dataValues.siteLogo
         })
       }
-    });
+    })
   },
   updateSiteConfiguration: async function (req, res) {
     var projectdatavalues = await ProjectConfiguration.find({

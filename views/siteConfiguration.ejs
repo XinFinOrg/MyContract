@@ -273,7 +273,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/axios.min.js"></script>
     <script>
-        axios.get('/siteConfiguration/project/<%= projectName %>/getSiteConfiguration')
+        axios.get('/siteConfiguration/project/<%=projectName %>/getSiteConfiguration')
             .then(function (response) {
                 // console.log("hello ", response.data.data);
                 document.getElementsByName('site_name')[0].value = response.data.data.siteName;

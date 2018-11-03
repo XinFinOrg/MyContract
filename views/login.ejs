@@ -217,7 +217,7 @@
         });
     </script>
     <script>
-        document.getElementById("to-recoveremailsent").disabled = "disabled";
+        // document.getElementById("to-recoveremailsent").disabled = "disabled";
         var myInput = document.getElementById("emailid");
         myInput.onkeyup = function () {
             if (myInput.value === '' || myInput.value.indexOf(" ") == 0) {
@@ -226,7 +226,7 @@
                 document.getElementById("loginButton").disabled = "disabled";
             } else {
                 document.getElementById("inputVal_error").innerHTML = '';
-                document.getElementById("to-recoveremailsent").disabled = "";
+                document.getElementById("to-recoveremailsent").disabled ='';
                 document.getElementById("loginButton").disabled = "";
 
             }
@@ -235,11 +235,11 @@
         myInput2.onkeyup = function () {
             if (myInput2.value === '' || myInput2.value.indexOf(" ") == 0) {
                 document.getElementById("inputVal_error1").innerHTML = 'Please enter valid password';
-                document.getElementById("to-recoveremailsent").disabled = "disabled";
+                // document.getElementById("to-recoveremailsent").disabled = "disabled";
                 document.getElementById("loginButton").disabled = "disabled";
             } else {
                 document.getElementById("inputVal_error1").innerHTML = '';
-                document.getElementById("to-recoveremailsent").disabled = "";
+                // document.getElementById("to-recoveremailsent").disabled = "";
                 document.getElementById("loginButton").disabled = "";
 
             }
