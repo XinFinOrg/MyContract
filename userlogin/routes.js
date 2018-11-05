@@ -2,14 +2,18 @@ var impl = require('./impl');
 var superAdminimpl = require('./superAdminimpl');
 var db = require('../database/models/index');
 var client = db.client;
+var jwt = require('jsonwebtoken');
+var configAuth = require('../config/auth');
 module.exports = function (app) {
 
   app.get('/login', impl.getLogin);
-  app.post('/login', impl.postLogin);
+  app.post('/api/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
   app.get('/dashboard', isLoggedIn, impl.getDashboard);
+  app.get('/api/getProjectArray', isLoggedIn, impl.getProjectArray);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
+  app.get('/api/getProfileDetails', isLoggedIn, impl.getAPIProfileDetails);
   app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
@@ -36,14 +40,33 @@ module.exports = function (app) {
 
 };
 
-// route middleware to make sure a user is logged in
+// // route middleware to make sure a user is logged in
+// function isLoggedIn(req, res, next) {
+//   // if user is authenticated in the session, carry on
+//   if (req.isAuthenticated())
+//     return next();
+//
+//   // if they aren't redirect them to the home page
+//   res.redirect('/');
+//
+// }
+
 function isLoggedIn(req, res, next) {
-
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-
-  // if they aren't redirect them to the home page
-  res.redirect('/');
+  var token = req.cookies['clientToken'];
+  // JWT enabled login strategy for end user
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+    if (err) {
+      return res.redirect('/');
+    } else {
+      client.find({
+        where: {
+          uniqueId: decoded.userId
+        }
+      }).then(user => {
+        req.user = user;
+        next();
+      });
+    }
+  });
 
 }

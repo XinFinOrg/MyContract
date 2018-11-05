@@ -2,6 +2,8 @@ const impl = require("./impl");
 var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
+var jwt = require('jsonwebtoken');
+var configAuth = require('../config/auth');
 var ProjectConfiguration = db.projectConfiguration;
 
 
@@ -15,13 +17,22 @@ module.exports = function (app) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
-  // if user is authenticated in the session, carry on
-  // if (req.isAuthenticated())
-    return next();
-
-  // if they aren't redirect them to the home page
-  res.redirect('/');
+  var token = req.cookies['clientToken'];
+  // JWT enabled login strategy for end user
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+    if (err) {
+      return res.redirect('/');
+    } else {
+      client.find({
+        where: {
+          uniqueId: decoded.userId
+        }
+      }).then(user => {
+        req.user = user;
+        next();
+      });
+    }
+  });
 
 }
 
