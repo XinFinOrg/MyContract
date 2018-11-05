@@ -57,6 +57,7 @@ module.exports = {
   },
 
   postSignup: passport.authenticate('local-signup', {
+    session: false,
     successRedirect: '/login', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
@@ -101,10 +102,34 @@ module.exports = {
       scope: ["profile ", "email"]
     }),
 
-    googleLoginCallback: passport.authenticate("google", {
-      successRedirect: '/dashboard',
-      failureRedirect: '/'
-    }),
+    googleLoginCallback: (req, res, next) => {
+      passport.authenticate("google", {
+        session: false
+      }, (err, user) => {
+
+        try {
+          if (err || !user) {
+            const error = new Error('An Error occured')
+            return res.json({
+              'token': "failure",
+              'message': info
+            });
+          }
+          const token = jwt.sign({
+            userId: user.uniqueId,
+          }, configAuth.jwtAuthKey.secret, {
+            expiresIn: configAuth.jwtAuthKey.tokenLife
+          });
+          //Send back the token to the user
+          res.cookie('clientToken', token, {
+            expire: 360000 + Date.now()
+          });
+          return res.redirect('/dashboard')
+        } catch (error) {
+          return next(error);
+        }
+      })(req, res, next);
+    },
 
     getLogout: function(req, res) {
       res.clearCookie('clientToken');
@@ -114,10 +139,34 @@ module.exports = {
 
     githubLogin: passport.authenticate('github'),
 
-    githubLoginCallback: passport.authenticate('github', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/'
-    }),
+    githubLoginCallback: (req, res, next) => {
+      passport.authenticate("github", {
+        session: false
+      }, (err, user) => {
+
+        try {
+          if (err || !user) {
+            const error = new Error('An Error occured')
+            return res.json({
+              'token': "failure",
+              'message': info
+            });
+          }
+          const token = jwt.sign({
+            userId: user.uniqueId,
+          }, configAuth.jwtAuthKey.secret, {
+            expiresIn: configAuth.jwtAuthKey.tokenLife
+          });
+          //Send back the token to the user
+          res.cookie('clientToken', token, {
+            expire: 360000 + Date.now()
+          });
+          return res.redirect('/dashboard')
+        } catch (error) {
+          return next(error);
+        }
+      })(req, res, next);
+    },
 
     KYCpage: function(req, res) {
       res.render('adminKYC.ejs', {
@@ -166,38 +215,38 @@ module.exports = {
       },
 
       getProjectArray: (req, res) => {
-          var email = req.user.email;
-          var projectArray = [];
-          client.find({
-            where: {
-              'email': email
-            },
-            include: [{
-              model: ProjectConfiguration,
-              attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
-            }],
-          }).then(client => {
-            client.projectConfigurations.forEach(element => {
-              projectArray.push(element.dataValues);
-            });
-            // res.send({'projectArray': projectArray});
-            res.send(projectArray);
+        var email = req.user.email;
+        var projectArray = [];
+        client.find({
+          where: {
+            'email': email
+          },
+          include: [{
+            model: ProjectConfiguration,
+            attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+          }],
+        }).then(client => {
+          client.projectConfigurations.forEach(element => {
+            projectArray.push(element.dataValues);
+          });
+          // res.send({'projectArray': projectArray});
+          res.send(projectArray);
+        });
+      },
+
+      getProfileDetails: async (req, res) => {
+          var projectArray = await getProjectArray(req.user.email);
+          var address = req.cookies['address'];
+          res.render('profileDetails', {
+            user: req.user,
+            address: address,
+            ProjectConfiguration: projectArray,
           });
         },
 
-        getProfileDetails: async (req, res) => {
-            var projectArray = await getProjectArray(req.user.email);
-            var address = req.cookies['address'];
-            res.render('profileDetails', {
-              user: req.user,
-              address: address,
-              ProjectConfiguration: projectArray,
-            });
-          },
-
         getAPIProfileDetails: async (req, res) => {
-          res.send(req.user);
-        },
+            res.send(req.user);
+          },
 
           getFAQ: async (req, res) => {
               var projectArray = await getProjectArray(req.user.email);
@@ -268,9 +317,10 @@ module.exports = {
               });
             }
 };
+
 function getProjectArray(email) {
   var projectArray = [];
-  return new Promise(async function (resolve, reject) {
+  return new Promise(async function(resolve, reject) {
     client.find({
       where: {
         'email': email
