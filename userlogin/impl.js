@@ -99,40 +99,9 @@ module.exports = {
     }
   },
 
-<<<<<<< HEAD
   googleLogin: passport.authenticate("google", {
     scope: ["profile ", "email"]
   }),
-=======
-    googleLoginCallback: (req, res, next) => {
-      passport.authenticate("google", {
-        session: false
-      }, (err, user) => {
-
-        try {
-          if (err || !user) {
-            const error = new Error('An Error occured')
-            return res.json({
-              'token': "failure",
-              'message': info
-            });
-          }
-          const token = jwt.sign({
-            userId: user.uniqueId,
-          }, configAuth.jwtAuthKey.secret, {
-            expiresIn: configAuth.jwtAuthKey.tokenLife
-          });
-          //Send back the token to the user
-          res.cookie('clientToken', token, {
-            expire: 360000 + Date.now()
-          });
-          return res.redirect('/dashboard')
-        } catch (error) {
-          return next(error);
-        }
-      })(req, res, next);
-    },
->>>>>>> 6b4f018f9657ff0ceaa505a9f898770f6392bae5
 
   googleLoginCallback: passport.authenticate("google", {
     successRedirect: '/dashboard',
@@ -145,38 +114,7 @@ module.exports = {
     res.redirect('/dashboard');
   },
 
-<<<<<<< HEAD
   githubLogin: passport.authenticate('github'),
-=======
-    githubLoginCallback: (req, res, next) => {
-      passport.authenticate("github", {
-        session: false
-      }, (err, user) => {
-
-        try {
-          if (err || !user) {
-            const error = new Error('An Error occured')
-            return res.json({
-              'token': "failure",
-              'message': info
-            });
-          }
-          const token = jwt.sign({
-            userId: user.uniqueId,
-          }, configAuth.jwtAuthKey.secret, {
-            expiresIn: configAuth.jwtAuthKey.tokenLife
-          });
-          //Send back the token to the user
-          res.cookie('clientToken', token, {
-            expire: 360000 + Date.now()
-          });
-          return res.redirect('/dashboard')
-        } catch (error) {
-          return next(error);
-        }
-      })(req, res, next);
-    },
->>>>>>> 6b4f018f9657ff0ceaa505a9f898770f6392bae5
 
   githubLoginCallback: passport.authenticate('github', {
     successRedirect: '/dashboard',
@@ -219,7 +157,6 @@ module.exports = {
     }
   },
 
-<<<<<<< HEAD
   getProjectList: (req, res) => {
     client.findAll({
       include: [ProjectConfiguration]
@@ -259,41 +196,6 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
-=======
-      getProjectArray: (req, res) => {
-        var email = req.user.email;
-        var projectArray = [];
-        client.find({
-          where: {
-            'email': email
-          },
-          include: [{
-            model: ProjectConfiguration,
-            attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
-          }],
-        }).then(client => {
-          client.projectConfigurations.forEach(element => {
-            projectArray.push(element.dataValues);
-          });
-          // res.send({'projectArray': projectArray});
-          res.send(projectArray);
-        });
-      },
-
-      getProfileDetails: async (req, res) => {
-          var projectArray = await getProjectArray(req.user.email);
-          var address = req.cookies['address'];
-          res.render('profileDetails', {
-            user: req.user,
-            address: address,
-            ProjectConfiguration: projectArray,
-          });
-        },
-
-        getAPIProfileDetails: async (req, res) => {
-            res.send(req.user);
-          },
->>>>>>> 6b4f018f9657ff0ceaa505a9f898770f6392bae5
 
   getAPIProfileDetails: async (req, res) => {
     res.send(req.user);
