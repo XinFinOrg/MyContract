@@ -29,25 +29,25 @@ function generateNewAccount(password) {
 
 module.exports = function (passport) {
 
-
-  // used to serialize the user for the session
-  passport.serializeUser(function (user, done) {
-
-    done(null, user.email);
-  });
-
-  // used to deserialize the user
-  passport.deserializeUser(function (email, done) {
-    client.find({
-      where: {
-        'email': email
-      }
-    }).then(client => {
-      done(null, client.dataValues);
-    }).catch(err => {
-      console.log(err);
-    });
-  });
+  // 
+  // // used to serialize the user for the session
+  // passport.serializeUser(function (user, done) {
+  //
+  //   done(null, user.email);
+  // });
+  //
+  // // used to deserialize the user
+  // passport.deserializeUser(function (email, done) {
+  //   client.find({
+  //     where: {
+  //       'email': email
+  //     }
+  //   }).then(client => {
+  //     done(null, client.dataValues);
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // });
 
   //user signup strategy for passport
   passport.use('user-signup', new LocalStrategy({
