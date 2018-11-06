@@ -10,6 +10,8 @@ var config = require('./config/dev');
 var engine = require('ejs-mate')
 // var helmet = require('helmet');
 var validator = require('express-validator');
+var cors = require('cors')
+
 
 
 
@@ -43,8 +45,8 @@ app.use(session({
 //   reportOnly: false,
 //   setAllHeaders: false,
 //   disableAndroid: false
-
 // }));
+app.use(cors())
 app.use(validator());
 app.use(function (req, res, next) {
   for (var item in req.body) {

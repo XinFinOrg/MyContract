@@ -133,6 +133,7 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
+      console.log(email,password)
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       client.find({
@@ -140,8 +141,7 @@ module.exports = function (passport) {
           'email': email
         }
       }).then(client => {
-        // console.log(client);
-
+        console.log(true)
         // if no user is found, return the message
         if (!client)
           return done(null, false, 'No user found.'); // req.flash is the way to set flashdata using connect-flash

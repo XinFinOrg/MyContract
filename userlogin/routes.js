@@ -14,7 +14,7 @@ module.exports = function (app) {
   app.get('/api/getProjectArray', isLoggedIn, impl.getProjectArray);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get('/api/getProfileDetails', isLoggedIn, impl.getAPIProfileDetails);
-  app.get('/faq', isLoggedIn, impl.getFAQ);
+  // app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
@@ -24,8 +24,10 @@ module.exports = function (app) {
   app.get('/forgotPassword',impl.forgotPassword);
   app.get('/resetPassword',impl.resetPassword);
   app.post('/updatePassword',impl.updatePassword);
-  app.get('/verifyAccount',impl.verifyAccount);
-  // app.get('/getProjectArray', impl.getProjectArray);
+  app.get('/verifyAccount',impl.verifyAccount);   
+
+  //new apis
+  app.get('/api/checkExistence',impl.checkExistence);
 
 
   //kyc
