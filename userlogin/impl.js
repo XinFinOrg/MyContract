@@ -21,6 +21,7 @@ module.exports = {
   },
 
   postLogin: (req, res, next) => {
+    console.log(req.body)
     passport.authenticate('local-login', {
       session: false,
     }, async (err, user, info) => {
