@@ -10,11 +10,11 @@ export const userService = {
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        "Content-Type":"application/json",
-        body: { "email": username, "password": password }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
     };
 
-    return fetch(`http://localhost/api/login`, requestOptions)
+    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -42,7 +42,6 @@ function getAll() {
 }
 
 function handleResponse(response) {
-    console.log(response);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
