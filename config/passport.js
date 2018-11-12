@@ -172,7 +172,7 @@ module.exports = function (passport) {
         }).then(async result => {
           // check to see if theres already a user with that email
           if (result) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false, 'email is already taken.');
           } else {
             // if there is no user with that email
             // create the user
@@ -187,7 +187,7 @@ module.exports = function (passport) {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
-              return done(null, createdClient.dataValues, req.flash('loginMessage', 'Please verify your email address by clicking the link that we have mailed  you!'));
+              return done(null,true,'successful signup');
             });
           }
         });

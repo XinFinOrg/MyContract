@@ -43,10 +43,10 @@ module.exports = {
         res.cookie('clientToken', token, {
           expire: 360000 + Date.now()
         });
-        console.log(token,"token")
+        console.log(token, "token")
         return res.send(token) //res.redirect('/dashboard')
       } catch (error) {
-        return next(error); 
+        return next(error);
       }
     })(req, res, next);
   },
@@ -58,12 +58,30 @@ module.exports = {
     });
   },
 
-  postSignup: passport.authenticate('local-signup', {
-    session: false,
-    successRedirect: '/login', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }),
+  postSignup: async function (req, res, next) {
+    console.log(req.body, "in here")
+    passport.authenticate('local-signup', {
+      session: false,
+      // successRedirect: '/login', // redirect to the secure profile section
+      // failureRedirect: '/signup', // redirect back to the signup page if there is an error
+      // failureFlash: true // allow flash messages
+    }, async (err, status, info) => {
+      try {
+        if (err) {
+          const error = new Error('An Error occured')
+          return res.json({
+            'token': "failure",
+            'message': info
+          });
+        }
+        return res.send({ status, info })
+      }
+      catch (error) {
+        return next(error);
+      }
+
+    })(req, res, next);
+  },
 
   getDashboard: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
@@ -341,7 +359,7 @@ module.exports = {
 
 function getProjectArray(email) {
   var projectArray = [];
-  return new Promise(async function(resolve, reject) {
+  return new Promise(async function (resolve, reject) {
     client.find({
       where: {
         'email': email
