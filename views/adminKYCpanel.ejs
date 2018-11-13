@@ -1,10 +1,133 @@
 <% include layouts/adminSidebar %>
+    <div class="content-wrapper">
+        <div class="content container">
+            <!--START PAGE HEADER -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h1>KYC DETAILS</h1>
+                    </div>
+                </div>
+            </header>
+            <!--END PAGE HEADER -->
+
+            <!--START PAGE CONTENT -->
+            <section class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">User KYC Data
+                            </div>
+                            <form>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="userId">User Id</label>
+                                            <input type="text" class="form-control" id="userId" value="<%= KYCdata.uniqueId %>" readonly="readonly">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" value="<%= KYCdata.email %>" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="firstName">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" value="<%= KYCdata.firstName %>" readonly="readonly">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" value="<%= KYCdata.lastName %>" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="contactNumber">Contact Number</label>
+                                            <input type="text" class="form-control" id="contactNumber" value="<%= KYCdata.isd_code %> - <%= KYCdata.mobile %>" readonly="readonly">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="country">Country</label>
+                                            <input type="text" class="form-control" id="country" value="<%= KYCdata.country %>" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="text-center p-20">
+                                                <img class="card-img-top" src="<%= KYCdata.kycDoc1 %>" alt="Smiley face"></a>
+                                                <div class="card-body p-10">
+                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="text-center p-20">
+                                                <img class="card-img-top" src="<%= KYCdata.kycDoc2 %>" alt="Smiley face">
+                                                <div class="card-body p-10">
+                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="text-center p-20">
+                                                <img class="card-img-top" src="<%= KYCdata.kycDoc3 %>" alt="Smiley face">
+                                                <div class="card-body p-10">
+                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                            <form action="/icoDashboard/icoDashboardSetup/project/<%= KYCdata.projectConfigurationCoinName %>/kyctab/<%= KYCdata.uniqueId %>/updateUserData"
+                                method="post" class="form-horizontal" enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="kycStatus">KYC Status</label>
+                                        <select id="kycStatus" name="kyc_verified" class="form-control" value="<%= KYCdata.status %>">
+                                            <option value="active">Approve</option>
+                                            <option value="rejected">Decline</option>
+                                            <option value="pending">Pending</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="userStatus">User Status</label>
+                                        <select id="userStatus" name="status" class="form-control" value="<%= KYCdata.status %>">
+                                            <option value="true">Approve</option>
+                                            <option value="false">Decline</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-light text-center">
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary btn-rounded">Update Status</button>
+                                                <button class="btn btn-light btn-rounded btn-outline">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--END PAGE CONTENT -->
+        </div>
+    </div>
+    <!-- END CONTENT WRAPPER -->
+    </div>
+    <!-- END APP WRAPPER -->
 
 
-    <!--BEGIN PAGE WRAPPER-->
-    <div id="page-wrapper">
-        <!--BEGIN TITLE & BREADCRUMB PAGE-->
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <!-- END FOOTER -->
 
+
+    <!-- 
         <div class="page-content">
             <div class="row">
                 <div class="col-md-12">
@@ -72,8 +195,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <!-- <div class="form-group col-sm-4 control-label"><label>Document Name</label>
+                                        <hr> -->
+    <!-- <div class="form-group col-sm-4 control-label"><label>Document Name</label>
                                                 </div>
                                                 <div class="form-group col-sm-4 control-label"><label>Document Name</label>
                                                 </div>
@@ -90,8 +213,8 @@
                                                         width="42">
                                                 </div>
                                                  -->
-                                        <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName1 %></label>
-                                            <div class="col-sm-9 controls">
+    <!-- <div class="form-group"><label class="col-sm-3 control-label"><%= KYCdata.kycDocName1 %></label> -->
+    <!-- <div class="col-sm-9 controls">
                                                 <div class="row">
                                                     <div class="col-xs-6"><img id="KYCimg1" src="<%= KYCdata.kycDoc1 %>"
                                                             data-zoom-image="<%= KYCdata.kycDoc1 %>" alt="Smiley face" height="300px"
@@ -160,59 +283,7 @@
                 </div>
 
             </div>
-        </div>
-
-
-
-
-        <!--END CONTENT-->
-        <!--BEGIN FOOTER-->
-
-        <!--END FOOTER-->
-    </div>
-    <!--END PAGE WRAPPER-->
-    </div>
-    </div>
-    <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
-    <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
-    <script>
-        $(function () {
-
-            $("#max,#min").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'yy-mm-dd',
-                onSelect: function (selectedDate) {
-                    if (this.id == 'min') {
-                        var dateMin = $('#min').datepicker("getDate");
-                        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
-                        $('#max').datepicker("option", "minDate", rMin);
-                    }
-
-                }
-
-
-            });
-
-
-
-        });
-
-
-    </script>
-    <script src='../../../../../vendors/elevatezoom-master/jquery-1.8.3.min.js'></script>
-    <script src="../../../../../vendors/elevatezoom-master/jquery.elevateZoom.js">
-        $("#KYCimg1").elevateZoom({ zoomType: "inner" });
-        $("#KYCimg2").elevateZoom({ zoomType: "inner" });
-        $("#KYCimg3").elevateZoom({ zoomType: "inner" });
-    </script>
-    <!--LOADING SCRIPTS FOR PAGE-->
-
-
-
-
-
-
+        </div> -->
     </body>
 
     </html>

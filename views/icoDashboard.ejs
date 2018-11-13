@@ -1,300 +1,121 @@
 
 <% include layouts/adminSidebar %>
-      <!--BEGIN PAGE WRAPPER-->
-        <div id="page-wrapper"><!--BEGIN TITLE & BREADCRUMB PAGE-->
-                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-        <div class="page-header pull-left">
-            <div class="page-title">Dashboard</div>
-        </div>
-        <ol class="breadcrumb page-breadcrumb pull-right">
-            <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-            <li class="hidden"><a href="#">Dashboard</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-            <li class="active">Dashboard</li>
-        </ol>
-        <div class="clearfix"></div>
-    </div>
-    <!--END TITLE & BREADCRUMB PAGE--><!--BEGIN CONTENT-->
-    <div class="page-content">
-        <div id="tab-general">
-            <div id="sum_box" class="row mbl">
-                <div class="col-sm-6 col-md-3">
-                    <div class="panel profit db mbm" onclick="window.location.href='https://whatshalal.io/prashaasak/users'" style="cursor: pointer;">
-                        <div class="panel-body"><p class="icon"><i class="icon fa fa-group"></i></p><h4 class="value"><span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0">24</span></h4>
-
-                            <p class="description">Registered Users</p>
-
-
-                        </div>
-                    </div>
+<div class="content-wrapper">
+    <div class="content container">
+        <!--START PAGE HEADER -->
+        <header class="page-header">
+            <div class="d-flex align-items-center">
+                <div class="mr-auto">
+                    <h1>Dashboard</h1>
                 </div>
-                                    
-                        
+            </div>
+        </header>
+        <!--END PAGE HEADER -->
 
-                            
-
-                        
-                    
-                
-                
-                    
-                        
-
-                            
-
-
-                        
-                    
-                
-                <div class="col-sm-6 col-md-3">
-                    <div class="panel visit db mbm" onclick="window.location.href='https://whatshalal.io/prashaasak/kyc_users'" style="cursor: pointer;">
-                        <div class="panel-body"><p class="icon"><i class="icon fa fa-group"></i></p><h4 class="value"><span>12</span></h4>
-
-                            <p class="description">KYC verification</p>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            <div class="clearfix"></div>
-                
-                <div class="col-sm-6 col-md-6">
-                    <div class="panel db mbm" style="cursor: pointer;">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div style="text-align: center"><i class="fa font50"><img src="https://whatshalal.io/front/assets/icons/BTC.png" class="stat-icon" style="width: 50px;height: 50px;"></i></div>
-                                    <div style="text-align: center"><p><h2>0</h2></p>
-                                        <p class="description "><strong>Admin BTC Balance</strong></p></div>
+        <!--START PAGE CONTENT -->
+        <section class="page-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="row m-0 col-border-xl">
+                            <div class="col-md-6 col-lg-6 col-xl-3">
+                                <div class="card-body">
+                                    <div class="icon-rounded icon-rounded-primary float-left m-r-20">
+                                        <i class="la la-btc"></i>
+                                    </div>
+                                    <h5 class="card-title m-b-5 counter" data-count="5627">5627</h5>
+                                    <h6 class="text-muted m-t-10">Admin BTC Balance</h6>
                                 </div>
                             </div>
-
-                            
-                                
-                                    
-                                
-                                
-                                    
-                                
-                            
-
-
-
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="col-sm-6 col-md-6">
-                    <div class="panel db mbm" style="cursor: pointer;">
-                        <div class="panel-body" onclick="window.open('https://etherscan.io/address/0xd6204c2aa126d3558fa894e36fac8295ef951c46','_newtab');">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div style="text-align: center"><i class="fa font50"><img src="https://whatshalal.io/front/assets/icons/ETH.png" class="stat-icon" style="width: 50px;height: 50px;"></i></div>
-                                    <div style="text-align: center"><p><h2>0</h2></p>
-                                        <p class="description "><strong>Admin ETH Balance</strong></p></div>
+                            <div class="col-md-6 col-lg-6 col-xl-3">
+                                <div class="card-body">
+                                    <div class="icon-rounded icon-rounded-info float-left m-r-20">
+                                        <i class="cf cf-eth"></i>
+                                    </div>
+                                    <h5 class="card-title m-b-5 counter" data-count="67">6770</h5>
+                                    <h6 class="text-muted m-t-10">Admin ETH Balance</h6>
                                 </div>
                             </div>
-
-                            
-                                
-                                    
-                                
-                                
-                                    
-                                
-                            
-
-
-
+                            <div class="col-md-6 col-lg-6 col-xl-3">
+                                <div class="card-body">
+                                    <div class="icon-rounded icon-rounded-accent float-left m-r-20">
+                                        <i class="icon dripicons-user-group"></i>
+                                    </div>
+                                    <h5 class="card-title m-b-5 counter" data-count="337">337</h5>
+                                    <h6 class="text-muted m-t-10">Registered Users</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-3">
+                                <div class="card-body">
+                                    <div class="icon-rounded icon-rounded-success float-left m-r-20">
+                                        <i class="la la-bank"></i>
+                                    </div>
+                                    <h5 class="card-title m-b-5 counter" data-count="250">250</h5>
+                                    <h6 class="text-muted m-t-10">KYC Verification</h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
-            <div class="table-container">
-
-                <div>
-                    <h2>&nbsp;&nbsp;Latest 25 ICO Trades:</h2>
-                    <br>
-                </div>
-                <table class="table table-hover table-striped table-bordered table-advanced tablesorter"
-                       id="myTable">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>FirstCurrency</th>
-                        <th>SecondCurrency</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Created time</th>
-
-
-                    </tr>
-                    <tbody>
-                                                                                    </tbody>
-                    </thead>
-
-                </table>
-
             </div>
 
-
-
-        </div>
-        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">Latest ICO Trades
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="bs4-table" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>USER ID</th>
+                                            <th>USER NAME</th>
+                                            <th>FIRST CURRENCY</th>
+                                            <th>SECOND CURRENCY</th>
+                                            <th>AMOUNT</th>
+                                            <th>PRICE</th>
+                                            <th>TOTAL</th>
+                                            <th>STATUS</th>
+                                            <th>TIME</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="break">0x973992d9132233b85815487F14e57C4e23760b2B</td>
+                                            <td>Nishant Mitra</td>
+                                            <td>BTC</td>
+                                            <td>ETH</td>
+                                            <td>2000</td>
+                                            <td>3000</td>
+                                            <td>5000</td>
+                                            <td><span class="badge badge-pill badge-warning">Pending</span></td>
+                                            <td>15:30:27</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--END PAGE CONTENT -->
     </div>
-            <!--END CONTENT--><!--BEGIN FOOTER-->
-            <div id="footer">
-                <div class="copyright">Copyright &copy 2018, WhatsHalal. All Rights Reserved.</div>
-            </div>            <!--END FOOTER--></div>
-        <!--END PAGE WRAPPER--></div>
+
+  
 </div>
- <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-<script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
-<!--loading bootstrap js-->
-<script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-
-<script src="https://whatshalal.io/control/js/respond.min.js"></script>
-<script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
-<script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
-<script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
+<!-- END CONTENT WRAPPER -->
+</div>
+<!-- END APP WRAPPER -->
 
 
-<script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-<script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
-
-<script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
-<script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
-
-<script src="https://whatshalal.io/control/js/main.js"></script>
-
-     <script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.js"></script>
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.categories.js"></script>
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.pie.js"></script>
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.tooltip.js"></script>
-
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.fillbetween.js"></script>
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.stack.js"></script>
-<script src="https://whatshalal.io/control/vendors/flot-chart/jquery.flot.spline.js"></script>
-<!-- <script src="https://whatshalal.io/control/vendors/calendar/zabuto_calendar.min.js"></script>
- --><script src="https://whatshalal.io/control/js/index.js"></script>
-
-<script src="https://whatshalal.io/control/js/main.js"></script>
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-
-<script type="text/javascript">
-    Highcharts.chart('container', {
-    chart: {
-        type: 'spline'
-    },
-    title: {
-        text: 'Admin profit'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        type: 'datetime',
-        dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
-            year: '%b'
-        },
-        title: {
-            text: 'Date'
-        }
-    },
-    yAxis: {
-        title: {
-            text: 'Value'
-        },
-        min: 0
-    },
-    tooltip: {
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '{point.x:%e. %b}: {point.y:.8f} m'
-    },
-
-    plotOptions: {
-        spline: {
-            marker: {
-                enabled: true
-            }
-        }
-    },
-
-    series: [{
-        name: 'XDC',
-        // Define the data points. All series have a dummy year
-        // of 1970/71 in order to be compared on the same x axis. Note
-        // that in JavaScript, months start at 0 for January, 1 for February etc.
-        data: [
-            
-        ]
-    }, {
-        name: 'BTC',
-        data: [
-           
-        ]
-    }, {
-        name: 'ETH',
-        data: [
-            
-        ]
-    },
-    {
-        name: 'XRP',
-        data: [
-             
-        ]
-    }]
-});
-
-
-  //BEGIN COUNTER FOR SUMMARY BOX
-    
-    
-    
-    function counterNum(obj, start, end, step, duration) {
-        $(obj).html(start);
-        setInterval(function(){
-            var val = Number($(obj).html());
-            if (val < end) {
-                $(obj).html(val+step);
-            } else {
-                clearInterval();
-            }
-        },duration);
-    }
-
-</script>    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#myTable').DataTable({
-                "searching": false,
-                "paging": false,
-                "ordering": false,
-                "info": false
-            });
-        });
-    </script>
-<!--LOADING SCRIPTS FOR PAGE-->
-
-
-
+<!-- FOOTER -->
+<footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+<!-- END FOOTER -->
 
 
 
 </body>
+
 </html>

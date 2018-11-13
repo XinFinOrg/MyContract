@@ -1,104 +1,66 @@
 <% include layouts/adminSidebar %>
+  <!-- END TOP HEADER WRAPPER -->
+  <div class="content-wrapper">
+        <div class="content container">
+            <!--START PAGE HEADER -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h1>KYC STATUS</h1>
+                    </div>
+                </div>
+            </header>
+            <!--END PAGE HEADER -->
 
-    <!--BEGIN PAGE WRAPPER-->
-    <div id="page-wrapper">
-        <!--BEGIN TITLE & BREADCRUMB PAGE-->
-        <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-            <div class="page-header pull-left">
-                <div class="page-title">KYC Status</div>
-            </div>
-            <ol class="breadcrumb page-breadcrumb pull-right">
-                <li><i class="fa fa-home"></i>&nbsp;<a href="https://whatshalal.io/prashaasak/home">Home</a>&nbsp;&nbsp;<i
-                        class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-
-                <li class="active">KYC</li>
-            </ol>
-            <div class="clearfix"></div>
-        </div>
-
-
-        <div class="page-content">
-            <div class="row">
-                <div class="col-md-12">
-
-
-                    <div id="tableactionTabContent" class="tab-content">
-                        <div id="table-table-tab" class="tab-pane fade in active">
-                            <div class="row">
-                                <div class="col-lg-12">
-
-                                    <div class="table-container">
-
-                                        <table id="example" class="display" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <!-- <th>ID</th> -->
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Email</th>
-                                                    <th>verifiation status</th>
-                                                    <th>User status</th>
-                                                    <th>view KYC Documents</th>
-
-                                                </tr>
-                                            </thead>
-                                        </table>
-
-                                    </div>
-
-
+            <!--START PAGE CONTENT -->
+            <section class="page-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">All KYC Details
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="bs4-table1" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>FIRST NAME</th>
+                                                <th>LAST NAME</th>
+                                                <th>EMAIL</th>
+                                                <th>VERIFICATION STATUS</th>
+                                                <th>USER STATUS</th>
+                                                <th>VIEW KYC DOCUMENTS</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
+            </section>
+            <!--END PAGE CONTENT -->
         </div>
-
-
-
-        <!--END CONTENT-->
-        <!--BEGIN FOOTER-->
-        <div id="footer">
-        </div>
-        <!--END FOOTER-->
     </div>
-    <!--END PAGE WRAPPER-->
+    <!-- END CONTENT WRAPPER -->
     </div>
-    </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
-    <!--loading bootstrap js-->
-    <script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-
-    <script src="https://whatshalal.io/control/js/respond.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
-    <script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
-    <script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
+    <!-- END APP WRAPPER -->
+    
+    
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <!-- END FOOTER -->
 
 
-    <script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
-
-    <script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
-    <script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
-
-    <script src="https://whatshalal.io/control/js/main.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+    <!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script> -->
     <script type="text/javascript">
-        $(document).ready(function () {
             $(document).ready(function () {
-                $('#example').DataTable({
+                $('#bs4-table1').DataTable({
                     "scrollCollapse": true,
                     "paging": false,
-                    "ajax": "/icoDashboardSetup/project/<%= projectName %>/kyctab/getICOdata",
+                    "ajax": "http://localhost/icoDashboard/icoDashboardSetup/project/<%= projectName %>/kyctab/getICOdata",
                     "columns": [
                         // { "data": "id" },
                         { "data": "firstName" },
@@ -110,38 +72,8 @@
                     ],
                 });
 
-            });
-
-        });
+            }); 
     </script>
-
-    <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
-    <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
-    <script>
-        $(function () {
-
-            $("#max,#min").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'yy-mm-dd',
-                onSelect: function (selectedDate) {
-                    if (this.id == 'min') {
-                        var dateMin = $('#min').datepicker("getDate");
-                        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
-                        $('#max').datepicker("option", "minDate", rMin);
-                    }
-
-                }
-
-
-            });
-
-        });
-
-
-        });
-    </script>
-
     <!--LOADING SCRIPTS FOR PAGE-->
 
 

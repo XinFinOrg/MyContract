@@ -1,288 +1,148 @@
 <% include layouts/adminSidebar %>
-    
 
-            <!--BEGIN PAGE WRAPPER-->
-            <div id="page-wrapper">
-                <!--BEGIN TITLE & BREADCRUMB PAGE-->
-                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-                    <div class="page-header pull-left">
-                        <div class="page-title">Site Configuration</div>
+
+    <div class="content-wrapper">
+        <div class="content container">
+            <!--START PAGE HEADER -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h1>Site Configuration</h1>
                     </div>
-
-                    <div class="clearfix"></div>
                 </div>
+            </header>
+            <!--END PAGE HEADER -->
 
+            <!--START PAGE CONTENT -->
+            <section class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Site Settings</div>
+                            <form action="/icoDashboard/siteConfiguration/project/<%= projectName %>/updateSiteConfiguration" method="post" class="form-horizontal"
+                                enctype="multipart/form-data">
+                                <div class="card-body">
 
-                <div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
-
-
-                            <div class="row mtl">
-
-                                <div class="col-md-12">
-
-                                    <div id="generalTabContent" class="tab-content">
-                                        <div id="tab-edit" class="tab-pane fade in active">
-                                                <button type="edit" class="btn btn-default" id="edit" onclick="handleEdit()">Edit</button>
-                                            <form action="/siteConfiguration/project/<%= projectName %>/updateSiteConfiguration" method="post" class="form-horizontal"
-                                                enctype="multipart/form-data">
-                                                <h3>Site Settings</h3>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Site Name</label>
-                                                    <input type="hidden" class="form-control" name="email" value="" />
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" id="site_name" disabled = "false" class="form-control"
-                                                                    name="site_name" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Site Logo</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-9"><input type="file" class="" name="site_logo"
-                                                                /></div>
-                                                            <img id="imglogo" style="width: 150px;" disabled="disabled" alt="☺" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Coin Name</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="coin_name"  disabled="disabled" value="<%= projectName %>"
-                                                                    class="form-control" disabled="true" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Token Supply</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6">
-                                                                <input class="form-control" name="token_supply" disabled="disabled"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Soft Cap</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" id="soft_cap" name="soft_cap" disabled="disabled" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Hard Cap</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" id="hard_cap" name="hard_cap" disabled="disabled" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Start Date</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="date" id="start_date" name="start_date" disabled="disabled" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">End Date</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="date" id="end_date" name="end_date" disabled="disabled" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- <div class="form-group"><label class="col-sm-3 control-label">Conversion Rate</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input   type="text"  name="usd_conversion_rate" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                                <div class="form-group"><label class="col-sm-3 control-label">Minimum Contribution</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" id="minimum_contribution" disabled="disabled" name="minimum_contribution"
-                                                                    class="form-control" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Token Contract
-                                                        Address
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <div class="user_detail">
+                                                <h5 class="mt-2">Site Logo</h5>
+                                            </div>
+                                            <div class="user_pic_wrap">
+                                                <img src="/icoDashboard/img/logo1.png" id="imglogo" height="250px" width="300px" alt="user_img">
+                                                <span class="edit_pic">
+                                                    <label for="user_img">
+                                                        <input type="file" name="filename" id="user_img" accept="image/gif, image/jpeg, image/png">
+                                                        <i class="icon dripicons-camera"></i>
                                                     </label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="contract_address"
-                                                                    class="form-control" disabled="disabled" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">Crowdsale Contract
-                                                        Hash
-                                                    </label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="contract_hash"
-                                                                    class="form-control" disabled="disabled" /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-
-                                                <h3>Social Links</h3>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">website Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" id="website_url" name="website_url"  disabled="disabled" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- <div class="form-group"><label class="col-sm-3 control-label">LinkedIn Url</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="url" name="linkedin_url" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-
-
-                                                <hr/>
-                                                <!-- 
-                                                <h3>Admin Address</h3>
-
-                                                <div class="form-group"><label class="col-sm-3 control-label">ETH Address</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="eth_address" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group"><label class="col-sm-3 control-label">BTC Address</label>
-
-                                                    <div class="col-sm-9 controls">
-                                                        <div class="row">
-                                                            <div class="col-xs-6"><input type="text" name="btc_address" class="form-control"
-                                                                /></div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-
-
-                                                <!--  <h3>SMTP</h3>
-                                              <div class="form-group"><label class="col-sm-3 control-label">SMTP Host</label>
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_host" value="eyJpdiI6Ik40dkRIdGZjQjY4VjkxM0YzQ2tMYmc9PSIsInZhbHVlIjoiTUZ2YXdOYW9mYTJiN1pWODd1NTAzUT09IiwibWFjIjoiODFiZmJjNjAyNDIwNDBjNjc1OGEyYmYwNmVkNTkzYmEyYjlmNjgxMmM1MTMwOGJiM2UwMDE2NzQ3YWY0Mjg4MSJ9" class="form-control"/></div>
-                                                    </div>
-                                                </div>
+                                                </span>
                                             </div>
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Port</label>
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_port" value="eyJpdiI6IktPOTNTS2FUQ0pNNE5qXC9veGtaSWRBPT0iLCJ2YWx1ZSI6IlNYYnBaTWxEaURTZVRWaE9Gc2I3Nnc9PSIsIm1hYyI6ImIzNDQ2NGQyODM1MjUyZjU5OTMzNzcxYzQ0MDE5ZGFjMGE3NGIzYWUxNzUzZTIxMzhlNjBkZDg4Y2JkOTE2M2QifQ==" class="form-control"/></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Username</label>
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_email" value="eyJpdiI6ImV6UVFCY0wrVWNlMVdkYjE3Y1UwSkE9PSIsInZhbHVlIjoiYm5UbUZiSUNsRUlSSmtPd1pZXC9qVFE9PSIsIm1hYyI6ImU1MjczODQ2ZDA5NzA2NjliYTdjMTM2ZDgzYzU1ZWRhMjlhZTUwZjRkNzIyYjNiOWZmOWIxMzQyY2YwYjMyZDQifQ==" class="form-control"/></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group"><label class="col-sm-3 control-label">SMTP Password</label>
-                                                <div class="col-sm-9 controls">
-                                                    <div class="row">
-                                                        <div class="col-xs-6"><input type="text" name="smtp_password" value="eyJpdiI6ImVzUjV4RmVXQkZVbFYwVnRJK1dDQ1E9PSIsInZhbHVlIjoiWFJJR1RLeXpRb21Cd1RVV0dqTmIrZz09IiwibWFjIjoiZTdiZWZkM2ZjNDlkZTVlNGI5MTdiNjNkOWI3OWNkYzdlNzU5YWIzMmQyY2ZiNWI3YTlmNGQ2NGE3ZTE2NDVkNSJ9" class="form-control"/></div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                        </div>
+                                    </div>
 
-
-                                                <hr/>
-
-
-
-
-                                                <button type="submit" id="submit" class="btn btn-green btn-block">Update</button>
-                                            </form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="siteName">Site Name</label>
+                                            <input type="text" class="form-control" id="siteName" name="site_name" placeholder="Site Name">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="coinName">Coin Name</label>
+                                            <input type="text" class="form-control" id="coinName" name="coin_name" placeholder="Coin Name" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="tokenSupply">Token Supply</label>
+                                            <input type="text" class="form-control" id="tokenSupply" name="token_supply" placeholder="Token Supply" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="minimumContribution">Minimum Contribution</label>
+                                            <input type="text" class="form-control" id="minimumContribution" name="minimum_contribution" placeholder="Minimum Contribution">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="hardCap">Hard Cap</label>
+                                            <input type="text" class="form-control" id="hardCap" name="hard_cap" placeholder="Hard Cap">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="softCap">Soft Cap</label>
+                                            <input type="text" class="form-control" id="softCap" name="soft_cap" placeholder="Soft Cap">
                                         </div>
 
                                     </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="startDate">Start Date</label>
+                                            <input type="date" class="form-control" id="startDate" name="start_date" placeholder="Start Date">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="endDate">End Date</label>
+                                            <input type="date" class="form-control" id="endDate" name="end_date" placeholder="End Date">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="tokenAddress">Token Contract Address</label>
+                                            <input type="text" class="form-control" id="tokenAddress" name="contract_address" placeholder="Token Contract Address" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="crowdsaleHash">Crowdsale Contract Address</label>
+                                            <input type="text" class="form-control" id="crowdsaleHash" name="crowdsale_address" placeholder="Crowdsale Contract Hash" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="websiteUrl">Website Url</label>
+                                            <input type="text" class="form-control" id="websiteUrl" name="website_url" placeholder="Website Url">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-light text-center">
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary btn-rounded">Update</button>
+                                                    <button class="btn btn-light btn-rounded btn-outline">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-
-
-                <!--END CONTENT-->
-                <!--BEGIN FOOTER-->
-                <div id="footer">
-                    <div class="copyright">Copyright &copy 2018, AutoCoin. All Rights Reserved.</div>
-                </div>
-                <!--END FOOTER-->
-            </div>
-            <!--END PAGE WRAPPER-->
+            </section>
+            <!--END PAGE CONTENT -->
         </div>
-    </div>
 
-    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
+
+    </div>
+    <!-- END CONTENT WRAPPER -->
+    </div>
+    <!-- END APP WRAPPER -->
+
+
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <!-- END FOOTER -->
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/js/axios.min.js"></script>
+    <script src="/icoDashboard/js/axios.min.js"></script>
     <script>
-        axios.get('/siteConfiguration/project/<%=projectName %>/getSiteConfiguration')
+        axios.get('/icoDashboard/siteConfiguration/project/<%=projectName %>/getSiteConfiguration')
             .then(function (response) {
                 // console.log("hello ", response.data.data);
                 document.getElementsByName('site_name')[0].value = response.data.data.siteName;
-                // document.getElementsByName('coin_name')[0].value = response.data.data.coinName;
+                document.getElementsByName('coin_name')[0].value = response.data.data.coinSymbol;
                 document.getElementsByName('token_supply')[0].value = response.data.data.tokenSupply;
                 document.getElementsByName('soft_cap')[0].value = response.data.data.softCap;
                 document.getElementsByName('hard_cap')[0].value = response.data.data.hardCap;
                 document.getElementsByName("contract_address")[0].value = response.data.data.tokenContractAddress;
-                document.getElementsByName("contract_hash")[0].value = response.data.data.crowdsaleContractAddress;
+                document.getElementsByName("crowdsale_address")[0].value = response.data.data.crowdsaleContractAddress;
                 document.getElementsByName("website_url")[0].value = response.data.data.homeURL;
                 document.getElementById("imglogo").src = response.data.data.siteLogo;
                 document.getElementsByName('start_date')[0].value = response.data.data.startDate.slice(0, 10);
@@ -294,60 +154,7 @@
             .catch(function (e) {
                 console.log(e);
             });
-        $(document).ready(function () {
-            var datetimeurl = document.getelementsbyname('datetime').value;
-            var datetimeview = document.getelementsbyname('dateid');
-            $.getJSON(datetimeurl, function (result) {
-                datetimeview.innerText = result.date;
-            });
-            setInterval(function () {  // set Interval function to carry out same operation in the time specified
-                $.getJSON(datetimeurl, function (result) {
-                    datetimeview.innerText = result.date;
-                });
-            }, 6000);
-        });
-
-        function handleEdit() {
-            console.log("working");
-            document.getElementById('soft_cap').disabled="" ;
-            document.getElementById('hard_cap').disabled ="";
-            document.getElementById('website_url').disabled ="";
-            document.getElementById('imglogo').disabled="" ;
-            document.getElementById('start_date').disabled="";
-            document.getElementById('end_date').disabled="";
-            document.getElementById('minimum_contribution').disabled="";
-            document.getElementById('site_name').disabled="";
-        }
-
     </script>
-    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
-    <!--loading bootstrap js-->
-    <script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+    </body>
 
-    <script src="https://whatshalal.io/control/js/respond.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
-    <script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
-    <script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
-
-
-    <script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
-
-    <script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
-    <script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
-
-    <script src="https://whatshalal.io/control/js/main.js"></script>
-
-    <!--LOADING SCRIPTS FOR PAGE-->
-
-
-
-
-
-
-</body>
-
-</html>
+    </html>

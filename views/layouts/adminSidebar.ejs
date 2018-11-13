@@ -2,188 +2,389 @@
 <html lang="en">
 
 <head>
-    <title>Admin</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="/cdn-cgi/apps/head/lf7pRreZSj1Ob_rNBjPMzJCbyXs.js"></script> -->
-    <!-- <link rel="shortcut icon" href="https://whatshalal.io/front/assets2/images/favicon/favicon-57x57.png"> -->
-    <!-- <link rel="apple-touch-icon" href="https://whatshalal.io/control/images/icons/favicon.png"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icoDashboard/img/favicon.png">
+    <title>MyContract | User Dashboard</title>
+    <!-- ================== GOOGLE FONTS ==================-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+    <!-- ======================= GLOBAL VENDOR STYLES ========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/vendor/bootstrap.css">
+    <!-- ======================= ICONS FONTS STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/icons/line-awesome.min.css">
+    <link rel="stylesheet" href="/icoDashboard/css/icons/dripicons.min.css">
+    <link rel="stylesheet" href="/icoDashboard/css/icons/cryptofont.min.css">
+    <!-- ======================= PAGE VENDOR STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/vendor/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <!-- ======================= GLOBAL COMMON STYLES ============================-->
+    <link rel="stylesheet" href="/icoDashboard/css/common/main.bundle.css">
+    <!-- ======================= LAYOUT STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/core/main.css">
+    <!-- ======================= MENU TYPE ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/menu-type/auto-hide.css">
+    <!-- ======================= THEME COLOR STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/themes/theme-j.css">
+    <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->
+    <script src="/icoDashboard/vendor/modernizr/modernizr.custom.js"></script>
+    <script src="/icoDashboard/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/icoDashboard/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/icoDashboard/vendor/js-storage/js.storage.js"></script>
+    <script src="/icoDashboard/vendor/metismenu/dist/metisMenu.js"></script>
+    <script src="/icoDashboard/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
-    <!--Loading bootstrap css-->
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
-    <link type="text/css" rel="stylesheet" href="../../../../../vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
-    <link type="text/css" rel="stylesheet" href="../../../../../vendors/font-awesome/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="../../../../../vendors/bootstrap/css/bootstrap.min.css">
+    <!-- ================== PAGE LEVEL VENDOR SCRIPTS ==================-->
+    <script src="/icoDashboard/vendor/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="/icoDashboard/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
 
-    <script src="../../../../../js/jquery-1.10.2.min.js"></script>
-    <script src="../../../../../js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="../../../../../js/jquery-ui.js"></script>
-    <!--loading bootstrap js-->
-    <script src="../../../../../vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../../../../vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-    
-    <script src="../../../../../js/respond.min.js"></script>
-    <script src="../../../../../vendors/metisMenu/jquery.metisMenu.js"></script>
-    <script src="../../../../../vendors/slimScroll/jquery.slimscroll.js"></script>
-    <script src="../../../../../vendors/jquery-cookie/jquery.cookie.js"></script>
-    
-    
-    <script src="../../../../../vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="../../../../../js/jquery.menu.js"></script>
-    
-    <script src="../../../../../vendors/holder/holder.js"></script>
-    <script src="../../../../../vendors/responsive-tabs/responsive-tabs.js"></script>
-    
-    <script src="../../../../../js/main.js"></script>
-    
-         <script src="../../../../../vendors/flot-chart/jquery.flot.js"></script>
-    <script src="../../../../../vendors/flot-chart/jquery.flot.categories.js"></script>
-    <script src="../../../../../vendors/flot-chart/jquery.flot.pie.js"></script>
-    <script src="../../../../../vendors/flot-chart/jquery.flot.tooltip.js"></script>
-    
-    <script src="../../../../../vendors/flot-chart/jquery.flot.fillbetween.js"></script>
-    <script src="../../../../../vendors/flot-chart/jquery.flot.stack.js"></script>
-    <script src="../../../../../vendors/flot-chart/jquery.flot.spline.js"></script>
-    <!-- <script src="https://whatshalal.io/control/vendors/calendar/zabuto_calendar.min.js"></script>
-     --><script src="https://whatshalal.io/control/js/index.js"></script>
-    
-    <script src="../../../../../js/main.js"></script>
-    <!--LOADING STYLESHEET FOR PAGE-->
+    <!-- ================== GLOBAL APP SCRIPTS ==================-->
+    <script src="/icoDashboard/js/global/app.js"></script>
 
-    <!-- <link type="text/css" rel="stylesheet" href="../../../../../vendors/calendar/zabuto_calendar.min.css"> -->
-    <!--Loading style vendors-->
-
-
-
-    <link type="text/css" rel="stylesheet" href="../../../../../vendors/jquery-news-ticker/jquery.news-ticker.css">
-    <!--Loading style-->
-    <link type="text/css" rel="stylesheet" href="../../../../../css/themes/style3/orange-blue.css" id="theme-change"
-        class="style-change color-change">
-    <link type="text/css" rel="stylesheet" href="../../../../../css/style-responsive.css">
-    <link href="../../css/patternLock.css" rel="stylesheet" type="text/css" />
-
-    <link type="text/css" rel="stylesheet" href="../../../../../vendors/dataTables.bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+    <!-- ================== PAGE LEVEL COMPONENT SCRIPTS ==================-->
+    <script src="/icoDashboard/js/components/datatables-init.js"></script>
 </head>
 
-<body>
-    <div>
-        <!--END THEME SETTING-->
-        <!--BEGIN BACK TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
-        <!--END BACK TO TOP-->
-        <!--BEGIN TOPBAR-->
-        <div id="header-topbar-option-demo" class="page-header-topbar">
-            <input type="hidden" id="datetime" value="https://whatshalal.io/datetime">
-            <nav id="topbar" role="navigation" style="margin-bottom: 0;" data-step="3" data-intro="&lt;b&gt;Topbar&lt;/b&gt; has other styles with live demo. Go to &lt;b&gt;Layouts-&gt;Header&amp;Topbar&lt;/b&gt; and check it out."
-                class="navbar navbar-default navbar-static-top">
-                <div class="navbar-header">
-                    <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle"><span
-                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                            class="icon-bar"></span></button>
 
-                    <a id="logo" href="#" class="navbar-brand"><span class="fa fa-rocket"></span><span
-                            class="logo-text"><%= projectName %></span><span style="display: none" class="logo-text-icon">µ</span></a></div>
-                <div class="topbar-main"><a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
-
-
-                    <ul class="nav navbar navbar-top-links navbar-right mbn">
-                        <li class="topbar-user"><label style="color: whitesmoke" id="dateid"></label></li>&nbsp;
-                        <li><a href="/logout"><i class=""></i>Log Out</a></li>
-
-
-                    </ul>
+<body class="layout-horizontal menu-auto-hide">
+    <!-- START APP WRAPPER -->
+    <div id="app">
+        <!-- START TOP HEADER WRAPPER -->
+        <div class="header-wrapper">
+            <div class="header-top">
+                <!-- START MOBILE MENU TRIGGER -->
+                <ul class="mobile-only navbar-nav nav-left">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" data-toggle-state="aside-left-open">
+                            <i class="icon dripicons-align-justify"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END MOBILE MENU TRIGGER -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6">
+                            <ul class="site-logo">
+                                <li>
+                                    <!-- START LOGO -->
+                                    <a href="/icoDashboard/icoDashboardSetup/project/<%=projectName %>">
+                                        <div class="logo"><img src="/icoDashboard/img/logo.png" width="211" height="42"></div>
+                                    </a>
+                                    <!-- END LOGO -->
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- START TOP TOOLBAR WRAPPER -->
+                            <div class="top-toolbar-wrapper">
+                                <nav class="top-toolbar navbar flex-nowrap">
+                                    <ul class="navbar-nav nav-right">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)" data-toggle-state="aside-right-open">
+                                                <i class="icon dripicons-view-apps"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- END TOP TOOLBAR WRAPPER -->
+                        </div>
+                    </div>
                 </div>
-            </nav>
+                <!-- START MOBILE TOOLBAR TRIGGER -->
+                <ul class="mobile-only navbar-nav nav-right">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" data-toggle-state="aside-right-open">
+                            <i class="icon dripicons-view-apps"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END MOBILE TOOLBAR TRIGGER -->
+            </div>
 
+            <!-- START HEADER BOTTOM -->
+            <div class="header-bottom">
+                <div class="container">
+                    <!-- START MAIN MENU -->
+                    <nav class="main-menu">
+                        <ul class="nav metismenu">
+                            <li class="sidebar-header mobile-only"><span>NAVIGATION</span></li>
+                            <li><a class="active" href="/icoDashboard/icoDashboardSetup/project/<%= projectName %>"><i class="icon dripicons-meter"></i><span
+                                        class="hide-menu">Dashboard</span></a></li>
+                            <li><a href="/icoDashboard/siteConfiguration/project/<%= projectName %>"><i class="icon dripicons-gear"></i><span
+                                        class="hide-menu">Site Configuration</span></a></li>
+                            <li>
+                                <a class="has-arrow" href="#" aria-expanded="false"><i class="icon dripicons-user-group"></i><span
+                                        class="hide-menu">Manage Users</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="#">User List</a></li>
+                                    <li><a href="#">User Balance</a></li>
+                                    <li><a href="/icoDashboard/icoDashboardSetup/project/<%= projectName %>/kyctab">KYC Verification</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="transactions.html" aria-expanded="false"><i class="la la-exchange font-weight-600"></i><span
+                                        class="hide-menu">Transactions</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="/icoDashboard/transaction/project/<%= projectName %>">ICO Transactions</a></li>
+                                </ul>
+                            </li>
+                            <!-- <li><a href="#"><i class="icon dripicons-user"></i><span class="hide-menu">User Activity</span></a></li> -->
+                            <!-- <li><a href="#"><i class="icon dripicons-mail"></i><span class="hide-menu">Email Template</span></a></li> -->
+                            <li><a href="/dashboard"><i class="icon dripicons-meter"></i><span class="hide-menu">Admin Dashboard</span></a></li>
+                        </ul>
+                    </nav>
+                    <!-- END MAIN MENU -->
+                </div>
+            </div>
+            <!-- END HEADER BOTTOM -->
         </div>
-        <!--END TOPBAR-->
-        <div id="wrapper">
-            <!--BEGIN SIDEBAR MENU-->
-            <nav id="sidebar" role="navigation" data-step="2" data-intro="Template has &lt;b&gt;many navigation styles&lt;/b&gt;" data-position="right"
-                class="navbar-default navbar-static-side">
-                <div class="sidebar-collapse menu-scroll">
-                    <ul id="side-menu" class="nav">
-                            <div class="clearfix"></div>
-
-
-                        <li class=""><a href="/icoDashboardSetup/project/<%= projectName %>"><i class="fa fa-tachometer fa-fw">
-                                    <div class="icon-bg bg-orange"></div>
-                                </i><span class="menu-title">Dashboard</span></a></li>
-
-                                <li class=""><a href="/siteConfiguration/project/<%= projectName %>"><i class="fa fa-tachometer fa-fw">
-                                        <div class="icon-bg bg-orange"></div>
-                                    </i><span class="menu-title">Site Configuraion</span></a></li>
-
-
-
-                        <li class=""><a href="#"><i class="fa fa-user fa-fw"><div class="icon-bg bg-pink"></div>
-                                </i><span class="menu-title">Manage Users</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse " style="height: 0 px;">
-                                <li><a href="/"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">User List</span></a></li>
-
-                                <li><a href="http://localhost/icoDashboardSetup/project/userbalance"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">User Balance</span></a></li>
-                                <li><a href="/icoDashboardSetup/project/<%= projectName %>/kyctab"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">KYC verfication</span></a></li>
-
-                            </ul>
-
-
-                        </li>
-
-
-
-                        <li class=""><a href="#"><i class="fa fa-exchange fa-fw"><div class="icon-bg bg-pink"></div>
-                                </i><span class="menu-title">Transactions</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse " style="height: 0 px;">
-                                <!--  <li ><a href="https://whatshalal.io/prashaasak/transactions"  ><i class="fa fa-align-left"></i><span class="submenu-title">Exchange Transactions</span></a></li> -->
-                                <!-- <li><a href="https://whatshalal.io/prashaasak/deposit_history"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">Deposit Transactions</span></a></li>
-
-                                <li><a href="https://whatshalal.io/prashaasak/updated_history"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">Updated Transactions</span></a></li>
-                                <li><a href="https://whatshalal.io/prashaasak/withdraw_history"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">Send Transactions (Cryptocurrency)</span></a></li> -->
-                                <li><a href="/transaction/project/<%= projectName %>"><i class="fa fa-align-left"></i><span
-                                            class="submenu-title">ICO Transaction</span></a></li>
-
-
-
-                            </ul>
-
-
-                        </li>
-
-                        <li class=""><a href="#"><i class="fa fa-user fa-fw">
-                                    <div class="icon-bg bg-orange"></div>
-                                </i><span class="menu-title">User Activity</span></a></li>
-
-
-                        <li class=""><a href="#"><i class="fa fa-envelope fa-fw">
-                                    <div class="icon-bg bg-orange"></div>
-                                </i><span class="menu-title">Manage Email Template</span></a></li>
-
-
-
-
-
-
-                                <li class=""><a href="/Dashboard"><i class="fa fa-envelope fa-fw">
-                                        <div class="icon-bg bg-orange"></div>
-                                    </i><span class="menu-title">Admin Dashboard</span></a></li>
-
-
-
-
-
-
-
-
+        <!-- SIDEBAR QUICK PANNEL WRAPPER -->
+        <aside class="sidebar sidebar-right">
+            <div class="sidebar-content">
+                <div class="tab-panel m-b-30" id="sidebar-tabs">
+                    <ul class="nav nav-tabs primary-tabs">
+                        <li class="nav-item" role="presentation">Colour Settings</li>
                     </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fadeIn active" id="sidebar-settings">
+                            <!-- START THEME OPTIONS WRAPPER -->
+                            <section class="sidebar-settings-wrapper">
+                                <h5 class="m-t-30 m-b-20">Colors with dark menu</h5>
+                                <div class="row m-0">
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <!-- THEME OPTION "A" theme-a.css -->
+                                        <div class="color-option-check">
+                                            <h6 class="title text-center">theme-a.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-a.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-a "></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <!-- THEME OPTION "B" theme-b.css -->
+                                        <div class="color-option-check">
+                                            <h6 class="title text-center">theme-b.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-b.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-b"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <!-- THEME OPTION "C" theme-c.css -->
+                                        <div class="color-option-check">
+                                            <h6 class="title text-center">theme-c.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-c.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-c"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "D" theme-d.css -->
+                                            <h6 class="title text-center">theme-d.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-d.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-d"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "E" theme-e.css -->
+                                            <h6 class="title text-center">theme-e.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-e.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-e"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "F" theme-f.css -->
+                                            <h6 class="title text-center">theme-f.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-f.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-f"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "G" theme-g.css -->
+                                            <h6 class="title text-center">theme-g.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-g.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-g"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "H" theme-h.css -->
+                                            <h6 class="title text-center">theme-h.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-h.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-h"></span>
+                                                    <span class="color bg-menu-dark"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5 class="m-t-30 m-b-20">Colors with light menu</h5>
+                                <div class="row m-0">
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "I" theme-i.css -->
+                                            <h6 class="title text-center">theme-i.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-i.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-menu-dark"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "J" theme-j.css -->
+                                            <h6 class="title text-center">theme-j.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-j.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-j"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "K" theme-k.css -->
+                                            <h6 class="title text-center">theme-k.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-k.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-k"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "L" theme-l.css -->
+                                            <h6 class="title text-center">theme-l.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-l.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-l"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "M" theme-m.css -->
+                                            <h6 class="title text-center">theme-m.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-m.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-m"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "N" theme-n.css -->
+                                            <h6 class="title text-center">theme-n.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-n.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-n"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "O" theme-o.css -->
+                                            <h6 class="title text-center">theme-o.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-o.css">
+                                                <input type="radio" name="setting-theme">
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-o"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 p-5 m-b-10">
+                                        <div class="color-option-check">
+                                            <!-- THEME OPTION "P" theme-p.css -->
+                                            <h6 class="title text-center">theme-p.css</h6>
+                                            <label data-load-css="assets/css/layouts/horizontal/themes/theme-p.css">
+                                                <input type="radio" name="setting-theme" />
+                                                <span class="icon-check"></span>
+                                                <span class="split">
+                                                    <span class="color bg-theme-p"></span>
+                                                    <span class="color bg-menu-light"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- END THEME OPTIONS WRAPPER -->
+
+                        </div>
+                    </div>
                 </div>
-            </nav>
-            <!--END SIDEBAR MENU-->
+            </div>
+        </aside>
+        <!-- END SIDEBAR QUICK PANNEL WRAPPER -->

@@ -1,159 +1,118 @@
 <% include layouts/adminSidebar %>
+    <div class="content-wrapper">
+        <div class="content container">
+            <!--START PAGE HEADER -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h1>Transaction Logs</h1>
+                    </div>
+                </div>
+            </header>
+            <!--END PAGE HEADER -->
 
-    <!--BEGIN PAGE WRAPPER-->
-    <div id="page-wrapper">
-        <!--BEGIN TITLE & BREADCRUMB PAGE-->
-        <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-            <div class="page-header pull-left">
-                <div class="page-title">Transaction Logs</div>
-            </div>
-            <ol class="breadcrumb page-breadcrumb pull-right">
-                <li><i class="fa fa-home"></i>&nbsp;<a href="#">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-
-                <li class="active">
-                    <%- projectName %>
-                </li>
-            </ol>
-            <div class="clearfix"></div>
-        </div>
-
-
-        <div class="page-content">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div id="tableactionTabContent" class="tab-content">
-                        <div id="table-table-tab" class="tab-pane fade in active">
-                            <div class="row">
-                                <div class="col-lg-12">
-
-                                    <div class="table-container">
-
-                                        <table id="example" class="ui celled table" style="width:100%">
-                                            <thead>
+            <!--START PAGE CONTENT -->
+            <section class="page-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">All ICO Transactions
+                                <ul class="nav nav-pills nav-pills-primary float-right">
+                                    <li class="nav-item">
+                                        <button class="btn btn-light btn-rounded btn-outline">Send Transaction</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="bs4-table" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>USER ID</th>
+                                                <th>PAYMENT METHOD</th>
+                                                <th>TOKEN AMOUNT</th>
+                                                <th>ADDRESS</th>
+                                                <th>TRANSACTION HASH</th>
+                                                <th>TRANSFER STATUS</th>
+                                                <th>CREATED AT</th>
+                                                <th>UPDATED AT</th>
+                                                <th>SELECT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (var i = 0; i < transactionLog.length; i++) { %>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Payment Method</th>
-                                                    <th>Token Amount</th>
-                                                    <th>Address</th>
-                                                    <th>Transaction Hash</th>
-                                                    <th>Transfer Status</th>
-                                                    <th>Created At</th>
-                                                    <th>Updated At</th>
-                                                    <th>Complete Transfer</th>
-
+                                                    <td  class="break">
+                                                        <%= transactionLog[i].uniqueId %>
+                                                    </td>
+                                                    <td>
+                                                        <%=  transactionLog[i].paymentMethod %>
+                                                    </td>
+                                                    <td>
+                                                        <%=  transactionLog[i].tokenAmount %>
+                                                    </td>
+                                                    <td>
+                                                        <%= transactionLog[i].address %>
+                                                    </td>
+                                                    <td>
+                                                        <%=  transactionLog[i].transaction_hash %>
+                                                    </td>
+                                                    <td>
+                                                        <%= transactionLog[i].tokenTransferStatus %>
+                                                    </td>
+                                                    <td  class="break">
+                                                        <%=  Date(transactionLog[i].createdAt) %>
+                                                    </td>
+                                                    <td  class="break">
+                                                        <%=   Date(transactionLog[i].updatedAt) %>
+                                                    </td>
+                                                    <td>
+                                                           <div class="custom-control custom-checkbox form-check"></div>
+                                                        <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
+                                                        <script>
+                                                            $("#<%= transactionLog[i].uniqueId %>").click(function () {
+                                                                if ($(this).is(":checked")) {
+                                                                    console.log("checked <%= transactionLog[i].address %>")
+                                                                    accounts.push({ "uniqueId": "<%= transactionLog[i].uniqueId %>" });
+                                                                } else {
+                                                                    console.log("unchecked <%= transactionLog[i].address %>")
+                                                                    accounts.pop({ "uniqueId": "<%= transactionLog[i].uniqueId %>" });
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% for (var i = 0; i < transactionLog.length; i++) { %>
-                                                    <tr>
-                                                        <td>
-                                                            <%= transactionLog[i].uniqueId %>
-                                                        </td>
-                                                        <td>
-                                                            <%=  transactionLog[i].paymentMethod %>
-                                                        </td>
-                                                        <td>
-                                                            <%=  transactionLog[i].tokenAmount %>
-                                                        </td>
-                                                        <td>
-                                                            <%= transactionLog[i].address %>
-                                                        </td>
-                                                        <td>
-                                                            <%=  transactionLog[i].transaction_hash %>
-                                                        </td>
-                                                        <td>
-                                                            <%= transactionLog[i].tokenTransferStatus %>
-                                                        </td>
-                                                        <td>
-                                                            <%=  Date(transactionLog[i].createdAt) %>
-                                                        </td>
-                                                        <td>
-                                                            <%=   Date(transactionLog[i].updatedAt) %>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
-                                                            <script>
-                                                                $("#<%= transactionLog[i].uniqueId %>").click(function () {
-                                                                    if ($(this).is(":checked")) {
-                                                                        console.log("checked <%= transactionLog[i].address %>")
-                                                                        accounts.push({"uniqueId":"<%= transactionLog[i].uniqueId %>"});
-                                                                    } else {
-                                                                        console.log("unchecked <%= transactionLog[i].address %>")
-                                                                        accounts.pop({"uniqueId":"<%= transactionLog[i].uniqueId %>"});
-                                                                    }
-                                                                });
-                                                            </script>
-                                                        </td>
-                                                    </tr>
-                                                    <% } %>
-                                            </tbody>
-                                        </table>
+                                                <% } %>
 
-                                    </div>
+                                                    <!-- <td>
+                                                        <div class="custom-control custom-checkbox form-check"><input type="checkbox" class="custom-control-input" id="customCheck1"><label
+                                                                class="custom-control-label" for="customCheck1"></label></div>
+                                                    </td> -->
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="col-md-12">
-
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div id="tableactionTabContent" class="tab-content">
-                                <button class="button" id="initiateTrasfer">InitiateTrasfer</button>
-                            </div>
-                        </div>
-                        <!-- <div class="col-sm-4">
-                                    <div id="tableactionTabContent" class="tab-content">
-                                    <li><a href="/icoDashboardSetup/project/<%= projectName %>/kyctab">
-                                            verfication
-                                        </a></li>
-                                                </div>
-                                </div> -->
-                        <!-- <div class="col-sm-4">
-                                        <div id="tableactionTabContent" class="tab-content">
-                                        <li><a href="/icoDashboardSetup/project/<%= projectName %>/kyctab">
-                                                verfication
-                                            </a></li>
-                                            </div>
-                                    </div> -->
-                    </div>
-                </div>
-            </div>
-
-
-            <!--END CONTENT-->
-            <!--BEGIN FOOTER-->
-            <div id="footer">
-            </div>
-            <!--END FOOTER-->
+            </section>
+            <!--END PAGE CONTENT -->
         </div>
-        <!--END PAGE WRAPPER-->
+
+
+
     </div>
+    <!-- END CONTENT WRAPPER -->
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-1.10.2.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery-ui.js"></script>
-    <!--loading bootstrap js-->
-    <script src="https://whatshalal.io/control/vendors/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
-
-    <script src="https://whatshalal.io/control/js/respond.min.js"></script>
-    <script src="https://whatshalal.io/control/vendors/metisMenu/jquery.metisMenu.js"></script>
-    <script src="https://whatshalal.io/control/vendors/slimScroll/jquery.slimscroll.js"></script>
-    <script src="https://whatshalal.io/control/vendors/jquery-cookie/jquery.cookie.js"></script>
+    <!-- END APP WRAPPER -->
 
 
-    <script src="https://whatshalal.io/control/vendors/jquery-news-ticker/jquery.news-ticker.js"></script>
-    <script src="https://whatshalal.io/control/js/jquery.menu.js"></script>
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <!-- END FOOTER -->
 
-    <script src="https://whatshalal.io/control/vendors/holder/holder.js"></script>
-    <script src="https://whatshalal.io/control/vendors/responsive-tabs/responsive-tabs.js"></script>
 
-    <script src="https://whatshalal.io/control/js/main.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -165,45 +124,20 @@
         });
     </script>
 
-    <link rel="stylesheet" href="https://whatshalal.io/datepicker/jquery-ui.css">
-    <script src="https://whatshalal.io/datepicker/jquery-ui.js"></script>
-    <script>
-        $(function () {
 
-            $("#max,#min").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: 'yy-mm-dd',
-                onSelect: function (selectedDate) {
-                    if (this.id == 'min') {
-                        var dateMin = $('#min').datepicker("getDate");
-                        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
-                        $('#max').datepicker("option", "minDate", rMin);
-                    }
-                }
-            });
-        });
-    </script>
     <script>
         var accounts = [];
         $("#initiateTrasfer").click(function () {
             console.log(accounts);
             $.ajax({
-                url:"/transaction/project/<%- projectName %>/initiateTransferReq",
-                type:"POST",
-                 data:{"account":accounts.serializeArray()}, success: function (result) {
+                url: "/transaction/project/<%- projectName %>/initiateTransferReq",
+                type: "POST",
+                data: { "account": accounts.serializeArray() }, success: function (result) {
                     console.log(result, accounts, "hello");
                 }
             });
         });
     </script>
-    <!--LOADING SCRIPTS FOR PAGE-->
-
-
-
-
-
-
     </body>
 
     </html>

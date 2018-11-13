@@ -56,6 +56,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'icoDashboardCreator')));
 app.use('/contractInteraction/project', express.static(__dirname + '/icoDashboardCreator/dist'));
+app.use('/icoDashboard/', express.static('./public/adminAssets'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
