@@ -20,6 +20,7 @@ module.exports = {
   getBytecode: async function (req, res) {
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
+    let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterEthereum" }, raw: true, })
     ProjectConfiguration.find({
       where: {
         'coinName': coinName
@@ -31,7 +32,7 @@ module.exports = {
         if (byteCode == null) {
           // console.log(projectData.ETHRate, projectData.bonusRate=="" ? 0:projectData.bonusRate, address, projectData.tokenContractAddress, projectData.bonusStatus,"hello");
           byteCode = await solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'];
-          byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, address, projectData.tokenContractAddress, projectData.bonusStatus]).slice(2)
+          byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, eth_address[0].address, projectData.tokenContractAddress, projectData.bonusStatus]).slice(2)
           projectData.crowdsaleByteCode = byteCode.bytecode;
           projectData.crowdsaleABICode = byteCode.interface;
           byteCode = byteCode.bytecode

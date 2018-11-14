@@ -151,7 +151,7 @@ module.exports = function (passport) {
         if (client.status == false)
           return done(null, false, req.flash('loginMessage', 'Oops! Active your Account! Check Your email for Activation Link.'));
         // all is well, return successful user
-        return done(null, client.dataValues);
+        return done(null, client);
       });
     }));
 

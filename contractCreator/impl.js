@@ -9,6 +9,12 @@ var db = require('../database/models/index');
 var ProjectConfiguration = db.projectConfiguration;
 var client = db.client;
 var nodemailerservice = require('../emailer/impl');
+var bitcoin = require("bitcoinjs-lib");
+let Promise = require('bluebird');
+var Address = db.userCurrencyAddress;
+const Web3 = require('web3');
+const web3 = new Web3();
+
 module.exports = {
 
   getCustomContractForm: async (req, res) => {
@@ -132,11 +138,14 @@ module.exports = {
       objdata.tokenContractCode = data;
       objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
       objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      console.log("here");
-      var projectData = await ProjectConfiguration.create(objdata)
-      await clientdata.addProjectConfiguration(projectData);
-      clientdata.package1 -= 1;
-      clientdata.save();
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      })
       res.redirect('/generatedContract');
     });
   },
@@ -300,6 +309,35 @@ module.exports = {
       coinName: req.session.coinName
     });
   },
+}
+
+function generateEthAddress() {
+  return new Promise(async function (resolve, reject) {
+    var newEthAddress = new Object();
+    var keyStore = generateNewAccount();
+    newEthAddress.privateKey = keyStore.privateKey;
+    newEthAddress.address = keyStore.address;
+    newEthAddress.currencyType = "masterEthereum";
+    var createdEthAddress = await Address.create(newEthAddress);
+    resolve(createdEthAddress);
+  });
+}
+
+function generateNewAccount(password) {
+  return web3.eth.accounts.create(web3.utils.randomHex(32));
+};
+function generateBTCAddress() {
+  return new Promise(async function (resolve, reject) {
+    var newBTCAddress = new Object();
+    const TestNet = bitcoin.networks.testnet;
+    var keyPair = bitcoin.ECPair.makeRandom();
+    let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+    newBTCAddress.address = address;
+    newBTCAddress.privateKey = keyPair.toWIF();
+    newBTCAddress.currencyType = "masterBitcoin";
+    var createdBTCAddress = await Address.create(newBTCAddress);
+    resolve(createdBTCAddress);
+  });
 }
 
 function getProjectArray(email) {
