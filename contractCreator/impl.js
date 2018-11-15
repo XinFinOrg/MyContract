@@ -52,7 +52,8 @@ module.exports = {
     });
   },
   createERC20Contract: async (req, res) => {
-    console.log(req.body);
+    console.log("exist 3");
+    // console.log(req.body);
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
@@ -122,7 +123,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
       var clientdata = await client.find({
         where: {
           'email': req.user.email
@@ -221,7 +222,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
       var clientdata = await client.find({
         where: {
           'email': req.user.email
@@ -237,10 +238,14 @@ module.exports = {
       objdata.tokenContractCode = data;
       objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
       objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      var projectData = await ProjectConfiguration.create(objdata)
-      await clientdata.addProjectConfiguration(projectData);
-      clientdata.package1 -= 1;
-      clientdata.save();
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      });
       res.redirect('/generatedContract');
     });
   },

@@ -9,14 +9,14 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-  sendContractEmail: function (email, result) {
+  sendContractEmail: function (email, result, coinName, smartcontractType) {
     ejs.renderFile(__dirname + '/emailerTemplates/contractMailer.ejs', {
       email: email
     }, (err, data) => {
       var mailOptions = {
         from: "contract@autocoin.com",
         to: email,
-        subject: "AutoCoin - Smart Contract generation",
+        subject: "Mycontract.co - Smart Contract generation(" +coinName+"-"+ smartcontractType +")",
         html: data,
         attachments: [{
           filename: "coin.sol",
@@ -88,7 +88,7 @@ module.exports = {
   },
   //forgot password mailer
   forgotPasswordMailer: function (req, recipientmail, userhash) {
-    console.log(recipientmail,userhash)
+    console.log(recipientmail, userhash)
     var link = "http://" + req.get('host') + "/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/forgotPassword.ejs', {
       link: link

@@ -10,6 +10,7 @@ var userCurrencyAddress = db.userCurrencyAddress;
 var ejs = require("ejs");
 var fileReader = require('../filereader/impl');
 var config = require('../config/paymentListener');
+var nodemailerservice = require('../emailer/impl');
 var Tx = require('ethereumjs-tx');
 const Web3 = require('web3');
 var ws_provider = config.ws_provider;
@@ -105,6 +106,7 @@ module.exports = {
         if (err)
           console.log(err);
         projectData.crowdsaleContractCode = data;
+        nodemailerservice.sendContractEmail(req.user.email, data, req.session.coinName, "Crowdsale Contract");
         await projectData.save();
         res.render('deployedContract', {
           message1: "",
@@ -209,6 +211,7 @@ module.exports = {
                     "SafeMath": SafeMath,
                     "IERC20": IERC20,
                   }, async (err, data) => {
+                    nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
                     byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
                     byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', receipt.contractAddress, projectData.bonusStatus]).slice(2)
                     projectData.crowdsaleByteCode = byteCode2.bytecode;

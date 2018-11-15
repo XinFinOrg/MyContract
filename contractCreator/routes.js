@@ -1,20 +1,15 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
 var client = db.client;
-var projectConfiguration = db.projectConfiguration
 
 
 module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
-
   app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
-  app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract); 
-   // app.post("/createContract", isLoggedIn,coinNameExist, hasPackage1, impl.createContract);
+  app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
   app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
-  // app.get('/api/checkPackage', isLoggedIn, impl.checkPackage);
-
   app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
   app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
 
@@ -22,7 +17,7 @@ module.exports = function (app) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
+  console.log("exist 1");
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated())
     return next();
@@ -32,18 +27,17 @@ function isLoggedIn(req, res, next) {
 
 }
 
-function coinNameExist(req, res, next) {
+async function coinNameExist(req, res, next) {
   if (req.body.token_symbol == "XDC" || req.body.token_symbol == "XDCE") {
-    console.log("exist");
     req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
     res.redirect('/customContract');
   } else {
-    projectConfiguration.find({
+    await db.projectConfiguration.find({
       where: {
-        'coinSymbol': req.body.token_symbol
+        'coinName': req.body.token_name
       }
     }).then(result => {
-      console.log(result)
+      // console.log(result,"here")
       if (result == null) {
         console.log("next");
         return next();
