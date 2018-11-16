@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../_actions';
 
+
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
@@ -41,36 +42,139 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                {/* <div className="alert alert-info">
-                    Username: test<br />
-                    Password: test
-                </div> */}
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+          <div>
+{/* HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries */}
+{/* WARNING: Respond.js doesn't work if you view the page via file:// */}
+{/*[if lt IE 9]>
+
+
+<![endif]*/}
+<div className="main-wrapper">
+  {/* Preloader */}
+  <div className="preloader">
+    <div className="lds-ripple">
+      <div className="lds-pos" />
+      <div className="lds-pos" />
+    </div>
+  </div>
+  {/* Preloader */}
+  {/* Login box */}
+  <section>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-sm-12 col-md-6 col-lg-5">
+          <div className="auth-wrapper d-flex no-block justify-content-center align-items-center">
+            <div className="auth-box login-box">
+              <div id="loginform">
+                <div className="logo">
+                  <span className="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                  <h2 className="font-medium m-t-20 m-b-20">Welcome to MyContract</h2>
+                  <h5 className="font-normal m-b-20">Enter your details to Sign In</h5>
+                </div>
+                {/* Form */}
+                <div className="row">
+                  <div className="col-12">
+                    <form className="form-horizontal m-t-20" id="loginform" action="/api/login" method="post">
+                      <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="emailid" className="form-control" id="emailid" name="email" placeholder="Enter email" />
+                      </div>
+                      <span className="alert-danger" id="inputVal_error" />
+                      <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
-                        {loggingIn &&
-                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                      <br/><br/>  <Link className="btn btn-primary" to="/signup">Signup</Link>
-                    </div>
-                </form>
+                        <input type="password" className="form-control" id="password" name="password" placeholder="Enter password" />
+                      </div>
+                      <span className="alert-danger" id="inputVal_error1" />
+                      <div className="form-group">
+                        <div className="row align-items-center">
+                          <div className="col-md-12 p-b-20">
+                            <button className="btn btn-lg btn-rounded btn-info" id="loginButton" type="submit">LOGIN</button>
+                            <span className="pl-5"><a href="javascript:void(0)" id="to-recover" className="text-dark"><i className="fa fa-lock m-r-5" />
+                                Forgot password?</a></span>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="line-on-side text-muted text-center font-small-3 mx-2"><span>OR
+                          continue with</span></p>
+                      <div className="row full-width">
+                        <div className="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                          <div className="social">
+                            <a href="/auth/google" className="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title data-original-title="Login with Google">
+                              <i aria-hidden="true" className="fab fa-google" />
+                              Google</a>
+                            <a href="/auth/github" className="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title data-original-title="Login with GitHub">
+                              <i aria-hidden="true" className="fab fa-github" />
+                              GitHub</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group m-b-0 m-t-15">
+                        <div className="col-sm-12">
+                          Don't have an account? <a href="/signup" className="text-info m-l-5"><b>Sign
+                              Up
+                            </b></a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="recoverform">
+                <div className="logo">
+                  <span className="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                  <h2 className="font-medium m-t-20 m-b-20">Recover Password</h2>
+                  <h5 className="font-normal m-b-20">Enter your Email and instructions will be sent to
+                    you!
+                  </h5>
+                </div>
+                <div className="row m-t-20">
+                  {/* <form class="col-12" action="/forgotPassword" method="GET"> */}
+                  <form className="col-12">
+                    <label htmlFor="email">Email</label> <input className="form-control" type="text" name="email" id="emailid" placeholder="email" />
+                    <br /> <span className="alert-danger" id="inputVal_error" />
+                    <br /><br />
+                    <button className="btn btn-lg btn-rounded btn-info" type="button" onsubmit="forgotPassword()" value="Submit" id="to-recoveremailsent">Submit</button>
+                  </form>
+                </div>
+              </div>
+              <div id="recoverformSend">
+                <div className="logo">
+                  <span className="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                  <h2 className="font-medium m-t-20 m-b-20"> Password Recovery email sent!</h2>
+                  <h5 className="font-normal m-b-20">check your email for further instructions!</h5>
+                </div>
+              </div>
+              <div id="noUserFound">
+                <div className="logo">
+                  <span className="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                  <h2 className="font-medium m-t-20 m-b-20"> No user found with this email address!</h2>
+                </div>
+              </div>
+              <div id="noPassword">
+                <div className="logo">
+                  <span className="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                  <h2 className="font-medium m-t-20 m-b-20"> Opps! it seems you have already logged in
+                    using github or google!</h2>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+        <div className="col-sm-12 col-md-6 col-lg-7">
+          <div className="auth-wrapper-bg">
+            <div className="auth-box_content">
+              <p className="font-bold">Create your smart contract without coding</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{/* All Required js */}
+{/* Bootstrap tether Core JavaScript */}
+{/* This page plugin js */}
+</div>
         );
     }
 }
@@ -83,4 +187,4 @@ function mapStateToProps(state) {
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export { connectedLoginPage as LoginPage }; 
+export { connectedLoginPage as LoginPage };
