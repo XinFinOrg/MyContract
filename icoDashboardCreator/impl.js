@@ -42,7 +42,7 @@ module.exports = {
         'projectName': req.params.projectName,
         'userCount': userCount,
         'verifiedUserCount': verifiedUserCount,
-        'transactionLog':transactionLog
+        'transactionLog': transactionLog
       });
     });
   },
@@ -291,8 +291,9 @@ module.exports = {
     });
   },
   initiateTransferReq: async (req, res) => {
-    let address = []
-    let values = [];
+    console.log("here", req.body)
+    let address
+    let values
     let projectdatavalues = await ProjectConfiguration.find({
       where: {
         "coinName": req.params.projectName
@@ -305,51 +306,50 @@ module.exports = {
       }, raw: true
     })
     for (let index = 0; index < tokenLogs.length; index++) {
-      address.push(tokenLogs[index].address)
-      values.push(tokenLogs[index].tokenAmount * projectdatavalues.ETHRate)
+      address =+ (req.body.accounts[index].uniqueId) + ","
+      values =+ (tokenLogs[index].tokenAmount * projectdatavalues.ETHRate) + ","
     }
-    var escrowAbi = [{
-      "constant": false,
-      "inputs": [{
-        "name": "_addresses",
-        "type": "address[]"
-      }, {
-        "name": "_value",
-        "type": "uint256[]"
-      }],
-      "name": "dispenseTokensToInvestorAddressesByValue",
-      "outputs": [{
-        "name": "ok",
-        "type": "bool"
-      }],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }]
-    console.log(accountData.privateKey);
-    var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
-    let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue([address], [values])
-    var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
-    let txData = {
-      "nonce": await web3.eth.getTransactionCount(accountData.address),
-      "gasPrice": "0x170cdc1e00",
-      "gasLimit": "0x2dc6c0",
-      "to": projectdatavalues.crowdsaleContractAddress,
-      "value": "0x0",
-      "data": data,
-      "chainId": 3
-    }
-    var tx = new Tx(txData);
-    console.log(tx)
-    tx.sign(mainPrivateKey);
-    var serializedTx = tx.serialize();
-    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-      .on('confirmation', async function (confirmationNumber, receipt) {
-        res.send(receipt);
-        console.log(confirmationNumber, receipt);
-      });
-
-
+    console.log(address, values)
+    // var escrowAbi = [{
+    //   "constant": false,
+    //   "inputs": [{
+    //     "name": "_addresses",
+    //     "type": "address[]"
+    //   }, {
+    //     "name": "_value",
+    //     "type": "uint256[]"
+    //   }],
+    //   "name": "dispenseTokensToInvestorAddressesByValue",
+    //   "outputs": [{
+    //     "name": "ok",
+    //     "type": "bool"
+    //   }],
+    //   "payable": false,
+    //   "stateMutability": "nonpayable",
+    //   "type": "function"
+    // }]
+    // console.log(accountData.privateKey);
+    // var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
+    // let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue([address], [values])
+    // var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
+    // let txData = {
+    //   "nonce": await web3.eth.getTransactionCount(accountData.address),
+    //   "gasPrice": "0x170cdc1e00",
+    //   "gasLimit": "0x2dc6c0",
+    //   "to": projectdatavalues.crowdsaleContractAddress,
+    //   "value": "0x0",
+    //   "data": data,
+    //   "chainId": 3
+    // }
+    // var tx = new Tx(txData);
+    // console.log(tx)
+    // tx.sign(mainPrivateKey);
+    // var serializedTx = tx.serialize();
+    // web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+    //   .on('confirmation', async function (confirmationNumber, receipt) {
+    //     res.send(receipt);
+    //     console.log(confirmationNumber, receipt);
+    //   });
   }
 }
 

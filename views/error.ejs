@@ -2,3 +2,62 @@
 <h2><%= error.status %></h2>
 <pre><%= error.stack %></pre>
 
+<% include layouts/adminSidebar %>
+
+    <!-- END TOP HEADER WRAPPER -->
+    <div class="content-wrapper">
+            <div class="content container">
+              
+                <!--START PAGE CONTENT -->
+                <section class="page-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+
+                                <div class="not-found">
+                                    <div class="notfound-top text-center">
+                                        <h1>404</h1>
+                                    </div>
+                                    <div class="content-404">
+                                        <img src="/icoDashboard/assets/img/404.png" alt="" title="">
+                                        <h3>The server indicates that you did a mistake of misspelling the URL or requesting for a page that is no longer available.</h3>
+                                        <div class="form-actions">
+                                            <div class="row demo-buttons--preview">
+                                                <div class="col-md-12">
+                                                    <a href="/dashboard" class="btn btn-primary btn-rounded">Back To Home</a>
+                                                    <!-- <a href="/contactPage" class="btn btn-info btn-rounded btn-outline">Contact US</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"> </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--END PAGE CONTENT -->
+            </div>
+        </div>
+        <!-- END CONTENT WRAPPER -->
+    </div>
+    <!-- END APP WRAPPER -->
+
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <!-- END FOOTER -->
+
+    <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->
+    <script src="assets/vendor/modernizr/modernizr.custom.js"></script>
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/js-storage/js.storage.js"></script>
+    <script src="assets/vendor/metismenu/dist/metisMenu.js"></script>
+    <script src="assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- ================== GLOBAL APP SCRIPTS ==================-->
+    <script src="assets/js/global/app.js"></script>
+</body>
+
+</html>

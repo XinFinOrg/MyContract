@@ -19,7 +19,7 @@
                             <div class="card-header">All ICO Transactions
                                 <ul class="nav nav-pills nav-pills-primary float-right">
                                     <li class="nav-item">
-                                        <button class="btn btn-light btn-rounded btn-outline">Send Transaction</button>
+                                        <button class="btn btn-light btn-rounded btn-outline" id="initiateTrasfer">Send Transaction</button>
                                     </li>
                                 </ul>
                             </div>
@@ -28,7 +28,7 @@
                                     <table id="bs4-table" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>USER ID</th>
+                                                <th>TRANSACTION ID</th>
                                                 <th>PAYMENT METHOD</th>
                                                 <th>TOKEN AMOUNT</th>
                                                 <th>ADDRESS</th>
@@ -42,7 +42,7 @@
                                         <tbody>
                                             <% for (var i = 0; i < transactionLog.length; i++) { %>
                                                 <tr>
-                                                    <td  class="break">
+                                                    <td class="break">
                                                         <%= transactionLog[i].uniqueId %>
                                                     </td>
                                                     <td>
@@ -51,7 +51,7 @@
                                                     <td>
                                                         <%=  transactionLog[i].tokenAmount %>
                                                     </td>
-                                                    <td>
+                                                    <td class="addressBreak">
                                                         <%= transactionLog[i].address %>
                                                     </td>
                                                     <td>
@@ -60,23 +60,23 @@
                                                     <td>
                                                         <%= transactionLog[i].tokenTransferStatus %>
                                                     </td>
-                                                    <td  class="break">
+                                                    <td class="break">
                                                         <%=  Date(transactionLog[i].createdAt) %>
                                                     </td>
-                                                    <td  class="break">
+                                                    <td class="break">
                                                         <%=   Date(transactionLog[i].updatedAt) %>
                                                     </td>
                                                     <td>
-                                                           <div class="custom-control custom-checkbox form-check"></div>
+                                                        <div class="custom-control custom-checkbox form-check"></div>
                                                         <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
                                                         <script>
                                                             $("#<%= transactionLog[i].uniqueId %>").click(function () {
                                                                 if ($(this).is(":checked")) {
                                                                     console.log("checked <%= transactionLog[i].address %>")
-                                                                    accounts.push({ "uniqueId": "<%= transactionLog[i].uniqueId %>" });
+                                                                    accounts.push("<%= transactionLog[i].uniqueId %>");
                                                                 } else {
                                                                     console.log("unchecked <%= transactionLog[i].address %>")
-                                                                    accounts.pop({ "uniqueId": "<%= transactionLog[i].uniqueId %>" });
+                                                                    accounts.pop("<%= transactionLog[i].uniqueId %>");
                                                                 }
                                                             });
                                                         </script>
@@ -127,12 +127,15 @@
 
     <script>
         var accounts = [];
+        var addressData;
         $("#initiateTrasfer").click(function () {
-            console.log(accounts);
+            accounts.forEach(element => {
+                addressData += element + ","
+            });
             $.ajax({
-                url: "/transaction/project/<%- projectName %>/initiateTransferReq",
+                url: "/icoDashboard/transaction/project/<%- projectName %>/initiateTransferReq",
                 type: "POST",
-                data: { "account": accounts.serializeArray() }, success: function (result) {
+                data: addressData, success: function (result) {
                     console.log(result, accounts, "hello");
                 }
             });

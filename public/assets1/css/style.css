@@ -45,14 +45,14 @@ h3,
 h4,
 h5,
 h6 {
-	color: #19ad69;
+	color: #0041bbbb;
 }
 p {
 	color:#7a7a7a;
 	margin-bottom:15px;
 }
 a {
-	color: #19ad69;
+	color: #0041bbbb;
 	text-decoration: none;
 	-webkit-transition: all 0.5s ease;
 	transition: all .5s ease;
@@ -724,15 +724,15 @@ button:focus {
 .btn:focus,
 .btn.active:not(:disabled):not(.disabled), 
 .btn:active:not(:disabled):not(.disabled) {
-	background-image: -webkit-linear-gradient(left, #92d852 0%,#24bc98 51%,#92d852);
-    background-image: linear-gradient(to right, #92d852 0%,#24bc98 51%,#92d852);
+	background-image: -webkit-linear-gradient(left, #607aea 10%,#17d9ea 51%,#607aea);
+    background-image: linear-gradient(to left, #607aea 10%,#17d9ea 51%,#607aea);
 	box-shadow:none;
 	outline:none;
 }
 .btn-default {
 	background-size: 200% auto;
-	background-image: -webkit-linear-gradient(left, #92d852 0%,#24bc98 51%,#92d852);
-    background-image: linear-gradient(to right, #92d852 0%,#24bc98 51%,#92d852);
+	background-image: -webkit-linear-gradient(left, #607aea 10%,#17d9ea 51%,#607aea)!important;
+    background-image: linear-gradient(to left, #607aea 10%,#17d9ea 51%,#607aea)!important;
 	/*border: 0;*/
 	color: #fff;
 	outline:none;

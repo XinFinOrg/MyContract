@@ -102,6 +102,19 @@
                         </div>
                         <span class="alert-danger" id="bonus_rate_error"></span>
                       </div>
+                      <div class="form-group">
+                        <label for="bonus_rate">Minimum Contribution</label>
+                        <div class="input-group mb-3">
+
+                          <input type="text" class="form-control" name="minimum_contribution" id="minimum_contribution" placeholder="please enter minimum contribution."><br>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Here you can define minimum contribution value in terms of token."><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="minimum_contribution_error"></span>
+                      </div>
                       <hr>
 
                       <h4>Advanced Functionalities (all are seleted as a default.)</h4><br>
@@ -287,6 +300,15 @@
       document.getElementById("submitButton").disabled = "";
     }
   }
+  var myInput8 = document.getElementById("minimum_contribution");
+  myInput8.onkeyup = function () {
+    if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+      document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("minimum_contribution_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
 </script>
-
 </html>
