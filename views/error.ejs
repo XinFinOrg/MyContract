@@ -1,63 +1,146 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
 
-<% include layouts/adminSidebar %>
+<html lang="en">
+       
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icoDashboard/img/favicon.png">
+    <title>MyContract | Error</title>
+    <!-- ================== GOOGLE FONTS ==================-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+    <!-- ======================= GLOBAL VENDOR STYLES ========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/vendor/bootstrap.css">
+    <!-- ======================= ICONS FONTS STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/icons/line-awesome.min.css">
+    <link rel="stylesheet" href="/icoDashboard/css/icons/dripicons.min.css">
+    <link rel="stylesheet" href="/icoDashboard/css/icons/cryptofont.min.css">
+    <!-- ======================= PAGE VENDOR STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/vendor/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <!-- ======================= GLOBAL COMMON STYLES ============================-->
+    <link rel="stylesheet" href="/icoDashboard/css/common/main.bundle.css">
+    <!-- ======================= LAYOUT STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/core/main.css">
+    <!-- ======================= MENU TYPE ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/menu-type/auto-hide.css">
+    <!-- ======================= THEME COLOR STYLES ===========================-->
+    <link rel="stylesheet" href="/icoDashboard/css/layouts/horizontal/themes/theme-j.css">
+    <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->
+    <script src="/icoDashboard/vendor/modernizr/modernizr.custom.js"></script>
+    <script src="/icoDashboard/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/icoDashboard/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/icoDashboard/vendor/js-storage/js.storage.js"></script>
+    <script src="/icoDashboard/vendor/metismenu/dist/metisMenu.js"></script>
+    <script src="/icoDashboard/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
-    <!-- END TOP HEADER WRAPPER -->
-    <div class="content-wrapper">
-            <div class="content container">
+    <!-- ================== PAGE LEVEL VENDOR SCRIPTS ==================-->
+    <script src="/icoDashboard/vendor/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="/icoDashboard/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <!-- ================== GLOBAL APP SCRIPTS ==================-->
+    <script src="/icoDashboard/js/global/app.js"></script>
+
+    <!-- ================== PAGE LEVEL COMPONENT SCRIPTS ==================-->
+    <script src="/icoDashboard/js/components/datatables-init.js"></script>
+</head>
+
+<body class="layout-horizontal menu-auto-hide">
+        <!-- START APP WRAPPER -->
+        <div id="app">
+            <!-- START TOP HEADER WRAPPER -->
+            <div class="header-wrapper">
+                <div class="header-top">
+                    <!-- START MOBILE MENU TRIGGER -->
+                    <ul class="mobile-only navbar-nav nav-left">
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" data-toggle-state="aside-left-open">
+                                <i class="icon dripicons-align-justify"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END MOBILE MENU TRIGGER -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6">
+                                <ul class="site-logo">
+                                    <li>
+                                        <!-- START LOGO -->
+                                        <a href="/">
+                                            <div class="logo"><img src="/adminAssets/img/logo.png" width="211" height="42"></div>
+                                        </a>
+                                        <!-- END LOGO -->
+                                    </li>
+                                </ul>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <!-- START MOBILE TOOLBAR TRIGGER -->
+                    <ul class="mobile-only navbar-nav nav-right">
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" data-toggle-state="aside-right-open">
+                                <i class="icon dripicons-view-apps"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END MOBILE TOOLBAR TRIGGER -->
+                </div>
+    
+                <!-- START HEADER BOTTOM -->
               
-                <!--START PAGE CONTENT -->
-                <section class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-
-                                <div class="not-found">
-                                    <div class="notfound-top text-center">
-                                        <h1>404</h1>
-                                    </div>
-                                    <div class="content-404">
-                                        <img src="/icoDashboard/assets/img/404.png" alt="" title="">
-                                        <h3>The server indicates that you did a mistake of misspelling the URL or requesting for a page that is no longer available.</h3>
-                                        <div class="form-actions">
-                                            <div class="row demo-buttons--preview">
-                                                <div class="col-md-12">
-                                                    <a href="/dashboard" class="btn btn-primary btn-rounded">Back To Home</a>
-                                                    <!-- <a href="/contactPage" class="btn btn-info btn-rounded btn-outline">Contact US</a> -->
+                <!-- END HEADER BOTTOM -->
+            </div>
+            <!-- END TOP HEADER WRAPPER -->
+            <div class="content-wrapper">
+                <div class="content container">
+                    <!--START PAGE HEADER -->
+                
+                    <!--END PAGE HEADER -->
+    
+                    <!--START PAGE CONTENT -->
+                    <section class="page-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+    
+                                    <div class="not-found">
+                                        <div class="notfound-top text-center">
+                                            <h1>404</h1>
+                                        </div>
+                                        <div class="content-404">
+                                            <img src="/adminAssets/img/404.png" alt="" title="">
+                                            <h3>The server indicates that you did a mistake of misspelling the URL or requesting for a page that is no longer available.</h3> 
+                                           <h2><%= error.status %>  <%= message %> </h2>
+                                           <pre><%= error.stack %></pre>                                   
+                                            <div class="form-actions">
+                                                <div class="row demo-buttons--preview">
+                                                    <div class="col-md-12">
+                                                        <a href="/" class="btn btn-primary btn-rounded">Back To Home</a>
+                                                        <!-- <button class="btn btn-info btn-rounded btn-outline">Contact US</button> -->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="clear"> </div>
                                     </div>
-                                    <div class="clear"> </div>
+    
                                 </div>
-
                             </div>
                         </div>
-                    </div>
-                </section>
-                <!--END PAGE CONTENT -->
+                    </section>
+                    <!--END PAGE CONTENT -->
+                </div>
+
+    
             </div>
+            <!-- END CONTENT WRAPPER -->
         </div>
-        <!-- END CONTENT WRAPPER -->
-    </div>
-    <!-- END APP WRAPPER -->
-
-    <!-- FOOTER -->
-    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
-    <!-- END FOOTER -->
-
-    <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->
-    <script src="assets/vendor/modernizr/modernizr.custom.js"></script>
-    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/js-storage/js.storage.js"></script>
-    <script src="assets/vendor/metismenu/dist/metisMenu.js"></script>
-    <script src="assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <!-- ================== GLOBAL APP SCRIPTS ==================-->
-    <script src="assets/js/global/app.js"></script>
-</body>
-
-</html>
+        <!-- END APP WRAPPER -->
+    
+        <!-- FOOTER -->
+        <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+        <!-- END FOOTER -->
+        </body>
+    
+    </html>
