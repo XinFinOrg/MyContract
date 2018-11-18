@@ -56,7 +56,7 @@
                                             <div class="text-center p-20">
                                                 <img class="card-img-top" src="<%= KYCdata.kycDoc1 %>" alt="Smiley face"></a>
                                                 <div class="card-body p-10">
-                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                    <h5 class="card-title m-b-0">Document 1</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                             <div class="text-center p-20">
                                                 <img class="card-img-top" src="<%= KYCdata.kycDoc2 %>" alt="Smiley face">
                                                 <div class="card-body p-10">
-                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                    <h5 class="card-title m-b-0">Document 2</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,7 +72,7 @@
                                             <div class="text-center p-20">
                                                 <img class="card-img-top" src="<%= KYCdata.kycDoc3 %>" alt="Smiley face">
                                                 <div class="card-body p-10">
-                                                    <h5 class="card-title m-b-0">Passport</h5>
+                                                    <h5 class="card-title m-b-0">Document 3</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,17 +83,17 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="kycStatus">KYC Status</label>
-                                        <select id="kycStatus" name="kyc_verified" class="form-control" value="<%= KYCdata.status %>">
+                                        <select id="kycStatus" name="kyc_verified" class="form-control" value="<%= KYCdata.kyc_verified %>">
                                             <option value="active">Approve</option>
                                             <option value="rejected">Decline</option>
                                             <option value="pending">Pending</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="userStatus">User Status</label>
+                                        <label for="userStatus">Account Status</label>
                                         <select id="userStatus" name="status" class="form-control" value="<%= KYCdata.status %>">
-                                            <option value="true">Approve</option>
-                                            <option value="false">Decline</option>
+                                            <option value="true">Active</option>
+                                            <option value="false">Disabled  </option>
                                         </select>
                                     </div>
                                 </div>

@@ -17,7 +17,6 @@ module.exports = function (app) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-  console.log("exist 1");
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated())
     return next();
@@ -39,7 +38,6 @@ async function coinNameExist(req, res, next) {
     }).then(result => {
       // console.log(result,"here")
       if (result == null) {
-        console.log("next");
         return next();
       } else {
         console.log("exist");

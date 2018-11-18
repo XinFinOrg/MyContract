@@ -10,12 +10,13 @@ module.exports = function (app, express) {
   app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
 
   app.get('/icoDashboard/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
-  app.get('/icoDashboard/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
+  app.get('/icoDashboard/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, impl.siteConfiguration);
   app.get('/icoDashboard/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
 
   app.get('/icoDashboard/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
   app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq',impl.initiateTransferReq)
+
 
   app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
   app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/getICOdata',isLoggedIn, impl.getICOdata);
