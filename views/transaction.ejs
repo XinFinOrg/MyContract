@@ -51,10 +51,10 @@
                                                     <td>
                                                         <%=  transactionLog[i].tokenAmount %>
                                                     </td>
-                                                    <td class="addressBreak">
+                                                    <td class="break">
                                                         <%= transactionLog[i].address %>
                                                     </td>
-                                                    <td>
+                                                    <td class="break">
                                                         <%=  transactionLog[i].transaction_hash %>
                                                     </td>
                                                     <td>
@@ -67,19 +67,23 @@
                                                         <%=   Date(transactionLog[i].updatedAt) %>
                                                     </td>
                                                     <td>
-                                                        <div class="custom-control custom-checkbox form-check"></div>
-                                                        <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
-                                                        <script>
-                                                            $("#<%= transactionLog[i].uniqueId %>").click(function () {
-                                                                if ($(this).is(":checked")) {
-                                                                    console.log("checked <%= transactionLog[i].address %>")
-                                                                    accounts.push("<%= transactionLog[i].uniqueId %>");
-                                                                } else {
-                                                                    console.log("unchecked <%= transactionLog[i].address %>")
-                                                                    accounts.pop("<%= transactionLog[i].uniqueId %>");
-                                                                }
-                                                            });
-                                                        </script>
+                                                        <% if ( transactionLog[i].tokenTransferStatus == "Transfered"){%>
+                                                            <%= transactionLog[i].tokenTransferStatus %>
+                                                            <% }else{%>
+                                                                <div class="custom-control custom-checkbox form-check"></div>
+                                                                <input type="checkbox" name="<%= transactionLog[i].uniqueId %>" id="<%= transactionLog[i].uniqueId %>">
+                                                                <script>
+                                                                    $("#<%= transactionLog[i].uniqueId %>").click(function () {
+                                                                        if ($(this).is(":checked")) {
+                                                                            console.log("checked <%= transactionLog[i].address %>")
+                                                                            accounts.push("<%= transactionLog[i].uniqueId %>");
+                                                                        } else {
+                                                                            console.log("unchecked <%= transactionLog[i].address %>")
+                                                                            accounts.pop("<%= transactionLog[i].uniqueId %>");
+                                                                        }
+                                                                    });
+                                                                </script>
+                                                                <% } %>
                                                     </td>
                                                 </tr>
                                                 <% } %>
@@ -127,16 +131,15 @@
 
     <script>
         var accounts = [];
-        var addressData = "";
         $("#initiateTrasfer").click(function () {
-            accounts.forEach(element => {
-                addressData += element + ","
-            });
+            console.log(accounts)
             $.ajax({
                 url: "/icoDashboard/transaction/project/<%- projectName %>/initiateTransferReq",
                 type: "POST",
                 data: { accounts }, success: function (result) {
-                    console.log(result, accounts, "hello");
+                    if (result.message) { location.reload(); }
+                    else { alert("error occured while trasfering tokens!", result.receipt); }
+
                 }
             });
         });
