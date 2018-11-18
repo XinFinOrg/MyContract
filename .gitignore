@@ -3,4 +3,5 @@ contractCreator/contractDirectory
 *.bak
 database/migrations/
 kycdump/
+database/config
 icoDashboardCreator/etherwallet/node_modules
