@@ -131,6 +131,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    web3Provider: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     createdAt: {
       allowNull: true,
       type: DataTypes.DATE,
