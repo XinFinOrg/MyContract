@@ -1,44 +1,93 @@
 <body>
   <% layout('./layouts/sidebar') -%>
-  <!-- Preloader -->
-  <div class="preloader">
-    <div class="lds-ripple">
-      <div class="lds-pos"></div>
-      <div class="lds-pos"></div>
+    <!-- Preloader -->
+    <div class="preloader">
+      <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+      </div>
     </div>
-  </div>
-  <!-- Page wrapper  -->
-  <div class="page-wrapper">
 
-    <!-- Container fluid  -->
-    <div class="container-fluid">
-      <div class="card" style="min-height:500px;">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-12 text-center">
-              <div class="well">
-                <h3><span class="fa fa-info-circle"></span> User Details</h3><br>
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
 
-                <p>
-                  <strong>Email</strong>:
-                  <%= user.email %><br><br>
-                  <strong>XDCE Address</strong>:
-                  <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= address %>"> -->
-                  <span id="address"><%= address %></span><br><br>
+      <!-- Container fluid  -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">User Details</h4>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row m-t-30">
+                  <div class="col-lg-4 col-md-12">
+                    <div class="alert alert-success">
+                      <h3 class="text-success"><i class="fa fa-envelope"></i> Email Id</h3>
+                      <%= user.email %>
+                    </div>
+                  </div>
+                  <div class="col-lg-8 col-md-12">
+                    <div class="alert alert-info">
+                      <h3 class="text-info"><i class="fa"><img src="assets/images/icons/xdce.png"></i> XDCE Address</h3>
+                      <%= address %>
+                    </div>
+                  </div>
+                </div>
 
-                  <strong>Packages Bought</strong>:<br>
-          Package 1 :
-                  <%= user.package1 %> credits<br>
-          Package 2 :
-                  <%= user.package2 %> credits<br><br>
-                </p>
-                <a href="/buyPackage" class="btn btn-danger btn-sm"><i class="fa fa-dollar-sign"></i> Buy Package</a>
-               <!-- <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/buyPackage" aria-expanded="false"><i class="fa fa-dollar-sign"></i><span class="hide-menu">Buy Package</span></a> -->
+                <hr>
+              </div>
+            </div>
+            <div class="clpricing-table cat-id-10">
+              <div class="container-fluid">
+                <div class="col-md-10">
+                  <h4 class="card-title text-center">Packages Bought</h4>
+                  <div class="row align-items-center price-table style10">
+                    <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
+                      <div class="cl-pricetable-wrap price-1 category28 ">
+                        <div class="top">
+                          <div class="cl-header">
+                            <h2>PACKAGE 1</h2>
+                          </div>
+                        </div>
+                        <div class="bottom">
+                          <div class="cl-footer">
+                            <div class="dolar">
+                              <%= user.package1 %>
+                            </div>
+                            <a href="/buyPackage" class="btn-table btn-rounded btn-1 hvr-sweep-to-right">Buy
+                              Now</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
+                      <div class="cl-pricetable-wrap price-1 category28 ">
+                        <div class="top">
+                          <div class="cl-header">
+                            <h2>PACKAGE 2</h2>
+                          </div>
+                        </div>
+                        <div class="bottom">
+                          <div class="cl-footer">
+                            <div class="dolar">
+                              <%= user.package2 %>
+                            </div>
+                            <a href="/buyPackage" class="btn-table btn-rounded btn-1 hvr-sweep-to-right">Buy
+                              Now</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- footer -->
+        <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+        <!-- End footer -->
       </div>
+      <!-- End Page wrapper  -->
     </div>
-  </div>
+    <!-- End Wrapper -->
 </body>

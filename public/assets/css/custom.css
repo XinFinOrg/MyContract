@@ -165,6 +165,14 @@ input:checked + .slider {
   margin: 0 0 5px;
   color: #fff;
 }
+.clpricing-table h2 {
+  font-size: 25px;
+  font-weight: normal;
+  margin: 0 0 5px;
+  color: #fff;
+  border-bottom: 2px dotted rgba(255,255,255,0.5);
+  padding-bottom: 15px;
+}
 .clpricing-table h3 {
   font-size: 42px;
   font-weight: bold;

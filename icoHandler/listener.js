@@ -95,8 +95,9 @@ module.exports = {
       var tokenContractInstance = new web3.eth.Contract(config.erc20ABI, tokenAddress);
       var decimals = await tokenContractInstance.methods.decimals().call();
       console.log(decimals);
-      var onSaleTokens = await tokenContractInstance.methods.onSaleTokens.call().call();
-      resolve(onSaleTokens / 10 ** decimals);
+      resolve(decimals);
+      // var onSaleTokens = await tokenContractInstance.methods.onSaleTokens.call().call();
+      // resolve(onSaleTokens / 10 ** decimals);
     });
   },
 
