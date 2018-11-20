@@ -29,7 +29,7 @@
                                                 <h5 class="mt-2">Site Logo</h5>
                                             </div>
                                             <div class="user_pic_wrap">
-                                                <img src="/icoDashboard/img/logo1.png" id="imglogo" height="250px" width="300px" alt="user_img">
+                                                <img src="/adminAssets/img/logo1.png" id="imglogo" height="250px" width="300px" alt="user_img">
                                                 <span class="edit_pic">
                                                     <label for="user_img">
                                                         <input type="file" name="filename" id="user_img" accept="image/gif, image/jpeg, image/png">
@@ -131,7 +131,7 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/icoDashboard/js/axios.min.js"></script>
+    <script src="/adminAssets/js/axios.min.js"></script>
     <script>
         axios.get('/icoDashboard/siteConfiguration/project/<%=projectName %>/getSiteConfiguration')
             .then(function (response) {
