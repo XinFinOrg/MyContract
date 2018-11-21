@@ -13,9 +13,6 @@ var config = require('../config/paymentListener');
 var nodemailerservice = require('../emailer/impl');
 var Tx = require('ethereumjs-tx');
 const Web3 = require('web3');
-var ws_provider = config.ws_provider;
-var provider = new Web3.providers.WebsocketProvider(ws_provider);
-var web3 = new Web3(provider);
 
 module.exports = {
   getBytecode: async function (req, res) {
@@ -148,233 +145,86 @@ module.exports = {
   getAutomaticDeployer: async function (req, res) {
     let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.query.coinName } });
     let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', 'project_id': req.query.coinName } })
-    if (req.query.network != 'test') {
-      console.log('test')
-      let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
-      let web3 = new Web3(provider);
-      console.log(accountData.address)
-      projectData.crowdsaleContractAddress = "Deployment is in process";
-      projectData.tokenContractAddress = "Deployment is in process";
-      projectData.networkType = "testnet";
-      projectData.networkURL = "#"
-      await projectData.save();
-      res.redirect('/');
-      var mainPrivateKey = new Buffer('25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142', 'hex')
-      let txData = {
-        "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
-        "gasPrice": "0x170cdc1e00",
-        "gasLimit": "0x5208",
-        "to": accountData.address,
-        "value": "0x06f05b59d3b20000",
-        "data": '0x',
-        "chainId": 3
-      }
-      var tx = new Tx(txData);
-      tx.sign(mainPrivateKey);
-      var serializedTx = tx.serialize();
-      console.log("in here")
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('confirmation', async function (confirmationNumber, receipt) {
-          // console.log(confirmationNumber, "times confirmationNumber");
-          if (confirmationNumber == 10) {
-            if (receipt.status == true) {
-              byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
-              projectData.tokenByteCode = byteCode.bytecode;
-              projectData.tokenABICode = byteCode.interface;
-              var privateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
-              let txData = {
-                "nonce": await web3.eth.getTransactionCount(accountData.address),
-                "gasPrice": "0x170cdc1e00",
-                "gasLimit": "0x2dc6c0",
-                "to": "",
-                "value": "0x00",
-                "data": '0x' + byteCode.bytecode,
-                "chainId": 3
-              }
-              var tx = new Tx(txData);
-              tx.sign(privateKey);
-              var serializedTx = tx.serialize();
-              console.log("in here")
-              web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-                .on('receipt', async function (receipt) {
-                  if (receipt.status == false) {
-                    projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                    projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                    await projectData.save();
-                    // res.status(505).end();
-                  } else {
-                    projectData.tokenContractAddress = receipt.contractAddress;
-                    projectData.tokenContractHash = receipt.transactionHash;
-                    var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
-                    var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
-                    var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
-                    ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-                      "SafeERC20": SafeERC20,
-                      "SafeMath": SafeMath,
-                      "IERC20": IERC20,
-                    }, async (err, data) => {
-                      nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-                      byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
-                      byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', receipt.contractAddress, projectData.bonusStatus]).slice(2)
-                      projectData.crowdsaleByteCode = byteCode2.bytecode;
-                      projectData.crowdsaleABICode = byteCode2.interface;
-                      let txData = {
-                        "nonce": await web3.eth.getTransactionCount(accountData.address),
-                        "gasPrice": "0x170cdc1e00",
-                        "gasLimit": "0xD19A9",
-                        "to": "",
-                        "value": "0x00",
-                        "data": '0x' + byteCode2.bytecode,
-                        "chainId": 3
-                      }
-                      var tx = new Tx(txData);
-                      tx.sign(privateKey);
-                      var serializedTx = tx.serialize();
-                      console.log("in here")
-                      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-                        .on('receipt', async function (receipt) {
-                          if (receipt.status == false) {
-                            projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                            projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                            await projectData.save();
-                            // res.status(505).end();
-                          } else {
-                            projectData.crowdsaleContractHash = receipt.transactionHash;
-                            projectData.crowdsaleContractAddress = receipt.contractAddress;
-                            await projectData.save();
-                            // res.status(200).end();
-                          }
-                        })
-                        .on('error', async function (receipt) {
-                          console.log(receipt)
-                          projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                          projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                          await projectData.save();
-                          // res.status(505).end();
-                        })
-                    })
-                  }
-                })
-                .on('error', async function (receipt) {
-                  console.log(receipt)
-                  projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                  projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                  await projectData.save();
-                  // res.status(505).end();
-                })
-            }
-            else {
-              projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-              projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-              await projectData.save();
-              // res.status(505).end();
-            }
-          }
-        })
-        .on('error', async function (receipt) {
-          console.log(receipt)
-          projectData.crowdsaleContractAddress = receipt;
-          projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-          await projectData.save();
-          // res.status(505).end();
-        })
-    } else {
-      console.log(accountData.address)
-      projectData.crowdsaleContractAddress = "Deployment is in process";
-      projectData.tokenContractAddress = "Deployment is in process";
-      projectData.networkType = "Mainnet";
-      projectData.networkURL = "#"
-      await projectData.save();
-      res.redirect('/');
+    projectData.crowdsaleContractAddress = "Deployment is in process";
+    projectData.tokenContractAddress = "Deployment is in process";
+    projectData.networkType = req.query.network;
+    projectData.networkURL = "#"
+    await projectData.save();
+    res.redirect('/')
+    await Promise.all([getWeb3Provider(req.query.network, accountData)]).then(async ([provider]) => {
+      console.log('working')
+      //token deployment
+      let web3 = provider;
       byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
       projectData.tokenByteCode = byteCode.bytecode;
       projectData.tokenABICode = byteCode.interface;
-      var privateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
       let txData = {
         "nonce": await web3.eth.getTransactionCount(accountData.address),
+        "data": '0x' + byteCode.bytecode,
         "gasPrice": "0x170cdc1e00",
         "gasLimit": "0x2dc6c0",
-        "to": "",
-        "value": "0x00",
-        "data": '0x' + byteCode.bytecode,
-        "chainId": 3
       }
-      var tx = new Tx(txData);
-      tx.sign(privateKey);
-      var serializedTx = tx.serialize();
-      console.log("in here")
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('receipt', async function (receipt) {
-          if (receipt.status == false) {
+      web3.eth.accounts.signTransaction(txData, accountData.privateKey).then(result => {
+        web3.eth.sendSignedTransaction(result.rawTransaction)
+          .on('receipt', async function (receipt) {
+            if (receipt.status == false) {
+              projectData.crowdsaleContractAddress = "Network error occured! Please try again";
+              projectData.tokenContractAddress = "Network error occured! Please try again";
+              await projectData.save();
+            } else {
+              //crowdsale deployment
+              console.log(receipt)
+              projectData.tokenContractAddress = receipt.contractAddress;
+              projectData.tokenContractHash = receipt.transactionHash;
+              var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+              var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+              var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+              ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+                "SafeERC20": SafeERC20,
+                "SafeMath": SafeMath,
+                "IERC20": IERC20,
+              }, async (err, data) => {
+                nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
+                byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', receipt.contractAddress, projectData.bonusStatus]).slice(2)
+                projectData.crowdsaleByteCode = byteCode2.bytecode;
+                projectData.crowdsaleABICode = byteCode2.interface;
+                let txData = {
+                  "nonce": await web3.eth.getTransactionCount(accountData.address),
+                  "data": '0x' + byteCode2.bytecode,
+                  "gasPrice": "0x170cdc1e00",
+                  "gasLimit": "0xD19A9",
+                }
+                web3.eth.accounts.signTransaction(txData, accountData.privateKey).then(result => {
+                  web3.eth.sendSignedTransaction(result.rawTransaction)
+                    .on('receipt', async function (receipt) {
+                      if (receipt.status == false) {
+                        projectData.crowdsaleContractAddress = "Network error occured! Please try again";
+                        projectData.tokenContractAddress = "Network error occured! Please try again";
+                        await projectData.save();
+                      } else {
+                        console.log(receipt)
+                        projectData.crowdsaleContractHash = receipt.transactionHash;
+                        projectData.crowdsaleContractAddress = receipt.contractAddress;
+                        await projectData.save();
+                      }
+                    })
+                    .on('error', async function (receipt) {
+                      projectData.crowdsaleContractAddress = "Network error occured! Please try again";
+                      projectData.tokenContractAddress = "Network error occured! Please try again";
+                      await projectData.save();
+                    })
+                })
+              })
+            }
+          })
+          .on('error', async function (receipt) {
             projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-            projectData.tokenContractAddress = "Deployment is in process!  Please try again";
+            projectData.tokenContractAddress = "Network error occured! Please try again";
             await projectData.save();
-            // res.status(505).end();
-          } else {
-            projectData.tokenContractAddress = receipt.contractAddress;
-            projectData.tokenContractHash = receipt.transactionHash;
-            var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
-            var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
-            var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
-            ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-              "SafeERC20": SafeERC20,
-              "SafeMath": SafeMath,
-              "IERC20": IERC20,
-            }, async (err, data) => {
-              nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-              byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
-              byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', receipt.contractAddress, projectData.bonusStatus]).slice(2)
-              projectData.crowdsaleByteCode = byteCode2.bytecode;
-              projectData.crowdsaleABICode = byteCode2.interface;
-              let txData = {
-                "nonce": await web3.eth.getTransactionCount(accountData.address),
-                "gasPrice": "0x170cdc1e00",
-                "gasLimit": "0xD19A9",
-                "to": "",
-                "value": "0x00",
-                "data": '0x' + byteCode2.bytecode,
-                "chainId": 3
-              }
-              var tx = new Tx(txData);
-              tx.sign(privateKey);
-              var serializedTx = tx.serialize();
-              console.log("in here")
-              web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-                .on('receipt', async function (receipt) {
-                  if (receipt.status == false) {
-                    projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                    projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                    await projectData.save();
-                    // res.status(505).end();
-                  } else {
-                    projectData.crowdsaleContractHash = receipt.transactionHash;
-                    projectData.crowdsaleContractAddress = receipt.contractAddress;
-                    await projectData.save();
-                    // res.status(200).end();
-                  }
-                })
-                .on('error', async function (receipt) {
-                  console.log(receipt)
-                  projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                  projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-                  await projectData.save();
-                  // res.status(505).end();
-                })
-            })
-          }
-        })
-        .on('error', async function (receipt) {
-          console.log(receipt)
-          projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-          projectData.tokenContractAddress = "Deployment is in process!  Please try again";
-          await projectData.save();
-          // res.status(505).end();
-        })
-    }
-  },
-
-  test: async function (req, res) {
-
+          })
+      })
+    })
   },
 };
 
@@ -397,4 +247,57 @@ function getProjectArray(email) {
       resolve(projectArray);
     });
   });
+}
+
+function getWeb3Provider(provider, accountData) {
+  console.log(provider, 'in here')
+  return new Promise(async function (resolve, reject) {
+    console.log('in here 1')
+    if (provider == 'testNet') {
+      console.log('in here testnet')
+      var web3 = new Web3(new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws'));
+      var mainPrivateKey = '0x25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142';
+      var txData = {
+        "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
+        "to": accountData.address,
+        "value": "0x06f05b59d3b20000",
+      }
+      web3.eth.estimateGas(txData).then(gasLimit => {
+        txData["gasLimit"] = gasLimit;
+        web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
+          web3.eth.sendSignedTransaction(result.rawTransaction)
+            .on('confirmation', async function (confirmationNumber, receipt) {
+              if (confirmationNumber == 3) {
+                if (receipt.status == true) {
+                  console.log(receipt);
+                  resolve(new Web3(new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws')))
+                }
+              }
+            })
+        })
+      })
+    } else if (provider == 'private') {
+      console.log('in here private')
+      var web3 = new Web3(new Web3.providers.HttpProvider(config.privateProvider));
+      var mainPrivateKey = '0xdf11b6debfa783dbc46afd4d753a6dc39caa785c1b3e749f087fc1d4f0552f6c';
+      var txData = {
+        "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
+        "to": accountData.address,
+        "value": "0x06f05b59d3b20000",
+      }
+      web3.eth.estimateGas(txData).then(gasLimit => {
+        txData["gasLimit"] = gasLimit;
+        web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
+          web3.eth.sendSignedTransaction(result.rawTransaction)
+            .on('receipt', async function (receipt) {
+              if (receipt.status == true) {
+                resolve(new Web3(new Web3.providers.HttpProvider(config.privateProvider)))
+              }
+            })
+        })
+      })
+    } else {
+      resolve(new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws')))
+    }
+  })
 }

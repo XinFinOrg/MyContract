@@ -319,15 +319,22 @@
           window.sessionStorage.setItem("deploymentName", coinName);
           if (!istoken) { window.location.href = "/deployer"; }
           else {
-            if (isMainnet) {
+            console.log('in here ')
+            if (isMainnet == '1') {
+              console.log('in here 1')
               if (globalEthBalance == 0.5) {
                 window.location.href = "/api/automaticDeployment?network=main&coinName=" + coinName;
               } else {
                 $('#networkModal').modal('hide'); 
                 $('#mainnetBalanceError').modal('show');
               }
-            } else {
-              window.location.href = "/api/automaticDeployment?network=test&coinName=" + coinName;
+            } else if(isMainnet == '2') {
+              console.log('in here 2')
+              window.location.href = "/api/automaticDeployment?network=testNet&coinName=" + coinName;
+            }
+            else{
+              console.log('in here 3')
+              window.location.href = "/api/automaticDeployment?network=private&coinName=" + coinName;
             }
           }
         }
