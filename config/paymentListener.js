@@ -4,6 +4,7 @@ module.exports = {
   'diversionAddress': "0x920E938A80Fa1669b608166741eeb01De6C57402",
   'amount':'1200000000000000000000000',
   'ws_provider' : 'wss://mainnet.infura.io/ws',
+  'testnetProvider' : 'wss://ropsten.infura.io/ws',
   'privateProvider':'http://78.129.208.129:8545',
   'erc20ABI': [{
       "anonymous": false,

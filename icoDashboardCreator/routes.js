@@ -14,7 +14,7 @@ module.exports = function (app, express) {
   app.get('/icoDashboard/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
   app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
   app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer',isLoggedIn,impl.tokenTrasfer)
-
+  app.post('/icoDashboard/project/:projectName/updateColor',impl.updateColor)
 
   app.get('/icoDashboard/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
   app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq',isLoggedIn,impl.initiateTransferReq)

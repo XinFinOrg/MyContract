@@ -46,7 +46,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@autocoin.com",
+        from: "emailverification@mycontract.co",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -63,7 +63,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@autocoin.com",
+        from: "emailverification@mycontract.co",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -78,7 +78,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "packagePayment@autocoin.com",
+        from: "packagePayment@mycontract.co",
         to: recipientmail,
         subject: "Package Payment OTP",
         html: data
@@ -95,7 +95,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "forgotPassword@autocoin.com",
+        from: "forgotPassword@mycontract.co",
         to: recipientmail,
         subject: "reset Password link",
         html: data

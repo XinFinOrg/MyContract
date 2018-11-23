@@ -90,7 +90,8 @@ module.exports = {
     });
   },
 
-  checkTokenStats: async (tokenAddress) => {
+  checkTokenStats: async (tokenAddress,provider) => {
+    var web3 = new Web3(provider);
     return new Promise(async function(resolve, reject) {
       var tokenContractInstance = new web3.eth.Contract(config.erc20ABI, tokenAddress);
       var decimals = await tokenContractInstance.methods.decimals().call();
