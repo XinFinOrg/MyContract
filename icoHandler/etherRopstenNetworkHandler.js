@@ -3,8 +3,9 @@ var config = require('../config/paymentListener');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider(config.privateProvider));
-
+var web3 = new Web3();
+var provider = new Web3.providers.WebsocketProvider(config.testnetProvider);
+web3.setProvider(provider);
 
 module.exports = {
     checkBalance: (address) => {
@@ -59,6 +60,10 @@ module.exports = {
                     web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
                         resolve(receipt);
                     });
+                }).catch(async error => {
+                    provider = new Web3.providers.WebsocketProvider(ws_provider);
+                    web3.setProvider(provider);
+                    reject(error);
                 });
             });
         });
@@ -75,15 +80,16 @@ module.exports = {
     },
 
     sendEther: async (address, amount) => {
-        var mainPrivateKey = '0xdf11b6debfa783dbc46afd4d753a6dc39caa785c1b3e749f087fc1d4f0552f6c';
-        var txData = {
-            "nonce": await web3.eth.getTransactionCount('0xbF456F32Fed09Ee730a4263DCc9c1B48E422Dfb5'),
-            "to": address,
-            "value": amount, // "0x06f05b59d3b200000"
-        }
         return new Promise(async function (resolve, reject) {
+            var mainPrivateKey = '0x25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142';
+            var txData = {
+                "nonce": await web3.eth.getTransactionCount('0x14649976AEB09419343A54ea130b6a21Ec337772'),
+                "to": address,
+                "value": amount, // "0x06f05b59d3b200000"
+            }
             web3.eth.estimateGas(txData).then(gasLimit => {
-                txData["gasLimit"] = gasLimit;
+                console.log(gasLimit);
+                txData["gasLimit"] = '0x5208';
                 web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
                         .on('receipt', async function (receipt) { resolve(receipt) })
@@ -94,21 +100,28 @@ module.exports = {
     },
 
     sendTransaction: async (address, data, privateKey) => {
-        let txData = {
-            "nonce": await web3.eth.getTransactionCount(address),
-            "data": '0x' + data,
-        }
         return new Promise(async function (resolve, reject) {
+            let txData = {
+                "nonce": await web3.eth.getTransactionCount(address),
+                "data": '0x' + data,
+                "gasPrice": "0x170cdc1e00",
+                // "gasLimit": "0x2625A0",
+            }
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
                 console.log(gasLimit);
                 txData["gasLimit"] = gasLimit;
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
-                        .on('receipt', async function (receipt) { resolve(receipt) })
+                        .on('confirmation', async function (confirmationNumber, receipt) {
+                            if (confirmationNumber == 3) {
+                                if (receipt.status == true) {
+                                    resolve(receipt)
+                                }
+                            }
+                        })
                         .on('error', async function (error) { reject(error) })
                 })
             })
         })
     }
 }
-
