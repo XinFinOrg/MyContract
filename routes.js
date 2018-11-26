@@ -1,7 +1,7 @@
 module.exports = function(app){
   app.get('/', isLoggedIn, function(req, res) {
 
-    res.render('login', { message: '' });
+    res.render('landingPage');
   });
 };
 

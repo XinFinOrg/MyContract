@@ -21,6 +21,8 @@ module.exports = function (app) {
   app.get('/resetPassword', impl.resetPassword);
   app.post('/updatePassword', impl.updatePassword);
   app.get('/verifyAccount', impl.verifyAccount);
+  app.post('/subscribe',impl.subscribe);
+  app.post('/contactUs',impl.contactUs);
   // app.get('/getProjectArray', impl.getProjectArray);
 
 

@@ -10,6 +10,7 @@ var mailer = require('../emailer/impl');
 const ImageDataURI = require('image-data-uri');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
+var fs = require('fs');
 module.exports = {
 
   getLogin: function (req, res) {
@@ -215,6 +216,32 @@ module.exports = {
       client.status = true;
       client.save().then(res.redirect("/"));
     });
+  },
+  subscribe: (req, res) => {
+    let fd;
+    try {
+      fd = fs.openSync('./subscribeData.txt', 'a');
+      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      if (fd !== undefined)
+        fs.closeSync(fd);
+      res.redirect('/');
+    }
+  },
+  contactUs: (req, res) => {
+    let fd;
+    try {
+      fd = fs.openSync('./contactUsData.txt', 'a');
+      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      if (fd !== undefined)
+        fs.closeSync(fd);
+      res.redirect('/');
+    }
   }
 };
 
