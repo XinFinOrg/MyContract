@@ -7,9 +7,9 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 
 module.exports = function (app) {
-  app.post("/api/createERC721Contract", checkSecret, coinNameExist, impl.createERC721Contract);
-  app.post("/api/createERC20Contract", checkSecret, coinNameExist, impl.createERC20Contract);
-  app.post("/api/createERC223Contract", checkSecret, coinNameExist, impl.createERC223Contract);
+  app.post("/api/createERC721Contract",isLoggedIn, checkSecret, coinNameExist, impl.createERC721Contract);
+  app.post("/api/createERC20Contract", isLoggedIn,checkSecret, coinNameExist, impl.createERC20Contract);
+  app.post("/api/createERC223Contract",isLoggedIn, checkSecret, coinNameExist, impl.createERC223Contract);
 }
 
 // route middleware to make sure a user is logged in

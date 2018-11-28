@@ -11,8 +11,8 @@ module.exports = function (app, express) {
 
   // app.get('/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
-  app.get('/api/siteConfiguration/project/:projectName/getSiteConfiguration', impl.getSiteConfiguration);
-  app.post('/api/siteConfiguration/project/:projectName/updateSiteConfiguration', impl.updateSiteConfiguration)
+  app.get('/api/siteConfiguration/project/:projectName/getSiteConfiguration',isLoggedIn, impl.getSiteConfiguration);
+  app.post('/api/siteConfiguration/project/:projectName/updateSiteConfiguration',isLoggedIn, impl.updateSiteConfiguration)
   app.get('/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
 
   app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
@@ -29,16 +29,24 @@ module.exports = function (app, express) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-
-  // if they aren't redirect them to the home page
-  res.redirect('/');
+  var token = req.cookies['clientToken'];
+  // JWT enabled login strategy for end user
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+    if (err) {
+      return res.redirect('/');
+    } else {
+      client.find({
+        where: {
+          uniqueId: decoded.userId
+        }
+      }).then(user => {
+        req.user = user;
+        next();
+      });
+    }
+  });
 
 }
-
 
 // route middleware to check package 2
 function hasPackage3(req, res, next) {

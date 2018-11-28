@@ -219,49 +219,21 @@ module.exports = {
   getAPIProfileDetails: async (req, res) => {
     res.send(req.user);
   },
-
-  forgotPassword: (req, res) => {
-    client.find({
-      where: {
-        'email': req.query.email
-      }
-    }).then(result => {
-      if (result == null) {
-        res.send("User not found")
-      } else if (result.password == null) {
-        res.send("Password")
-      } else {
-        mailer.forgotPasswordMailer(req, req.query.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
-        res.send("success")
-      }
-    })
-  },
-  resetPassword: (req, res) => {
-    console.log(req.query)
-    client.find({
-      where: {
-        'email': req.query.email
-      }
-    }).then(result => {
-      if (!bcrypt.compareSync(result.dataValues.uniqueId, req.query.resetId)) { console.log("false") }
-      else {
-        console.log("true")
-        res.render("resetPassword", { email: result.dataValues.email })
-      }
-    })
-  },
   updatePassword: (req, res) => {
-    console.log(req.body)
     client.find({
       where: {
         'email': req.body.email
       }
     }).then(result => {
-      result.update({
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
-      }).then(result => {
-        res.redirect("/")
-      })
+      try {
+        bcrypt.compareSync(result.dataValues.uniqueId, req.body.resetId)
+        result.update({
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
+        }).then(result => {
+          res.redirect("/")
+        })
+      }
+      catch{ res.send({ message: ' Not a valid BCrypt hash' }) }
     })
   },
   verifyAccount: (req, res) => {
@@ -330,31 +302,6 @@ module.exports = {
       }
     })
   },
-  updatePassword: (req, res) => {
-    console.log(req.body)
-    client.find({
-      where: {
-        'email': req.body.email
-      }
-    }).then(result => {
-      result.update({
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
-      }).then(result => {
-        res.redirect("/")
-      })
-    })
-  },
-  verifyAccount: (req, res) => {
-    console.log(req.query)
-    client.find({
-      where: {
-        'email': req.query.email
-      }
-    }).then((client) => {
-      client.status = true;
-      client.save().then(res.redirect("/"));
-    });
-  }
 };
 
 function getProjectArray(email) {

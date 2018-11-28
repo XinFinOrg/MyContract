@@ -20,7 +20,7 @@ module.exports = function (app) {
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
-  app.get('/projectList', impl.getProjectList);
+  app.get('/projectList',isLoggedIn, impl.getProjectList);
   app.get('/forgotPassword',impl.forgotPassword);
   app.get('/resetPassword',impl.resetPassword);
   app.post('/updatePassword',impl.updatePassword);
@@ -36,9 +36,9 @@ module.exports = function (app) {
   app.post('/KYCpage/KYCdocUpload', isLoggedIn, impl.KYCdocUpload);
 
   //superUser
-  app.get('/adminLogin', superAdminimpl.adminLogin);
-  app.post('/adminLogin', superAdminimpl.postadminLogin);
-  app.get('/adminDashboard', superAdminimpl.adminDashboard);
+  // app.get('/adminLogin', superAdminimpl.adminLogin);
+  app.post('/adminLogin', superAdminimpl.postLogin);
+  // app.get('/adminDashboard', superAdminimpl.adminDashboard);
 
 };
 
