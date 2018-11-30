@@ -4,6 +4,7 @@ import {hot} from "react-hot-loader";
 import { connect } from "react-redux";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import ProjectList from "./ProjectList";
 import { BrowserRouter, Route, Link} from "react-router-dom";
 
 
@@ -15,6 +16,7 @@ class App extends Component{
         <BrowserRouter>
           <div>
             <Route exact path="/projectList" component={Dashboard}/>
+            <Route path="/projectList/:userEmail" component={ProjectList}/>
             <Route exact path="/superadmin" component={Login}/>
           </div>
 

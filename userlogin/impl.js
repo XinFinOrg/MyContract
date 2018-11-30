@@ -177,13 +177,18 @@ module.exports = {
   },
 
   getProjectList: (req, res) => {
-    client.findAll({
-      include: [ProjectConfiguration]
-    }).then((clients) => {
-      res.send({
-        clients: clients
+    console.log(req.body.email);
+    client.find({
+      where: {
+        'email': req.body.email
+      }
+    }).then(client => {
+      client.getProjectConfigurations().then(projectList => {
+        res.send({
+          projects : projectList
+        });
       })
-    });
+    })
   },
 
   getClientList: (req, res) => {
@@ -241,7 +246,10 @@ module.exports = {
           res.redirect("/")
         })
       }
-      catch{ res.send({ message: ' Not a valid BCrypt hash' }) }
+      catch(exception)
+      {
+        res.send({ message: ' Not a valid BCrypt hash' })
+      }
     })
   },
   verifyAccount: (req, res) => {

@@ -4,7 +4,7 @@ import axios from "axios";
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 
-class Dashboard extends Component {
+class ProjectList extends Component {
     constructor(props){
       super(props);
       this.state = {
@@ -16,33 +16,37 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-      fetch('/api/getClientList')
-      .then(res => res.json())
-      .then(response => {
+      console.log(this.props.match.params.userEmail);
+      axios.post('/api/projectList', {'email': this.props.match.params.userEmail})
+      .then(res => {
+        console.log(res);
         this.setState({
-          data: response.clients
+          data: res.data.projects
         })
       })
     }
 
     getProjectList(email) {
-      this.props.history.push('/projectList/'+email)
+      axios.post('/api/projectList', {'email': email})
+      .then(res => {
+        console.log(res.data.projects);
+      })
     }
     render() {
       const {data} = this.state;
 
       const columns = [{
-        Header: 'Name',
-        accessor: 'name'
+        Header: 'Coin Name',
+        accessor: 'coinName'
       }, {
-        Header: 'Email',
-        accessor: 'email',
+        Header: 'Network Type',
+        accessor: 'networkType',
       }, {
-        Header: 'KYC status',
-        accessor: 'kyc_verified'
+        Header: 'Crowdsale Contract Address',
+        accessor: 'crowdsaleContractAddress'
       }, {
-        Header: 'Attempts taken',
-        accessor: 'attemptsCount'
+        Header: 'Token Contract Address',
+        accessor: 'tokenContractAddress'
       }, {
         Header: 'Go to Project List',
         accessor: 'uniqueId'
@@ -75,4 +79,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default ProjectList;
