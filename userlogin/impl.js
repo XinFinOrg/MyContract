@@ -180,7 +180,15 @@ module.exports = {
     client.findAll({
       include: [ProjectConfiguration]
     }).then((clients) => {
-      res.render('projectList.ejs', {
+      res.send({
+        clients: clients
+      })
+    });
+  },
+
+  getClientList: (req, res) => {
+    client.findAll().then((clients) => {
+      res.send({
         clients: clients
       })
     });

@@ -20,11 +20,12 @@ module.exports = function (app) {
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
-  app.get('/projectList', isLoggedIn, impl.getProjectList);
-  app.get('/forgotPassword', impl.forgotPassword);
-  app.get('/resetPassword', impl.resetPassword);
-  app.post('/updatePassword', impl.updatePassword);
-  app.get('/verifyAccount', impl.verifyAccount);
+  app.get('/api/projectList', impl.getProjectList);
+  app.get('/api/getClientList', impl.getClientList);
+  app.get('/forgotPassword',impl.forgotPassword);
+  app.get('/resetPassword',impl.resetPassword);
+  app.post('/updatePassword',impl.updatePassword);
+  app.get('/verifyAccount',impl.verifyAccount);
 
   //new apis
   app.get('/api/checkExistence', impl.checkExistence);
