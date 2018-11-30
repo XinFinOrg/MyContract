@@ -20,14 +20,14 @@ module.exports = function (app) {
   app.get('/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
-  app.get('/projectList',isLoggedIn, impl.getProjectList);
-  app.get('/forgotPassword',impl.forgotPassword);
-  app.get('/resetPassword',impl.resetPassword);
-  app.post('/updatePassword',impl.updatePassword);
-  app.get('/verifyAccount',impl.verifyAccount);   
+  app.get('/projectList', isLoggedIn, impl.getProjectList);
+  app.get('/forgotPassword', impl.forgotPassword);
+  app.get('/resetPassword', impl.resetPassword);
+  app.post('/updatePassword', impl.updatePassword);
+  app.get('/verifyAccount', impl.verifyAccount);
 
   //new apis
-  app.get('/api/checkExistence',impl.checkExistence);
+  app.get('/api/checkExistence', impl.checkExistence);
 
 
   //kyc
@@ -38,7 +38,7 @@ module.exports = function (app) {
   //superUser
   // app.get('/adminLogin', superAdminimpl.adminLogin);
   app.post('/adminLogin', superAdminimpl.postLogin);
-  // app.get('/adminDashboard', superAdminimpl.adminDashboard);
+  app.get('/getKycDataForUser', isLoggedIn, superAdminimpl.getKycDataForUser);
 
 };
 
@@ -55,8 +55,9 @@ module.exports = function (app) {
 
 function isLoggedIn(req, res, next) {
   var token = req.cookies['clientToken'];
+  console.log(req.cookies)
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.redirect('/');
     } else {
