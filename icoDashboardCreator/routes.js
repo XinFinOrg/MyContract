@@ -55,7 +55,9 @@ function hasPackage3(req, res, next) {
       exclude: ['coinName', 'ETHRate', 'tokenContractCode','tokenABICode','crowdsaleABICode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }
   }).then(result => {
-    if (result.isAllowedForICO == true) {
+    console.log(result.dataValues.isAllowedForICO,"result.dataValues.isAllowedForICO")
+    if (result.dataValues.isAllowedForICO == true) {
+      console.log("here")
       return next();
     } else {
       req.flash('package_flash', 'You need to buy this package ');

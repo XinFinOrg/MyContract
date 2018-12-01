@@ -9,6 +9,9 @@ var User = db.user;
 var ProjectConfiguration = db.projectConfiguration;
 var fs = require('fs');
 var icoListener = require('../icoHandler/listener');
+var mainnetListener = require('../icoHandler/etherMainNetworkHandler')
+var privateListener = require('../icoHandler/privateNetworkHandler');
+var testnetListener = require('../icoHandler/etherRopstenNetworkHandler');
 var config = require('../config/paymentListener');
 var Tx = require('ethereumjs-tx');
 const Web3 = require('web3');
@@ -44,53 +47,73 @@ module.exports = {
     let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterEthereum" }, raw: true, })
     let btc_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterBitcoin" }, raw: true, })
     let transactionLog = await db.tokenTransferLog.findAll({ where: { 'project_id': req.params.projectName }, raw: true });
-    Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), icoListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), icoListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
-      res.render('icoDashboard', {
-        'ethBalance': ethBalance,
-        'btcBalance': btcBalance,
-        'user': req.user,
-        'projectName': req.params.projectName,
-        'userCount': userCount,
-        'verifiedUserCount': verifiedUserCount,
-        'transactionLog': transactionLog,
-        'tokenBalance': tokenBalance,
-        'crowdsaleBalance': crowdsaleBalance
+    if (projectConfi.networkType == 'testnet') {
+      console.log("in testnet"); await Promise.all([testnetListener.checkEtherBalance(eth_address[0].address), testnetListener.checkBalance(btc_address[0].address), testnetListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), testnetListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+        res.render('icoDashboard', {
+          'ethBalance': ethBalance,
+          'btcBalance': btcBalance,
+          'user': req.user,
+          'projectName': req.params.projectName,
+          'userCount': userCount,
+          'verifiedUserCount': verifiedUserCount,
+          'transactionLog': transactionLog,
+          'tokenBalance': tokenBalance,
+          'crowdsaleBalance': crowdsaleBalance
+        });
       });
-    });
+    }
+    else if (projectConfi.networkType == 'mainnet') {
+      console.log("in mainnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), icoListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), icoListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+        res.render('icoDashboard', {
+          'ethBalance': ethBalance,
+          'btcBalance': btcBalance,
+          'user': req.user,
+          'projectName': req.params.projectName,
+          'userCount': userCount,
+          'verifiedUserCount': verifiedUserCount,
+          'transactionLog': transactionLog,
+          'tokenBalance': tokenBalance,
+          'crowdsaleBalance': crowdsaleBalance
+        });
+      });
+    }
+    else {
+      console.log("in private");
+      await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), privateListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), privateListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+        res.render('icoDashboard', {
+          'ethBalance': ethBalance,
+          'btcBalance': btcBalance,
+          'user': req.user,
+          'projectName': req.params.projectName,
+          'userCount': userCount,
+          'verifiedUserCount': verifiedUserCount,
+          'transactionLog': transactionLog,
+          'tokenBalance': tokenBalance,
+          'crowdsaleBalance': crowdsaleBalance
+        });
+      })
+    }
   },
   tokenTrasfer: async function (req, res) {
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum' } })
-    var web3;
-    if (projectConfi.networkType == 'testnet') { console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.testnetProvider)) }
-    else if (projectConfi.networkType == 'mainnet') { console.log("in mainnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.ws_provider)) }
-    else { console.log("in provate"); new Web3(new Web3.providers.HttpProvider(config.privateProvider)); }
-    var escrowAbi = [{ "constant": true, "inputs": [], "name": "mintingFinished", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "spender", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "destroyToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "cap", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "spender", "type": "address" }, { "name": "addedValue", "type": "uint256" }], "name": "increaseAllowance", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "unpause", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "to", "type": "address" }, { "name": "amount", "type": "uint256" }], "name": "mint", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "value", "type": "uint256" }], "name": "burn", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "value", "type": "uint256" }], "name": "upgrade", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "account", "type": "address" }], "name": "isPauser", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "paused", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "upgradeAgent", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "upgradeMaster", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "renouncePauser", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "renounceOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "acceptOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "from", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "burnFrom", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_tokens", "type": "uint256" }, { "name": "_address", "type": "address" }], "name": "sendTokensToCrowdsale", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "finishMinting", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "account", "type": "address" }], "name": "addPauser", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "getUpgradeState", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "pause", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "isOwner", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "canUpgrade", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "account", "type": "address" }], "name": "addMinter", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "renounceMinter", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "spender", "type": "address" }, { "name": "subtractedValue", "type": "uint256" }], "name": "decreaseAllowance", "outputs": [{ "name": "success", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "to", "type": "address" }, { "name": "value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "account", "type": "address" }], "name": "isMinter", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "totalUpgraded", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "newOwner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "agent", "type": "address" }], "name": "setUpgradeAgent", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "owner", "type": "address" }, { "name": "spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_tokens", "type": "uint256" }], "name": "sendTokensToOwner", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_upgradeMaster", "type": "address" }], "name": "UpgradeableToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "master", "type": "address" }], "name": "setUpgradeMaster", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "_from", "type": "address" }, { "indexed": true, "name": "_to", "type": "address" }, { "indexed": false, "name": "_value", "type": "uint256" }], "name": "Upgrade", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "agent", "type": "address" }], "name": "UpgradeAgentSet", "type": "event" }, { "anonymous": false, "inputs": [], "name": "MintingFinished", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "account", "type": "address" }], "name": "MinterAdded", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "account", "type": "address" }], "name": "MinterRemoved", "type": "event" }, { "anonymous": false, "inputs": [], "name": "Paused", "type": "event" }, { "anonymous": false, "inputs": [], "name": "Unpaused", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "account", "type": "address" }], "name": "PauserAdded", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "account", "type": "address" }], "name": "PauserRemoved", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "_from", "type": "address" }, { "indexed": true, "name": "_to", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }], "name": "OwnershipRenounced", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }]
-    var contractfunc = new web3.eth.Contract(escrowAbi, projectConfi.tokenContractAddress, { from: accountData.address });
-    let data = contractfunc.methods.sendTokensToCrowdsale('0x' + (req.body.tokenAmount).toString(16), req.body.tokenAddress).encodeABI()
-    var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
-    let txData = {
-      "nonce": await web3.eth.getTransactionCount(accountData.address),
-      "gasPrice": "0x170cdc1e00",
-      "gasLimit": "0x2dc6c0",
-      "to": projectConfi.tokenContractAddress,
-      "value": "0x0",
-      "data": data,
-      "chainId": 3
-    }
-    var tx = new Tx(txData);
-    tx.sign(mainPrivateKey);
-    var serializedTx = tx.serialize();
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', 'project_id': req.params.projectName } })
+    console.log(accountData.dataValues, req.user.uniqueId)
     try {
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('confirmation', async function (confirmationNumber, receipt) {
-          if (confirmationNumber == 1) {
-            console.log(confirmationNumber, receipt);
-            res.redirect('/icoDashboard/icoDashboardSetup/project/' + req.params.projectName);
-          }
+      if (projectConfi.networkType == 'testnet') {
+        console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(() => {
+          res.redirect('/icoDashboard/icoDashboardSetup/project/' + req.params.projectName);
         })
-        .on('error', function (error) { console.log(error); res.render('error', { error: error }); })
-
+      }
+      else if (projectConfi.networkType == 'mainnet') {
+        console.log("in mainnet"); mainnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(() => {
+          res.redirect('/icoDashboard/icoDashboardSetup/project/' + req.params.projectName);
+        })
+      }
+      else {
+        console.log("in private"); privateListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(() => {
+          res.redirect('/icoDashboard/icoDashboardSetup/project/' + req.params.projectName);
+        })
+      }
     }
     catch (err) { console.log("in err", err) }
   },
