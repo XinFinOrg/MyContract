@@ -59,6 +59,7 @@ module.exports = {
             "nonce": await web3.eth.getTransactionCount(address),
             "to": projectData.tokenContractAddress,
             "data": data,
+            "chainId":2401502
         }
         return new Promise(async function (resolve, reject) {
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
@@ -66,7 +67,9 @@ module.exports = {
                 txData["gasLimit"] = gasLimit;
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
-                        .on('receipt', async function (receipt) { resolve(receipt) })
+                        .on('receipt', async function (receipt) { resolve(receipt) 
+                        console.log(receipt);
+                        })
                         .on('error', async function (error) { reject(error) })
                 })
             })

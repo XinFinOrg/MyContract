@@ -4,7 +4,7 @@ var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
 var web3 = new Web3();
-var provider = new Web3.providers.WebsocketProvider(config.testnetProvider);
+var provider = new Web3.providers.WebsocketProvider(config.ws_provider);
 web3.setProvider(provider);
 
 

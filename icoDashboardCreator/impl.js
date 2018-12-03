@@ -382,8 +382,8 @@ module.exports = {
     var web3;
     if (projectdatavalues.networkType == 'testnet') { console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.testnetProvider)) }
     else if (projectdatavalues.networkType == 'mainnet') { console.log("in mainnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.ws_provider)) }
-    else { console.log("in provate"); new Web3(new Web3.providers.HttpProvider(config.privateProvider)); }
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum' } })
+    else { console.log("in private"); new Web3(new Web3.providers.HttpProvider(config.privateProvider)); }
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', "project_id": req.params.projectName } })
     let tokenLogs = await db.tokenTransferLog.findAll({
       where: {
         "project_id": req.params.projectName,
