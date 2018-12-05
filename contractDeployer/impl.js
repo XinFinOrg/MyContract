@@ -149,7 +149,7 @@ module.exports = {
 
   getAutomaticDeployer: async function (req, res) {
     let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.query.coinName } });
-    let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', 'project_id': req.query.coinName } })
+    let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.query.coinName } })
     projectData.crowdsaleContractAddress = "Deployment is in process";
     projectData.tokenContractAddress = "Deployment is in process";
     projectData.networkType = req.query.network;
@@ -181,6 +181,7 @@ module.exports = {
                   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
                   projectData.crowdsaleByteCode = byteCode2.bytecode;
                   projectData.crowdsaleABICode = byteCode2.interface;
+                  projectData.crowdsaleContractCode = data;
                   privateICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                     .then(async crowdsaleReceipt => {
                       console.log(tokenReceipt, "here 3")
@@ -203,7 +204,7 @@ module.exports = {
         console.error('error in deployment ', e);
       }
     }
-    else if (req.query.network == 'testNet') {
+    else if (req.query.network == 'testnet') {
       try {
         etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
@@ -227,6 +228,7 @@ module.exports = {
                   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
                   projectData.crowdsaleByteCode = byteCode2.bytecode;
                   projectData.crowdsaleABICode = byteCode2.interface;
+                  projectData.crowdsaleContractCode = data;
                   etherRopstenICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                     .then(async crowdsaleReceipt => {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
@@ -271,6 +273,7 @@ module.exports = {
               byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
               projectData.crowdsaleByteCode = byteCode2.bytecode;
               projectData.crowdsaleABICode = byteCode2.interface;
+              projectData.crowdsaleContractCode = data;
               etherRopstenICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                 .then(async crowdsaleReceipt => {
                   projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;

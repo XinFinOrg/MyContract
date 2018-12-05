@@ -289,7 +289,7 @@ function generateEthAddress() {
     var keyStore = generateNewAccount();
     newEthAddress.privateKey = keyStore.privateKey;
     newEthAddress.address = keyStore.address;
-    newEthAddress.currencyType = "Ethereum";
+    newEthAddress.currencyType = "masterEthereum";
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
   });
@@ -303,7 +303,7 @@ function generateBTCAddress() {
     let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
     newBTCAddress.address = address;
     newBTCAddress.privateKey = keyPair.toWIF();
-    newBTCAddress.currencyType = "Bitcoin";
+    newBTCAddress.currencyType = "masterBitcoin";
     var createdBTCAddress = await Address.create(newBTCAddress);
     resolve(createdBTCAddress);
   });

@@ -8,6 +8,7 @@ var configAuth = require('../config/auth');
 const Binance = require('node-binance-api');
 var coinPaymentHandler = require('../coinPayments/impl');
 var icoListener = require('../icoHandler/listener');
+var privateListener = require('../icoHandler/privateNetworkHandler');
 const ImageDataURI = require('image-data-uri');
 var privateIcoListener = require('../icoHandler/privateListener');
 const readChunk = require('read-chunk');
@@ -19,14 +20,14 @@ module.exports = {
     var btc_address, eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
 
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Bitcoin'
+        currencyType: 'masterBitcoin'
       }
     });
     btc_address = btc_addresses[0].address;
@@ -181,14 +182,14 @@ module.exports = {
     var btc_address, eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
 
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Bitcoin'
+        currencyType: 'masterBitcoin'
       }
     });
 
@@ -204,12 +205,15 @@ module.exports = {
   checkTokenBalances: async (req, res) => {
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
     if (req.user.projectConfiguration.networkType == "testnet") {
       var tokenBalance = await privateIcoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
+    }
+    else if(req.user.projectConfiguration.networkType == "private"){
+     var tokenBalance = await privateListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
     }
     else {
       var tokenBalance = await icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
@@ -223,7 +227,7 @@ module.exports = {
     var eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     console.log(req.body.token_ETH);
@@ -231,7 +235,7 @@ module.exports = {
 
     var masterETHList = await req.user.projectConfiguration.getUserCurrencyAddresses({
       where: {
-        currencyType: 'masterEthereum'
+        currencyType: 'Ethereum'
       }
     });
     var masterETHAddress = masterETHList[0].address;
@@ -246,21 +250,21 @@ module.exports = {
     var eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
     var btc_address;
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Bitcoin'
+        currencyType: 'masterBitcoin'
       }
     });
     btc_address = btc_addresses[0].address;
 
     var masterBTCList = await req.user.projectConfiguration.getUserCurrencyAddresses({
       where: {
-        currencyType: 'masterBitcoin'
+        currencyType: 'Bitcoin'
       }
     });
     var masterBTCAddress = masterBTCList[0].address;
@@ -294,7 +298,7 @@ module.exports = {
     var eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
@@ -310,10 +314,11 @@ module.exports = {
     var btc_address;
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Bitcoin'
+        currencyType: 'masterBitcoin'
       }
     });
     btc_address = btc_addresses[0].address;
+    console.log(btc_address)
     axios.get("https://blockchain.info/unspent?active=" + btc_address).then(response => {
       res.send(response.data.unspent_outputs)
     }).catch(err => {

@@ -323,14 +323,14 @@
             if (isMainnet == '1') {
               console.log('in here 1')
               if (globalEthBalance == 0.5) {
-                window.location.href = "/api/automaticDeployment?network=main&coinName=" + coinName;
+                window.location.href = "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
               } else {
                 $('#networkModal').modal('hide'); 
                 $('#mainnetBalanceError').modal('show');
               }
             } else if(isMainnet == '2') {
               console.log('in here 2')
-              window.location.href = "/api/automaticDeployment?network=testNet&coinName=" + coinName;
+              window.location.href = "/api/automaticDeployment?network=testnet&coinName=" + coinName;
             }
             else{
               console.log('in here 3')

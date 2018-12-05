@@ -16,9 +16,9 @@ var config = require('../config/paymentListener');
 var Tx = require('ethereumjs-tx');
 const Web3 = require('web3');
 // var ws_provider = config.ws_provider;
-// var provider = new Web3.providers.WebsocketProvider(ws_provider);
-// // let provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
-// var web3 = new Web3(provider);
+// var provider = new Web3.providers.WebsocketProvider(config.testnetProvider);
+let provider = new Web3(new Web3.providers.HttpProvider(config.privateProvider));
+var web3 = new Web3(provider);
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
@@ -44,11 +44,11 @@ module.exports = {
     let userCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.projectName } })
     let verifiedUserCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.projectName, "kyc_verified": "active" } })
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
-    let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterEthereum" }, raw: true, })
-    let btc_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterBitcoin" }, raw: true, })
+    let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Ethereum", "project_id": req.params.projectName }, raw: true, })
+    let btc_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Bitcoin", "project_id": req.params.projectName }, raw: true, })
     let transactionLog = await db.tokenTransferLog.findAll({ where: { 'project_id': req.params.projectName }, raw: true });
     if (projectConfi.networkType == 'testnet') {
-      console.log("in testnet"); await Promise.all([testnetListener.checkEtherBalance(eth_address[0].address), testnetListener.checkBalance(btc_address[0].address), testnetListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), testnetListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+      console.log("in testnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), testnetListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), testnetListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
         res.render('icoDashboard', {
           'ethBalance': ethBalance,
           'btcBalance': btcBalance,
@@ -96,8 +96,8 @@ module.exports = {
   },
   tokenTrasfer: async function (req, res) {
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', 'project_id': req.params.projectName } })
-    console.log(accountData.dataValues, req.user.uniqueId)
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.params.projectName } })
+    console.log(accountData, req.user.uniqueId)
     try {
       if (projectConfi.networkType == 'testnet') {
         console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(() => {
@@ -379,11 +379,7 @@ module.exports = {
         "coinName": req.params.projectName
       }
     })
-    var web3;
-    if (projectdatavalues.networkType == 'testnet') { console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.testnetProvider)) }
-    else if (projectdatavalues.networkType == 'mainnet') { console.log("in mainnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.ws_provider)) }
-    else { console.log("in private"); new Web3(new Web3.providers.HttpProvider(config.privateProvider)); }
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'masterEthereum', "project_id": req.params.projectName } })
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', "project_id": req.params.projectName } })
     let tokenLogs = await db.tokenTransferLog.findAll({
       where: {
         "project_id": req.params.projectName,
@@ -392,43 +388,19 @@ module.exports = {
         }
       }, raw: true
     })
-    await Promise.all([icoListener.checkTokenStats(projectdatavalues.tokenContractAddress, new Web3.providers.WebsocketProvider(config.testnetProvider))]).then(([decimals]) => {
-      console.log("here 2", decimals);
+    privateListener.checkTokenStats(projectdatavalues.tokenContractAddress).then(decimals =>{
       for (let index = 0; index < tokenLogs.length; index++) {
         address.push(tokenLogs[index].address);
         values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
       }
     })
     var escrowAbi = [{ "constant": false, "inputs": [{ "name": "_value", "type": "bool" }], "name": "updateBounsStatus", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "rate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "weiRaised", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "wallet", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateBounsRate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "bonusRate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateTokenPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isBonusOn", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_investor", "type": "address" }, { "name": "_tokens", "type": "uint256" }], "name": "sendTokensToInvestors", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "stopCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_addresses", "type": "address[]" }, { "name": "_value", "type": "uint256[]" }], "name": "dispenseTokensToInvestorAddressesByValue", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "beneficiary", "type": "address" }], "name": "buyTokens", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [], "name": "startCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "token", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "rate", "type": "uint256" }, { "name": "bonusRate", "type": "uint256" }, { "name": "wallet", "type": "address" }, { "name": "token", "type": "address" }, { "name": "isBonusOn", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "purchaser", "type": "address" }, { "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }]
-    console.log(values, address, accountData.privateKey);
     var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
     let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue(address, values).encodeABI()
-    var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
-    let txData = {
-      "nonce": await web3.eth.getTransactionCount(accountData.address),
-      "gasPrice": "0x170cdc1e00",
-      "gasLimit": "0x2dc6c0",
-      "to": projectdatavalues.crowdsaleContractAddress,
-      "value": "0x0",
-      "data": data,
-      "chainId": 3
-    }
-    var tx = new Tx(txData);
-    tx.sign(mainPrivateKey);
-    var serializedTx = tx.serialize();
-    try {
-      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-        .on('confirmation', async function (confirmationNumber, receipt) {
-          if (confirmationNumber == 1) {
-            console.log(confirmationNumber, receipt);
-            await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
-            res.send({ receipt: receipt, message: true });
-          }
-        })
-        .on('error', function (error) { res.send({ receipt: error, message: false }); })
-
-    }
-    catch (err) { console.log("in err") }
+    privateListener.sendTransaction(accountData.address,data,accountData.privateKey,projectdatavalues.tokenContractAddress).then(result =>{
+      console.log(result,"here")
+    })
+    
   }
 }
 

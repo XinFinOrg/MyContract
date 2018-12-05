@@ -68,6 +68,10 @@ module.exports = {
     var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
     var ERC20CappedSign = "";
     inherits = "";
+    let decimalInZero = "";
+    for (let index = 0; index < req.body.token_decimals; index++) {
+      decimalInZero += '0';
+    }
 
     if (isBurnable) {
       var ERC20Burnable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Burnable.sol');
@@ -116,7 +120,7 @@ module.exports = {
       name: req.body.token_name,
       symbol: req.body.token_symbol,
       decimal: req.body.token_decimals,
-      decimalInZero: "000000000000000000",
+      decimalInZero: decimalInZero, //"000000000000000000",
       ERC20CappedSign: ERC20CappedSign
     }, async (err, data) => {
       if (err)
@@ -167,6 +171,10 @@ module.exports = {
     var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
     var ERC20CappedSign = "";
     inherits = "";
+    let decimalInZero = "";
+    for (let index = 0; index < req.body.token_decimals; index++) {
+      decimalInZero += '0';
+    }
 
     if (isBurnable) {
       var ERC20Burnable = await fileReader.readEjsFile(__dirname + '/ERC223contracts/ERC20Burnable.sol');
@@ -216,7 +224,7 @@ module.exports = {
       name: req.body.token_name,
       symbol: req.body.token_symbol,
       decimal: req.body.token_decimals,
-      decimalInZero: "000000000000000000",
+      decimalInZero: decimalInZero,//"000000000000000000",
       ERC20CappedSign: ERC20CappedSign
     }, async (err, data) => {
       if (err)
@@ -324,7 +332,7 @@ function generateEthAddress() {
     var keyStore = generateNewAccount();
     newEthAddress.privateKey = keyStore.privateKey;
     newEthAddress.address = keyStore.address;
-    newEthAddress.currencyType = "masterEthereum";
+    newEthAddress.currencyType = "Ethereum";
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
   });
@@ -341,7 +349,7 @@ function generateBTCAddress() {
     let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
     newBTCAddress.address = address;
     newBTCAddress.privateKey = keyPair.toWIF();
-    newBTCAddress.currencyType = "masterBitcoin";
+    newBTCAddress.currencyType = "Bitcoin";
     var createdBTCAddress = await Address.create(newBTCAddress);
     resolve(createdBTCAddress);
   });

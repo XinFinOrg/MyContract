@@ -57,7 +57,11 @@
                                                         <%= transactionLog[i].address %>
                                                     </td>
                                                     <td class="break">
-                                                        <%=  transactionLog[i].transaction_hash %>
+                                                        <% if ( transactionLog[i].transaction_hash == null) {%>
+                                                        Not initiated
+                                                        <% } else { %>
+                                                            <%= transactionLog[i].transaction_hash %>
+                                                        <% } %>
                                                     </td>
                                                     <td>
                                                         <%= transactionLog[i].tokenTransferStatus %>

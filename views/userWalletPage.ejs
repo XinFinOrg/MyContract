@@ -286,9 +286,9 @@
         balance = result["balance"];
         btcBalance = result["btcBalance"];
         tokenBalance = result["tokenBalance"];
-        $("#Ethereum_balance").text(balance);
-        $("#Bitcoin_balance").text(btcBalance);
-        $("#token_balance").text(tokenBalance);
+        $("#masterEthereum_balance").text(balance);
+        $("#masterBitcoin_balance").text(btcBalance);
+        // $("#token_balance").text(tokenBalance);
       });
       $.get('./api/checkTokenBalances', function(result) {
         tokenBalance = result["tokenBalance"];
