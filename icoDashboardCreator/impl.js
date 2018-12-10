@@ -14,11 +14,11 @@ var privateListener = require('../icoHandler/privateNetworkHandler');
 var testnetListener = require('../icoHandler/etherRopstenNetworkHandler');
 var config = require('../config/paymentListener');
 var Tx = require('ethereumjs-tx');
-const Web3 = require('web3');
+var Web3 = require('web3');
 // var ws_provider = config.ws_provider;
 // var provider = new Web3.providers.WebsocketProvider(config.testnetProvider);
-let provider = new Web3(new Web3.providers.HttpProvider(config.privateProvider));
-var web3 = new Web3(provider);
+// let provider = new Web3(new Web3.providers.HttpProvider(config.privateProvider));
+// var web3 = new Web3(provider);
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
@@ -97,7 +97,6 @@ module.exports = {
   tokenTrasfer: async function (req, res) {
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
     let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.params.projectName } })
-    console.log(accountData, req.user.uniqueId)
     try {
       if (projectConfi.networkType == 'testnet') {
         console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(() => {
@@ -379,8 +378,8 @@ module.exports = {
         "coinName": req.params.projectName
       }
     })
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', "project_id": req.params.projectName } })
-    let tokenLogs = await db.tokenTransferLog.findAll({
+    var accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', "project_id": req.params.projectName } })
+    var tokenLogs = await db.tokenTransferLog.findAll({
       where: {
         "project_id": req.params.projectName,
         uniqueId: {
@@ -388,19 +387,123 @@ module.exports = {
         }
       }, raw: true
     })
-    privateListener.checkTokenStats(projectdatavalues.tokenContractAddress).then(decimals =>{
-      for (let index = 0; index < tokenLogs.length; index++) {
-        address.push(tokenLogs[index].address);
-        values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
+    // if (projectdatavalues.networkType == "mainnet") {
+    //   await Promise.all([icoListener.checkTokenStats(projectdatavalues.tokenContractAddress, new Web3.providers.WebsocketProvider(config.testnetProvider))]).then(([decimals]) => {
+    //     for (let index = 0; index < tokenLogs.length; index++) {
+    //       address.push(tokenLogs[index].address);
+    //       values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
+    //     }
+    //   })
+    //   //   mainnetListener.sendTokenFromcrowdsaleContract(projectdatavalues.dataValues, accountData.address, values, address, accountData.privateKey).then(async receipt => {
+    //   //     await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
+    //   //     res.send({ message: true });
+    //   //   })
+    // }
+    // else if (projectdatavalues.networkType == "testnet") {
+    //   await Promise.all([testnetListener.checkTokenStats(projectdatavalues.tokenContractAddress, new Web3.providers.WebsocketProvider(config.testnetProvider))]).then(([decimals]) => {
+    //     for (let index = 0; index < tokenLogs.length; index++) {
+    //       address.push(tokenLogs[index].address);
+    //       values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
+    //     }
+    //   })
+    //   // testnetListener.sendTokenFromcrowdsaleContract(projectdatavalues.dataValues, accountData.address, values, address, accountData.privateKey).then(async receipt => {
+    //   //   await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
+    //   //   res.send({ message: true });
+    //   // })
+    // }
+    var web3;
+    if (projectdatavalues.networkType == 'testnet') {
+      console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.testnetProvider))
+      await Promise.all([testnetListener.checkTokenStats(projectdatavalues.tokenContractAddress, new Web3.providers.WebsocketProvider(config.testnetProvider))]).then(([decimals]) => {
+        for (let index = 0; index < tokenLogs.length; index++) {
+          address.push(tokenLogs[index].address);
+          values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
+        }
+      })
+      var escrowAbi = [{ "constant": false, "inputs": [{ "name": "_value", "type": "bool" }], "name": "updateBounsStatus", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "rate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "weiRaised", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "wallet", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateBounsRate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "bonusRate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateTokenPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isBonusOn", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_investor", "type": "address" }, { "name": "_tokens", "type": "uint256" }], "name": "sendTokensToInvestors", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "stopCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_addresses", "type": "address[]" }, { "name": "_value", "type": "uint256[]" }], "name": "dispenseTokensToInvestorAddressesByValue", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "beneficiary", "type": "address" }], "name": "buyTokens", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [], "name": "startCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "token", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "rate", "type": "uint256" }, { "name": "bonusRate", "type": "uint256" }, { "name": "wallet", "type": "address" }, { "name": "token", "type": "address" }, { "name": "isBonusOn", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "purchaser", "type": "address" }, { "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }]
+      console.log(values, address, accountData.privateKey);
+      var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
+      let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue(address, values).encodeABI()
+      var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
+      let txData = {
+        "nonce": await web3.eth.getTransactionCount(accountData.address),
+        "gasPrice": "0x170cdc1e00",
+        "gasLimit": "0x2dc6c0",
+        "to": projectdatavalues.crowdsaleContractAddress,
+        "value": "0x0",
+        "data": data,
+        "chainId": 3
       }
-    })
-    var escrowAbi = [{ "constant": false, "inputs": [{ "name": "_value", "type": "bool" }], "name": "updateBounsStatus", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "rate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "weiRaised", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "wallet", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateBounsRate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "bonusRate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateTokenPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isBonusOn", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_investor", "type": "address" }, { "name": "_tokens", "type": "uint256" }], "name": "sendTokensToInvestors", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "stopCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_addresses", "type": "address[]" }, { "name": "_value", "type": "uint256[]" }], "name": "dispenseTokensToInvestorAddressesByValue", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "beneficiary", "type": "address" }], "name": "buyTokens", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [], "name": "startCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "token", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "rate", "type": "uint256" }, { "name": "bonusRate", "type": "uint256" }, { "name": "wallet", "type": "address" }, { "name": "token", "type": "address" }, { "name": "isBonusOn", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "purchaser", "type": "address" }, { "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }]
-    var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
-    let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue(address, values).encodeABI()
-    privateListener.sendTransaction(accountData.address,data,accountData.privateKey,projectdatavalues.tokenContractAddress).then(result =>{
-      console.log(result,"here")
-    })
-    
+      var tx = new Tx(txData);
+      tx.sign(mainPrivateKey);
+      var serializedTx = tx.serialize();
+      try {
+        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+          .on('confirmation', async function (confirmationNumber, receipt) {
+            if (confirmationNumber == 1) {
+              console.log(confirmationNumber, receipt);
+              await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
+              res.send({ receipt: receipt, message: true });
+            }
+          })
+          .on('error', function (error) { res.send({ receipt: error, message: false }); })
+
+      }
+      catch (err) { console.log("in err") }
+    }
+    else if (projectdatavalues.networkType == 'mainnet') {
+      console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.ws_provider))
+      await Promise.all([testnetListener.checkTokenStats(projectdatavalues.tokenContractAddress, new Web3.providers.WebsocketProvider(config.testnetProvider))]).then(([decimals]) => {
+        for (let index = 0; index < tokenLogs.length; index++) {
+          address.push(tokenLogs[index].address);
+          values.push('0x' + ((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate).toString(16))
+        }
+      })
+      var escrowAbi = [{ "constant": false, "inputs": [{ "name": "_value", "type": "bool" }], "name": "updateBounsStatus", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "rate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "weiRaised", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "wallet", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateBounsRate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "bonusRate", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "updateTokenPrice", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isBonusOn", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_investor", "type": "address" }, { "name": "_tokens", "type": "uint256" }], "name": "sendTokensToInvestors", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "stopCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_addresses", "type": "address[]" }, { "name": "_value", "type": "uint256[]" }], "name": "dispenseTokensToInvestorAddressesByValue", "outputs": [{ "name": "ok", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "beneficiary", "type": "address" }], "name": "buyTokens", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [], "name": "startCrowdSale", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "token", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "rate", "type": "uint256" }, { "name": "bonusRate", "type": "uint256" }, { "name": "wallet", "type": "address" }, { "name": "token", "type": "address" }, { "name": "isBonusOn", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "purchaser", "type": "address" }, { "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "beneficiary", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }], "name": "TokensPurchased", "type": "event" }]
+      console.log(values, address, accountData.privateKey);
+      var contractfunc = new web3.eth.Contract(escrowAbi, projectdatavalues.crowdsaleContractAddress, { from: accountData.address });
+      let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue(address, values).encodeABI()
+      var mainPrivateKey = new Buffer(accountData.privateKey.replace("0x", ""), 'hex')
+      let txData = {
+        "nonce": await web3.eth.getTransactionCount(accountData.address),
+        "gasPrice": "0x170cdc1e00",
+        "gasLimit": "0x2dc6c0",
+        "to": projectdatavalues.crowdsaleContractAddress,
+        "value": "0x0",
+        "data": data,
+        "chainId": 3
+      }
+      var tx = new Tx(txData);
+      tx.sign(mainPrivateKey);
+      var serializedTx = tx.serialize();
+      try {
+        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+          .on('confirmation', async function (confirmationNumber, receipt) {
+            if (confirmationNumber == 1) {
+              console.log(confirmationNumber, receipt);
+              await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
+              res.send({ receipt: receipt, message: true });
+            }
+          })
+          .on('error', function (error) { res.send({ receipt: error, message: false }); })
+
+      }
+      catch (err) { console.log("in err") }
+    }
+    else {
+      privateListener.checkTokenStats(projectdatavalues.tokenContractAddress).then(async decimals => {
+        for (let index = 0; index < tokenLogs.length; index++) {
+          address.push(tokenLogs[index].address);
+          values.push((tokenLogs[index].tokenAmount * 10 ** (decimals)) * projectdatavalues.ETHRate)
+        }
+        for (let index = 0; index < tokenLogs.length; index++) {
+          await privateListener.sendTokenFromTokenContract(projectdatavalues.dataValues, accountData.address, values[index], address[index], accountData.privateKey).then(async receipt => {
+            await db.tokenTransferLog.update({ tokenTransferStatus: "Transferred", transaction_hash: receipt.transactionHash }, { where: { uniqueId: { [Op.or]: ids } } });
+          })
+        }
+        res.send({ message: true });
+      })
+    }
   }
 }
 

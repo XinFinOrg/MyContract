@@ -112,27 +112,5 @@ module.exports = {
             })
         })
     },
-    sendTransaction: async (address, data, privateKey, toAddress) => {
-        let txData = {
-            "nonce": await web3.eth.getTransactionCount(address),
-            "data": data,
-            "to": toAddress,
-            "chainId": 2401502
-        }
-        return new Promise(async function (resolve, reject) {
-            web3.eth.estimateGas({data:txData.data,from:address}).then(gasLimit => {
-                console.log(gasLimit);
-                txData["gasLimit"] = gasLimit;
-                web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
-                    web3.eth.sendSignedTransaction(result.rawTransaction)
-                        .on('receipt', async function (receipt) {
-                            resolve(receipt)
-                            console.log(receipt);
-                        })
-                        .on('error', async function (error) { reject(error) })
-                })
-            })
-        })
-    }
 }
 
