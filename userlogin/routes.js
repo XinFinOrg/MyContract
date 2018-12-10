@@ -6,25 +6,25 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 module.exports = function (app) {
 
-  app.get('/login', impl.getLogin);
+  // app.get('/login', impl.getLogin);
   app.post('/api/login', impl.postLogin);
-  app.get('/signup', impl.getSignup);
-  app.post('/signup', impl.postSignup);
-  app.get('/dashboard', isLoggedIn, impl.getDashboard);
+  // app.get('/signup', impl.getSignup);
+  app.post('/api/signup', impl.postSignup);
+  // app.get('/dashboard', isLoggedIn, impl.getDashboard);
   app.get('/api/getProjectArray', isLoggedIn, impl.getProjectArray);
-  app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
+  // app.get('/api/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get('/api/getProfileDetails', isLoggedIn, impl.getAPIProfileDetails);
   // app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
-  app.get('/logout', impl.getLogout);
+  app.get('/api/logout', impl.getLogout);
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
-  app.post('/api/projectList', impl.getProjectList);
-  app.get('/api/getClientList', impl.getClientList);
-  app.get('/forgotPassword',impl.forgotPassword);
-  app.get('/resetPassword',impl.resetPassword);
-  app.post('/updatePassword',impl.updatePassword);
+  // app.get('/api/projectList', impl.getProjectList);
+  // app.get('/api/getClientList', impl.getClientList);
+  app.get('/api/forgotPassword',impl.forgotPassword);
+  // app.get('/resetPassword',impl.resetPassword);
+  app.post('/api/updatePassword',impl.updatePassword);
   app.get('/verifyAccount',impl.verifyAccount);
 
   //new apis
@@ -32,9 +32,9 @@ module.exports = function (app) {
 
 
   //kyc
-  app.get('/KYCpage', isLoggedIn, impl.KYCpage);
-  app.get('/KYCpage/pending', isLoggedIn, impl.KYCpagePending);
-  app.post('/KYCpage/KYCdocUpload', isLoggedIn, impl.KYCdocUpload);
+  // app.get('/KYCpage', isLoggedIn, impl.KYCpage);
+  // app.get('/KYCpage/pending', isLoggedIn, impl.KYCpagePending);
+  app.post('/api/KYCdocUpload', isLoggedIn, impl.KYCdocUpload);
 
   //superUser
   // app.get('/adminLogin', superAdminimpl.adminLogin);
@@ -60,7 +60,7 @@ function isLoggedIn(req, res, next) {
   // JWT enabled login strategy for end user
   jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.redirect('/');
+      return res.send({status:false,message:"please login again"}) //res.redirect('/');
     } else {
       client.find({
         where: {

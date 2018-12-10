@@ -9,6 +9,11 @@ var db = require('../database/models/index');
 var ProjectConfiguration = db.projectConfiguration;
 var client = db.client;
 var nodemailerservice = require('../emailer/impl');
+var bitcoin = require("bitcoinjs-lib");
+let Promise = require('bluebird');
+var Address = db.userCurrencyAddress;
+const Web3 = require('web3');
+const web3 = new Web3();
 module.exports = {
 
   getCustomContractForm: async (req, res) => {
@@ -60,6 +65,12 @@ module.exports = {
     var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
     var ERC20CappedSign = "";
     inherits = "";
+    var decimalInZero = "";
+
+    for (let index = 0; index < req.body.tokenDecimals; index++) {
+      decimalInZero += "0"
+
+    }
 
     if (isBurnable) {
       var ERC20Burnable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Burnable.sol');
@@ -104,38 +115,40 @@ module.exports = {
       "Upgradable": Upgradable,
       "ERC20Mintable": ERC20Mintable,
       //data from form
-      totalSupply: req.body.token_supply,
-      name: req.body.token_name,
-      symbol: req.body.token_symbol,
-      decimal: req.body.token_decimals,
-      decimalInZero: "000000000000000000",
+      totalSupply: req.body.tokenSupply,
+      name: req.body.tokenName,
+      symbol: req.body.tokenSymbol,
+      decimal: req.body.tokenDecimals,
+      decimalInZero: decimalInZero,
       ERC20CappedSign: ERC20CappedSign
     }, async (err, data) => {
       if (err)
         console.log(err);
       req.session.contract = data;
-      req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.body.email, data);
+      req.session.coinName = req.body.tokenName;
+      nodemailerservice.sendContractEmail(req.user.email, data);
       var clientdata = await client.find({
         where: {
-          'email': req.body.email
+          'email': req.user.email
         }
       });
       var objdata = new Object();
       objdata.contractCode = result;
-      objdata.coinName = req.body.token_name;
-      objdata.tokenSupply = req.body.token_supply;
-      objdata.coinSymbol = req.body.token_symbol;
-      objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate = req.body.eth_tokens;
+      objdata.coinName = req.body.tokenName;
+      objdata.tokenSupply = req.body.tokenSupply;
+      objdata.coinSymbol = req.body.tokenSymbol;
+      objdata.ETHRate = req.body.ethRate;
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      var projectData = await ProjectConfiguration.create(objdata)
-      await clientdata.addProjectConfiguration(projectData);
-      clientdata.package1 -= 1;
-      clientdata.save();
-      // res.send({smartcontract:objdata.tokenContractCode.toString()})
+      objdata.bonusRate = req.body.bonusRate == '' ? 0 : req.body.bonusRate;
+      objdata.bonusStatus = req.body.bonusRate == null ? true : false;
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      })
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(objdata.tokenContractCode);
@@ -158,7 +171,11 @@ module.exports = {
     var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
     var ERC20CappedSign = "";
     inherits = "";
+    var decimalInZero = "";
 
+    for (let index = 0; index < req.body.tokenDecimals; index++) {
+      decimalInZero += "0"
+    }
     if (isBurnable) {
       var ERC20Burnable = await fileReader.readEjsFile(__dirname + '/ERC223contracts/ERC20Burnable.sol');
       inherits += ", ERC20Burnable";
@@ -203,37 +220,40 @@ module.exports = {
       "ERC20Mintable": ERC20Mintable,
       "ERC223_receiving_contract": ERC223_receiving_contract,
       //data from form
-      totalSupply: req.body.token_supply,
-      name: req.body.token_name,
-      symbol: req.body.token_symbol,
-      decimal: req.body.token_decimals,
-      decimalInZero: "000000000000000000",
+      totalSupply: req.body.tokenSupply,
+      name: req.body.tokenName,
+      symbol: req.body.tokenSymbol,
+      decimal: req.body.tokenDecimals,
+      decimalInZero: decimalInZero,
       ERC20CappedSign: ERC20CappedSign
     }, async (err, data) => {
       if (err)
         console.log(err);
       req.session.contract = data;
-      req.session.coinName = req.body.token_name;
-      nodemailerservice.sendContractEmail(req.body.email, data);
+      req.session.coinName = req.body.tokenName;
+      nodemailerservice.sendContractEmail(req.user.email, data);
       var clientdata = await client.find({
         where: {
-          'email': req.body.email
+          'email': req.user.email
         }
       });
       var objdata = new Object();
       objdata.contractCode = result;
-      objdata.coinName = req.body.token_name;
-      objdata.tokenSupply = req.body.token_supply;
-      objdata.coinSymbol = req.body.token_symbol;
-      objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate = req.body.eth_tokens;
+      objdata.coinName = req.body.tokenName;
+      objdata.tokenSupply = req.body.tokenSupply;
+      objdata.coinSymbol = req.body.tokenSymbol;
+      objdata.ETHRate = req.body.ethRate;
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      var projectData = await ProjectConfiguration.create(objdata)
-      await clientdata.addProjectConfiguration(projectData);
-      clientdata.package1 -= 1;
-      clientdata.save();
+      objdata.bonusRate = req.body.bonusRate == '' ? 0 : req.body.bonusRate;
+      objdata.bonusStatus = req.body.bonusRate == null ? true : false;
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      })
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(objdata.tokenContractCode);
@@ -279,47 +299,67 @@ module.exports = {
       'ERC721Mintable': ERC721Mintable,
       'ERC721Pausable': ERC721Pausable,
       'Ownable': Ownable,
-      'tokenName': req.body.token_name,
-      'tokenSymbol': req.body.token_symbol,
+      'tokenName': req.body.tokenName,
+      'tokenSymbol': req.body.tokenSymbol,
       'inherits': inherits
     }, async (err, data) => {
       if (err)
         console.log(err);
       var objdata = new Object();
       objdata.contractCode = result;
-      objdata.coinName = req.body.token_name;
-      objdata.coinSymbol = req.body.token_symbol;
+      objdata.coinName = req.body.tokenName;
+      objdata.coinSymbol = req.body.tokenSymbol;
       var clientdata = await client.find({
         where: {
-          'email': req.body.email
+          'email': req.user.email
         }
       });
-      var projectData = await ProjectConfiguration.create(objdata)
-      await clientdata.addProjectConfiguration(projectData);
-      clientdata.package1 -= 1;
-      clientdata.save();
-      nodemailerservice.sendContractEmail(req.body.email, result);
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      })
+      nodemailerservice.sendContractEmail(req.user.email, result);
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(data);
       res.end();
     });
   },
-
-  getGeneratedContract: async function (req, res) {
-    var projectArray = await getProjectArray(req.user.email);
-    var address = req.cookies['address'];
-    console.log(req.session.coinName);
-    res.render('deployedContract', {
-      message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
-      user: req.user,
-      address: address,
-      ProjectConfiguration: projectArray,
-      contract: req.session.contract,
-      coinName: req.session.coinName
-    });
-  },
 }
+
+function generateEthAddress() {
+  return new Promise(async function (resolve, reject) {
+    var newEthAddress = new Object();
+    var keyStore = generateNewAccount();
+    newEthAddress.privateKey = keyStore.privateKey;
+    newEthAddress.address = keyStore.address;
+    newEthAddress.currencyType = "Ethereum";
+    var createdEthAddress = await Address.create(newEthAddress);
+    resolve(createdEthAddress);
+  });
+}
+
+function generateNewAccount(password) {
+  return web3.eth.accounts.create(web3.utils.randomHex(32));
+};
+function generateBTCAddress() {
+  return new Promise(async function (resolve, reject) {
+    var newBTCAddress = new Object();
+    const TestNet = bitcoin.networks.testnet;
+    var keyPair = bitcoin.ECPair.makeRandom();
+    let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+    newBTCAddress.address = address;
+    newBTCAddress.privateKey = keyPair.toWIF();
+    newBTCAddress.currencyType = "Bitcoin";
+    var createdBTCAddress = await Address.create(newBTCAddress);
+    resolve(createdBTCAddress);
+  });
+}
+
 
 function getProjectArray(email) {
   var projectArray = [];

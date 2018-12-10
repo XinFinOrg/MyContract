@@ -14,7 +14,7 @@ module.exports = {
       email: email
     }, (err, data) => {
       var mailOptions = {
-        from: "contract@autocoin.com",
+        from: "contract@mycontract.co",
         to: email,
         subject: "AutoCoin - Smart Contract generation",
         html: data,
@@ -46,7 +46,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@autocoin.com",
+        from: "emailverification@mycontract.co",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -63,7 +63,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@autocoin.com",
+        from: "emailverification@mycontract.co",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -78,7 +78,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "packagePayment@autocoin.com",
+        from: "packagePayment@mycontract.co",
         to: recipientmail,
         subject: "Package Payment OTP",
         html: data
@@ -88,16 +88,15 @@ module.exports = {
   },
   //forgot password mailer
   forgotPasswordMailer: function (req, recipientmail, userhash) {
-    console.log(recipientmail,userhash)
     var link = "http://" + req.get('host') + "/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/forgotPassword.ejs', {
       link: link
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "forgotPassword@autocoin.com",
+        from: "forgotPassword@mycontract.co",
         to: recipientmail,
-        subject: "reset Password link",
+        subject: "Reset Password link",
         html: data
       };
       triggerEmail(mailOptions);

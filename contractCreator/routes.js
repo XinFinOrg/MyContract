@@ -7,24 +7,25 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 
 module.exports = function (app) {
-  app.post("/api/createERC721Contract",isLoggedIn, checkSecret, coinNameExist, impl.createERC721Contract);
-  app.post("/api/createERC20Contract", isLoggedIn,checkSecret, coinNameExist, impl.createERC20Contract);
-  app.post("/api/createERC223Contract",isLoggedIn, checkSecret, coinNameExist, impl.createERC223Contract);
+  app.post("/api/createERC721Contract", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC721Contract);
+  app.post("/api/createERC20Contract", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC20Contract);
+  app.post("/api/createERC223Contract", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC223Contract);
 }
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
   var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.redirect('/');
+      return res.send({ status: false, message: "please login again" })
     } else {
       client.find({
         where: {
           uniqueId: decoded.userId
         }
       }).then(user => {
+        console.log("here 1")
         req.user = user;
         next();
       });
@@ -38,25 +39,19 @@ function checkSecret(req, res, next) {
 }
 
 function coinNameExist(req, res, next) {
-  if (req.body.token_symbol == "XDC" || req.body.token_symbol == "XDCE") {
-    console.log("exist");
-    req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
-    res.redirect('/customContract');
+  if (req.body.tokenSymbol == "XDC" || req.body.tokenSymbol == "XDCE") {
+    res.send({ status: false, message: "coin name already exist" })
   } else {
     projectConfiguration.find({
       where: {
-        'coinSymbol': req.body.token_symbol
+        'coinSymbol': req.body.tokenSymbol
       }
     }).then(result => {
-      // console.log(result)
       if (result == null) {
-        console.log("next");
+        console.log("here 2")
         return next();
       } else {
-        res.send({ error: "SMC01", message: "coin name already exist" })
-        // console.log("exist");
-        // req.flash('project_flash', "Token Name Already Exist! Please Try Different Name.");
-        // res.redirect('/customContract');
+        res.send({ status: false, message: "coin name already exist" })
       }
     })
   }
@@ -64,7 +59,6 @@ function coinNameExist(req, res, next) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
-  console.log("Here");
   client.find({
     where: {
       'email': req.user.email
@@ -73,10 +67,10 @@ function hasPackage1(req, res, next) {
     result.attemptsCount = result.attemptsCount + 1;
     await result.save().then(console.log("attmpt added", result.package1));
     if (result.package1 > 0) {
+      console.log("here 3")
       return next();
     } else {
-      req.flash('package_flash', "You need to buy Package 1 by contributing 1200000 XDCe");
-      res.redirect('/generatedContract');
+      res.send({ status: false, message: "Package 1 required" })
     }
   });
 }

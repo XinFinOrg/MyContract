@@ -10,7 +10,7 @@ var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = function (app) {
   app.post('/api/automaticDeployer', isLoggedIn, checkSecret, impl.getAutomaticDeployer);
-  app.post('/api/contractCompiler', isLoggedIn, checkSecret, impl.contractCompiler);
+  app.post('/api/projectContractData', isLoggedIn, checkSecret, impl.projectContractData);
 
 }
 
@@ -19,9 +19,9 @@ module.exports = function (app) {
 function isLoggedIn(req, res, next) {
   var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.redirect('/');
+      return res.send({ status: false, message: "please login again" })
     } else {
       client.find({
         where: {
