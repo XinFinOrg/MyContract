@@ -27,6 +27,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11",
+    "react-loader-spinner": "^2.3.0",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",

@@ -13,6 +13,7 @@ class Dashboard extends Component {
       };
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getProjectList = this.getProjectList.bind(this);
+      this.getKYCList = this.getKYCList.bind(this);
     }
 
     componentDidMount() {
@@ -27,6 +28,10 @@ class Dashboard extends Component {
 
     getProjectList(email) {
       this.props.history.push('/projectList/'+email)
+    }
+
+    getKYCList(uniqueId) {
+      this.props.history.push('/kycList/'+uniqueId)
     }
     render() {
       const {data} = this.state;
@@ -52,18 +57,18 @@ class Dashboard extends Component {
           data={data}
           columns={columns}
           onFetchData={this.fetchData}
-          getTrProps ={(state, rowInfo) => {
+          noDataText="Not available"
+          getTdProps ={(state, rowInfo, column) => {
             if (rowInfo && rowInfo.row) {
               return {
                 onClick: (e) => {
                   this.setState({
                     selected: rowInfo.index,
                   })
-                  this.getProjectList(rowInfo.original.email)
-                },
-                style: {
-                  background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
-                  color: rowInfo.index === this.state.selected ? 'white' : 'black'
+                  if(column.id == "uniqueId")
+                    this.getProjectList(rowInfo.original.email)
+                  else if(column.id == "kyc_verified")
+                    this.getKYCList(rowInfo.original.uniqueId)
                 }
               }
             }else{

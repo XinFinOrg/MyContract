@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import ReactTable from "react-table";
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
+import Loader from 'react-loader-spinner';
 
 class ProjectList extends Component {
     constructor(props){
@@ -16,10 +17,8 @@ class ProjectList extends Component {
     }
 
     componentDidMount() {
-      console.log(this.props.match.params.userEmail);
       axios.post('/api/projectList', {'email': this.props.match.params.userEmail})
       .then(res => {
-        console.log(res);
         this.setState({
           data: res.data.projects
         })
@@ -52,29 +51,30 @@ class ProjectList extends Component {
         accessor: 'uniqueId'
       }];
       return (
-        <ReactTable
-          data={data}
-          columns={columns}
-          onFetchData={this.fetchData}
-          getTrProps ={(state, rowInfo) => {
-            if (rowInfo && rowInfo.row) {
-              return {
-                onClick: (e) => {
-                  this.setState({
-                    selected: rowInfo.index,
-                  })
-                  this.getProjectList(rowInfo.original.email)
-                },
-                style: {
-                  background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
-                  color: rowInfo.index === this.state.selected ? 'white' : 'black'
+          <ReactTable
+            data={data}
+            columns={columns}
+            onFetchData={this.fetchData}
+            noDataText="Not available"
+            getTrProps ={(state, rowInfo) => {
+              if (rowInfo && rowInfo.row) {
+                return {
+                  onClick: (e) => {
+                    this.setState({
+                      selected: rowInfo.index,
+                    })
+                    this.getProjectList(rowInfo.original.email)
+                  },
+                  style: {
+                    background: rowInfo.index === this.state.selected ? '#00afec' : 'white',
+                    color: rowInfo.index === this.state.selected ? 'white' : 'black'
+                  }
                 }
+              }else{
+                return {}
               }
-            }else{
-              return {}
-            }
-          }}
-          />
+            }}
+            />
       );
     }
 }

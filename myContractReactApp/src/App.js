@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import ProjectList from "./ProjectList";
+import KYCPage from "./KYCPage";
 import { BrowserRouter, Route, Link} from "react-router-dom";
 
 
@@ -17,6 +18,7 @@ class App extends Component{
           <div>
             <Route exact path="/projectList" component={Dashboard}/>
             <Route path="/projectList/:userEmail" component={ProjectList}/>
+            <Route exact path="/kycList/:uniqueId" component={KYCPage}/>
             <Route exact path="/superadmin" component={Login}/>
           </div>
 
