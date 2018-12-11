@@ -31,7 +31,7 @@ module.exports = {
           const error = new Error('An Error occured')
           return res.json({
             'token': "failure",
-            'message': info
+            'message': error
           });
         }
         const token = jwt.sign({
@@ -74,7 +74,7 @@ module.exports = {
             'message': info
           });
         }
-        return res.send({ status, info })
+        return res.send({status:true,message:"signup successful"}) //res.send({ status, info })
       }
       catch (error) {
         return next(error);
@@ -130,7 +130,8 @@ module.exports = {
   getLogout: function (req, res) {
     res.clearCookie('clientToken');
     res.clearCookie('address');
-    res.redirect('/dashboard');
+    // res.redirect('/dashboard');
+    res.send({ message: true })
   },
 
   githubLogin: passport.authenticate('github'),
@@ -157,22 +158,25 @@ module.exports = {
     let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
     if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
       client.update({
-        "name": req.body.first_name + " " + req.body.last_name,
-        "isd_code": req.body.ISD_code,
-        "mobile": req.body.number,
+        "name": req.body.firstName + " " + req.body.lastName,
+        "isd_code": req.body.ISDCode,
+        "mobile": req.body.contactNumber,
         'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
         'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
         'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+        "kycDocName1":req.body.kycDocName1,
+        "kycDocName2":req.body.kycDocName2,
+        "kycDocName3":req.body.kycDocName3,
         "kyc_verified": "pending"
       }, {
           where: {
-            'email': req.user.email
+            'email': req.body.email
           }
         }).then(() => {
-          res.redirect('/KYCpage/pending');
+          res.send({status:true,message:"KYC submitted"});
         });
     } else {
-      res.send("Error occured while uploading! Please check your images!")
+      res.send({status:false,message:"Error occured while uploading! Please check your image extension! only jpeg allowed"})
     }
   },
 
@@ -222,8 +226,15 @@ module.exports = {
   getProfileDetails: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    res.render('profileDetails', {
-      user: req.user,
+    res.send({
+      name: req.user.name,
+      email: req.user.email,
+      verification: req.user.kyc_verified,
+      accountStatus: req.user.status,
+      package1: req.user.package1,
+      package2: req.user.package2,
+      isd_code: req.user.isd_code,
+      mobile: req.user.mobile,
       address: address,
       ProjectConfiguration: projectArray,
     });
@@ -243,13 +254,10 @@ module.exports = {
         result.update({
           password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
         }).then(result => {
-          res.redirect("/")
+          res.send({ status: true, message: "password changed" })
         })
       }
-      catch(exception)
-      {
-        res.send({ message: ' Not a valid BCrypt hash' })
-      }
+      catch{ res.send({ status: false, message: ' Not a valid BCrypt hash' }) }
     })
   },
   verifyAccount: (req, res) => {
@@ -266,17 +274,17 @@ module.exports = {
   checkExistence: async (req, res) => {
     client.find({
       where: {
-        'email': req.query.email
+        'email': req.body.email
       }
     }).then((result) => {
       if (result != null) {
         res.send({
-          status: 'success',
+          status: false,
           message: 'Account Already Exists'
         });
       } else {
-        res.status(200).send({
-          status: 'success',
+        res.send({
+          status:true,
           message: 'Account does not exist.'
         });
       }
@@ -288,16 +296,16 @@ module.exports = {
   forgotPassword: (req, res) => {
     client.find({
       where: {
-        'email': req.query.email
+        'email': req.body.email
       }
     }).then(result => {
       if (result == null) {
-        res.send("User not found")
+        res.send({ error: "no user found", status: false })
       } else if (result.password == null) {
-        res.send("Password")
+        res.send({ error: "no password found", status: false })
       } else {
-        mailer.forgotPasswordMailer(req, req.query.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
-        res.send("success")
+        mailer.forgotPasswordMailer(req, req.body.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
+        res.send({ error: "email sent", status: true })
       }
     })
   },

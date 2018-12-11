@@ -37,10 +37,9 @@ module.exports = {
     });
   },
   getSiteConfiguration: function (req, res) {
-    console.log(req.params.projectName)
     ProjectConfiguration.find({
       where: {
-        'coinSymbol': req.params.projectName
+        'coinName': req.params.tokenName
       },
       attributes: {
         exclude: ['coinName', 'ETHRate', 'networkURL', 'client_id', 'isAllowedForICO', 'bonusStatus', 'tokenContractCode', "tokenABICode", "crowdsaleABICode", 'networkType', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
@@ -48,17 +47,14 @@ module.exports = {
     }).then(values => {
       if (!values) {
         res.send({
-          message: "null!"
+          status: false,
+          message: "no record found"
         });
       } else {
         var dataobj = new Object();
         dataobj = values.dataValues;
-        // if (values.dataValues.siteLogo) {
-        //   dataobj.siteLogo ='data:image/bmp;base64,' + Buffer.from(values.dataValues.siteLogo).toString('base64')
-        // } else {
-        //   dataobj.siteLogo = null;
-        // }
         res.send({
+          status: true,
           data: dataobj
         })
       }
@@ -67,23 +63,24 @@ module.exports = {
   updateSiteConfiguration: async function (req, res) {
     var projectdatavalues = await ProjectConfiguration.find({
       where: {
-        "coinName": req.params.projectName
+        "coinName": req.params.tokenName
       }
     })
     await ImageDataURI.encodeFromFile(req.files[0].path)
       .then(imgurl => {
         projectdatavalues.siteLogo = imgurl;
-        projectdatavalues.siteName = req.body.site_name
-        projectdatavalues.softCap = req.body.soft_cap
-        projectdatavalues.hardCap = req.body.hard_cap
-        projectdatavalues.startDate = req.body.start_date
-        projectdatavalues.endDate = req.body.end_date
-        projectdatavalues.homeURL = req.body.website_url
-        projectdatavalues.minimumContribution = req.body.minimum_contribution
+        projectdatavalues.siteName = req.body.siteName
+        projectdatavalues.softCap = req.body.softCap
+        projectdatavalues.hardCap = req.body.hardCap
+        projectdatavalues.startDate = req.body.startDate
+        projectdatavalues.endDate = req.body.endDate
+        projectdatavalues.homeURL = req.body.homeURL
+        projectdatavalues.minimumContribution = req.body.minimumContribution
       })
     projectdatavalues.save().then(() => {
-      console.log("Project updated successfully!");
-      res.redirect("/siteConfiguration/project/" + req.params.projectName)
+      res.send({ status: true, message: "Project updated successfully!" })
+    }).catch(function (err) {
+      res.send({ status: false, message: "please try again later" })
     });
   },
 
@@ -94,55 +91,53 @@ module.exports = {
     })
   },
   getICOdata: async function (req, res) {
-    userdata = new Object();
-    userdata = await User.findAll({
+    User.findAll({
       where: {
-        "projectConfigurationCoinName": req.params.projectName
+        "projectConfigurationCoinName": req.params.tokenName
       },
       attributes: {
         exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password"]
       }
-    })
-    userdata.forEach(element => {
-      element.dataValues.link = "<a href='/icoDashboardSetup/project/" + req.params.projectName + "/kyctab/" + element.dataValues.uniqueId + "/getUserData'>click Here</a>"
-      // console.log(element)
-    });
-    res.send({
-      data: userdata
+    }).then(userData => {
+      res.send({ status: true, data: userData })
+    }).catch(function (err) {
+      res.send({ status: false, message: "no data found" })
     });
   },
   getUserData: async function (req, res) {
-    var userdata = new Object();
     User.find({
       where: {
-        "projectConfigurationCoinName": req.params.projectName,
+        "projectConfigurationCoinName": req.params.tokenName,
         "uniqueId": req.params.uniqueId
       },
     }).then(async result => {
-      userdata = result.dataValues;
-      console.log("done")
-      res.render("adminKYCpanel.ejs", {
-        KYCdata: userdata,
-        projectName: req.params.projectName
+      res.send({
+        status: true,
+        UserData: result.dataValues,
       })
-    })
+    }).catch(function (err) {
+      res.send({ status: false, message: "no data found" })
+    });
   },
   updateUserData: async function (req, res) {
-    console.log(req.params)
-    var userdata = await User.find({
-      where: {
-        "projectConfigurationCoinName": req.params.projectName,
-        "uniqueId": req.params.uniqueId
-      },
-    })
-    userdata.kyc_verified = req.body.kyc_verified;
-    userdata.status = req.body.status;
-    userdata.save().then(function (result, error) {
-      if (!result)
-        console.log("not updated");
-      console.log("updated");
-    })
-    res.redirect("/icoDashboardSetup/project/" + req.params.projectName + "/kyctab")
+    try {
+      var userdata = await User.find({
+        where: {
+          "projectConfigurationCoinName": req.params.tokenName,
+          "uniqueId": req.params.uniqueId
+        },
+      })
+      userdata.kyc_verified = req.body.kycStatus;
+      userdata.status = req.body.accountStatus;
+      userdata.save().then(() => {
+        res.send({ status: true, message: "data updated" })
+      }).catch(function (err) {
+        res.send({ status: false, message: "error occured" })
+      });
+    } catch{
+      res.send({ status: false, message: "error occured" })
+
+    }
   },
 
   contractData: async function (req, res) {
@@ -227,7 +222,8 @@ module.exports = {
           expire: 360000 + Date.now()
         });
         return res.json({
-          'token': "success"
+          status:true,
+          token:token
         });
       } catch (error) {
         return next(error);
@@ -242,9 +238,9 @@ module.exports = {
       console.log(user);
       try {
         if (err || !user) {
-          return res.redirect('./userSignup');
+          return res.send({ status: false, message: "Somthing went wrong! Please try again later." })
         }
-        return res.redirect('./userLogin');
+        return res.send({ status: true, message: "signup Succesful" })
       } catch (error) {
         return next(error);
       }
@@ -253,7 +249,6 @@ module.exports = {
 
 
   verifyMail: (req, res) => {
-    console.log(req.query);
     db.user.find({
       where: {
         uniqueId: req.query.verificationId
@@ -261,18 +256,15 @@ module.exports = {
     }).then((user) => {
       user.emailVerified = true;
       user.save().then((user) => {
-        res.redirect('./' + user.projectConfigurationCoinName + '/userLogin');
+        res.render('blank');
       });
     });
   },
   getTransaction: async (req, res) => {
     transactionLog = await db.tokenTransferLog.findAll(
-      { where: { 'project_id': req.params.projectName }, raw: true }
+      { where: { 'project_id': req.params.tokenName }, raw: true }
     );
-    // console.log(transactionLog)
-    res.render("transaction.ejs", {
-      user: req.user,
-      projectName: req.params.projectName,
+    res.send({
       transactionLog: transactionLog
     });
   },

@@ -29,25 +29,25 @@ function generateNewAccount(password) {
 
 module.exports = function (passport) {
 
-  // 
-  // // used to serialize the user for the session
-  // passport.serializeUser(function (user, done) {
-  //
-  //   done(null, user.email);
-  // });
-  //
-  // // used to deserialize the user
-  // passport.deserializeUser(function (email, done) {
-  //   client.find({
-  //     where: {
-  //       'email': email
-  //     }
-  //   }).then(client => {
-  //     done(null, client.dataValues);
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  // });
+
+  // used to serialize the user for the session
+  passport.serializeUser(function (user, done) {
+
+    done(null, user.email);
+  });
+
+  // used to deserialize the user
+  passport.deserializeUser(function (email, done) {
+    client.find({
+      where: {
+        'email': email
+      }
+    }).then(client => {
+      done(null, client.dataValues);
+    }).catch(err => {
+      console.log(err);
+    });
+  });
 
   //user signup strategy for passport
   passport.use('user-signup', new LocalStrategy({
@@ -68,12 +68,12 @@ module.exports = function (passport) {
         }).then(async user => {
           // check to see if theres already a user with that email
           if (user) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false, 'That email is already taken.');
+
           } else {
             // if there is no user with that email
             // create the user
 
-            console.log(req.body.projectName);
             //Find project details and map user
             var project = await Project.find({
               where: {
@@ -133,7 +133,6 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
-      console.log(email,password)
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
       client.find({
@@ -141,7 +140,8 @@ module.exports = function (passport) {
           'email': email
         }
       }).then(client => {
-        console.log(true)
+        // console.log(client.dataValues);
+
         // if no user is found, return the message
         if (!client)
           return done(null, false, 'No user found.'); // req.flash is the way to set flashdata using connect-flash
@@ -149,9 +149,9 @@ module.exports = function (passport) {
         if (client.password == null || (!bcrypt.compareSync(password, client.password)))
           return done(null, false, 'Oops! Wrong password.'); // create the loginMessage and save it to session as flashdata
         if (client.status == false)
-          return done(null, false, 'Oops! Active your Account! Check Your email for Activation Link.');
+          return done(null, false, 'Hello! Active your Account! Check Your email for Activation Link.');
         // all is well, return successful user
-        return done(null, client.dataValues);
+        return done(null, client);
       });
     }));
 
@@ -172,7 +172,7 @@ module.exports = function (passport) {
         }).then(async result => {
           // check to see if theres already a user with that email
           if (result) {
-            return done(null, false, 'email is already taken.');
+            return done(null, false,'That email is already taken.');
           } else {
             // if there is no user with that email
             // create the user
@@ -187,7 +187,7 @@ module.exports = function (passport) {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
-              return done(null,true,'successful signup');
+              return done(null, createdClient.dataValues,'Please verify your email address by clicking the link that we have mailed you!');
             });
           }
         });
@@ -289,7 +289,7 @@ function generateEthAddress() {
     var keyStore = generateNewAccount();
     newEthAddress.privateKey = keyStore.privateKey;
     newEthAddress.address = keyStore.address;
-    newEthAddress.currencyType = "Ethereum";
+    newEthAddress.currencyType = "masterEthereum";
     var createdEthAddress = await Address.create(newEthAddress);
     resolve(createdEthAddress);
   });
@@ -303,7 +303,7 @@ function generateBTCAddress() {
     let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
     newBTCAddress.address = address;
     newBTCAddress.privateKey = keyPair.toWIF();
-    newBTCAddress.currencyType = "Bitcoin";
+    newBTCAddress.currencyType = "masterBitcoin";
     var createdBTCAddress = await Address.create(newBTCAddress);
     resolve(createdBTCAddress);
   });
@@ -315,9 +315,9 @@ function createNewUser(req) {
     // set the user's local credentials
     newUser.email = req.body.email;
     newUser.password = generateHash(req.body.password);
-    newUser.firstName = req.body.first_name;
-    newUser.lastName = req.body.last_name;
-    newUser.country = req.body.country_id;
+    newUser.firstName = req.body.firstName;
+    newUser.lastName = req.body.lastName;
+    newUser.country = req.body.countryId;
     var createdUser = await User.create(newUser);
     sendUserVerificationMail(req, createdUser.email, createdUser.firstName, createdUser.uniqueId);
     resolve(createdUser);

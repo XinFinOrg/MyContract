@@ -6,7 +6,8 @@ module.exports = {
   'testnetFaucetAddress':'0x14649976AEB09419343A54ea130b6a21Ec337772',
   'testnetFaucetPrivatekey':'25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142',
   'ws_provider' : 'wss://mainnet.infura.io/ws',
-  'ws_testnet':'wss://ropsten.infura.io/ws',
+  'testnetProvider' : 'wss://ropsten.infura.io/ws',
+  'privateProvider':'http://78.129.208.129:8545',
   'erc20ABI': [{
       "anonymous": false,
       "inputs": [{
