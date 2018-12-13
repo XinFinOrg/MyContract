@@ -11,11 +11,14 @@ module.exports = function (app, express) {
   // app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   // app.post('/api/contractInteraction/contractData', impl.contractData);
 
-  app.get('/icoDashboardSetup/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
+  app.get('/api/icoDashboardSetup/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
   app.get('/api/siteConfiguration/project/:tokenName/getSiteConfiguration',isLoggedIn, impl.getSiteConfiguration);
   app.post('/api/siteConfiguration/project/:tokenName/updateSiteConfiguration',isLoggedIn, impl.updateSiteConfiguration)
-  app.get('/transaction/project/:tokenName',isLoggedIn, impl.getTransaction)
+  app.get('/api/transaction/project/:tokenName',isLoggedIn, impl.getTransaction)
+  app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq',isLoggedIn,impl.initiateTransferReq)
+  app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer',isLoggedIn,impl.tokenTrasfer)
+
 
   // app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
   app.get('/icoDashboardSetup/project/:tokenName/kyctab/getICOUsersData',isLoggedIn, impl.getICOdata);
@@ -56,7 +59,7 @@ function hasPackage3(req, res, next) {
   ProjectConfiguration.find({
     where: {
       'client_id': req.user.uniqueId,
-      'coinName': req.params.projectName
+      'coinName': req.params.tokenName
     }
   }).then(result => {
     if (result.dataValues.isAllowedForICO == true) {

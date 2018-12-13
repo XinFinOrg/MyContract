@@ -38,7 +38,7 @@ module.exports = {
 
     },
 
-    getKycDataForUser:async(req, res) => {
+    getKycDataForUser: async (req, res) => {
         userdata = new Object();
         userdata = await client.findAll({
             order: [['createdAt', 'DESC']],
@@ -53,5 +53,43 @@ module.exports = {
         res.send({
             data: userdata
         });
-    }
+    },
+
+    getClientData: async function (req, res) {
+        client.find({
+            where: {
+                "uniqueId": req.params.uid
+            },
+            attributes: {
+                exclude: ["password", "google_id", "github_id"]
+            }
+        }).then(async result => {
+            res.send({
+                status: true,
+                UserData: result.dataValues,
+            })
+        }).catch(function (err) {
+            res.send({ status: false, message: "no data found" })
+        });
+    },
+
+    updateClientData: async function (req, res) {
+        try {
+            var userdata = await client.find({
+                where: {
+                    "uniqueId": req.params.uid
+                },
+            })
+            userdata.kyc_verified = req.body.kycStatus;
+            userdata.status = req.body.accountStatus;
+            userdata.save().then(() => {
+                res.send({ status: true, message: "data updated" })
+            }).catch(function (err) {
+                res.send({ status: false, message: "error occured" })
+            });
+        } catch{
+            res.send({ status: false, message: "error occured" })
+
+        }
+    },
 }
