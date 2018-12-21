@@ -4,6 +4,7 @@ var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
 var ProjectConfiguration = db.projectConfiguration;
+var admin = db.admin;
 
 module.exports = {
     postLogin: (req, res) => {
@@ -38,12 +39,33 @@ module.exports = {
 
     },
 
-    getKycDataForUser: async (req, res) => {
+    postLogout: function (req, res) {
+        res.clearCookie('clientToken');
+        res.clearCookie('address');
+        // res.redirect('/dashboard');
+        res.send({ message: true })
+    },
+
+    getAllAdmins: async (req, res) => {
         userdata = new Object();
         userdata = await client.findAll({
             order: [['createdAt', 'DESC']],
             attributes: {
-                exclude: ["usertype_id", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password"]
+                exclude: ["usertype_id", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password", "paymentOTP"]
+            },
+            raw: true
+        })
+        res.send({
+            data: userdata
+        });
+    },
+
+    getKycDataForUser: async (req, res) => {
+        userdata = new Object();
+        userdata = await admin.findAll({
+            order: [['createdAt', 'DESC']],
+            attributes: {
+                include: ["kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password"]
             },
             raw: true
         })

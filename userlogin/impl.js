@@ -59,7 +59,6 @@ module.exports = {
   },
 
   postSignup: async function (req, res, next) {
-    console.log(req.body, "in here")
     passport.authenticate('local-signup', {
       session: false,
       // successRedirect: '/login', // redirect to the secure profile section

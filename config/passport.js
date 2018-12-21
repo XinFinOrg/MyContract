@@ -7,6 +7,7 @@ var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
+var admin = db.admin;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
@@ -172,8 +173,14 @@ module.exports = function (passport) {
         }).then(async result => {
           // check to see if theres already a user with that email
           if (result) {
-            return done(null, false,'That email is already taken.');
+            return done(null, false, 'That email is already taken.');
           } else {
+
+            var Admin = await admin.find({
+              where: {
+                'uniqueId': req.params.adminId
+              }
+            });
             // if there is no user with that email
             // create the user
             var newUser = new Object();
@@ -182,12 +189,13 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status = false;
-            newUser.package1 = 1 ;
-            Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
-              createdClient.addUserCurrencyAddress(createdEthAddress);
+            newUser.package1 = 1;
+            Promise.all([generateEthAddress(), createNewClient(req)]).then(async ([createdEthAddress, createdClient]) => {
+              await createdClient.addUserCurrencyAddress(createdEthAddress);
+              await Admin.addClient(createdClient);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
-              return done(null, createdClient.dataValues,'Please verify your email address by clicking the link that we have mailed you!');
+              return done(null, createdClient.dataValues, 'Please verify your email address by clicking the link that we have mailed you!');
             });
           }
         });
@@ -226,7 +234,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -270,7 +278,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -281,6 +289,76 @@ module.exports = function (passport) {
       });
     }
   ));
+
+  //admin login strategy for passport
+  passport.use('admin-login', new LocalStrategy({
+    // by default, local strategy uses username and password, we will override with email
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, email, password, done) {
+      // callback with email and password from our form
+      // find a user whose email is the same as the forms email
+      admin.find({
+        where: {
+          'email': email
+        }
+      }).then(admin => {
+        // console.log(client.dataValues);
+
+        // if no user is found, return the message
+        if (!admin)
+          return done(null, false, 'No user found.'); // req.flash is the way to set flashdata using connect-flash
+        // if the user is found but the password is wrong
+        if (admin.password == null || (!bcrypt.compareSync(password, admin.password)))
+          return done(null, false, 'Oops! Wrong password.'); // create the loginMessage and save it to session as flashdata
+        if (admin.status == false)
+          return done(null, false, 'Hello! Active your Account! Check Your email for Activation Link.');
+        // all is well, return successful user
+        return done(null, admin);
+      });
+    }));
+
+  //admin signup strategy for passport
+  passport.use('admin-signup', new LocalStrategy({
+    // by default, local strategy uses username and password, we will override with email
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true // allows us to pass back the entire request to the callback
+  },
+    function (req, email, password, done) {
+      process.nextTick(function () {
+        // find a user whose email is the same as the forms email
+        admin.find({
+          where: {
+            'email': email
+          }
+        }).then(async result => {
+          // check to see if theres already a user with that email
+          if (result) {
+            return done(null, false, 'That email is already taken.');
+          } else {
+            // if there is no user with that email
+            // create the user
+            var newUser = new Object();
+
+            // set the user's local credentials
+            newUser.email = email;
+            newUser.password = generateHash(password);
+            newUser.name = req.body.firstName + ' ' + req.body.lastName;
+            newUser.status = false;
+            Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
+              var createdClient = await admin.create(newUser);
+              createdClient.addUserCurrencyAddress(createdEthAddress);
+              //activation email sender
+              mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
+              return done(null, createdClient.dataValues, 'Please verify your email address by clicking the link that we have mailed you!');
+            });
+          }
+        });
+      });
+    }));
 }
 
 function generateEthAddress() {

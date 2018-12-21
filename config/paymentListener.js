@@ -1,6 +1,6 @@
 module.exports = {
 
-  'tokenAddress': "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
+  'tokenAddress': "0xCb5608d645f648dc46b1245ea1fEcd125E1525c4",
   'diversionAddress': "0x920E938A80Fa1669b608166741eeb01De6C57402",
   'amount':'1200000000000000000000000',
   'testnetFaucetAddress':'0x14649976AEB09419343A54ea130b6a21Ec337772',

@@ -80,6 +80,15 @@ module.exports = (sequelize, DataTypes) => {
         {
             type: DataTypes.STRING
         },
+        paymentOTP:
+        {
+            type: DataTypes.NUMERIC,
+            allowNull:true
+        },
+        isAllowed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         createdAt: {
             allowNull: false,
             type: DataTypes.DATE,

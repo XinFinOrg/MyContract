@@ -3,7 +3,8 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
-module.exports = function(app) {
+var admin = db.admin;
+module.exports = function (app) {
 
   app.get('/buyPackage', isLoggedIn, impl.buyPackage);
   app.get('/payment', isLoggedIn, impl.payment);
@@ -17,11 +18,32 @@ module.exports = function(app) {
 function isLoggedIn(req, res, next) {
   var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function(err, decoded) {
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.redirect('/');
     } else {
       client.find({
+        where: {
+          uniqueId: decoded.userId
+        }
+      }).then(user => {
+        console.log(user)
+        req.user = user;
+        next();
+      });
+    }
+  });
+
+}
+
+function isAdminLoggedIn(req, res, next) {
+  var token = req.cookies['clientToken'];
+  // JWT enabled login strategy for end user
+  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+    if (err) {
+      return res.redirect('/');
+    } else {
+      admin.find({
         where: {
           uniqueId: decoded.userId
         }

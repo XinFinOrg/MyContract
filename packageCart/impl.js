@@ -6,6 +6,7 @@ var paymentListener = require('./paymentListener');
 var ProjectConfiguration = db.projectConfiguration;
 var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
+var admin = db.admin;
 module.exports = {
   buyPackage: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
@@ -52,7 +53,7 @@ module.exports = {
               'address': addressCookie
             }
           }).then(address => {
-            console.log(address,"address");
+            console.log(address, "address");
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1200000) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);
@@ -94,7 +95,7 @@ module.exports = {
       userHash: req.user.uniqueId,
       address: req.body.address
     }, configAuth.jwtAuthKey.secret, {
-        expiresIn: 60*3
+        expiresIn: 60 * 3
       });
     //Send back the token to the user
     res.cookie('paymentToken', token, {
@@ -107,11 +108,11 @@ module.exports = {
 
   sendPaymentInfo: (req, res) => {
     // console.log(req.cookies['paymentToken']);
-    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function(err, decoded) {
+    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
       console.log(decoded);
       paymentListener.attachListenerWithUserHash(decoded.userHash, decoded.address);
     });
-  }
+  },
 }
 
 function getProjectArray(email) {
@@ -123,7 +124,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash','networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {
