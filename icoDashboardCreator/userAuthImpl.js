@@ -88,33 +88,36 @@ module.exports = {
 
   logout: (req, res, next) => {
     res.clearCookie('token');
-    res.redirect('../userSignup');
+    res.send({status:true,message:"logout successful."})
   },
 
   getDashboard: async (req, res, next) => {
     // try {
-      let UserObj = new Object;
-      UserObj.firstName = req.user.firstName
-      UserObj.lastName = req.user.lastName
-      UserObj.email = req.user.email
-      UserObj.uniqueId = req.user.uniqueId
-      let projectObj = new Object;
-      projectObj.siteLogo = req.user.projectConfiguration.dataValues.siteLogo
-      projectObj.siteName = req.user.projectConfiguration.dataValues.siteName
-      projectObj.coinName = req.user.projectConfiguration.dataValues.coinName
-      projectObj.coinSymbol = req.user.projectConfiguration.dataValues.coinSymbol
-      projectObj.tokenSold = req.user.projectConfiguration.dataValues.tokenSold
-      projectObj.tokenSupply = req.user.projectConfiguration.dataValues.tokenSupply
-      projectObj.softCap = req.user.projectConfiguration.dataValues.softCap
-      projectObj.minimumContribution = req.user.projectConfiguration.dataValues.minimumContribution
-      projectObj.bonusRate = req.user.projectConfiguration.dataValues.bonusRate
-      projectObj.homeURL = req.user.projectConfiguration.dataValues.homeURL
-      projectObj.contactEmail = req.user.projectConfiguration.dataValues.contactEmail
-      projectObj.startDate = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString();
-      projectObj.endDate = new Date(req.user.projectConfiguration.dataValues.endDate).toLocaleDateString();
-      projectObj.datetime = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString() + " " + new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleTimeString();
-      console.log(projectObj)
-      res.send({ status: true, UserObject: UserObj, projectObject: projectObj });
+    let UserObj = new Object;
+    UserObj.firstName = req.user.firstName
+    UserObj.lastName = req.user.lastName
+    UserObj.email = req.user.email
+    UserObj.uniqueId = req.user.uniqueId
+    let projectObj = new Object;
+    projectObj.siteLogo = req.user.projectConfiguration.dataValues.siteLogo
+    projectObj.siteName = req.user.projectConfiguration.dataValues.siteName
+    projectObj.coinName = req.user.projectConfiguration.dataValues.coinName
+    projectObj.coinSymbol = req.user.projectConfiguration.dataValues.coinSymbol
+    projectObj.tokenSold = req.user.projectConfiguration.dataValues.tokenSold
+    projectObj.tokenSupply = req.user.projectConfiguration.dataValues.tokenSupply
+    projectObj.softCap = req.user.projectConfiguration.dataValues.softCap
+    projectObj.minimumContribution = req.user.projectConfiguration.dataValues.minimumContribution
+    projectObj.bonusRate = req.user.projectConfiguration.dataValues.bonusRate
+    projectObj.homeURL = req.user.projectConfiguration.dataValues.homeURL
+    projectObj.contactEmail = req.user.projectConfiguration.dataValues.contactEmail
+    projectObj.startDate = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString();
+    projectObj.endDate = new Date(req.user.projectConfiguration.dataValues.endDate).toLocaleDateString();
+    projectObj.datetime = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString() + " " + new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleTimeString();
+    let CurrencyAddresses = new Object;
+    CurrencyAddresses = req.user.userCurrencyAddresses;
+    CurrencyAddresses[0].privateKey = "";
+    CurrencyAddresses[1].privateKey = "";
+    res.send({ status: true, UserObject: UserObj, CurrencyAddresses: CurrencyAddresses, projectData: projectObj });
     // } catch {
     //   res.send({ status: false, message: "error occured." })
     // }
@@ -166,7 +169,7 @@ module.exports = {
           }).then(() => {
             res.send({ status: true, message: "KYC Submitted." })
           }).catch(err => {
-            res.send({ status: false, message: "error occured" })
+            res.send({ status: false, message: "error occured", err: err })
           })
       }
       else {
@@ -243,7 +246,7 @@ module.exports = {
     var eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     console.log(req.body.token_ETH);
@@ -251,36 +254,36 @@ module.exports = {
 
     var masterETHList = await req.user.projectConfiguration.getUserCurrencyAddresses({
       where: {
-        currencyType: 'masterEthereum'
+        currencyType: 'Ethereum'
       }
     });
     var masterETHAddress = masterETHList[0].address;
     icoListener.buyToken(eth_address, masterETHAddress, eth_addresses[0].privateKey, req.body.amount)
       .then((receipt) => {
         initiateTokenTransfer(req.user, req.user.projectConfiguration, req.body.token_ETH, eth_address, "ETH");
+        res.send({ receipt: receipt });
       });
-    res.redirect('../../user/dashboard');
   },
 
   buyTokenBTC: async (req, res) => {
     var eth_address;
     var eth_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Ethereum'
+        currencyType: 'masterEthereum'
       }
     });
     eth_address = eth_addresses[0].address;
     var btc_address;
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {
-        currencyType: 'Bitcoin'
+        currencyType: 'masterBitcoin'
       }
     });
     btc_address = btc_addresses[0].address;
 
     var masterBTCList = await req.user.projectConfiguration.getUserCurrencyAddresses({
       where: {
-        currencyType: 'masterBitcoin'
+        currencyType: 'Bitcoin'
       }
     });
     var masterBTCAddress = masterBTCList[0].address;
@@ -299,8 +302,8 @@ module.exports = {
       fee: "fastest",
     }).then(receipt => {
       initiateTokenTransfer(req.user, req.user.projectConfiguration, req.body.token_BTC, eth_address, "BTC");
+      res.send({ receipt: receipt });
     });
-    res.redirect('../../user/dashboard');
   },
 
   checkTokenStats: (req, res) => {

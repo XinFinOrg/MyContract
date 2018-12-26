@@ -16,7 +16,7 @@ module.exports = {
                         expiresIn: configAuth.jwtAuthKey.tokenLife
                     });
                 //Send back the token to the user
-                res.cookie('clientToken', token, {
+                res.cookie('superAdminToken', token, {
                     expire: 36000 + Date.now()
                 });
                 console.log(token, "token")

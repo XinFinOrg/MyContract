@@ -13,7 +13,7 @@ var configAuth = require('../config/auth');
 router.get('/transactions', isAuthenticated, kycVerified, impl.getTransactions);
 router.get('/wallets', isAuthenticated, kycVerified, impl.getWallets);
 // router.get('/kyc', isAuthenticated, kycVerified, impl.getCompletedKYCPage);
-router.get('/logout', isAuthenticated, impl.logout);
+router.get('/userLogout', isAuthenticated, impl.logout);
 router.get('/dashboard', isAuthenticated, kycVerified, impl.getDashboard);
 // router.get('/contact_us', isAuthenticated, kycVerified, impl.getContactPage);
 // router.post('/contact_us', isAuthenticated, impl.postContactPage);

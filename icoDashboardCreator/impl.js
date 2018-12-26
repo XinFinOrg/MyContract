@@ -16,6 +16,9 @@ var privateListener = require('../icoHandler/privateNetworkHandler');
 var testnetListener = require('../icoHandler/etherRopstenNetworkHandler');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
+var Tx = require('ethereumjs-tx');
+var Web3 = require('web3');
+var config = require('../config/paymentListener');
 
 module.exports = {
   //client setup
@@ -120,17 +123,15 @@ module.exports = {
         "coinName": req.params.tokenName
       }
     })
-    await ImageDataURI.encodeFromFile(req.files[0].path)
-      .then(imgurl => {
-        projectdatavalues.siteLogo = imgurl;
-        projectdatavalues.siteName = req.body.siteName
-        projectdatavalues.softCap = req.body.softCap
-        projectdatavalues.hardCap = req.body.hardCap
-        projectdatavalues.startDate = req.body.startDate
-        projectdatavalues.endDate = req.body.endDate
-        projectdatavalues.homeURL = req.body.homeURL
-        projectdatavalues.minimumContribution = req.body.minimumContribution
-      })
+    if (req.files[0] == undefined) { projectdatavalues.siteLogo = null }
+    else { projectdatavalues.siteLogo = await ImageDataURI.encodeFromFile(req.files[0].path) }
+    projectdatavalues.siteName = req.body.siteName
+    projectdatavalues.softCap = req.body.softCap
+    projectdatavalues.hardCap = req.body.hardCap
+    projectdatavalues.startDate = req.body.startDate
+    projectdatavalues.endDate = req.body.endDate
+    projectdatavalues.homeURL = req.body.homeURL
+    projectdatavalues.minimumContribution = req.body.minimumContribution
     projectdatavalues.save().then(() => {
       res.send({ status: true, message: "Project updated successfully!" })
     }).catch(function (err) {
@@ -323,8 +324,8 @@ module.exports = {
     });
   },
   tokenTrasfer: async function (req, res) {
-    let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
-    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.params.projectName } })
+    let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.tokenName } })
+    let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.params.tokenName } })
     try {
       if (projectConfi.networkType == 'testnet') {
         console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(receipt => {
@@ -345,7 +346,7 @@ module.exports = {
     catch (err) { console.log("in err", err) }
   },
   initiateTransferReq: async (req, res) => {
-    console.log(req.body,req.params)
+    console.log(req.body, req.params)
     let ids = []
     let address = [];
     let values = [];
@@ -354,18 +355,19 @@ module.exports = {
     });
     let projectdatavalues = await ProjectConfiguration.find({
       where: {
-        "coinName": req.params.projectName
+        "coinName": req.params.tokenName
       }
     })
-    var accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', "project_id": req.params.projectName } })
+    var accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', "project_id": req.params.tokenName } })
     var tokenLogs = await db.tokenTransferLog.findAll({
       where: {
-        "project_id": req.params.projectName,
+        "project_id": req.params.tokenName,
         uniqueId: {
           [Op.or]: ids
         }
       }, raw: true
     })
+
     var web3;
     if (projectdatavalues.networkType == 'testnet') {
       console.log("in testnet"); web3 = new Web3(new Web3.providers.WebsocketProvider(config.testnetProvider))

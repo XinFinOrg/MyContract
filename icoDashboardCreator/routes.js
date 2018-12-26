@@ -13,18 +13,19 @@ module.exports = function (app, express) {
 
   app.get('/api/icoDashboardSetup/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
-  app.get('/api/siteConfiguration/project/:tokenName/getSiteConfiguration',isLoggedIn, impl.getSiteConfiguration);
-  app.post('/api/siteConfiguration/project/:tokenName/updateSiteConfiguration',isLoggedIn, impl.updateSiteConfiguration)
-  app.get('/api/transaction/project/:tokenName',isLoggedIn, impl.getTransaction)
-  app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq',isLoggedIn,impl.initiateTransferReq)
-  app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer',isLoggedIn,impl.tokenTrasfer)
+  app.get('/api/siteConfiguration/project/:tokenName/getSiteConfiguration', isLoggedIn, hasVerified, hasPackage3, impl.getSiteConfiguration);
+  app.post('/api/siteConfiguration/project/:tokenName/updateSiteConfiguration', isLoggedIn, hasVerified, hasPackage3, impl.updateSiteConfiguration)
+  app.get('/api/transaction/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.getTransaction)
+  app.post('/icoDashboard/transaction/project/:tokenName/initiateTransferReq', isLoggedIn, impl.initiateTransferReq)
+  app.post('/icoDashboard/transaction/project/:tokenName/tokenTrasfer', isLoggedIn, impl.tokenTrasfer)
 
 
   // app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
-  app.get('/icoDashboardSetup/project/:tokenName/kyctab/getICOUsersData',isLoggedIn, impl.getICOdata);
-  app.get('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/getUserData',isLoggedIn, impl.getUserData);
-  app.post('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/updateUserData', isLoggedIn,impl.updateUserData);
+  app.get('/icoDashboardSetup/project/:tokenName/kyctab/getICOUsersData', isLoggedIn, hasVerified, hasPackage3, impl.getICOdata);
+  app.get('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/getUserData', isLoggedIn, impl.getUserData);
+  app.post('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/updateUserData', isLoggedIn, impl.updateUserData);
 
+  //user login apis
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
   app.post('/:projectName/userSignup', impl.postUserSignup);
@@ -38,7 +39,7 @@ function isLoggedIn(req, res, next) {
   // JWT enabled login strategy for end user
   jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.send({ status: false, message: "please login again" })
+      return res.send({ status: false, message: "please login again", err: err })
     } else {
       client.find({
         where: {
@@ -65,8 +66,7 @@ function hasPackage3(req, res, next) {
     if (result.dataValues.isAllowedForICO == true) {
       return next();
     } else {
-      req.flash('package_flash', 'You need to buy this package ');
-      res.redirect('/dashboard');
+      res.send({ status: false, message: 'You need to buy this package ' });
     }
   })
 }
@@ -83,13 +83,19 @@ function hasVerified(req, res, next) {
         { next(); }
         break;
       case "pending":
-        { res.redirect('/KYCpage/pending'); }
+        {
+          res.send({ status: false, message: 'KYC status is pending!' });
+        }
         break;
       case "notInitiated":
-        { res.redirect('/KYCpage'); }
+        {
+          res.send({ status: false, message: 'In order to access this platform please do the KYC' });
+        }
         break;
       default:
-        { res.redirect('/'); }
+        {
+          res.send({ status: false, message: 'In order to access this platform please do the KYC' });
+        }
         break;
     }
   })

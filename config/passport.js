@@ -337,7 +337,7 @@ module.exports = function (passport) {
         }).then(async result => {
           // check to see if theres already a user with that email
           if (result) {
-            return done(null, false, 'That email is already taken.');
+            return done(null, false, 'That email was already taken.');
           } else {
             // if there is no user with that email
             // create the user

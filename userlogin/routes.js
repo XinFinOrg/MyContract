@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 module.exports = function (app) {
 
+  //client apis
   // app.get('/login', impl.getLogin);
   app.post('/api/login', impl.postLogin);
   // app.get('/signup', impl.getSignup);
@@ -52,17 +53,17 @@ module.exports = function (app) {
   // app.post('/api/makeAdminPayment',adminimpl.makePayment);
   app.post('/api/adminKYCupload', isAdminLoggedIn, adminimpl.adminKYCupload);
   app.get('/api/adminBalance', isAdminLoggedIn, adminimpl.adminBalance);
-  app.get('/api/clientList',isAdminLoggedIn ,adminimpl.getClientKYCData);
-  app.post('/api/updateClientKYCData/uid/:uid',isAdminLoggedIn , adminimpl.updateClientKYC)
+  app.get('/api/clientList', isAdminLoggedIn, adminimpl.getClientKYCData);
+  app.post('/api/updateClientKYCData/uid/:uid', isAdminLoggedIn, adminimpl.updateClientKYC)
   app.get('/adminLogout', isAdminLoggedIn, adminimpl.Adminlogout);
 
 };
 
 // // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-  var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+  // if (req.cookies['clientToken'] || req.cookies['superAdminToken']) {
+  jwt.verify(req.cookies['clientToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.send({ status: false, message: "please login again" }) //res.redirect('/');
     } else {
@@ -79,9 +80,8 @@ function isLoggedIn(req, res, next) {
 }
 
 function isAdminLoggedIn(req, res, next) {
-  var token = req.cookies['clientToken'];
-  // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+  // else if (req.cookies['adminToken']) {
+  jwt.verify(req.cookies['adminToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.send({ status: false, message: "please login again" }) //res.redirect('/');
     } else {
@@ -96,3 +96,4 @@ function isAdminLoggedIn(req, res, next) {
     }
   });
 }
+// }

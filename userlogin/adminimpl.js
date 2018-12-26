@@ -33,7 +33,7 @@ module.exports = {
                         expiresIn: configAuth.jwtAuthKey.tokenLife
                     });
                 //Send back the token to the user
-                res.cookie('clientToken', token, {
+                res.cookie('adminToken', token, {
                     expire: 360000 + Date.now()
                 });
                 console.log(token, "token")

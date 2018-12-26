@@ -26,7 +26,7 @@ module.exports = {
   },
 
   payment: function (req, res) {
-    if (!req.query.otpValue) {
+    if (!req.body.otpValue) {
       client.find({
         where: {
           'email': req.user.email
@@ -37,6 +37,7 @@ module.exports = {
         }).then(result => {
           console.log(req.user.email, result.dataValues.paymentOTP);
           otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
+          res.send({ status: true, message: "OTP  sent to your respective email address." })
         })
       });
     } else {
@@ -45,24 +46,21 @@ module.exports = {
           'email': req.user.email
         }
       }).then(result => {
-        if (result.dataValues.paymentOTP == req.query.otpValue) {
-          var addressCookie = req.cookies['address'];
-          console.log(addressCookie)
+        if (result.dataValues.paymentOTP == req.body.otpValue) {
           Address.find({
             where: {
-              'address': addressCookie
+              'address': req.user.userCurrencyAddresses[0].address
             }
           }).then(address => {
-            console.log(address, "address");
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1200000) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);
+                console.log(receipt)
                 paymentListener.attachListener(address.address);
-                req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
+                res.send({ status: true, message: 'Successfully initiated payment. You will be shortly alloted package credits' });
               } else {
-                req.flash('package_flash', 'Insufficient funds to buy Package');
+                res.send({ status: false, message: 'Insufficient funds to buy Package' });
               }
-              res.redirect('/dashboard');
             });
           })
         }
@@ -79,8 +77,7 @@ module.exports = {
   },
 
   getBalances: (req, res) => {
-    var address = req.cookies['address'];
-    Promise.all([paymentListener.checkBalance(address), paymentListener.checkEtherBalance(address)]).then(([balance, ethBalance]) => {
+    Promise.all([paymentListener.checkBalance(req.user.userCurrencyAddresses[0].address), paymentListener.checkEtherBalance(req.user.userCurrencyAddresses[0].address)]).then(([balance, ethBalance]) => {
       res.send({
         'XDCE': balance,
         'ETH': ethBalance

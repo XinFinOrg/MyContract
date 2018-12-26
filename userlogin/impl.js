@@ -27,11 +27,11 @@ module.exports = {
     }, async (err, user, info) => {
       console.log("Info" + info);
       try {
-        if (err || !user) {
+        if (err || !user || info) {
           const error = new Error('An Error occured')
           return res.json({
             'token': "failure",
-            'message': error
+            'message': err ? null : info
           });
         }
         const token = jwt.sign({
@@ -73,7 +73,7 @@ module.exports = {
             'message': info
           });
         }
-        return res.send({status:true,message:"signup successful"}) //res.send({ status, info })
+        return res.send({ status: true, message: "signup successful" }) //res.send({ status, info })
       }
       catch (error) {
         return next(error);
@@ -163,19 +163,19 @@ module.exports = {
         'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
         'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
         'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
-        "kycDocName1":req.body.kycDocName1,
-        "kycDocName2":req.body.kycDocName2,
-        "kycDocName3":req.body.kycDocName3,
+        "kycDocName1": req.body.kycDocName1,
+        "kycDocName2": req.body.kycDocName2,
+        "kycDocName3": req.body.kycDocName3,
         "kyc_verified": "pending"
       }, {
           where: {
             'email': req.body.email
           }
         }).then(() => {
-          res.send({status:true,message:"KYC submitted"});
+          res.send({ status: true, message: "KYC submitted" });
         });
     } else {
-      res.send({status:false,message:"Error occured while uploading! Please check your image extension! only jpeg allowed"})
+      res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
     }
   },
 
@@ -188,7 +188,7 @@ module.exports = {
     }).then(client => {
       client.getProjectConfigurations().then(projectList => {
         res.send({
-          projects : projectList
+          projects: projectList
         });
       })
     })
@@ -283,7 +283,7 @@ module.exports = {
         });
       } else {
         res.send({
-          status:true,
+          status: true,
           message: 'Account does not exist.'
         });
       }
