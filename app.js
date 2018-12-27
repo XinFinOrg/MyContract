@@ -55,9 +55,9 @@ app.use(function (req, res, next) {
   next();
 });
 //for static files
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'icoDashboardCreator')));
-app.use('/contractInteraction/project', express.static(__dirname + '/icoDashboardCreator/dist'));
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'icoDashboardCreator')));
+// app.use('/contractInteraction/project', express.static(__dirname + '/icoDashboardCreator/dist'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
