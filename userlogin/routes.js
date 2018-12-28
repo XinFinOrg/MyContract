@@ -42,10 +42,10 @@ module.exports = function (app) {
   //superAdmin
   app.post('/api/superAdminLogin', superAdminimpl.postLogin);
   app.get('/api/superAdminLogout', superAdminimpl.postLogout);
-  app.get('/api/getAllAdmins', superAdminimpl.getAllAdmins);
-  app.get('/api/getKycDataForUser', isLoggedIn, superAdminimpl.getKycDataForUser);
-  app.get('/api/getClientData/uid/:uid', isLoggedIn, superAdminimpl.getClientData);
-  app.post('/api/updateClientData/uid/:uid', isLoggedIn, superAdminimpl.updateClientData);
+  app.get('/api/getAllAdmins', isSuperAdminLoggedIn, superAdminimpl.getAllAdmins);
+  app.get('/api/getKycDataForUser', isSuperAdminLoggedIn, superAdminimpl.getKycDataForUser);
+  app.get('/api/getClientData/uid/:uid', isSuperAdminLoggedIn, superAdminimpl.getClientData);
+  app.post('/api/updateClientData/uid/:uid', isSuperAdminLoggedIn, superAdminimpl.updateClientData);
 
   //admin
   app.post('/api/adminLogin', adminimpl.postLogin);
@@ -96,4 +96,17 @@ function isAdminLoggedIn(req, res, next) {
     }
   });
 }
-// }
+
+
+
+function isSuperAdminLoggedIn(req, res, next) {
+  // else if (req.cookies['adminToken']) {
+  jwt.verify(req.cookies['superAdminToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
+    if (err) {
+      return res.send({ status: false, message: "please login again" }) //res.redirect('/');
+    } else {
+      next();
+    }
+  });
+}
+// }  

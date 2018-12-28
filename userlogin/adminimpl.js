@@ -102,19 +102,25 @@ module.exports = {
     },
 
     adminBalance: async (req, res) => {
-        var eth_address;
-        var eth_addresses = await req.user.getUserCurrencyAddresses({
-            where: {
-                currencyType: 'masterEthereum'
-            }
-        });
-        eth_address = eth_addresses[0].address;
-        Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkTokenBalance(eth_address, '0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2')]).then(([ethBalance, tokenBalance]) => {
-            res.send({
-                'ETHBalance': ethBalance,
-                'tokenBalance': tokenBalance
+        try {
+            var eth_address;
+            var eth_addresses = await req.user.getUserCurrencyAddresses({
+                where: {
+                    currencyType: 'masterEthereum'
+                }
             });
-        });
+            eth_address = eth_addresses[0].address;
+            Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkTokenBalance(eth_address, '0xc573c48ad1037dd92cb39281e5f55dcb5e033a70')]).then(([ethBalance, tokenBalance]) => {
+                res.send({
+                    'ETHBalance': ethBalance,
+                    'tokenBalance': tokenBalance
+                });
+            });
+        } catch{
+            res.send({
+                status: false, message: "error occured while fetching balance",
+            });
+        }
     },
 
     getClientKYCData: async (req, res) => {
