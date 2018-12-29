@@ -10,6 +10,8 @@ const ImageDataURI = require('image-data-uri');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
 var icoListener = require('../icoHandler/listener');
+var fs = require('fs');
+
 
 
 module.exports = {
@@ -90,6 +92,14 @@ module.exports = {
                             'email': req.body.email
                         }
                     }).then(() => {
+                        req.files.forEach(element => {
+                            fs.unlink(element.destination + '/' + element.originalname, function (error) {
+                                if (error) {
+                                    throw error;
+                                }
+                                console.log('Deleted filename', element.originalname);
+                            })
+                        })
                         res.send({ status: true, message: "KYC submitted successfully" });
                     });
             } else {
