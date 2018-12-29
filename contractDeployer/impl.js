@@ -51,8 +51,9 @@ module.exports = {
     })
   },
   getAutomaticDeployer: async function (req, res) {
-    let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.body.coinName } });
+    let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.body.coinName, 'client_id': req.user.uniqueId } });
     if (projectData == null) {
+      console.log("herewS")
       res.send({ status: false, message: "No data found!" });
     } else {
       let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.body.coinName } })
