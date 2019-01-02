@@ -140,6 +140,9 @@ module.exports = {
             attributes: {
                 exclude: ["password", "google_id", "github_id"]
             },
+            where: {
+                admin_id: req.user.uniqueId
+            },
             raw: true
         })
         // userdata.forEach(element => {

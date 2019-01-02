@@ -1,9 +1,10 @@
 module.exports = function(app){
   app.get('/', function(req, res) {
-    res.statusCode = 302;
-    res.setHeader("Location", "https://apidocs.mycontract.co/");
-    res.end();
+    // res.statusCode = 302;
+    // res.setHeader("Location", "https://apidocs.mycontract.co/");
+    // res.end();
     // res.send({ message: 'Welcome to Mycontract for apis please find below document' });
+    res.render('index.ejs')
   });
 };
 
