@@ -1,0 +1,8 @@
+{"message":"::1 - - [03/Jan/2019:07:17:51 +0000] \"POST /api/adminLogin HTTP/1.1\" 200 192 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:18:37 +0000] \"POST /api/adminLogin HTTP/1.1\" 200 192 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:19:53 +0000] \"POST /api/adminLogin HTTP/1.1\" 200 192 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:20:09 +0000] \"POST /api/paymentforAdmin HTTP/1.1\" 404 4044 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:20:27 +0000] \"GET /api/paymentforAdmin HTTP/1.1\" 404 3844 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:20:51 +0000] \"GET /api/adminBalance HTTP/1.1\" 200 35 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:21:29 +0000] \"GET /api/clientList HTTP/1.1\" 200 450 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [03/Jan/2019:07:21:54 +0000] \"GET /getBalances HTTP/1.1\" 200 20 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}

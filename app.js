@@ -11,9 +11,8 @@ var engine = require('ejs-mate')
 // var helmet = require('helmet');
 var validator = require('express-validator');
 var cors = require('cors')
-
-
-
+var fs = require('fs')
+var winston = require('./config/winston');
 
 const app = express();
 const session = require('express-session');
@@ -83,7 +82,7 @@ app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+app.use(logger('combined', { stream: winston.stream }))
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
