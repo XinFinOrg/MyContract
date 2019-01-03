@@ -81,6 +81,7 @@ function isLoggedIn(req, res, next) {
 
 function isAdminLoggedIn(req, res, next) {
   // else if (req.cookies['adminToken']) {
+    console.log(req.cookies)
   jwt.verify(req.cookies['adminToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.send({ status: false, message: "please login again" }) //res.redirect('/');

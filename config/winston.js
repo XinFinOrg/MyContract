@@ -12,12 +12,12 @@ var options = {
         maxFiles: 5,
         colorize: false,
     },
-    // console: {
-    //     level: 'debug',
-    //     handleExceptions: true,
-    //     json: false,
-    //     colorize: true,
-    // },
+    console: {
+        level: 'debug',
+        handleExceptions: true,
+        json: false,
+        colorize: true,
+    },
     errorFile: {
         level: 'error',
         filename: `${appRoot}/logs/appError.log`,
@@ -32,7 +32,7 @@ var options = {
 // instantiate a new Winston Logger with the settings defined above
 let logger = winston.createLogger({
     transports: [
-        // new (winston.transports.Console)(options.console),
+        new (winston.transports.Console)(options.console),
         new (winston.transports.File)(options.errorFile),
         new (winston.transports.File)(options.file)
     ],

@@ -123,7 +123,8 @@ module.exports = {
             Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkTokenBalance(eth_address, '0xc573c48ad1037dd92cb39281e5f55dcb5e033a70')]).then(([ethBalance, tokenBalance]) => {
                 res.send({
                     'ETHBalance': ethBalance,
-                    'tokenBalance': tokenBalance
+                    'tokenBalance': tokenBalance,
+                    status:true
                 });
             });
         } catch{
