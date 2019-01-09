@@ -28,7 +28,15 @@ module.exports = {
   getSignup: function (req, res) {
     // render the page and pass in any flash data if it exists
     res.render('signup.ejs', {
-      message: req.flash('signupMessage')
+      message: req.flash('signupMessage'),
+    });
+  },
+
+  getAdminRelatedSignup: function (req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('signupAdmin.ejs', {
+      message: req.flash('signupMessage'),
+      adminId: req.params.adminId
     });
   },
 
@@ -221,7 +229,7 @@ module.exports = {
     let fd;
     try {
       fd = fs.openSync('./subscribeData.txt', 'a');
-      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+      fs.appendFileSync(fd, JSON.stringify(req.body) + '\r\n', 'utf8');
     } catch (err) {
       console.log(err);
     } finally {
@@ -234,7 +242,7 @@ module.exports = {
     let fd;
     try {
       fd = fs.openSync('./contactUsData.txt', 'a');
-      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+      fs.appendFileSync(fd, JSON.stringify(req.body) + '\r\n', 'utf8');
     } catch (err) {
       console.log(err);
     } finally {

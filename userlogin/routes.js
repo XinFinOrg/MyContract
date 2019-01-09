@@ -2,12 +2,14 @@ var impl = require('./impl');
 var superAdminimpl = require('./superAdminimpl');
 var db = require('../database/models/index');
 var client = db.client;
+var admin = db.admin;
 module.exports = function (app) {
 
   app.get('/login', impl.getLogin);
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
+  app.get('/adminId/:adminId/ClientSignup', adminCheck, impl.getAdminRelatedSignup);
   app.get('/dashboard', isLoggedIn, impl.getDashboard);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get('/faq', isLoggedIn, impl.getFAQ);
@@ -21,8 +23,8 @@ module.exports = function (app) {
   app.get('/resetPassword', impl.resetPassword);
   app.post('/updatePassword', impl.updatePassword);
   app.get('/verifyAccount', impl.verifyAccount);
-  app.post('/subscribe',impl.subscribe);
-  app.post('/contactUs',impl.contactUs);
+  app.post('/subscribe', impl.subscribe);
+  app.post('/contactUs', impl.contactUs);
   // app.get('/getProjectArray', impl.getProjectArray);
 
 
@@ -50,3 +52,17 @@ function isLoggedIn(req, res, next) {
 
 }
 
+function adminCheck(req, res, next) {
+  admin.find({
+    where: {
+      uniqueId: req.params.adminId
+    },
+  }).then(user => {
+    if (user.isAllowed == true) {
+      next();
+    }
+    else {
+      res.send({ status: false, message: "This URL is not valid!" })
+    }
+  });
+}

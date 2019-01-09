@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+  <title>MyContract</title>
+  <!-- Style CSS -->
+  <link href="../../assets/css/style.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="../../assets/css/custom.css" rel="stylesheet">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<style>
+      /* The message box is shown when the user clicks on the password field */
+    #message {
+        display:none;
+        background: #ffffffd3;
+        color: rgba(12, 8, 8, 0.753);
+        position: relative;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    
+    #message p {
+        padding: 1  px 10px;
+        font-size: 15px;
+    }
+    
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+    
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✔";
+    }
+    
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+    
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "✖";
+    }
+    </style>
+
+<body>
+  <div class="main-wrapper">
+
+    <!-- Preloader -->
+
+    <div class="preloader">
+      <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+      </div>
+    </div>
+
+    <!-- Preloader -->
+
+
+    <!-- Login box -->
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-5">
+            <div class="auth-wrapper d-flex no-block justify-content-center align-items-center">
+              <div class="auth-box login-box">
+                <div id="loginform">
+                  <div class="logo">
+                    <span class="db"><img src="../../assets/images/logo.png" alt="AltCoin" /></span>
+                    <h2 class="font-medium m-t-20 m-b-20">Create an Account</h2>
+                    <h5 class="font-normal m-b-20">Enter your details to register</h5>
+                  </div>
+                  <!-- Form -->
+                  <div class="row">
+                    <div class="col-12">
+                      <% if (message.length > 0) { %>
+                        <div class="alert alert-danger">
+                          <%= message %>
+                        </div>
+                        <% } %>
+                          <form class="form-horizontal m-t-20" id="loginform" action="/signup?adminId=<%= adminId %>" method="post">
+                            <div class="form-group">
+                              <label for="email">Email</label>
+                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                              <span class="alert-danger" id="inputVal_error"></span>
+                            </div>
+                            <div class="form-group">
+                              <label for="password">Password</label>
+                              <input type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required placeholder="Enter password">
+                            </div>
+                            <div class="form-group">
+                              <label for="retypePassword">Retype Password</label>
+                              <input type="password" class="form-control" id="retypePassword" name="retypePassword" placeholder="Retype password">
+                            </div>
+                            <div id="message" >
+                                <h3>Password must contain the following:</h3>
+                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                <p id="number" class="invalid">A <b>number</b></p>
+                                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                                <p id="passwordcheck" class="invalid">Password should be<b>  same in both fields</b></p>
+                              </div>
+                            <div class="form-group">
+                              <div class="row align-items-center">
+                                <div class="col-md-12 p-b-20">
+                                  <button class="btn btn-lg btn-rounded btn-info" type="submit"  id="send" disabled="disabled">SIGNUP</button>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR continue with</span></p>
+
+                            <div class="row full-width">
+                              <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                                <div class="social">
+                                  <a href="/auth/google" class="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title="" data-original-title="Login with Google">
+                                  <i aria-hidden="true" class="fab fa-google"></i> Google</a>
+                                  <a href="/auth/google" class="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title="" data-original-title="Login with GitHub">
+                                  <i aria-hidden="true" class="fab fa-github"></i> GitHub</a>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group m-b-0 m-t-15">
+                              <div class="col-sm-12">
+                                Already have an account? <a href="/login" class="text-info m-l-5"><b>Login</b></a>
+                              </div>
+                            </div>
+                          </form>
+                    </div>
+                  </div>
+                </div>
+                <div id="recoverform">
+                  <div class="logo">
+                    <span class="db"><img src="../../assets/images/logo.png" alt="AltCoin" /></span>
+                    <h2 class="font-medium m-t-20 m-b-20">Recover Password</h2>
+                    <h5 class="font-normal m-b-20">Enter your Email and instructions will be sent to you!</h5>
+                  </div>
+                  <div class="row m-t-20">
+                    <!-- Form -->
+                    <form class="col-12" action="/forgotPassword" method="POST">
+                      <label for="email">Email</label> <input class="form-control" type="text" name="email" placeholder="email">
+                      <br>
+                      <input class="btn btn-lg btn-rounded btn-info" type="submit" value="Submit">
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-7">
+            <div class="auth-wrapper-bg">
+              <div class="auth-box_content">
+                <p class="font-bold">Code your own Crowdsale token</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+
+  <!-- All Required js -->
+
+  <script src="../../assets/libs/jquery/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="../../assets/libs/popper.js/popper.min.js"></script>
+  <script src="../../assets/libs/bootstrap/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <% include partials/icoScripts %>
+  <!-- This page plugin js -->
+  <script type="text/javascript">
+    $('body').addClass('login');
+    $('#root-view').addClass('auth-layout');
+  </script>
+
+  <script>
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+    // ==============================================================
+    // Login and Recover Password
+    // ==============================================================
+    $('#to-recover').on("click", function () {
+      $("#loginform").slideUp();
+      $("#recoverform").fadeIn();
+    });
+  </script>
+ <script>
+    var myInput3 = document.getElementById("email");
+    var myInput = document.getElementById("password");
+    var myInput2 = document.getElementById("retypePassword");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length"); 
+    var passwordcheck = document.getElementById("passwordcheck");
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function() {
+        document.getElementById("message").style.display = "block";
+    }
+    
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function() {
+        document.getElementById("message").style.display = "none";
+    }
+    myInput3.onkeyup = function() {
+      if (myInput3.value === '' || myInput3.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
+                document.getElementById("send").disabled="disabled";
+
+            } else {
+                document.getElementById("inputVal_error").innerHTML = '';
+                // document.getElementById("send").disabled="";
+            }
+    }
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function() {
+      // Validate lowercase letters
+      var lowerCaseLetters = /[a-z]/g;
+      if(myInput.value.match(lowerCaseLetters)) {  
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+      }
+      
+      // Validate capital letters
+      var upperCaseLetters = /[A-Z]/g;
+      if(myInput.value.match(upperCaseLetters)) {  
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+    
+      // Validate numbers
+      var numbers = /[0-9]/g;
+      if(myInput.value.match(numbers)) {  
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+      
+      // Validate length
+      if(myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+        
+      }
+    }
+    myInput2.onfocus = function() {
+        document.getElementById("message").style.display = "block";
+    }
+    
+    // When the user clicks outside of the password field, hide the message box
+    myInput2.onblur = function() {
+        document.getElementById("message").style.display = "none";
+    }
+    myInput2.onkeyup = function() {
+      if(myInput.value == myInput2.value) {
+        passwordcheck.classList.remove("invalid");
+        passwordcheck.classList.add("valid");
+        document.getElementById("send").disabled="";
+      } else {
+        passwordcheck.classList.remove("valid");
+        passwordcheck.classList.add("invalid");
+        document.getElementById("send").disabled="disabled";
+      }
+    }
+    </script>
+</body>
+
+</html>

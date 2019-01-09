@@ -7,6 +7,7 @@ var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
+var admin = db.admin;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
@@ -174,6 +175,11 @@ module.exports = function (passport) {
           if (result) {
             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
+            var Admin = await admin.find({
+              where: {
+                'uniqueId': req.query.adminId
+              }
+            });
             // if there is no user with that email
             // create the user
             var newUser = new Object();
@@ -182,9 +188,10 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status = false;
-            newUser.package1 = 1 ;
-            Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
+            newUser.package1 = 1;
+            Promise.all([generateEthAddress(), createNewClient(req)]).then(async ([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
+              await Admin.addClient(createdClient);
               //activation email sender
               mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
               return done(null, createdClient.dataValues, req.flash('loginMessage', 'Please verify your email address by clicking the link that we have mailed  you!'));
@@ -226,7 +233,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -270,7 +277,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
