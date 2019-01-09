@@ -6,12 +6,13 @@ var configAuth = require('../config/auth');
 var ProjectConfiguration = db.projectConfiguration;
 // var fs = require('fs');
 var path = require('path');
-// var paymentListener = require('../packageCart/paymentListener');
+var paymentListener = require('../packageCart/paymentListener');
 var bcrypt = require('bcrypt-nodejs');
 var mailer = require('../emailer/impl');
 const ImageDataURI = require('image-data-uri');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
+var fs = require('fs');
 module.exports = {
 
   getLogin: function (req, res) {
@@ -21,7 +22,6 @@ module.exports = {
   },
 
   postLogin: (req, res, next) => {
-    console.log(req.body)
     passport.authenticate('local-login', {
       session: false,
     }, async (err, user, info) => {
@@ -73,7 +73,10 @@ module.exports = {
             'message': info
           });
         }
-        return res.send({ status: true, message: "signup successful" }) //res.send({ status, info })
+        if (status)
+          return res.send({ status: true, message: "signup successful" }) //res.send({ status, info })
+        else
+          return res.send({ status: true, message: info }) //res.send({ status, info })
       }
       catch (error) {
         return next(error);
@@ -150,35 +153,47 @@ module.exports = {
       user: req.user,
     })
   },
-  KYCdocUpload: async function (req, res) { //{ ext: 'jpg', mime: 'image/jpeg' }
-
-    let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
-    let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
-    let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
-    if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
-      client.update({
-        "name": req.body.firstName + " " + req.body.lastName,
-        "isd_code": req.body.ISDCode,
-        "mobile": req.body.contactNumber,
-        'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
-        'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
-        'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
-        "kycDocName1": req.body.kycDocName1,
-        "kycDocName2": req.body.kycDocName2,
-        "kycDocName3": req.body.kycDocName3,
-        "kyc_verified": "pending"
-      }, {
-          where: {
-            'email': req.body.email
-          }
-        }).then(() => {
-          res.send({ status: true, message: "KYC submitted" });
-        });
-    } else {
+  KYCdocUpload: async function (req, res) {
+    try {
+      let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
+      let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
+      let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
+      if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
+        client.update({
+          "name": req.body.fullName,
+          "isd_code": req.body.ISDCode,
+          "mobile": req.body.contactNumber,
+          'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
+          'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
+          'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+          "kycDocName1": req.body.kycDocName1,
+          "kycDocName2": req.body.kycDocName2,
+          "kycDocName3": req.body.kycDocName3,
+          "kyc_verified": "pending"
+        }, {
+            where: {
+              'email': req.user.email,
+              'uniqueId': req.user.uniqueId
+            }
+          }).then(client => {
+            req.files.forEach(element => {
+              fs.unlink(element.destination + '/' + element.originalname, function (error) {
+                if (error) {
+                  throw error;
+                }
+                console.log('Deleted filename', element.originalname);
+              })
+            })
+            res.send({ status: true, message: "KYC submitted successfully" });
+          });
+      } else {
+        res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
+      }
+    }
+    catch{
       res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
     }
   },
-
   getProjectList: (req, res) => {
     console.log(req.body.email);
     client.find({
@@ -240,7 +255,18 @@ module.exports = {
   },
 
   getAPIProfileDetails: async (req, res) => {
-    res.send(req.user);
+    userdata = new Object();
+    userdata.id = req.user.uniqueId
+    userdata.name = req.user.name;
+    userdata.email = req.user.email;
+    userdata.isd_code = req.user.isd_code;
+    userdata.mobile = req.user.mobile;
+    userdata.kyc_verified = req.user.kyc_verified;
+    userdata.status = req.user.status;
+    userdata.address = req.user.userCurrencyAddresses[0].address
+    userdata.package1 = req.user.package1
+    userdata.package2 = req.user.package2
+    res.send({ status: true, data: userdata })
   },
   updatePassword: (req, res) => {
     client.find({
@@ -258,6 +284,14 @@ module.exports = {
       }
       catch{ res.send({ status: false, message: ' Not a valid BCrypt hash' }) }
     })
+  },
+  getBalances: (req, res) => {
+    Promise.all([paymentListener.checkBalance(req.user.userCurrencyAddresses[0].address), paymentListener.checkEtherBalance(req.user.userCurrencyAddresses[0].address)]).then(([balance, ethBalance]) => {
+      res.send({
+        'XDCE': balance,
+        'ETH': ethBalance
+      });
+    });
   },
   verifyAccount: (req, res) => {
     console.log(req.query)

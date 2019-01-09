@@ -2,6 +2,7 @@ const Web3 = require('web3');
 var db = require('../database/models/index');
 var client = db.client;
 var Address = db.userCurrencyAddress;
+var admin = db.admin;
 var config = require('../config/paymentListener');
 var ws_provider = config.ws_provider;
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
@@ -13,7 +14,7 @@ provider.on('error', e => {
   console.log('Attempting to reconnect...');
   provider = new Web3.providers.WebsocketProvider(ws_provider);
 
-  provider.on('connect', function() {
+  provider.on('connect', function () {
     console.log('WSS Reconnected');
   });
 
@@ -24,7 +25,7 @@ provider.on('end', e => {
   console.log('Attempting to reconnect...');
   provider = new Web3.providers.WebsocketProvider(ws_provider);
 
-  provider.on('connect', function() {
+  provider.on('connect', function () {
     console.log('WSS Reconnected');
   });
 
@@ -55,6 +56,32 @@ module.exports = {
     });
   },
 
+  attachAdminPackageListener: (address) => {
+    contractInstance.once('Transfer', {
+      filter: {
+        from: address
+      },
+      fromBlock: 'pending',
+      toBlock: 'latest'
+    }, (err, res) => {
+      console.log(err, res.returnValues);
+      Address.find({
+        where: {
+          address: address
+        }
+      }).then(address => {
+        admin.find({
+          where: {
+            uniqueId: address.admin_id
+          }
+        }).then(async admin => {
+          admin.isAllowed = true;
+          await admin.save();
+        });
+      });
+    });
+  },
+
   attachListenerWithUserHash: (userHash, address) => {
     contractInstance.once('Transfer', {
       filter: {
@@ -76,8 +103,8 @@ module.exports = {
     });
   },
 
-  sendToParent: (address, privateKey) => {
-    return new Promise(async function(resolve, reject) {
+  sendToParent: (address, privateKey, amount) => {
+    return new Promise(async function (resolve, reject) {
       var amountToSend = web3.utils.toWei('0.001', 'ether');
       var rawTransaction = {
         "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
@@ -109,7 +136,7 @@ module.exports = {
   },
 
   checkBalance: (address) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       contractInstance.methods.balanceOf(address).call().then(balance => {
         resolve(balance / 10 ** 18);
       }).catch(error => {
@@ -119,7 +146,7 @@ module.exports = {
   },
 
   checkEtherBalance: (address) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       web3.eth.getBalance(address).then(balance => {
         resolve(web3.utils.fromWei(balance));
       }).catch(error => {

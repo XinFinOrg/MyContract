@@ -11,6 +11,11 @@ const readChunk = require('read-chunk');
 const fileType = require('file-type');
 var icoListener = require('../icoHandler/listener');
 var fs = require('fs');
+var otpMailer = require("../emailer/impl");
+var Address = db.userCurrencyAddress;
+var paymentListener = require('../packageCart/paymentListener');
+
+
 
 
 
@@ -45,6 +50,54 @@ module.exports = {
             }
         })(req, res, next);
     },
+
+    makePayment: async function (req, res) {
+        if (!req.body.otpValue) {
+            admin.find({
+                where: {
+                    'email': req.user.email
+                }
+            }).then(admin => {
+                admin.update({
+                    paymentOTP: Math.floor(Math.random() * 9999) + 1
+                }).then(result => {
+                    console.log(req.user.email, result.dataValues.paymentOTP);
+                    otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
+                    res.send({ status: true, message: "OTP  sent to your respective email address." })
+                })
+            });
+        } else {
+            admin.find({
+                where: {
+                    'email': req.user.email
+                }
+            }).then(result => {
+                if (result.dataValues.paymentOTP == req.body.otpValue) {
+                    Address.find({
+                        where: {
+                            'address': req.user.userCurrencyAddresses[0].address
+                        }
+                    }).then(address => {
+                        Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
+                            if (balance >= 10000000) {
+                                var receipt = paymentListener.sendToParent(address.address, address.privateKey, '10000000000000000000000000');
+                                console.log(receipt)
+                                paymentListener.attachAdminPackageListener(address.address);
+                                res.send({ status: true, message: 'Successfully initiated payment. You will be shortly alloted package credits' });
+                            } else {
+                                res.send({ status: false, message: 'Insufficient funds to buy Package' });
+                            }
+                        });
+                    })
+                }
+                else {
+                    console.log(false)
+                    res.send({ status: false });
+                }
+            })
+        }
+    },
+
     postSignup: async function (req, res, next) {
         passport.authenticate('admin-signup', {
             session: false,
@@ -57,11 +110,12 @@ module.exports = {
                         'message': info
                     });
                 }
-                else if (info) {
-                    res.send({ status: true, info })
-                }
                 else {
-                    return res.send({ status: true, message: "signup successful" })
+                    if (status == false) {
+                        res.send({ status: status, info })
+                    } else {
+                        return res.send({ status: true, info: info })
+                    }
                 }
             }
             catch (error) {
@@ -77,7 +131,7 @@ module.exports = {
             let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
             if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
                 admin.update({
-                    "name": req.body.firstName + " " + req.body.lastName,
+                    "name": req.body.fullName,
                     "isd_code": req.body.ISDCode,
                     "mobile": req.body.contactNumber,
                     'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
@@ -89,7 +143,8 @@ module.exports = {
                     "kyc_verified": "pending"
                 }, {
                         where: {
-                            'email': req.body.email
+                            'email': req.body.email,
+                            'uniqueId': req.body.uniqueId
                         }
                     }).then(() => {
                         req.files.forEach(element => {
@@ -111,6 +166,20 @@ module.exports = {
         }
     },
 
+    adminDetails: async (req, res) => {
+        userdata = new Object();
+        userdata.id = req.user.uniqueId
+        userdata.name = req.user.name;
+        userdata.email = req.user.email;
+        userdata.isd_code = req.user.isd_code;
+        userdata.mobile = req.user.mobile;
+        userdata.kyc_verified = req.user.kyc_verified;
+        userdata.status = req.user.status;
+        userdata.isAllowed = req.user.isAllowed;
+        userdata.address = req.user.userCurrencyAddresses[0].address
+        res.send({ status: true, data: userdata })
+    },
+
     adminBalance: async (req, res) => {
         try {
             var eth_address;
@@ -124,7 +193,7 @@ module.exports = {
                 res.send({
                     'ETHBalance': ethBalance,
                     'tokenBalance': tokenBalance,
-                    status:true
+                    status: true
                 });
             });
         } catch{
@@ -134,7 +203,7 @@ module.exports = {
         }
     },
 
-    getClientKYCData: async (req, res) => {
+    getClientList: async (req, res) => {
         userdata = new Object();
         userdata = await client.findAll({
             order: [['createdAt', 'DESC']],
@@ -149,6 +218,21 @@ module.exports = {
         // userdata.forEach(element => {
         //     element.dataValues.link = "<a href='/icoDashboardSetup/project/" + req.params.projectName + "/kyctab/" + element.dataValues.uniqueId + "/getUserData'>click Here</a>"
         // });
+        res.send(userdata);
+    },
+
+    getClientKYCData: async (req, res) => {
+        userdata = new Object();
+        userdata = await client.find({
+            attributes: {
+                exclude: ["password", "google_id", "github_id"]
+            },
+            where: {
+                admin_id: req.user.uniqueId,
+                uniqueId: req.params.uid
+            },
+            raw: true
+        })
         res.send(userdata);
     },
 
@@ -171,6 +255,18 @@ module.exports = {
             res.send({ status: false, message: "error occured" })
 
         }
+    },
+
+    verifyAdminAccount: (req, res) => {
+        console.log(req.query)
+        admin.find({
+            where: {
+                'email': req.query.email
+            }
+        }).then((client) => {
+            client.status = true;
+            client.save().then(res.redirect("/"));
+        });
     },
 
     Adminlogout: async (req, res) => {

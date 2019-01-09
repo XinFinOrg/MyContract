@@ -352,7 +352,7 @@ module.exports = function (passport) {
               var createdClient = await admin.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
-              mailer.sendVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
+              mailer.sendAdminVerificationMail(req, email, email, bcrypt.hashSync(createdClient.dataValues.uniqueId, bcrypt.genSaltSync(8), null))
               return done(null, createdClient.dataValues, 'Please verify your email address by clicking the link that we have mailed you!');
             });
           }

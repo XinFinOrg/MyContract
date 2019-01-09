@@ -37,7 +37,7 @@ module.exports = {
         }).then(result => {
           console.log(req.user.email, result.dataValues.paymentOTP);
           otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
-          res.send({ status: true, message: "OTP  sent to your respective email address." })
+          // res.send({ status: true, message: "OTP  sent to your respective email address." })
         })
       });
     } else {
@@ -54,7 +54,7 @@ module.exports = {
           }).then(address => {
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1200000) {
-                var receipt = paymentListener.sendToParent(address.address, address.privateKey);
+                var receipt = paymentListener.sendToParent(address.address, address.privateKey,"1200000000000000000000000");
                 console.log(receipt)
                 paymentListener.attachListener(address.address);
                 res.send({ status: true, message: 'Successfully initiated payment. You will be shortly alloted package credits' });

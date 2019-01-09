@@ -55,6 +55,23 @@ module.exports = {
     });
   },
 
+  sendAdminVerificationMail: function (req, recipientmail, name, userhash) {
+    var link = "http://" + req.get('host') + "/verifyAdminAccount?resetId=" + userhash + "&email=" + recipientmail;
+    ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
+      name: name,
+      link: link
+    }, (err, data) => {
+      console.log(err);
+      var mailOptions = {
+        from: "emailverification@mycontract.co",
+        to: recipientmail,
+        subject: "Email Verification",
+        html: data
+      };
+      triggerEmail(mailOptions);
+    });
+  },
+
   sendUserVerificationMail: function (req, recipientmail, name, userhash) {
     var link = "http://" + req.get('host') + "/verifyMail?verificationId=" + userhash;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
