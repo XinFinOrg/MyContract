@@ -125,6 +125,7 @@ module.exports = {
         })(req, res, next);
     },
     adminKYCupload: async (req, res, next) => {
+        console.log("hrereer",req.body)
         try {
             let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
             let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
@@ -143,8 +144,8 @@ module.exports = {
                     "kyc_verified": "pending"
                 }, {
                         where: {
-                            'email': req.body.email,
-                            'uniqueId': req.body.uniqueId
+                            'email': req.user.email,
+                            'uniqueId': req.user.uniqueId
                         }
                     }).then(() => {
                         req.files.forEach(element => {
