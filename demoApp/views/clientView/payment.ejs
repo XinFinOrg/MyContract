@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Bootstrap Login Page Card with Floating Labels</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <style id="compiled-css" type="text/css">
+        :root {
+            --input-padding-x: 1.5rem;
+            --input-padding-y: .75rem;
+        }
+
+        body {
+            background: #9CECFB;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .card-signin {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card-signin .card-title {
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        .card-signin .card-body {
+            padding: 2rem;
+        }
+
+        .form-signin {
+            width: 100%;
+        }
+
+        .form-signin .btn {
+            font-size: 80%;
+            border-radius: 5rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group input {
+            height: auto;
+            border-radius: 2rem;
+        }
+
+        .form-label-group>input,
+        .form-label-group>label {
+            padding: var(--input-padding-y) var(--input-padding-x);
+        }
+
+        .form-label-group>label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            margin-bottom: 0;
+            /* Override default `<label>` margin */
+            line-height: 1.5;
+            color: #495057;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+            padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+            padding-bottom: calc(var(--input-padding-y) / 3);
+        }
+
+        .form-label-group input:not(:placeholder-shown)~label {
+            padding-top: calc(var(--input-padding-y) / 3);
+            padding-bottom: calc(var(--input-padding-y) / 3);
+            font-size: 12px;
+            color: #777;
+        }
+
+        .btn-google {
+            color: white;
+            background-color: #ea4335;
+        }
+
+        .btn-facebook {
+            color: white;
+            background-color: #3b5998;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            display: block;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+            z-index: 10;
+            margin-top: 20%;
+            margin-left: 45%;
+            position: fixed;
+
+
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .blurEffect {
+            /* -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px); */
+            filter: blur(5px);
+            /* background-color: #ccc; */
+            z-index: 9;
+
+        }
+    </style>
+
+
+    <!-- TODO: Missing CoffeeScript 2 -->
+
+    <script type="text/javascript">
+
+
+        window.onload = function () {
+
+
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+    <body>
+        <div class="loader" id="loader"></div>
+        <div id="blurEffect" class="blurEffect">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                        <div class="col">
+                            <div class="row-sm-9 row-md-7 row-lg-5 mx-auto">
+                                <div class="card card-signin my-5">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">Account Balance</h5>
+                                        <form class="form-signin" method="POST" id="ajax-contact" action="javascript:void(0);" onSubmit="signIn()">
+                                            <div class="form-label-group">
+                                                <input type="text" id="ETHbalance" class="form-control" name="email" placeholder="Email address" disabled>
+                                                <label for="inputEmail">ETH Balance</label>
+                                            </div>
+
+                                            <div class="form-label-group">
+                                                <input type="text" id="XDCEbalance" class="form-control" name="password" placeholder="Password" disabled>
+                                                <label for="inputPassword">XDCE Balance</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-sm-9 row-md-7 row-lg-5 mx-auto" id="packPayment">
+                                <div class="card card-signin my-5">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">Payment Tab</h5>
+                                        <form class="form-payment" method="POST" id="form-payments" action="javascript:void(0);" onSubmit="makePayment()">
+                                            <div class="form-label-group">
+                                                <input type="text" id="XDCEbalance" class="form-control" name="password" value="1200000" disabled>
+                                                <label for="inputPassword">Package 1 XDCE Amount</label>
+                                            </div>
+                                            <div class="form-label-group">
+                                                <input type="text" id="paymentOTP" class="form-control" name="otpValue" value="">
+                                                <label for="inputPassword" id="lablepayment">Enter OTP</label>
+                                            </div>
+                                            <div class="form-label-group">
+                                                <h6 id="paymentError"> Your balance is insufficient. Please recharge your
+                                                    address with XDCE</h6>
+                                            </div>
+                                            <div class="form-label-group">
+                                                <button class="btn btn-lg btn-primary btn-block text-uppercase" id="paymentButton" type="MakePayment()">Buy
+                                                    Package
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto" id="bancortab">
+                        <div class="card card-signin my-5">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Buy XDCE Tab</h5>
+                                <form class="form-signin" method="POST" id="ajax-contact" action="javascript:void(0);" onSubmit="signIn()">
+                                    <div class="form-label-group">
+                                        <input type="text" id="accountAddress" class="form-control" name="otpValue" placeholder="Password" disabled>
+                                        <label for="inputPassword">Account Address</label><br>
+                                        <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div>
+                                    </div>
+                                    <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Make
+                                    Payment
+                                </button> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        $(document).ready(function () {
+            $('#paymentButton').hide('fast');
+            $('#paymentOTP').hide('fast');
+            $('#lablepayment').hide('fast');
+            $("#loader").hide("fast");
+            $('#blurEffect').removeClass("blurEffect");
+            // $("#kycTab").hide();
+
+
+            axios.get('http://localhost:3001/api/clientBalance', {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            })
+                .then(function (response) {
+                    if (response.data.status == false) {
+                        console.log(response, "here1")
+                        window.location.href = './login';
+                    }
+                    else {
+                        console.log(response, "here1")
+                        $('#ETHbalance').val(response.data.ETH);
+                        $('#XDCEbalance').val(response.data.XDCE);
+                        if (response.data.tokenBalance >= '1200000') {
+                            $("#paymentButton").show('fast');
+                            $('#paymentError').hide('fast');
+                            $('#lablepayment').show('fast');
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
+
+        // make payment
+        function makePayment() {
+            // Get the form.
+            var form = $('#form-payments');
+            // Serialize the form data.
+            var formData = $(form).serialize();
+            // console.log("here", formData)
+            $("#loader").show("slow");
+            $('#blurEffect').addClass("blurEffect");
+            axios.post('http://localhost:3001/api/buyFirstPackage', formData, {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            }).then(function (response) {
+                $("#loader").hide("fast");
+                $('#blurEffect').removeClass("blurEffect");
+                alert(response.data.message);
+                if (response.data.message == 'OTP  sent to your respective email address.') {
+                    $('#paymentOTP').show('fast');
+                } else {
+                    location.reload();
+                }
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        // tell the embed parent frame the height of the content
+        if (window.parent && window.parent.parent) {
+            window.parent.parent.postMessage(["resultsFrame", {
+                height: document.body.getBoundingClientRect().height,
+                slug: "amxr8n19"
+            }], "*")
+        }
+    </script>
+    <script src="https://widget-convert.bancor.network/v1"></script>
+    <script>
+        const widgetInstance = BancorConvertWidget.createInstance({
+            "type": "2",
+            "blockchainType": "ethereum",
+            "baseCurrencyId": "5a60937501b4a8000153a22e",
+            "pairCurrencyId": "5937d635231e97001f744267",
+            "primaryColor": "#0d7491",
+            "widgetContainerId": "bancor-wc-id-1",
+            "displayCurrency": "USD",
+            "hideVolume": true
+        });
+    </script>
+
+</html>
