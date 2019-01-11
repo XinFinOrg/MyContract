@@ -393,7 +393,7 @@
             $("#kycTab").hide();
 
 
-            axios.get('http://localhost:3001/api/adminBalance', {
+            axios.get('http://api.mycontract.co:3001/api/adminBalance', {
                 headers: {
                     Authorization: localStorage.getItem("token")
                 }
@@ -414,7 +414,7 @@
                         }
 
                         //admin data
-                        axios.get('http://localhost:3001/api/adminDetails', {
+                        axios.get('http://api.mycontract.co:3001/api/adminDetails', {
                             headers: {
                                 Authorization: localStorage.getItem("token")
                             }
@@ -447,7 +447,7 @@
                             });
 
                         //client data
-                        axios.get('http://localhost:3001/api/clientList', {
+                        axios.get('http://api.mycontract.co:3001/api/clientList', {
                             headers: {
                                 Authorization: localStorage.getItem("token")
                             }
@@ -486,7 +486,7 @@
             $('#blurEffect').addClass("blurEffect");
 
             $.ajax({
-                url: 'http://localhost:3001/api/adminKYCupload',
+                url: 'http://api.mycontract.co:3001/api/adminKYCupload',
                 headers: {
                     'Authorization': localStorage.getItem("token"),
                 },
@@ -519,7 +519,7 @@
             // console.log("here", formData)
             $("#loader").show("slow");
             $('#blurEffect').addClass("blurEffect");
-            axios.post('http://localhost:3001/api/makeAdminPayment', formData, {
+            axios.post('http://api.mycontract.co:3001/api/makeAdminPayment', formData, {
                 headers: {
                     Authorization: localStorage.getItem("token")
                 }

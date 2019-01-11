@@ -193,7 +193,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: 'http://localhost:3001/api/adminSignup',
+                url: 'http://api.mycontract.co:3001/api/adminSignup',
                 type: 'POST',
                 data: formData,
                 success: function (data) {

@@ -190,7 +190,7 @@
             // Serialize the form data.
             var formData = $(form).serialize();
             console.log("here", formData)
-            $.post("http://localhost:3001/api/adminLogin", formData,
+            $.post("http://api.mycontract.co:3001/api/adminLogin", formData,
                 function (data) {
                     if (data.token == "failure") { alert(data.message); } else {
                         console.log(data)
