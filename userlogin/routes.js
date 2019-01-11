@@ -58,7 +58,9 @@ function adminCheck(req, res, next) {
       uniqueId: req.params.adminId
     },
   }).then(user => {
+    console.log("hello")
     if (user.isAllowed == true) {
+      req.user = user;
       next();
     }
     else {

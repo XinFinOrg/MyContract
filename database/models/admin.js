@@ -89,6 +89,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        companyName:
+        {
+            type: DataTypes.STRING,
+        },
+        companyLogo:
+        {
+            type: DataTypes.STRING,
+        },
         createdAt: {
             allowNull: false,
             type: DataTypes.DATE,

@@ -36,7 +36,9 @@ module.exports = {
     // render the page and pass in any flash data if it exists
     res.render('signupAdmin.ejs', {
       message: req.flash('signupMessage'),
-      adminId: req.params.adminId
+      adminId: req.params.adminId,
+      companyName: req.user.companyName,
+      companyLogo: req.user.companyLogo
     });
   },
 

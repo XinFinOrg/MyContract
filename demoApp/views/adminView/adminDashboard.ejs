@@ -332,6 +332,14 @@
                                         <label for="inputPassword">Government Photo ID PhotoCopy</label>
                                     </div>
                                     <div class="form-label-group">
+                                        <input type="text" id="admineContact" class="form-control" name="companyName">
+                                        <label for="inputPassword">Compnay Name</label>
+                                    </div>
+                                    <div class="form-label-group">
+                                        <input type="file" id="file" class="form-control" name="file4">
+                                        <label for="inputPassword">Company Logo</label>
+                                    </div>
+                                    <div class="form-label-group">
                                         <button class="btn btn-lg btn-primary btn-block text-uppercase" id="KYCButton" type="KYCSubmit()">
                                             Submit
                                         </button>
@@ -391,6 +399,7 @@
             $("#loader").hide("fast");
             $('#blurEffect').removeClass("blurEffect");
             $("#kycTab").hide();
+            $("#adminIdTab").hide();
 
 
             axios.get('http://api.mycontract.co:3001/api/adminBalance', {
