@@ -141,6 +141,8 @@ module.exports = {
                     "kycDocName1": req.body.kycDocName1,
                     "kycDocName2": req.body.kycDocName2,
                     "kycDocName3": req.body.kycDocName3,
+                    "companyName": req.body.companyName,
+                    "companyLogo":await ImageDataURI.encodeFromFile(req.files[3].path),
                     "kyc_verified": "pending"
                 }, {
                         where: {
