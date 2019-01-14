@@ -236,10 +236,7 @@
 </script>
 <script>
   document.getElementById("submitButton").disabled = "disabled";
-  var myInput = document.getElementById("token_symbol");
-  myInput.onkeyup = function () {
-    document.getElementById("tokenname").innerHTML = myInput.value;
-  }
+ 
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
     if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
@@ -287,6 +284,7 @@
       document.getElementById("token_symbol_error").innerHTML = 'Enter Valid String';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
+      document.getElementById("tokenname").innerHTML = myInput6.value;
       document.getElementById("token_symbol_error").innerHTML = '';
       document.getElementById("submitButton").disabled = "";
     }
