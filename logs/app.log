@@ -1440,3 +1440,7 @@
 {"message":"::1 - - [11/Jan/2019:11:39:39 +0000] \"GET /api/adminBalance HTTP/1.1\" 200 58 \"http://localhost:3000/admin/dashboard\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
 {"message":"::1 - - [11/Jan/2019:11:39:40 +0000] \"GET /api/adminDetails HTTP/1.1\" 200 267 \"http://localhost:3000/admin/dashboard\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
 {"message":"::1 - - [11/Jan/2019:11:39:40 +0000] \"GET /api/clientList HTTP/1.1\" 200 2 \"http://localhost:3000/admin/dashboard\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+{"message":"::1 - - [14/Jan/2019:06:20:01 +0000] \"POST /api/adminLogin HTTP/1.1\" 200 192 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [14/Jan/2019:06:21:13 +0000] \"POST /api/adminKYCupload HTTP/1.1\" 200 125 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [14/Jan/2019:06:23:02 +0000] \"POST /api/adminKYCupload HTTP/1.1\" - - \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+{"message":"::1 - - [14/Jan/2019:06:23:53 +0000] \"POST /api/adminKYCupload HTTP/1.1\" 200 54 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}

@@ -125,41 +125,46 @@ module.exports = {
         })(req, res, next);
     },
     adminKYCupload: async (req, res, next) => {
-        console.log("hrereer",req.body)
+        console.log("hrereer", req.body)
         try {
             let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
             let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
             let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
+            let buffer4 = readChunk.sync((req.files[3].path), 0, 4100);
             if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
-                admin.update({
-                    "name": req.body.fullName,
-                    "isd_code": req.body.ISDCode,
-                    "mobile": req.body.contactNumber,
-                    'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
-                    'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
-                    'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
-                    "kycDocName1": req.body.kycDocName1,
-                    "kycDocName2": req.body.kycDocName2,
-                    "kycDocName3": req.body.kycDocName3,
-                    "companyName": req.body.companyName,
-                    "companyLogo":await ImageDataURI.encodeFromFile(req.files[3].path),
-                    "kyc_verified": "pending"
-                }, {
-                        where: {
-                            'email': req.user.email,
-                            'uniqueId': req.user.uniqueId
-                        }
-                    }).then(() => {
-                        req.files.forEach(element => {
-                            fs.unlink(element.destination + '/' + element.originalname, function (error) {
-                                if (error) {
-                                    throw error;
-                                }
-                                console.log('Deleted filename', element.originalname);
+                if (fileType(buffer4).mime == "image/png") {
+                    admin.update({
+                        "name": req.body.fullName,
+                        "isd_code": req.body.ISDCode,
+                        "mobile": req.body.contactNumber,
+                        'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
+                        'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
+                        'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+                        "kycDocName1": req.body.kycDocName1,
+                        "kycDocName2": req.body.kycDocName2,
+                        "kycDocName3": req.body.kycDocName3,
+                        "companyName": req.body.companyName,
+                        "companyLogo": await ImageDataURI.encodeFromFile(req.files[3].path),
+                        "kyc_verified": "pending"
+                    }, {
+                            where: {
+                                'email': req.user.email,
+                                'uniqueId': req.user.uniqueId
+                            }
+                        }).then(() => {
+                            req.files.forEach(element => {
+                                fs.unlink(element.destination + '/' + element.originalname, function (error) {
+                                    if (error) {
+                                        throw error;
+                                    }
+                                    console.log('Deleted filename', element.originalname);
+                                })
                             })
-                        })
-                        res.send({ status: true, message: "KYC submitted successfully" });
-                    });
+                            res.send({ status: true, message: "KYC submitted successfully" });
+                        });
+                } else { 
+                    res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only png allowed for site Logo" })  
+                }
             } else {
                 res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
             }
