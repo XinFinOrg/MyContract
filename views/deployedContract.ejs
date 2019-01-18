@@ -33,16 +33,16 @@
 </code>
                     </pre>
                           <% if(message1.length == 0) { %>
-                            <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">
+                            <button type="button" id="deployment" onclick=deploy("<%=coinSymbol %>",false) class="btn btn-rounded btn-lg btn-info mr-1">
                               Deploy
-                              <%= coinName %></button>
+                              <%= coinSymbol %></button>
                             <% } else { %>
                               <button type="button" id="deployment" data-toggle="modal" data-target="#networkModal" data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1">Automatic
                                 Deploy
-                                <%= coinName %></button>
-                              <button type="button" id="deployment" onclick=deploy("<%=coinName %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
+                                <%= coinSymbol %></button>
+                              <button type="button" id="deployment" onclick=deploy("<%=coinSymbol %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
                                 Deploy
-                                <%= coinName %></button>
+                                <%= coinSymbol %></button>
                               <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
                                   class="ti-help-alt"></i></button>
                               <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">

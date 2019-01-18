@@ -309,6 +309,7 @@
           checkBalances();
         }, 30000);
         function deploy(coinName, istoken) {
+          console.log(coinName,"here")
           window.sessionStorage.setItem("deploymentName", coinName);
           if (!istoken) { window.location.href = "/deployer"; }
           else { window.location.href = "/deployer?coinName=" + coinName; }

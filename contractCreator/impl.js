@@ -127,6 +127,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
+      req.session.coinSymbol = req.body.token_symbol;
       nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
       var clientdata = await client.find({
         where: {
@@ -231,6 +232,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
+      req.session.coinSymbol = req.body.token_symbol;
       nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
       var clientdata = await client.find({
         where: {
@@ -306,6 +308,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
+      req.session.coinSymbol = req.body.token_symbol;
       nodemailerservice.sendContractEmail(req.user.email, result);
       res.redirect('/generatedContract');
     });
@@ -314,14 +317,15 @@ module.exports = {
   getGeneratedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    console.log(req.session.coinName);
+    console.log(req.session.coinName, req.session.coinSymbol);
     res.render('deployedContract', {
       message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,
       contract: req.session.contract,
-      coinName: req.session.coinName
+      coinName: req.session.coinName,
+      coinSymbol: req.session.coinSymbol
     });
   },
 }

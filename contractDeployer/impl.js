@@ -21,12 +21,13 @@ var web3 = new Web3();
 
 module.exports = {
   getBytecode: async function (req, res) {
+    console.log(req.body)
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
     let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterEthereum" }, raw: true, })
     ProjectConfiguration.find({
       where: {
-        'coinName': coinName
+        'coinSymbol': coinName
       },
       attributes: ['coinName', 'bonusRate', 'bonusStatus', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash', 'crowdsaleABICode', 'tokenABICode']
     }).then(async projectData => {
@@ -57,9 +58,10 @@ module.exports = {
     });
   },
   saveDeploymentData: async function (req, res) {
+    console.log(req.query)
     ProjectConfiguration.find({
       where: {
-        'coinName': req.query.coinName
+        'coinSymbol': req.query.coinName
       },
       attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }).then(async updateddata => {
@@ -76,7 +78,8 @@ module.exports = {
         req.session.contractAddress = req.body.contractAddress;
         req.session.contractTxHash = req.body.contractTxHash;
         req.flash('contract_flash', 'Contract mined successfully!');
-        req.session.coinName = req.query.coinName;
+        // req.session.coinName = req.query.coinName;
+        req.session.coinSymbol = req.query.coinName;
         res.send("generatedCrowdsaleContract");
       } else {
         updateddata.crowdsaleContractHash = req.body.contractTxHash;
@@ -116,7 +119,8 @@ module.exports = {
           address: address,
           contract: data,
           ProjectConfiguration: projectArray,
-          coinName: req.session.coinName
+          coinName: req.session.coinName,
+          coinSymbol: req.session.coinSymbol
         });
       })
     })
@@ -252,7 +256,7 @@ module.exports = {
     }
     else {
       try {
-        console.log(accountData.address,"heello")
+        console.log(accountData.address, "heello")
         byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
         projectData.tokenByteCode = byteCode.bytecode;
         projectData.tokenABICode = byteCode.interface;
