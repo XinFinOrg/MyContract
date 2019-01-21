@@ -1,8 +1,0 @@
-{"contact-name":"akshay pilankar","contact-email":"akshay@xinfin.org","contact-message":"qwert"}
-{"contact-name":"akshay pilankar","contact-email":"akshay@xinfin.org","contact-message":"uytrew"}
-{"contact-name":"akshay pilankar","contact-email":"","contact-message":""}
-{"contact-name":"akshay pilankar","contact-email":"akshay@xinfin.org","contact-message":"qwerty"}
-{"contact-name":"","contact-email":"","contact-message":""}
-{"contact-name":"akshay pilankar","contact-email":"akshay@xinfin.org","contact-message":"werty"}
-{"contact-name":"","contact-email":"","contact-message":""}
-{"contact-name":"","contact-email":"","contact-message":""}

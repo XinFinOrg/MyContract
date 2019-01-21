@@ -10,7 +10,7 @@ var config = require('./config/dev');
 var engine = require('ejs-mate')
 // var helmet = require('helmet');
 var validator = require('express-validator');
-
+var winston = require('./config/winston');
 
 
 const app = express();
@@ -45,6 +45,7 @@ app.use(session({
 //   disableAndroid: false
 
 // }));
+app.use(logger('combined', { stream: winston.stream }))
 app.use(validator());
 app.use(function (req, res, next) {
   for (var item in req.body) {
