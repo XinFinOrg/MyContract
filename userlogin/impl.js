@@ -21,7 +21,7 @@ module.exports = {
   },
 
   getWhiteLabelLogin: function (req, res) {
-    res.render('WhiteLabelLogin.ejs', {
+    res.render('whiteLabelLogin.ejs', {
       message: req.flash('loginMessage'),
       companyName: req.user.companyName,
       companyLogo: req.user.companyLogo
