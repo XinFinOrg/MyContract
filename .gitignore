@@ -5,3 +5,4 @@ database/migrations/
 database/config
 icoDashboardCreator/etherwallet/node_modules
 kycDump/
+logs /
