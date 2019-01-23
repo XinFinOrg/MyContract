@@ -5,11 +5,15 @@ var client = db.client;
 var admin = db.admin;
 module.exports = function (app) {
 
+  //whitelabel pages
+  app.get('/adminId/:adminId/login', adminCheck, impl.getWhiteLabelLogin);
+  app.get('/adminId/:adminId/signup', adminCheck, impl.getWhiteLabelSignup);
+  app.get('/adminId/:adminId/logout', impl.getWhiteLabelLogout);
+
   app.get('/login', impl.getLogin);
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
-  app.get('/adminId/:adminId/ClientSignup', adminCheck, impl.getAdminRelatedSignup);
   app.get('/dashboard', isLoggedIn, impl.getDashboard);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
   app.get('/faq', isLoggedIn, impl.getFAQ);

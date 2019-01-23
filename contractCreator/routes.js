@@ -1,7 +1,7 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
 var client = db.client;
-
+var Admin = db.admin;
 
 module.exports = function (app) {
 

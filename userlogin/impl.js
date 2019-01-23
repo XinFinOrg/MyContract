@@ -1,6 +1,7 @@
 var passport = require('passport');
 var db = require('../database/models/index');
 var client = db.client;
+var admin = db.admin;
 var ProjectConfiguration = db.projectConfiguration;
 // var fs = require('fs');
 var path = require('path');
@@ -19,6 +20,14 @@ module.exports = {
     });
   },
 
+  getWhiteLabelLogin: function (req, res) {
+    res.render('WhiteLabelLogin.ejs', {
+      message: req.flash('loginMessage'),
+      companyName: req.user.companyName,
+      companyLogo: req.user.companyLogo
+    });
+  },
+
   postLogin: passport.authenticate('local-login', {
     successRedirect: '/dashboard', // redirect to the secure profile section
     failureRedirect: '/login', // redirect back to the signup page if there is an error
@@ -32,9 +41,9 @@ module.exports = {
     });
   },
 
-  getAdminRelatedSignup: function (req, res) {
+  getWhiteLabelSignup: function (req, res) {
     // render the page and pass in any flash data if it exists
-    res.render('signupAdmin.ejs', {
+    res.render('WhiteLabelSignUp.ejs', {
       message: req.flash('signupMessage'),
       adminId: req.params.adminId,
       companyName: req.user.companyName,
@@ -42,14 +51,24 @@ module.exports = {
     });
   },
 
-  postSignup: passport.authenticate('local-signup', {
-    successRedirect: '/login', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }),
+  getWhiteLabelLogout: function (req, res) {
+    res.clearCookie('address');
+    req.logout();
+    res.redirect('/adminId/' + req.query.adminId + '/login');
+  },
+
+  postSignup: async function (req, res, next) {
+    console.log(req.query.adminId, "req.query.adminId")
+    passport.authenticate('local-signup', {
+      successRedirect: '/adminId/' + req.query.adminId + '/login', // redirect to the secure profile section
+      failureRedirect: '/adminId/' + req.query.adminId + '/signup', // redirect back to the signup page if there is an error
+      failureFlash: true // allow flash messages
+    })(req, res, next);
+  },
 
   getDashboard: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     // console.log(projectArray);
     var address;
     address = req.cookies['address'];
@@ -70,7 +89,10 @@ module.exports = {
           ProjectConfiguration: projectArray,
           message: req.flash('package_flash'),
           contractMessage: req.flash('contract_flash'),
-          address: address
+          address: address,
+          adminId: req.user.admin_id,
+          companyLogo: admin.companyLogo,
+          companyName: admin.companyName,
         });
       });
     } else {
@@ -79,7 +101,10 @@ module.exports = {
         ProjectConfiguration: projectArray,
         message: req.flash('package_flash'),
         contractMessage: req.flash('contract_flash'),
-        address: address
+        address: address,
+        adminId: req.user.admin_id,
+        companyLogo: admin.companyLogo,
+        companyName: admin.companyName,
       });
     }
   },
@@ -96,7 +121,7 @@ module.exports = {
   getLogout: function (req, res) {
     req.logout();
     res.clearCookie('address');
-    res.redirect('/dashboard');
+    res.redirect('/adminId/' + req.query.adminId + '/login');
   },
 
   githubLogin: passport.authenticate('github'),
@@ -154,11 +179,15 @@ module.exports = {
 
   getProfileDetails: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     res.render('profileDetails', {
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
 
@@ -272,6 +301,18 @@ function getProjectArray(email) {
       });
       // res.send({'projectArray': projectArray});
       resolve(projectArray);
+    });
+  });
+}
+
+function getAdminDetails(adminId) {
+  return new Promise(async function (resolve, reject) {
+    admin.find({
+      where: {
+        'uniqueId': adminId
+      },
+    }).then(client => {
+      resolve(client.dataValues);
     });
   });
 }

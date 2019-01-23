@@ -5,6 +5,7 @@ var byteCode;
 var byteCode2;
 var db = require('../database/models/index');
 var client = db.client;
+var admin = db.admin;
 var ProjectConfiguration = db.projectConfiguration;
 var userCurrencyAddress = db.userCurrencyAddress;
 var ejs = require("ejs");
@@ -91,6 +92,7 @@ module.exports = {
   generatedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
+    var admin = await getAdminDetails(req.user.admin_id);
     ProjectConfiguration.find({
       where: {
         'coinName': req.session.coinName
@@ -116,7 +118,10 @@ module.exports = {
           address: address,
           contract: data,
           ProjectConfiguration: projectArray,
-          coinName: req.session.coinName
+          coinName: req.session.coinName,
+          adminId: req.user.admin_id,
+          companyLogo: admin.companyLogo,
+          companyName: admin.companyName,
         });
       })
     })
@@ -124,22 +129,30 @@ module.exports = {
 
   crowdsaleDeployer: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     res.render(path.join(__dirname, './', 'dist', 'crowdsaleDeployer.ejs'), {
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
 
   getDeployer: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     if (req.query.coinName == null) {
       res.render(path.join(__dirname, './', 'dist', 'index.ejs'), {
         user: req.user,
         address: address,
         ProjectConfiguration: projectArray,
+        adminId: req.user.admin_id,
+        companyLogo: admin.companyLogo,
+        companyName: admin.companyName,
       });
     } else {
       req.session.coinName = req.query.coinName;
@@ -314,6 +327,18 @@ function getProjectArray(email) {
       });
       // res.send({'projectArray': projectArray});
       resolve(projectArray);
+    });
+  });
+}
+
+function getAdminDetails(adminId) {
+  return new Promise(async function (resolve, reject) {
+    admin.find({
+      where: {
+        'uniqueId': adminId
+      },
+    }).then(client => {
+      resolve(client.dataValues);
     });
   });
 }

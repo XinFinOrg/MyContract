@@ -8,6 +8,7 @@ var ejs = require("ejs");
 var db = require('../database/models/index');
 var ProjectConfiguration = db.projectConfiguration;
 var client = db.client;
+var admin = db.admin;
 var nodemailerservice = require('../emailer/impl');
 var bitcoin = require("bitcoinjs-lib");
 let Promise = require('bluebird');
@@ -19,6 +20,7 @@ module.exports = {
 
   getCustomContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     res.render('customContract', {
       user: req.user,
@@ -26,10 +28,14 @@ module.exports = {
       message2: req.flash('project_flash'),
       address: address,
       ProjectConfiguration: projectArray,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
   getERC223ContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     res.render('ERC223Contract', {
       user: req.user,
@@ -37,11 +43,15 @@ module.exports = {
       message2: req.flash('project_flash'),
       address: address,
       ProjectConfiguration: projectArray,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
 
   getERC721ContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     res.render('erc721', {
       user: req.user,
@@ -49,6 +59,9 @@ module.exports = {
       message2: req.flash('project_flash'),
       address: address,
       ProjectConfiguration: projectArray,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
   createERC20Contract: async (req, res) => {
@@ -313,6 +326,7 @@ module.exports = {
 
   getGeneratedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    var admin = await getAdminDetails(req.user.admin_id);
     var address = req.cookies['address'];
     console.log(req.session.coinName);
     res.render('deployedContract', {
@@ -321,7 +335,10 @@ module.exports = {
       address: address,
       ProjectConfiguration: projectArray,
       contract: req.session.contract,
-      coinName: req.session.coinName
+      coinName: req.session.coinName,
+      adminId: req.user.admin_id,
+      companyLogo: admin.companyLogo,
+      companyName: admin.companyName,
     });
   },
 }
@@ -372,6 +389,18 @@ function getProjectArray(email) {
       });
       // res.send({'projectArray': projectArray});
       resolve(projectArray);
+    });
+  });
+}
+
+function getAdminDetails(adminId) {
+  return new Promise(async function (resolve, reject) {
+    admin.find({
+      where: {
+        'uniqueId': adminId
+      },
+    }).then(client => {
+      resolve(client.dataValues);
     });
   });
 }

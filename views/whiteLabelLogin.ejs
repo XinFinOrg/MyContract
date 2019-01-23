@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= companyLogo %>">
+    <title><%= companyName %></title>
+    <!-- Style CSS -->
+    <link href="../../assets/css/style.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+
+        <!-- Preloader -->
+
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+
+        <!-- Preloader -->
+
+
+        <!-- Login box -->
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-5">
+                        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center">
+                            <div class="auth-box login-box">
+                                <div id="loginform">
+                                    <div class="logo">
+                                        <span class="db"><img src="<%= companyLogo %>"  width="150" height="150"></span>
+                                        <h2 class="font-medium m-t-20 m-b-20">Welcome to MyContract</h2>
+                                        <h5 class="font-normal m-b-20">Enter your details to Sign In</h5>
+                                    </div>
+                                    <!-- Form -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <% if (message.length > 0) { %>
+                                                <div class="alert alert-danger">
+                                                    <%= message %>
+                                                </div>
+                                                <% } %>
+                                                    <form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">
+                                                        <div class="form-group">
+                                                            <label for="email">Email</label>
+                                                            <input type="emailid" class="form-control" id="emailid" name="email" placeholder="Enter email">
+                                                        </div>
+                                                        <span class="alert-danger" id="inputVal_error"></span>
+                                                        <div class="form-group">
+                                                            <label for="password">Password</label>
+                                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                                                        </div>
+                                                         <span class="alert-danger" id="inputVal_error1"></span>
+                                                        <div class="form-group">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-md-12 p-b-20">
+                                                                    <button class="btn btn-lg btn-rounded btn-info" id="loginButton" type="submit">LOGIN</button>
+                                                                    <span class="pl-5"><a href="javascript:void(0)" id="to-recover"
+                                                                            class="text-dark"><i class="fa fa-lock m-r-5"></i>
+                                                                            Forgot password?</a></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR
+                                                                continue with</span></p>
+
+                                                        <div class="row full-width">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                                                                <div class="social">
+                                                                    <a href="/auth/google" class="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title="" data-original-title="Login with Google">
+                                                                        <i aria-hidden="true" class="fab fa-google"></i>
+                                                                        Google</a>
+                                                                    <a href="/auth/github" class="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title="" data-original-title="Login with GitHub">
+                                                                        <i aria-hidden="true" class="fab fa-github"></i>
+                                                                        GitHub</a>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group m-b-0 m-t-15">
+                                                            <div class="col-sm-12">
+                                                                Don't have an account? <a href="/signup" class="text-info m-l-5"><b>Sign
+                                                                        Up
+                                                                    </b></a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="recoverform">
+                                    <div class="logo">
+                                        <span class="db"><img src="../../assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20">Recover Password</h2>
+                                        <h5 class="font-normal m-b-20">Enter your Email and instructions will be sent to
+                                            you!
+                                        </h5>
+                                    </div>
+                                    <div class="row m-t-20">
+                                        <!-- <form class="col-12" action="/forgotPassword" method="GET"> -->
+                                        <form class="col-12">
+                                            <label for="email">Email</label> <input class="form-control" type="text" name="email"
+                                                id="emailid" placeholder="email">
+                                            <br> <span class="alert-danger" id="inputVal_error"></span>
+                                            <br><br>
+                                            <button class="btn btn-lg btn-rounded btn-info" type="button" onsubmit="forgotPassword()" value="Submit" id="to-recoveremailsent">Submit</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                <div id="recoverformSend">
+                                    <div class="logo">
+                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20"> Password Recovery email sent!</h2>
+                                        <h5 class="font-normal m-b-20">check your email for further instructions!</h5>
+                                    </div>
+
+                                </div>
+                                <div id="noUserFound">
+                                    <div class="logo">
+                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20"> No user found with this email address!</h2>
+                                    </div>
+
+                                </div>
+                                <div id="noPassword">
+                                    <div class="logo">
+                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <h2 class="font-medium m-t-20 m-b-20"> Opps! it seems you have already logged in
+                                            using github or google!</h2>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-7">
+                        <div class="auth-wrapper-bg">
+                            <div class="auth-box_content">
+                                <p class="font-bold">Create your smart contract without coding</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+
+    <!-- All Required js -->
+
+    <script src="../../assets/libs/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../assets/libs/popper.js/popper.min.js"></script>
+    <script src="../../assets/libs/bootstrap/bootstrap.min.js"></script>
+
+    <!-- This page plugin js -->
+
+    <script>
+        $("#recoverformSend").hide();
+        $("#noUserFound").hide();
+        $("#noPassword").hide();
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+        // ==============================================================
+        // Login and Recover Password
+        // ==============================================================
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+        $('#to-recoveremailsent').on("click", function () {
+            $.get("/forgotPassword?email=" + $('#emailid').val()).then(
+                result => {
+                    if (result === "success") {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#recoverformSend").show();
+                    } else if (result === "Password") {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#noPassword").show();
+                    } else {
+                        console.log(result)
+                        $("#recoverform").slideUp();
+                        $("#noUserFound").show();
+                    }
+
+                }
+            )
+        });
+    </script>
+    <script>
+        // document.getElementById("to-recoveremailsent").disabled = "disabled";
+        var myInput = document.getElementById("emailid");
+        myInput.onkeyup = function () {
+            if (myInput.value === '' || myInput.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
+                document.getElementById("to-recoveremailsent").disabled = "disabled";
+                document.getElementById("loginButton").disabled = "disabled";
+            } else {
+                document.getElementById("inputVal_error").innerHTML = '';
+                document.getElementById("to-recoveremailsent").disabled ='';
+                document.getElementById("loginButton").disabled = "";
+
+            }
+        }
+        var myInput2 = document.getElementById("password");
+        myInput2.onkeyup = function () {
+            if (myInput2.value === '' || myInput2.value.indexOf(" ") == 0) {
+                document.getElementById("inputVal_error1").innerHTML = 'Please enter valid password';
+                // document.getElementById("to-recoveremailsent").disabled = "disabled";
+                document.getElementById("loginButton").disabled = "disabled";
+            } else {
+                document.getElementById("inputVal_error1").innerHTML = '';
+                // document.getElementById("to-recoveremailsent").disabled = "";
+                document.getElementById("loginButton").disabled = "";
+
+            }
+        }
+    </script>
+</body>
+
+
+</html>
