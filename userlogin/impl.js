@@ -23,6 +23,7 @@ module.exports = {
   getWhiteLabelLogin: function (req, res) {
     res.render('whiteLabelLogin.ejs', {
       message: req.flash('loginMessage'),
+      adminId: req.params.adminId,
       companyName: req.user.companyName,
       companyLogo: req.user.companyLogo
     });
@@ -253,7 +254,7 @@ module.exports = {
       }
     }).then((client) => {
       client.status = true;
-      client.save().then(res.redirect("/"));
+      client.save().then( res.redirect("/adminId/" + client.admin_id + "/login"));
     });
   },
   subscribe: (req, res) => {

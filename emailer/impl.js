@@ -3,8 +3,8 @@ var nodemailer = require('nodemailer');
 var ejs = require("ejs");
 var fs = require('fs');
 var transporter = nodemailer.createTransport({
-  host: 'mail002.dakghar.in',
-  port: 587,
+  host: 'mail-b01.cloudmailbox.in',
+  port: 25,
   auth: nodemailerAuth
 });
 
