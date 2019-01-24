@@ -39,7 +39,8 @@ module.exports = {
   },
 
   sendVerificationMail: function (req, recipientmail, name, userhash) {
-    var link = "http://" + req.get('host') + "/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
+    // var link = "http://" + req.get('host') + "/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
+    var link = "http://api.mycontract.co:3001/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
       name: name,
       link: link
