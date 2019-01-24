@@ -13,8 +13,8 @@ module.exports = {
   },
 
   'nodemailerAuth': {
-    'user': 'AUTOICOSMTP@mail002.dakghar.in',
-    'pass': '@Ed2eQSxwd'
+    'user': 'contract@mail-b01.cloudmailbox.in',
+    'pass': 'COn$#5dgRd'
   },
 
   'jwtAuthKey': {

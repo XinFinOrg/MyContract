@@ -1,0 +1,1 @@
+{"message":"::1 - - [24/Jan/2019:08:54:13 +0000] \"POST /api/adminSignup HTTP/1.1\" 200 103 \"http://localhost:3000/admin/signup\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}

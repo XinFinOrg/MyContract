@@ -301,7 +301,9 @@ module.exports = {
       }
     }).then((client) => {
       client.status = true;
-      client.save().then(res.redirect("/"));
+      client.save().then(
+        res.redirect('http://api.mycontract.co:3002/admin/login')
+      );
     });
   },
   checkExistence: async (req, res) => {
