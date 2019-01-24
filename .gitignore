@@ -2,6 +2,7 @@ node_modules/
 contractCreator/contractDirectory
 *.bak
 database/migrations/
+database/config
 icoDashboardCreator/etherwallet/node_modules
 kycDump/
 logs /
