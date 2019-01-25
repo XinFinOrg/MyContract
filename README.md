@@ -153,11 +153,12 @@ syntax
 
 ```
 
+**How it works**
+![image](https://user-images.githubusercontent.com/35517875/51728272-aca19f80-2095-11e9-8e4f-c943c925b177.png)
 
+Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://)
 
-***About Tokenization & Features  - Pending***
-***How it works***
-
+***About Tokenization & Features  - Pending
 ***XDC Utility Brief - Pending
 Technical Overview - Pending
 Whitelable Setup Brief - Pending
