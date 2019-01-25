@@ -154,9 +154,9 @@ syntax
 ```
 
 # How it works
-![image](https://user-images.githubusercontent.com/35517875/51728272-aca19f80-2095-11e9-8e4f-c943c925b177.png)
+![image](https://raw.githubusercontent.com/XinFinOrg/MyContract/master/public/video1.gif)
 
-Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://)
+Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://www.youtube.com/watch?v=thR-pTpF7Sw)
 
 # FAQs 
 [Click here to know more about platforms as well as FAQ's](https://medium.com/xinfin/https-medium-com-xinfin-xinfin-launches-mycontract-technical-aspects-part-1-9c3604a4b6df)
