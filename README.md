@@ -158,6 +158,9 @@ syntax
 
 Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://)
 
+# FAQs 
+[Click here to know more about platforms as well as FAQ's](https://medium.com/xinfin/https-medium-com-xinfin-xinfin-launches-mycontract-technical-aspects-part-1-9c3604a4b6df)
+
 # Technical Overview
 
 * Express Framework of Node.js for backend support.
@@ -166,6 +169,17 @@ Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://)
 * Web3.js is used for blockchain interactions.
 
 All files structures as per the standard the code Node.js Express framework.
+
+# About Tokenization & Features
+
+* Mycontract provides contract creation and deployment as well as tokenization platform where user can create smartcontract for Initial token offering and deploy it in easy steps and start Initial token offering by doing KYC in very convenient manner.
+* Tokenization platform accepts ETHER and BITCOIN as contribution method.
+* Admin dashboard will be provided where user can access all the data as well as accounts.
+* KYC and AML services are provided by default for Initial token offering in tokenization platform.
+* User will be provided with individual account for ETHER and BTC  as well as Token for contribution as well as withdrawal.
+* Initial token offering platform will be provided with various theme options as well as custom platform logo.
+* Full custom platform services provided as a addon.
+
 
 # Whitelable Setup
 
@@ -182,9 +196,9 @@ All files structures as per the standard the code Node.js Express framework.
 11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
 
 
-***About Tokenization & Features  - Pending***
+
+
+
 ***XDC Utility Brief - Pending
-Technical Overview - Pending
-Whitelable Setup Brief - Pending
-FAQs and Help File - Pending
+
 Terms & Condition for Commercial usage - Pending***
