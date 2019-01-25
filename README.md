@@ -153,7 +153,11 @@ syntax
 
 ```
 
+
+
 ***About Tokenization & Features  - Pending***
+***How it works***
+
 ***XDC Utility Brief - Pending
 Technical Overview - Pending
 Whitelable Setup Brief - Pending
