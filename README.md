@@ -153,12 +153,36 @@ syntax
 
 ```
 
-**How it works**
+# How it works
 ![image](https://user-images.githubusercontent.com/35517875/51728272-aca19f80-2095-11e9-8e4f-c943c925b177.png)
 
 Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://)
 
-***About Tokenization & Features  - Pending
+# Technical Overview
+
+* Express Framework of Node.js for backend support.
+* EJS(Embedded JavaScript templates) templating engine with HTML, CSS, Javascript/Jquery for Front end. 
+* PostgreSQL for database.
+* Web3.js is used for blockchain interactions.
+
+All files structures as per the standard the code Node.js Express framework.
+
+# Whitelable Setup
+
+1. [Go to mycontract admin page for signup or login](http://api.mycontract.co:3002) 
+2. Fill in the details and hit the signup button. 
+3. Verification mail will be send to your registerd email address, please verify your account by clicking the link provided inside the mail.
+4. This will redirect you to admin login page once account is verified.
+5. Next step is to complete the KYC by uploading the KYC relevent data as well as company name and company logo in PNG format in the KYC tab that you can find on dashboard.
+6. KYC verification will be done in a day.
+7. Once the KYC is completed & accpeted by Mycontract you can buy admin package by contributing 10000000 XDCE.
+8. Next step is to send 10000000 XDCE to wallet address that has be provided my platform. you can find that address in payment tab.
+9. In case you don't have XDCE then you can use Bancor tab or  [AlphaEx](https://alphaex.net) or any other XDCE provider to buy XDCE and transfer to platform wallet.
+10. Once you have 10000000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
+11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
+
+
+***About Tokenization & Features  - Pending***
 ***XDC Utility Brief - Pending
 Technical Overview - Pending
 Whitelable Setup Brief - Pending
