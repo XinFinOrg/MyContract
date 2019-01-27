@@ -196,7 +196,7 @@ All files structures as per the standard the code Node.js Express framework.
 11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
 
 
-
+***API Link : http://api.mycontract.co:3001/#introduction
 
 
 ***XDC Utility Brief - Pending
