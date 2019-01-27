@@ -189,10 +189,10 @@ All files structures as per the standard the code Node.js Express framework.
 4. This will redirect you to admin login page once account is verified.
 5. Next step is to complete the KYC by uploading the KYC relevent data as well as company name and company logo in PNG format in the KYC tab that you can find on dashboard.
 6. KYC verification will be done in a day.
-7. Once the KYC is completed & accpeted by Mycontract you can buy admin package by contributing 10000000 XDCE.
-8. Next step is to send 10000000 XDCE to wallet address that has be provided my platform. you can find that address in payment tab.
+7. Once the KYC is completed & accpeted by Mycontract you can buy admin package by contributing 10,000,000 XDCE.
+8. Next step is to send 10,000,000 XDCE to wallet address that has be provided my platform. you can find that address in payment tab.
 9. In case you don't have XDCE then you can use Bancor tab or  [AlphaEx](https://alphaex.net) or any other XDCE provider to buy XDCE and transfer to platform wallet.
-10. Once you have 10000000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
+10. Once you have 10,000,000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
 11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
 
 
