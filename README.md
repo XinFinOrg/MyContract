@@ -202,7 +202,7 @@ All files structures as per the standard the code Node.js Express framework.
 
 MyContract.co invites Community Contribution for developmnet of various usecase library for Bond Creation, real estate tokenization and Security token creation as per local law etc. Feel free to add usecase library.   
 
-    How to Contribte: 
+    How to Contribute: 
     
     Fork Repository (https://github.com/XinFinOrg/MyContract/fork)
     
