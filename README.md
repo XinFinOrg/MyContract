@@ -153,6 +153,16 @@ syntax
 
 ```
 
+***About Tokenization Platform & Features***
+
+* Mycontract.co provides contract creation and deployment as well as tokenization platform where user can create smartcontract for Initial token offering and deploy it in easy steps and start Initial token offering by doing KYC in very convenient manner.
+* Tokenization platform accepts ETHER and BITCOIN as contribution method.
+* Admin dashboard will be provided where user can access all the data as well as accounts.
+* KYC and AML services are provided by default for Initial token offering in tokenization platform.
+* User will be provided with individual account for ETHER and BTC as well as Token for contribution as well as withdrawal.
+* Initial token offering platform will be provided with various theme options as well as custom platform logo.
+* Full custom platform services provided as a addon.
+
 # How is Mycontract Useful
 
 Smart Contract and Tokenization is a method to convert rights to an asset into a digital token. By Tokenizing assets, we have a digital representation of a real-world asset on a blockchain. The advocates of the new “Tokenized” economy claim that slicing and dicing assets into fractions of ownership on a blockchain will enhance liquidity, price discovery and accessibility to high value illiquid assets at a fraction of current transaction costs.
@@ -176,6 +186,28 @@ The primary objective of Mycontract.co is to provide Token-as-a-Service (TAAS) w
 
 **Industrial Use Cases** : Any Industries can use the platform and bring the asset to tokenization world.
 
+# What you can build on Mycontract.co
+
+**Smart Contracts :**  
+* ERC20 - used for token Smart Contracts 
+* ERC223 - Provides extra safety during token transfers 
+* ERC 721 - Asset Tokenisation, STO
+
+**Crowdsale Contract :** 
+This is a Audited smart contract with additional features for eg, Bonus rates, Send tokens to Investor etc.
+
+**Automatic Contract Deployment :**
+Automatic & Manual Deployment with various ways to access wallets.
+
+**Contract Interaction :**
+This Features can enable easy smart contract interaction with built in interaction platform.
+
+**Tokenization Platform :**
+This platform provides convenient way to conduct initial coin offering with admin dashboard for KYC and AML support.
+
+**Currency Support :**
+Ethereum and Bitcoin Support, Top 10 Cryptocurrency Support in near future and Secured Gateway for Keystore handling & withdrawal.
+
 # How it works
 ![image](https://raw.githubusercontent.com/XinFinOrg/MyContract/master/public/video1.gif)
 
@@ -186,6 +218,8 @@ Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://www.
 
 # Technical Overview
 
+Mycontract.co an open source platform for Smart Contract Generation, Deployment, Interaction and Tokenization Platform is build on below mentioned technologies:
+
 * Express Framework of Node.js for backend support.
 * EJS(Embedded JavaScript templates) templating engine with HTML, CSS, Javascript/Jquery for Front end. 
 * PostgreSQL for database.
@@ -193,18 +227,8 @@ Watch the Demo Here : [https://www.youtube.com/watch?v=thR-pTpF7Sw](https://www.
 
 All files structures as per the standard the code Node.js Express framework.
 
-# About Tokenization & Features
 
-* Mycontract provides contract creation and deployment as well as tokenization platform where user can create smartcontract for Initial token offering and deploy it in easy steps and start Initial token offering by doing KYC in very convenient manner.
-* Tokenization platform accepts ETHER and BITCOIN as contribution method.
-* Admin dashboard will be provided where user can access all the data as well as accounts.
-* KYC and AML services are provided by default for Initial token offering in tokenization platform.
-* User will be provided with individual account for ETHER and BTC  as well as Token for contribution as well as withdrawal.
-* Initial token offering platform will be provided with various theme options as well as custom platform logo.
-* Full custom platform services provided as a addon.
-
-
-# Whitelable Setup
+# How can you do Whitelable Setup for reselling Smart Contracts & Tokenization Platform without Coding Knowledge?
 
 1. [Go to mycontract admin page for signup or login](http://api.mycontract.co:3002) 
 2. Fill in the details and hit the signup button. 
@@ -218,26 +242,30 @@ All files structures as per the standard the code Node.js Express framework.
 10. Once you have 10,000,000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
 11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
 
+# Want a Customised Solution on Mycontract.co?
 
-**API Link : http://api.mycontract.co:3001/#introduction
+**API Link : http://api.mycontract.co:3001/#introduction  
 
-**Contribution and Collobration: 
-
-MyContract.co invites Community Contribution for developmnet of various usecase library for Bond Creation, real estate tokenization and Security token creation as per local law etc. Feel free to add usecase library.   
-
-    How to Contribute: 
+# How to Contribute: 
     
-    Fork Repository (https://github.com/XinFinOrg/MyContract/fork)
-    
-    Create your feature branch (git checkout -b feature/fooBar)
-    
-    Commit your changes (git commit -am 'Add some fooBar')
-    
-    Push to the branch (git push origin feature/fooBar)
-    
-    Create a new Pull Request
+MyContract.co invites Community Contribution for development of various usecase library for Bond Creation, real estate tokenization and Security token creation as per local law etc. Feel free to add usecase library. 
 
+* Fork Repository (https://github.com/XinFinOrg/MyContract/fork)
+* Create your feature branch (git checkout -b feature/fooBar)
+* Commit your changes (git commit -am 'Add some fooBar')
+* Push to the branch (git push origin feature/fooBar)
+* Create a new Pull Request
 
-***XDC Utility Brief - Pending
+# Where can you get more help?
 
-Terms & Condition for Commercial usage - Pending***
+Please note that this is an issue tracker reserved for bug reports and feature requests on Github Mycontract.co Repo. For general questions please use XinFin Public Slack Channel https://xinfin-public.slack.com/
+
+**System information** 
+Version: Windows/Linux/OSX 
+
+**Expected behaviour
+**Actual behaviour
+**Steps to reproduce the behaviour
+**Backtrace
+
+# Terms & Condition for Commercial usage
