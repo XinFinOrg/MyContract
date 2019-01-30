@@ -153,6 +153,29 @@ syntax
 
 ```
 
+# How is Mycontract Useful
+
+Smart Contract and Tokenization is a method to convert rights to an asset into a digital token. By Tokenizing assets, we have a digital representation of a real-world asset on a blockchain. The advocates of the new “Tokenized” economy claim that slicing and dicing assets into fractions of ownership on a blockchain will enhance liquidity, price discovery and accessibility to high value illiquid assets at a fraction of current transaction costs.
+
+With liquidity, investors have the flexibility to sell private securities for an efficient market price, increasing marketability and unlocking greater potential asset value for issuers. There are many asset categories that can benefit, Mycontract.co can be as Tokenization platform provider to such industries and asset categories.
+
+The primary objective of Mycontract.co is to provide Token-as-a-Service (TAAS) which will eventually result in greater liquidity, real-time market pricing, cost savings, and transparency.
+
+**Advantages of Tokenization using Mycontract.co**
+
+* Unlock Liquidity of your physical asset or business
+* Enforce compliance on secondary trades
+* Attract New Investors
+* Lower investment minimums by unbundling
+* Create new fund types by rebundling
+* Reach global investors
+* Faster, Easier, Low-Cost Capital Formation
+* Tokenize individual assets
+* Enforce regulations through technology
+* Maintain accurate records
+
+**Industrial Use Cases** : Any Industries can use the platform and bring the asset to tokenization world.
+
 # How it works
 ![image](https://raw.githubusercontent.com/XinFinOrg/MyContract/master/public/video1.gif)
 
@@ -189,14 +212,30 @@ All files structures as per the standard the code Node.js Express framework.
 4. This will redirect you to admin login page once account is verified.
 5. Next step is to complete the KYC by uploading the KYC relevent data as well as company name and company logo in PNG format in the KYC tab that you can find on dashboard.
 6. KYC verification will be done in a day.
-7. Once the KYC is completed & accpeted by Mycontract you can buy admin package by contributing 10000000 XDCE.
-8. Next step is to send 10000000 XDCE to wallet address that has be provided my platform. you can find that address in payment tab.
+7. Once the KYC is completed & accpeted by Mycontract you can buy admin package by contributing 10,000,000 XDCE.
+8. Next step is to send 10,000,000 XDCE to wallet address that has be provided my platform. you can find that address in payment tab.
 9. In case you don't have XDCE then you can use Bancor tab or  [AlphaEx](https://alphaex.net) or any other XDCE provider to buy XDCE and transfer to platform wallet.
-10. Once you have 10000000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
+10. Once you have 10,000,000 XDCE in your platform wallet you can buy admin package in payment tab by clicking on Buy Package and it will prompt for OTP that will be send to your registerd email address.
 11. Upon complition of payment you will find client registration link in 'Client Registration tab', use that link for client registation.
 
 
+**API Link : http://api.mycontract.co:3001/#introduction
 
+**Contribution and Collobration: 
+
+MyContract.co invites Community Contribution for developmnet of various usecase library for Bond Creation, real estate tokenization and Security token creation as per local law etc. Feel free to add usecase library.   
+
+    How to Contribute: 
+    
+    Fork Repository (https://github.com/XinFinOrg/MyContract/fork)
+    
+    Create your feature branch (git checkout -b feature/fooBar)
+    
+    Commit your changes (git commit -am 'Add some fooBar')
+    
+    Push to the branch (git push origin feature/fooBar)
+    
+    Create a new Pull Request
 
 
 ***XDC Utility Brief - Pending
