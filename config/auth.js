@@ -1,30 +1,32 @@
 module.exports = {
 
   'githubAuth': {
-    'clientID': 'ad40ff1b1afb7f139378',
-    'clientSecret': 'b9c0e3639ca88f3bbaf6aa3f6990b3d4141f0893',
+    'clientID': 'c455ac87f1a99c52cde0',
+    'clientSecret': 'dd91931ce6cebad79d6a035ace4a7fe2d595bc85',
     'callbackURL': '/auth/github/callback'
   },
 
   'googleAuth': {
-    'clientID': '606609265971-qd6d6ao6ndsv8aminmb40urbh3a38ihs.apps.googleusercontent.com',
-    'clientSecret': 'a6DIUG6bg1E0G22Fm4f03IJ1',
+    'clientID': '698754492059-v4ist2ra5a43klek8patiesthmb20gqe.apps.googleusercontent.com',
+    'clientSecret': 'CNyppdWZIF79bDX6o4W2PixS',
     'callbackURL': '/auth/google/callback'
   },
 
   'nodemailerAuth': {
-    'user': 'AUTOICOSMTP@mail002.dakghar.in',
-    'pass': '@Ed2eQSxwd'
+    'user': 'contract@mail-b01.cloudmailbox.in',
+    'pass': 'Dhh%Xg$545d4',
+    'Host': 'mail-b01.cloudmailbox.in',
+    'port': 25
   },
 
   'jwtAuthKey': {
-    'secret': "nishant",
-    'tokenLife': 60*30
+    'secret': "heyitsmeakshayhere",
+    'tokenLife': 60 * 30
   },
 
   'binanceKey': {
-    'apiKey': 'NOyC5fjJ8StEWnwcKN8BOIvkRLyGO6ESpZSkgdt1XzP8il34gWrP7KtDmEtZPzuc',
-    'apiSecret': 'kOozwAkqmHap9XVqzrviTAjFxXm7MqVoKPYgqEhHIzjYkiAvRT37jtk61omHQZbD'
+    'apiKey': '8DFjjeVS0JhzVVcXuvUenxhDYBoO2OoAIJpCXJpy19rX1aaSfk6SZ9CiGFLiLTZI',
+    'apiSecret': 'Cq0xxr0UPGSZOAKbvB6YbrueutUCSf2QrIyephBWZbOAkcBuOQd0tTwzat8MqsuR'
   }
 
 };

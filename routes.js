@@ -3,6 +3,14 @@ module.exports = function(app){
 
     res.render('landingPage');
   });
+  app.get('/privacyPolicy', function(req, res) {
+
+    res.render('privacyPolicy');
+  });
+  app.get('/termsConditions', function(req, res) {
+
+    res.render('termsConditions');
+  });
 };
 
 // route middleware to make sure a user is logged in

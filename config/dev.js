@@ -1,3 +1,3 @@
 module.exports = {
-  'contractEmailSubject': "AutoCoin - Smart Contract generation",
+  'contractEmailSubject': "Mycontract - Smart Contract generation",
 }
