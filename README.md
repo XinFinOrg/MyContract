@@ -246,7 +246,7 @@ All files structures as per the standard the code Node.js Express framework.
 
 **API Link : http://api.mycontract.co:3001/#introduction  
 
-# How to Contribute: 
+# How to Contribute?
     
 MyContract.co invites Community Contribution for development of various usecase library for Bond Creation, real estate tokenization and Security token creation as per local law etc. Feel free to add usecase library. 
 
@@ -263,12 +263,12 @@ Please note that this is an issue tracker reserved for bug reports and feature r
 **System information** 
 Version: Windows/Linux/OSX 
 
-**Expected behaviour
+**Expected behaviour**
 
-**Actual behaviour
+**Actual behaviour**
 
-**Steps to reproduce the behaviour
+**Steps to reproduce the behaviour**
 
-**Backtrace
+**Backtrace**
 
 # Terms & Condition for Commercial usage
