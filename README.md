@@ -153,6 +153,29 @@ syntax
 
 ```
 
+# How is Mycontract Useful
+
+Smart Contract and Tokenization is a method to convert rights to an asset into a digital token. By Tokenizing assets, we have a digital representation of a real-world asset on a blockchain. The advocates of the new “Tokenized” economy claim that slicing and dicing assets into fractions of ownership on a blockchain will enhance liquidity, price discovery and accessibility to high value illiquid assets at a fraction of current transaction costs.
+
+With liquidity, investors have the flexibility to sell private securities for an efficient market price, increasing marketability and unlocking greater potential asset value for issuers. There are many asset categories that can benefit, Mycontract.co can be as Tokenization platform provider to such industries and asset categories.
+
+The primary objective of Mycontract.co is to provide Token-as-a-Service (TAAS) which will eventually result in greater liquidity, real-time market pricing, cost savings, and transparency.
+
+**Advantages of Tokenization using Mycontract.co**
+
+●	Unlock Liquidity of your physical asset or business
+●	Enforce compliance on secondary trades
+●	Attract New Investors
+●	Lower investment minimums by unbundling
+●	Create new fund types by rebundling
+●	Reach global investors
+●	Faster, Easier, Low-Cost Capital Formation
+●	Tokenize individual assets
+●	Enforce regulations through technology
+●	Maintain accurate records
+
+**Industrial Use Cases** : Any Industries can use the platform and bring the asset to tokenization world.
+
 # How it works
 ![image](https://raw.githubusercontent.com/XinFinOrg/MyContract/master/public/video1.gif)
 
