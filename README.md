@@ -272,3 +272,4 @@ Version: Windows/Linux/OSX
 **Backtrace**
 
 # Terms & Condition for Commercial usage
+Please refer to License associated to Mycontract.co : https://github.com/XinFinOrg/MyContract/blob/master/LICENSE
