@@ -163,16 +163,16 @@ The primary objective of Mycontract.co is to provide Token-as-a-Service (TAAS) w
 
 **Advantages of Tokenization using Mycontract.co**
 
-●	Unlock Liquidity of your physical asset or business
-●	Enforce compliance on secondary trades
-●	Attract New Investors
-●	Lower investment minimums by unbundling
-●	Create new fund types by rebundling
-●	Reach global investors
-●	Faster, Easier, Low-Cost Capital Formation
-●	Tokenize individual assets
-●	Enforce regulations through technology
-●	Maintain accurate records
+* Unlock Liquidity of your physical asset or business
+* Enforce compliance on secondary trades
+* Attract New Investors
+* Lower investment minimums by unbundling
+* Create new fund types by rebundling
+* Reach global investors
+* Faster, Easier, Low-Cost Capital Formation
+* Tokenize individual assets
+* Enforce regulations through technology
+* Maintain accurate records
 
 **Industrial Use Cases** : Any Industries can use the platform and bring the asset to tokenization world.
 
