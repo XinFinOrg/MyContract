@@ -264,8 +264,11 @@ Please note that this is an issue tracker reserved for bug reports and feature r
 Version: Windows/Linux/OSX 
 
 **Expected behaviour
+
 **Actual behaviour
+
 **Steps to reproduce the behaviour
+
 **Backtrace
 
 # Terms & Condition for Commercial usage
