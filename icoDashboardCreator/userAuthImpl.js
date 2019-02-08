@@ -16,28 +16,13 @@ const fileType = require('file-type');
 module.exports = {
 
   getTransactions: async (req, res, next) => {
-    var btc_address, eth_address;
-    var eth_addresses = await req.user.getUserCurrencyAddresses({
-      where: {
-        currencyType: 'Ethereum'
-      }
-    });
-    eth_address = eth_addresses[0].address;
-
-    var btc_addresses = await req.user.getUserCurrencyAddresses({
-      where: {
-        currencyType: 'Bitcoin'
-      }
-    });
-    btc_address = btc_addresses[0].address;
-    var projectConfiguration = req.user.projectConfiguration;
-    res.render('userTransactionHistory', {
-      user: req.user,
-      projectConfiguration: projectConfiguration,
-      eth_address: eth_address,
-      btc_address: btc_address,
-      tokenTransferLogs: req.user.tokenTransferLogs
-    });
+    try {
+      res.status(200).send({
+        tokenTransferLogs: req.user.tokenTransferLogs
+      });
+    } catch (err) {
+      res.status(400).send({ message: "Error occured while fetching data" })
+    }
   },
 
   getTokenTransactionList: async (req, res) => {
@@ -46,13 +31,34 @@ module.exports = {
     });
   },
 
-  getWallets: (req, res, next) => {
-    var projectConfiguration = req.user.projectConfiguration;
-    res.render('userWalletPage', {
-      user: req.user,
-      projectConfiguration: projectConfiguration,
-      addresses: req.user.userCurrencyAddresses
-    });
+  getWallets: async (req, res, next) => {
+    try {
+      var btc_address, eth_address;
+      var eth_addresses = await req.user.getUserCurrencyAddresses({
+        where: {
+          currencyType: 'masterEthereum'
+        }
+      });
+      eth_address = eth_addresses[0].address;
+      var btc_addresses = await req.user.getUserCurrencyAddresses({
+        where: {
+          currencyType: 'masterBitcoin'
+        }
+      });
+
+      btc_address = btc_addresses[0].address;
+      Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([ethBalance, btcBalance]) => {
+        res.status(200).send(
+          {
+            "ETHAddress": eth_address,
+            'ETHBalance': ethBalance,
+            "BTCAddress": btc_address,
+            'BTCBalance': btcBalance,
+          });
+      });
+    } catch (err) {
+      res.status(400).send({ message: "Network error occured" })
+    }
   },
 
   getContactPage: (req, res, next) => {
@@ -88,39 +94,44 @@ module.exports = {
 
   logout: (req, res, next) => {
     res.clearCookie('token');
-    res.send({status:true,message:"logout successful."})
+    res.send({ message: "logout successful." })
   },
 
   getDashboard: async (req, res, next) => {
-    // try {
-    let UserObj = new Object;
-    UserObj.firstName = req.user.firstName
-    UserObj.lastName = req.user.lastName
-    UserObj.email = req.user.email
-    UserObj.uniqueId = req.user.uniqueId
-    let projectObj = new Object;
-    projectObj.siteLogo = req.user.projectConfiguration.dataValues.siteLogo
-    projectObj.siteName = req.user.projectConfiguration.dataValues.siteName
-    projectObj.coinName = req.user.projectConfiguration.dataValues.coinName
-    projectObj.coinSymbol = req.user.projectConfiguration.dataValues.coinSymbol
-    projectObj.tokenSold = req.user.projectConfiguration.dataValues.tokenSold
-    projectObj.tokenSupply = req.user.projectConfiguration.dataValues.tokenSupply
-    projectObj.softCap = req.user.projectConfiguration.dataValues.softCap
-    projectObj.minimumContribution = req.user.projectConfiguration.dataValues.minimumContribution
-    projectObj.bonusRate = req.user.projectConfiguration.dataValues.bonusRate
-    projectObj.homeURL = req.user.projectConfiguration.dataValues.homeURL
-    projectObj.contactEmail = req.user.projectConfiguration.dataValues.contactEmail
-    projectObj.startDate = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString();
-    projectObj.endDate = new Date(req.user.projectConfiguration.dataValues.endDate).toLocaleDateString();
-    projectObj.datetime = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString() + " " + new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleTimeString();
-    let CurrencyAddresses = new Object;
-    CurrencyAddresses = req.user.userCurrencyAddresses;
-    CurrencyAddresses[0].privateKey = "";
-    CurrencyAddresses[1].privateKey = "";
-    res.send({ status: true, UserObject: UserObj, CurrencyAddresses: CurrencyAddresses, projectData: projectObj });
-    // } catch {
-    //   res.send({ status: false, message: "error occured." })
-    // }
+    try {
+      let UserObj = new Object;
+      UserObj.firstName = req.user.firstName
+      UserObj.lastName = req.user.lastName
+      UserObj.email = req.user.email
+      UserObj.uniqueId = req.user.uniqueId
+      UserObj.contactNumber = req.user.isd_code + " - " + req.user.mobile
+      UserObj.accountStatus = req.user.status
+      res.status(200).send({ userData: UserObj });
+    } catch {
+      res.status(400).send({ message: "error occured." })
+    }
+  },
+
+  platformInfo: async (req, res, next) => {
+    try {
+      let projectObj = new Object;
+      projectObj.siteLogo = req.user.projectConfiguration.dataValues.siteLogo
+      projectObj.siteName = req.user.projectConfiguration.dataValues.siteName
+      projectObj.coinName = req.user.projectConfiguration.dataValues.coinName
+      projectObj.coinSymbol = req.user.projectConfiguration.dataValues.coinSymbol
+      projectObj.tokenSold = req.user.projectConfiguration.dataValues.tokenSold
+      projectObj.tokenSupply = req.user.projectConfiguration.dataValues.tokenSupply
+      projectObj.softCap = req.user.projectConfiguration.dataValues.softCap
+      projectObj.minimumContribution = req.user.projectConfiguration.dataValues.minimumContribution
+      projectObj.bonusRate = req.user.projectConfiguration.dataValues.bonusRate
+      projectObj.homeURL = req.user.projectConfiguration.dataValues.homeURL
+      projectObj.contactEmail = req.user.projectConfiguration.dataValues.contactEmail
+      projectObj.startDate = new Date(req.user.projectConfiguration.dataValues.startDate).toLocaleDateString();
+      projectObj.endDate = new Date(req.user.projectConfiguration.dataValues.endDate).toLocaleDateString();
+      res.status(200).send({ projectData: projectObj });
+    } catch {
+      res.status(400).send({ message: "error occured." })
+    }
   },
 
   getPrices: async (req, res, next) => {
@@ -133,50 +144,53 @@ module.exports = {
 
     binance.prices((error, ticker) => {
       if (error) {
-        console.log(error);
+        res.status(400).send({ message: "Network error occured" })
       }
-
-      res.send({
-        BTC: 1 / ticker.ETHBTC,
-        BTCUSD: ticker.BTCUSDT,
-        ETHUSD: ticker.ETHUSDT
+      res.status(200).send({
+        tokenBTC: 1 / req.user.projectConfiguration.dataValues.ETHRate * ticker.ETHBTC,
+        tokenETH: 1 / req.user.projectConfiguration.dataValues.ETHRate,
+        tokenUSD: (1 / req.user.projectConfiguration.dataValues.ETHRate * ticker.ETHBTC) * ticker.BTCUSDT,
       });
     });
   },
 
   uploadKYC: async (req, res, next) => {
-    try {
-      let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
-      let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
-      let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
-      if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
-        User.update({
-          'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
-          'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
-          'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
-          'kycDocName1': req.body.kycDocName1,
-          'kycDocName2': req.body.kycDocName2,
-          'kycDocName3': req.body.kycDocName3,
-          'kyc_verified': 'pending',
-          'isd_code': req.body.isdCode,
-          'mobile': req.body.contactNumber,
-          'country': req.body.country
-        }, {
-            where: {
-              'email': req.user.email,
-              'projectConfigurationCoinName': req.user.projectConfiguration.coinName
-            }
-          }).then(() => {
-            res.send({ status: true, message: "KYC Submitted." })
-          }).catch(err => {
-            res.send({ status: false, message: "error occured", err: err })
-          })
+    if (req.user.kyc_verified == 'notInitiated') {
+      try {
+        let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
+        let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
+        let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
+        if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
+          User.update({
+            'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
+            'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
+            'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
+            'kycDocName1': req.body.kycDocName1,
+            'kycDocName2': req.body.kycDocName2,
+            'kycDocName3': req.body.kycDocName3,
+            'kyc_verified': 'pending',
+            'isd_code': req.body.ISDCode,
+            'mobile': req.body.contactNumber,
+            'country': req.body.country
+          }, {
+              where: {
+                'email': req.user.email,
+                'projectConfigurationCoinName': req.user.projectConfiguration.coinName
+              }
+            }).then(() => {
+              res.status(200).send({ status: true, message: "KYC Submitted." })
+            }).catch(err => {
+              res.status(400).send({ status: false, message: "error occured", err: err })
+            })
+        }
+        else {
+          res.status(400).send({ status: false, message: "error occured. only jpeg allowed" })
+        }
+      } catch{
+        res.status(400).send({ status: false, message: "error occured." })
       }
-      else {
-        res.send({ status: false, message: "error occured. only jpeg allowed" })
-      }
-    } catch{
-      res.send({ status: false, message: "error occured." })
+    } else {
+      res.status(400).send({ status: false, message: "KYC already submitted." })
     }
   },
 
@@ -217,9 +231,9 @@ module.exports = {
 
     btc_address = btc_addresses[0].address;
     Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkBalance(btc_address)]).then(([ethBalance, btcBalance]) => {
-      res.send({
-        'balance': ethBalance,
-        'btcBalance': btcBalance
+      res.status(200).send({
+        'ETHbalance': ethBalance,
+        'BTCBalance': btcBalance
       });
     });
   },
@@ -230,14 +244,15 @@ module.exports = {
         currencyType: 'masterEthereum'
       }
     });
+    var tokenBalance
     eth_address = eth_addresses[0].address;
     if (req.user.projectConfiguration.networkType == "testnet") {
-      var tokenBalance = await privateIcoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
+      tokenBalance = await privateIcoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
     }
     else {
-      var tokenBalance = await icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
+      tokenBalance = await icoListener.checkTokenBalance(eth_address, req.user.projectConfiguration.tokenContractAddress)
     }
-    res.send({
+    res.status(200).send({
       'tokenBalance': tokenBalance
     });
   },

@@ -12,13 +12,13 @@ module.exports = function (app) {
 
   //client apis
   // app.get('/login', impl.getLogin);
-  app.post('/api/clientLogin', impl.postLogin);
+  app.post('/v1/client/login', impl.postLogin);
   // app.get('/signup', impl.getSignup);
-  app.post('/api/adminId/:adminId/ClientSignup', adminCheck, impl.postSignup);
+  app.post('/v1/:adminId/client/signup', adminCheck, impl.postSignup);
   // app.get('/dashboard', isLoggedIn, impl.getDashboard);
-  app.get('/api/getProjectArray', isLoggedIn, impl.getProjectArray);
+  app.get('/v1/client/projects', isLoggedIn, impl.getProjectArray);
   // app.get('/api/profileDetails', isLoggedIn, impl.getProfileDetails);
-  app.get('/api/getProfileDetails', isLoggedIn, impl.getAPIProfileDetails);
+  app.get('/v1/client/details', isLoggedIn, impl.getProfileDetails);
   // app.get('/faq', isLoggedIn, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
@@ -27,11 +27,11 @@ module.exports = function (app) {
   app.get('/auth/github/callback', impl.githubLoginCallback);
   // app.get('/api/projectList', impl.getProjectList);
   // app.get('/api/getClientList', impl.getClientList);
-  app.get('/api/forgotPassword', impl.forgotPassword);
+  app.get('/v1/client/password/reset', impl.forgotPassword);
   // app.get('/resetPassword',impl.resetPassword);
   app.post('/api/updatePassword', impl.updatePassword);
   app.get('/verifyAccount', impl.verifyAccount);
-  app.get('/api/clientBalance', isLoggedIn, impl.getBalances);
+  // app.get('/api/clientBalance', isLoggedIn, impl.getBalances);
 
   //new apis
   app.get('/api/checkExistence', impl.checkExistence);
@@ -51,16 +51,16 @@ module.exports = function (app) {
   app.post('/api/updateClientData/uid/:uid', isSuperAdminLoggedIn, superAdminimpl.updateClientData);
 
   //admin
-  app.post('/api/adminLogin', adminimpl.postLogin);
-  app.post('/api/adminSignup', adminimpl.postSignup);
-  app.post('/api/makeAdminPayment', isAdminLoggedIn, isAdminVerified, adminimpl.makePayment);
-  app.get('/api/adminDetails', isAdminLoggedIn, adminimpl.adminDetails);
-  app.post('/api/adminKYCupload', isAdminLoggedIn, adminimpl.adminKYCupload);
-  app.get('/api/adminBalance', isAdminLoggedIn, adminimpl.adminBalance);
-  app.get('/api/clientList', isAdminLoggedIn, adminimpl.getClientList);
-  app.get('/api/getClientKYCData/uid/:uid', isAdminLoggedIn, adminimpl.getClientKYCData);
-  app.post('/api/updateClientKYCData/uid/:uid', isAdminLoggedIn, adminimpl.updateClientKYC)
-  app.get('/adminLogout', isAdminLoggedIn, adminimpl.Adminlogout);
+  app.post('/v1/admin/login', adminimpl.postLogin);
+  app.post('/v1/admin/signup', adminimpl.postSignup);
+  app.post('/v1/admin/payment', isAdminLoggedIn, isAdminVerified, adminimpl.makePayment);
+  app.get('/v1/admin/details', isAdminLoggedIn, adminimpl.adminDetails);
+  app.post('/v1/admin/uploadKYC', isAdminLoggedIn, adminimpl.adminKYCupload);
+  // app.get('/api/adminBalance', isAdminLoggedIn, adminimpl.adminBalance);
+  app.get('/v1/admin/client/list', isAdminLoggedIn, adminimpl.getClientList);
+  app.get('/v1/admin/client/:clientId', isAdminLoggedIn, adminimpl.getClientKYCData);
+  app.post('/v1/admin/client/updateKYC/:clientId', isAdminLoggedIn, adminimpl.updateClientKYC)
+  app.get('/v1/admin/logout', isAdminLoggedIn, adminimpl.Adminlogout);
   app.get('/verifyAdminAccount', adminimpl.verifyAdminAccount);
 
 

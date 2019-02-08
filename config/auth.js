@@ -14,12 +14,15 @@ module.exports = {
 
   'nodemailerAuth': {
     'user': 'contract@mail-b01.cloudmailbox.in',
-    'pass': 'COn$#5dgRd'
+    'pass': 'Dhh%Xg$545d4',
+    'Host': 'mail-b01.cloudmailbox.in',
+    'port': 25
   },
 
   'jwtAuthKey': {
-    'secret': "nishant",
-    'tokenLife': 60*30
+    'secret': "hereitsme",
+    'tokenLife': 60 * 30,
+    'logout':1
   },
 
   'binanceKey': {

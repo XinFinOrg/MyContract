@@ -64,7 +64,7 @@ module.exports = function (passport) {
         User.find({
           where: {
             'email': email,
-            'projectConfigurationCoinName': req.body.projectName
+            'projectConfigurationCoinName': req.params.projectName
           }
         }).then(async user => {
           // check to see if theres already a user with that email
@@ -78,16 +78,21 @@ module.exports = function (passport) {
             //Find project details and map user
             var project = await Project.find({
               where: {
-                'coinName': req.body.projectName
+                'coinName': req.params.projectName
               }
             });
 
-            Promise.all([generateEthAddress(), generateBTCAddress(), createNewUser(req)]).then(([createdEthAddress, createdBTCAddress, createdUser]) => {
-              createdUser.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-              project.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-              project.addUser(createdUser);
-              return done(null, createdUser.dataValues);
-            });
+            if (!project) {
+              return done(null, false, 'No project found.');
+            }
+            else {
+              Promise.all([generateEthAddress(), generateBTCAddress(), createNewUser(req)]).then(([createdEthAddress, createdBTCAddress, createdUser]) => {
+                createdUser.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+                project.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+                project.addUser(createdUser);
+                return done(null, createdUser.dataValues, 'Please verify your email address by clicking the link that we have mailed you!');
+              });
+            }
           }
         });
       });
@@ -103,11 +108,11 @@ module.exports = function (passport) {
     async function (req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
-      console.log(email);
+      console.log(email, password);
       User.find({
         where: {
           'email': email,
-          'projectConfigurationCoinName': req.body.projectName
+          'projectConfigurationCoinName': req.params.projectName
         },
         attributes: ['email', 'password', 'projectConfigurationCoinName', 'emailVerified']
       }).then(user => {

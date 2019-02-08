@@ -90,7 +90,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 //Creating all app routes
-app.use('/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));
+app.use('/v1/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));
 require('./routes')(app);
 require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);

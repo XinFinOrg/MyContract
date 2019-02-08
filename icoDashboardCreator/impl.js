@@ -32,62 +32,64 @@ module.exports = {
     });
   },
   icoDashboardSetup: async function (req, res) {
-    console.log(req.params, req.query, req.body)
-    let userCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.tokenName } })
-    let verifiedUserCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.tokenName, "kyc_verified": "active" } })
-    let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.tokenName } })
-    let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Ethereum", "project_id": req.params.tokenName }, raw: true, })
-    let btc_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Bitcoin", "project_id": req.params.tokenName }, raw: true, })
-    let transactionLog = await db.tokenTransferLog.findAll({ where: { 'project_id': req.params.tokenName }, raw: true });
-    if (projectConfi.networkType == 'testnet') {
-      console.log("in testnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), testnetListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), testnetListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
-        res.send({
-          'ethBalance': ethBalance,
-          'btcBalance': btcBalance,
-          'user': req.user,
-          'projectName': req.params.tokenName,
-          'userCount': userCount,
-          'verifiedUserCount': verifiedUserCount,
-          'transactionLog': transactionLog,
-          'tokenBalance': tokenBalance,
-          'crowdsaleBalance': crowdsaleBalance
+    try {
+      let userCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.tokenName } })
+      let verifiedUserCount = await User.count({ where: { 'projectConfigurationCoinName': req.params.tokenName, "kyc_verified": "active" } })
+      let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.tokenName } })
+      let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Ethereum", "project_id": req.params.tokenName }, raw: true, })
+      let btc_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "Bitcoin", "project_id": req.params.tokenName }, raw: true, })
+      let transactionLog = await db.tokenTransferLog.findAll({ where: { 'project_id': req.params.tokenName }, raw: true });
+      if (projectConfi.networkType == 'testnet') {
+        console.log("in testnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), testnetListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), testnetListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+          res.status(200).send({
+            'ethBalance': ethBalance,
+            'btcBalance': btcBalance,
+            // 'user': req.user,
+            'projectName': req.params.tokenName,
+            'userCount': userCount,
+            'verifiedUserCount': verifiedUserCount,
+            'transactionLog': transactionLog,
+            'tokenBalance': tokenBalance,
+            'crowdsaleBalance': crowdsaleBalance
+          });
         });
-      });
-    } else if (projectConfi.networkType == 'mainnet') {
-      console.log("in mainnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), icoListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), icoListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
-        res.send({
-          'ethBalance': ethBalance,
-          'btcBalance': btcBalance,
-          'user': req.user,
-          'projectName': req.params.tokenName,
-          'userCount': userCount,
-          'verifiedUserCount': verifiedUserCount,
-          'transactionLog': transactionLog,
-          'tokenBalance': tokenBalance,
-          'crowdsaleBalance': crowdsaleBalance
+      } else if (projectConfi.networkType == 'mainnet') {
+        console.log("in mainnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), icoListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), icoListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+          res.status(200).send({
+            'ethBalance': ethBalance,
+            'btcBalance': btcBalance,
+            // 'user': req.user,
+            'projectName': req.params.tokenName,
+            'userCount': userCount,
+            'verifiedUserCount': verifiedUserCount,
+            'transactionLog': transactionLog,
+            'tokenBalance': tokenBalance,
+            'crowdsaleBalance': crowdsaleBalance
+          });
         });
-      });
-    }
-    else {
-      console.log("in private");
-      await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), privateListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), privateListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
-        res.send({
-          'ethBalance': ethBalance,
-          'btcBalance': btcBalance,
-          'user': req.user,
-          'projectName': req.params.tokenName,
-          'userCount': userCount,
-          'verifiedUserCount': verifiedUserCount,
-          'transactionLog': transactionLog,
-          'tokenBalance': tokenBalance,
-          'crowdsaleBalance': crowdsaleBalance
-        });
-      })
+      }
+      else {
+        console.log("in private");
+        await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), privateListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), privateListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+          res.status(200).send({
+            'ethBalance': ethBalance,
+            'btcBalance': btcBalance,
+            // 'user': req.user,
+            'projectName': req.params.tokenName,
+            'userCount': userCount,
+            'verifiedUserCount': verifiedUserCount,
+            'transactionLog': transactionLog,
+            'tokenBalance': tokenBalance,
+            'crowdsaleBalance': crowdsaleBalance
+          });
+        })
+      }
+    } catch{
+      res.status(400).send({ status: false, message: "no project found" })
     }
   },
 
   siteConfiguration: function (req, res) {
-    console.log(req.params, "project")
     res.render('siteConfiguration', {
       user: req.user,
       projectName: req.params.projectName
@@ -103,14 +105,14 @@ module.exports = {
       }
     }).then(values => {
       if (!values) {
-        res.send({
+        res.status(302).send({
           status: false,
           message: "no record found"
         });
       } else {
         var dataobj = new Object();
-        dataobj = values.dataValues;
-        res.send({
+        dataobj = values;
+        res.status(200).send({
           status: true,
           data: dataobj
         })
@@ -123,7 +125,7 @@ module.exports = {
         "coinName": req.params.tokenName
       }
     })
-    if (req.files[0] == undefined) { projectdatavalues.siteLogo = null }
+    if (req.files == undefined) { }
     else { projectdatavalues.siteLogo = await ImageDataURI.encodeFromFile(req.files[0].path) }
     projectdatavalues.siteName = req.body.siteName
     projectdatavalues.softCap = req.body.softCap
@@ -132,10 +134,11 @@ module.exports = {
     projectdatavalues.endDate = req.body.endDate
     projectdatavalues.homeURL = req.body.homeURL
     projectdatavalues.minimumContribution = req.body.minimumContribution
+    projectdatavalues.contactEmail = req.body.contactEmail
     projectdatavalues.save().then(() => {
-      res.send({ status: true, message: "Project updated successfully!" })
+      res.status(200).send({ status: true, message: "Project updated successfully!" })
     }).catch(function (err) {
-      res.send({ status: false, message: "please try again later" })
+      res.status(400).send({ status: false, message: "please try again later" })
     });
   },
 
@@ -154,9 +157,9 @@ module.exports = {
         exclude: ["mobile", "isd_code", "usertype_id", "updatedAt", "createdAt", "kycDoc3", "kycDocName3", "kycDoc2", "kycDocName2", "kycDoc1", "kycDocName1", "password"]
       }
     }).then(userData => {
-      res.send({ status: true, data: userData })
+      res.status(200).send({ status: true, data: userData })
     }).catch(function (err) {
-      res.send({ status: false, message: "no data found" })
+      res.status(400).send({ status: false, message: "no data found" })
     });
   },
   getUserData: async function (req, res) {
@@ -166,12 +169,12 @@ module.exports = {
         "uniqueId": req.params.uniqueId
       },
     }).then(async result => {
-      res.send({
+      res.status(200).send({
         status: true,
         UserData: result.dataValues,
       })
     }).catch(function (err) {
-      res.send({ status: false, message: "no data found" })
+      res.status(400).send({ status: false, message: "no data found" })
     });
   },
   updateUserData: async function (req, res) {
@@ -185,12 +188,12 @@ module.exports = {
       userdata.kyc_verified = req.body.kycStatus;
       userdata.status = req.body.accountStatus;
       userdata.save().then(() => {
-        res.send({ status: true, message: "data updated" })
+        res.status(200).send({ status: true, message: "data updated" })
       }).catch(function (err) {
-        res.send({ status: false, message: "error occured" })
+        res.status(400).send({ status: false, message: "error occured" })
       });
     } catch{
-      res.send({ status: false, message: "error occured" })
+      res.status(400).send({ status: false, message: "error occured" })
 
     }
   },
@@ -293,9 +296,9 @@ module.exports = {
       console.log(user);
       try {
         if (err || !user) {
-          return res.send({ status: false, message: "Somthing went wrong! Please try again later." })
+          return res.send({ status: false, message: info })
         }
-        return res.send({ status: true, message: "signup Succesful" })
+        return res.send({ status: true, message: info })
       } catch (error) {
         return next(error);
       }
@@ -316,34 +319,40 @@ module.exports = {
     });
   },
   getTransaction: async (req, res) => {
-    transactionLog = await db.tokenTransferLog.findAll(
-      { where: { 'project_id': req.params.tokenName }, raw: true }
-    );
-    res.send({
-      transactionLog: transactionLog
-    });
+    try {
+      transactionLog = await db.tokenTransferLog.findAll(
+        { where: { 'project_id': req.params.tokenName }, raw: true }
+      );
+      res.status(200).send({
+        status: true,
+        transactionLog: transactionLog
+      });
+    } catch{
+      res.status(400).send({ status: false, message: "error occured" })
+    }
   },
   tokenTrasfer: async function (req, res) {
+    console.log(req.body)
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.tokenName } })
     let accountData = await db.userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.params.tokenName } })
     try {
       if (projectConfi.networkType == 'testnet') {
-        console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(receipt => {
+        console.log("in testnet"); testnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.userAddress, accountData.privateKey).then(receipt => {
           res.send({ receipt: receipt });
         })
       }
       else if (projectConfi.networkType == 'mainnet') {
-        console.log("in mainnet"); mainnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(receipt => {
+        console.log("in mainnet"); mainnetListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.userAddress, accountData.privateKey).then(receipt => {
           res.send({ receipt: receipt });
         })
       }
       else {
-        console.log("in private"); privateListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.tokenAddress, accountData.privateKey).then(receipt => {
+        console.log("in private"); privateListener.sendTokenFromTokenContract(projectConfi.dataValues, accountData.address, req.body.tokenAmount, req.body.userAddress, accountData.privateKey).then(receipt => {
           res.send({ receipt: receipt });
         })
       }
     }
-    catch (err) { console.log("in err", err) }
+    catch (err) { res.status(400).send({ status: false, message: "network error occured" }) }
   },
   initiateTransferReq: async (req, res) => {
     console.log(req.body, req.params)
@@ -362,6 +371,7 @@ module.exports = {
     var tokenLogs = await db.tokenTransferLog.findAll({
       where: {
         "project_id": req.params.tokenName,
+        "tokenTransferStatus": "Pending",
         uniqueId: {
           [Op.or]: ids
         }

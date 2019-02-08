@@ -14,28 +14,29 @@ router.get('/transactions', isAuthenticated, kycVerified, impl.getTransactions);
 router.get('/wallets', isAuthenticated, kycVerified, impl.getWallets);
 // router.get('/kyc', isAuthenticated, kycVerified, impl.getCompletedKYCPage);
 router.get('/userLogout', isAuthenticated, impl.logout);
-router.get('/dashboard', isAuthenticated, kycVerified, impl.getDashboard);
+router.get('/profile', isAuthenticated, kycVerified, impl.getDashboard);
+router.get('/platform/info', isAuthenticated, kycVerified, impl.platformInfo);
 // router.get('/contact_us', isAuthenticated, kycVerified, impl.getContactPage);
 // router.post('/contact_us', isAuthenticated, impl.postContactPage);
 // router.get('/profile', isAuthenticated, kycVerified, impl.getProfileEditPage);
 // router.post('/profile', isAuthenticated, impl.postProfileEditPage);
-router.get('/getPrices', isAuthenticated, impl.getPrices);
-router.post('/kycUpload', isAuthenticated, impl.uploadKYC);
+router.get('/platform/tokenPrice', isAuthenticated, impl.getPrices);
+router.post('/kyc', isAuthenticated, impl.uploadKYC);
 // router.post('/loadWallet', isAuthenticated, impl.loadWallet);
-router.get('/api/checkBalances', isAuthenticated, impl.checkBalances);
-router.get('/api/checkTokenBalances', isAuthenticated, impl.checkTokenBalances);
-router.post('/api/buyToken', isAuthenticated, impl.buyToken);
-router.post('/api/buyTokenBTC', isAuthenticated, impl.buyTokenBTC);
+router.get('/balances', isAuthenticated, impl.checkBalances);
+router.get('/tokenBalances', isAuthenticated, impl.checkTokenBalances);
+router.post('/buyToken', isAuthenticated, impl.buyToken);
+router.post('/buyTokenBTC', isAuthenticated, impl.buyTokenBTC);
 // router.get('/api/checkTokenStats', isAuthenticated, impl.checkTokenStats);
-router.get('/api/getTransactions', isAuthenticated, impl.getTransactionList);
-router.get('/api/getBitcoinTransactions', isAuthenticated, impl.getBitcoinTransactionList);
+router.get('/getTransactions', isAuthenticated, impl.getTransactionList);
+router.get('/getBitcoinTransactions', isAuthenticated, impl.getBitcoinTransactionList);
 
 function isAuthenticated(req, res, next) {
-  var token = req.cookies['token'];
+  // var token = req.cookies['token'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+  jwt.verify(req.headers.authorization, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.send({status:false,message:"please login again."})
+      return res.send({ status: false, message: "please login again." })
     } else {
       User.find({
         where: {
@@ -61,7 +62,7 @@ function kycVerified(req, res, next) {
       break;
     case "pending":
       {
-        res.send({status:false,message:"KYC is in pending state."});
+        res.send({ status: false, message: "KYC is in pending state." });
       }
       break;
     case "notInitiated":
@@ -71,7 +72,7 @@ function kycVerified(req, res, next) {
       break;
     default:
       {
-        res.send({status:false,message:"please login."});
+        res.send({ status: false, message: "please login." });
       }
       break;
   }

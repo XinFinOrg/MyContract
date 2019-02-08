@@ -29,8 +29,8 @@ module.exports = {
             try {
                 if (err || !user || info) {
                     const error = new Error('An Error occured')
-                    return res.json({
-                        'token': "failure",
+                    return res.status(302).send({
+                        'token': false,
                         'message': err ? null : info
                     });
                 }
@@ -40,13 +40,13 @@ module.exports = {
                         expiresIn: configAuth.jwtAuthKey.tokenLife
                     });
                 //Send back the token to the user
-                res.cookie('adminToken', token, {
-                    expire: 360000 + Date.now()
-                });
-                console.log(token, "token")
-                return res.send(token) //res.redirect('/dashboard')
+                // res.cookie('adminToken', token, {
+                //     expire: 360000 + Date.now()
+                // });
+                // console.log(token, "token")
+                return res.status(200).send({ status: true, token: token })
             } catch (error) {
-                return next(error);
+                return res.status(500).send({ status: false, message: "error" })
             }
         })(req, res, next);
     },
@@ -105,6 +105,7 @@ module.exports = {
             try {
                 if (err) {
                     const error = new Error('An Error occured')
+                    res.status(502);
                     return res.json({
                         'token': "failure",
                         'message': info
@@ -112,20 +113,26 @@ module.exports = {
                 }
                 else {
                     if (status == false) {
-                        res.send({ status: status, info })
+                        res.status(409);
+                        return res.send({ status: status, info })
                     } else {
+                        res.status(200);
                         return res.send({ status: true, info: info })
                     }
                 }
             }
             catch (error) {
-                return next(error);
+                res.status(500);
+                return res.json({
+                    'status': "failure",
+                    'message': "error"
+                });
             }
 
         })(req, res, next);
     },
     adminKYCupload: async (req, res, next) => {
-        console.log("hrereer", req.body)
+        // console.log("hrereer", req.body)
         try {
             let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
             let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
@@ -160,17 +167,17 @@ module.exports = {
                                     console.log('Deleted filename', element.originalname);
                                 })
                             })
-                            res.send({ status: true, message: "KYC submitted successfully" });
+                            res.status(200).send({ status: true, message: "KYC submitted successfully" });
                         });
-                } else { 
-                    res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only png allowed for site Logo" })  
+                } else {
+                    res.status(409).send({ status: false, message: "Error occured while uploading! Please check your company logo image extension! only png allowed for site Logo" })
                 }
             } else {
-                res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
+                res.status(409).send({ status: false, message: "Error occured while uploading! Please check your KYC document image extension! only jpeg allowed" })
             }
         }
         catch{
-            res.send({ status: false, message: "Error occured while uploading! Please check your image extension! only jpeg allowed" })
+            res.status(409).send({ status: false, message: "Error occured while uploading! Please check your KYC document image extension! only jpeg allowed" })
         }
     },
 
@@ -179,13 +186,28 @@ module.exports = {
         userdata.id = req.user.uniqueId
         userdata.name = req.user.name;
         userdata.email = req.user.email;
-        userdata.isd_code = req.user.isd_code;
-        userdata.mobile = req.user.mobile;
+        userdata.contactNumber = req.user.isd_code + " - " + req.user.mobile;
         userdata.kyc_verified = req.user.kyc_verified;
-        userdata.status = req.user.status;
-        userdata.isAllowed = req.user.isAllowed;
-        userdata.address = req.user.userCurrencyAddresses[0].address
-        res.send({ status: true, data: userdata })
+        userdata.adminPackage = req.user.isAllowed;
+        userdata.accountAddress = req.user.userCurrencyAddresses[0].address
+        try {
+            var eth_address;
+            var eth_addresses = await req.user.getUserCurrencyAddresses({
+                where: {
+                    currencyType: 'masterEthereum'
+                }
+            });
+            eth_address = eth_addresses[0].address;
+            Promise.all([icoListener.checkEtherBalance(eth_address), icoListener.checkTokenBalance(eth_address, '0xc573c48ad1037dd92cb39281e5f55dcb5e033a70')]).then(([ethBalance, tokenBalance]) => {
+                userdata.ETHBalance = ethBalance
+                userdata.tokenBalance = tokenBalance
+                res.status(200).send({ status: true, data: userdata })
+            });
+        } catch{
+            res.status(302).send({
+                status: false, message: "error occured while fetching data",
+            });
+        }
     },
 
     adminBalance: async (req, res) => {
@@ -212,55 +234,63 @@ module.exports = {
     },
 
     getClientList: async (req, res) => {
-        userdata = new Object();
-        userdata = await client.findAll({
-            order: [['createdAt', 'DESC']],
-            attributes: {
-                exclude: ["password", "google_id", "github_id"]
-            },
-            where: {
-                admin_id: req.user.uniqueId
-            },
-            raw: true
-        })
-        // userdata.forEach(element => {
-        //     element.dataValues.link = "<a href='/icoDashboardSetup/project/" + req.params.projectName + "/kyctab/" + element.dataValues.uniqueId + "/getUserData'>click Here</a>"
-        // });
-        res.send(userdata);
+        try {
+            userdata = new Object();
+            userdata = await client.findAll({
+                order: [['createdAt', 'DESC']],
+                attributes: {
+                    exclude: ["password", "google_id", "github_id"]
+                },
+                where: {
+                    admin_id: req.user.uniqueId
+                },
+                raw: true
+            })
+            // userdata.forEach(element => {
+            //     element.dataValues.link = "<a href='/icoDashboardSetup/project/" + req.params.projectName + "/kyctab/" + element.dataValues.uniqueId + "/getUserData'>click Here</a>"
+            // });
+            res.status(200).send({ status: true, clientData: userdata });
+        } catch{
+            res.status(302).send({ status: false, message: "error" })
+        }
     },
 
     getClientKYCData: async (req, res) => {
-        userdata = new Object();
-        userdata = await client.find({
-            attributes: {
-                exclude: ["password", "google_id", "github_id"]
-            },
-            where: {
-                admin_id: req.user.uniqueId,
-                uniqueId: req.params.uid
-            },
-            raw: true
-        })
-        res.send(userdata);
+        try {
+            userdata = new Object();
+            userdata = await client.find({
+                attributes: {
+                    exclude: ["password", "google_id", "github_id"]
+                },
+                where: {
+                    admin_id: req.user.uniqueId,
+                    uniqueId: req.params.clientId
+                },
+                raw: true
+            })
+            res.status(200).send({ status: true, clientData: userdata });
+        } catch{
+            res.status(302).send({ status: false, message: "error" })
+        }
     },
 
     updateClientKYC: async (req, res) => {
         try {
             var userdata = await client.find({
                 where: {
-                    "uniqueId": req.params.uid,
+                    "uniqueId": req.params.clientId,
                     "admin_id": req.user.uniqueId
                 },
             })
             userdata.kyc_verified = req.body.accountStatus;
             userdata.status = req.body.kycStatus;
             userdata.save().then(() => {
-                res.send({ status: true, message: "data updated" })
+                res.status(200).send({ status: true, message: "data updated" })
             }).catch(function (err) {
-                res.send({ status: false, message: "error occured" })
+                res.status(302).send({ status: false, message: "error occured" })
             });
         } catch{
-            res.send({ status: false, message: "error occured" })
+            res.status(302).send({ status: false, message: "error occured" })
 
         }
     },
@@ -278,7 +308,11 @@ module.exports = {
     },
 
     Adminlogout: async (req, res) => {
-        res.clearCookie('clientToken');
+        jwt.sign({
+            userId: req.user.uniqueId,
+        }, configAuth.jwtAuthKey.secret, {
+                expiresIn: configAuth.jwtAuthKey.logout
+            });
         res.send({ status: true, message: "successfully signout" })
     }
 

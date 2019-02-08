@@ -96,21 +96,25 @@ module.exports = {
                         projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                         projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                         await projectData.save();
-                        // res.send({tokenReceipt:tokenReceipt,crowdsaleReceipt:crowdsaleReceipt})
+                        res.status(200).send({ tokenReceipt: tokenReceipt, crowdsaleReceipt: crowdsaleReceipt })
                       })
                       .catch(async e => {
                         console.error('error in 2st deployment', e)
                         projectData.crowdsaleContractAddress = "Network error occured! Please try again";
                         projectData.tokenContractAddress = "Network error occured! Please try again";
                         await projectData.save();
+                        res.status(200).send({ status: false, message: "Network error occured! Please try again" })
+
                       })
                   })
                 })
-                .catch(e => console.error('error in 1st deployment', e));
+                .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+                );
             })
-            .catch(e => console.error('error in sendEther', e));
+            .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+            );
         } catch (e) {
-          console.error('error in deployment ', e);
+          res.status(400).send({ status: false, message: "Network error occured! Please try again" })
         }
       }
       else if (req.body.network == 'testnet') {
@@ -143,21 +147,24 @@ module.exports = {
                         projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                         projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                         await projectData.save();
-                        res.send({ tokenReceipt: tokenReceipt, crowdsaleReceipt: crowdsaleReceipt })
+                        res.status(200).send({ tokenReceipt: tokenReceipt, crowdsaleReceipt: crowdsaleReceipt })
                       })
                       .catch(async e => {
                         console.error('error in 2st deployment', e)
                         projectData.crowdsaleContractAddress = "Network error occured! Please try again";
                         projectData.tokenContractAddress = "Network error occured!  Please try again";
                         await projectData.save();
+                        res.status(400).send({ status: false, message: "Network error occured! Please try again" })
                       })
                   })
                 })
-                .catch(e => console.error('error in 1st deployment', e));
+                .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+                );
             })
-            .catch(e => console.error('error in sendEther', e));
+            .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+            );
         } catch (e) {
-          console.error('error in deployment ', e);
+          res.status(400).send({ status: false, message: "Network error occured! Please try again" })
         }
       }
       else {
@@ -188,18 +195,21 @@ module.exports = {
                     projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                     projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                     await projectData.save();
+                    res.status(200).send({ tokenReceipt: tokenReceipt, crowdsaleReceipt: crowdsaleReceipt })
                   })
                   .catch(async e => {
                     console.error('error in 2st deployment', e)
                     projectData.crowdsaleContractAddress = "Network error occured! Please try again";
                     projectData.tokenContractAddress = "Network error occured! Please try again";
                     await projectData.save();
+                    res.status(400).send({ status: false, message: "Network error occured! Please try again" })
                   })
               })
             })
-            .catch(e => console.error('error in 1st deployment', e));
+            .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+            );
         } catch (e) {
-          console.error('error in deployment ', e);
+          res.status(400).send({ status: false, message: "Network error occured! Please try again" })
         }
       }
     }

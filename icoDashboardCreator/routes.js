@@ -11,35 +11,35 @@ module.exports = function (app, express) {
   // app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   // app.post('/api/contractInteraction/contractData', impl.contractData);
 
-  app.get('/api/icoDashboardSetup/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
+  app.get('/v1/tokenization/:tokenName/details', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   // app.get('/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.siteConfiguration);
-  app.get('/api/siteConfiguration/project/:tokenName/getSiteConfiguration', isLoggedIn, hasVerified, hasPackage3, impl.getSiteConfiguration);
-  app.post('/api/siteConfiguration/project/:tokenName/updateSiteConfiguration', isLoggedIn, hasVerified, hasPackage3, impl.updateSiteConfiguration)
-  app.get('/api/transaction/project/:tokenName', isLoggedIn, hasVerified, hasPackage3, impl.getTransaction)
-  app.post('/icoDashboard/transaction/project/:tokenName/initiateTransferReq', isLoggedIn, impl.initiateTransferReq)
-  app.post('/icoDashboard/transaction/project/:tokenName/tokenTrasfer', isLoggedIn, impl.tokenTrasfer)
+  app.get('/v1/tokenization/:tokenName/configuration', isLoggedIn, hasVerified, hasPackage3, impl.getSiteConfiguration);
+  app.post('/v1/tokenization/:tokenName/configuration', isLoggedIn, hasVerified, hasPackage3, impl.updateSiteConfiguration)
+  app.get('/v1/tokenization/:tokenName/transactions', isLoggedIn, hasVerified, hasPackage3, impl.getTransaction)
+  app.post('/v1/tokenization/:tokenName/token/transfer/pending', isLoggedIn, impl.initiateTransferReq)
+  app.post('/v1/tokenization/:tokenName/token/transfer', isLoggedIn, impl.tokenTrasfer)
 
 
   // app.get('/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
-  app.get('/icoDashboardSetup/project/:tokenName/kyctab/getICOUsersData', isLoggedIn, hasVerified, hasPackage3, impl.getICOdata);
-  app.get('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/getUserData', isLoggedIn, impl.getUserData);
-  app.post('/icoDashboardSetup/project/:tokenName/userId/:uniqueId/updateUserData', isLoggedIn, impl.updateUserData);
+  app.get('/v1/tokenization/:tokenName/users/list', isLoggedIn, hasVerified, hasPackage3, impl.getICOdata);
+  app.get('/v1/tokenization/:tokenName/user/:id', isLoggedIn, impl.getUserData);
+  app.post('/v1/tokenization/:tokenName/user/:id', isLoggedIn, impl.updateUserData);
 
   //user login apis
-  app.get('/:projectName/userSignup', impl.getUserSignup);
-  app.get('/:projectName/userLogin', impl.getUserLogin);
-  app.post('/:projectName/userSignup', impl.postUserSignup);
-  app.post('/:projectName/userLogin', impl.postUserLogin);
+  // app.get('/:projectName/user/signup', impl.getUserSignup);
+  // app.get('/:projectName/user/login', impl.getUserLogin);
+  app.post('/v1/:projectName/user/signup', impl.postUserSignup);
+  app.post('/v1/:projectName/user/login', impl.postUserLogin);
   app.get('/verifyMail', impl.verifyMail);
 }
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-  var token = req.cookies['clientToken'];
+  // var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+  jwt.verify(req.headers.authorization, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
-      return res.send({ status: false, message: "please login again", err: err })
+      return res.status(400).send({ status: false, message: "please login again" })
     } else {
       client.find({
         where: {
@@ -63,7 +63,9 @@ function hasPackage3(req, res, next) {
       'coinName': req.params.tokenName
     }
   }).then(result => {
-    if (result.dataValues.isAllowedForICO == true) {
+    if (!result)
+      return res.status(400).send({ status: false, message: "no record found" });
+    if (result.isAllowedForICO == true) {
       return next();
     } else {
       res.send({ status: false, message: 'You need to buy this package ' });
@@ -84,17 +86,17 @@ function hasVerified(req, res, next) {
         break;
       case "pending":
         {
-          res.send({ status: false, message: 'KYC status is pending!' });
+          res.status(400).send({ status: false, message: 'KYC status is pending!' });
         }
         break;
       case "notInitiated":
         {
-          res.send({ status: false, message: 'In order to access this platform please do the KYC' });
+          res.status(400).send({ status: false, message: 'In order to access this platform please do the KYC' });
         }
         break;
       default:
         {
-          res.send({ status: false, message: 'In order to access this platform please do the KYC' });
+          res.status(400).send({ status: false, message: 'In order to access this platform please do the KYC' });
         }
         break;
     }

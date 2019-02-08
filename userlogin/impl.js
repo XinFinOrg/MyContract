@@ -29,8 +29,8 @@ module.exports = {
       try {
         if (err || !user || info) {
           const error = new Error('An Error occured')
-          return res.json({
-            'token': "failure",
+          return res.status(302).send({
+            'token': false,
             'message': err ? null : info
           });
         }
@@ -40,11 +40,11 @@ module.exports = {
             expiresIn: configAuth.jwtAuthKey.tokenLife
           });
         //Send back the token to the user
-        res.cookie('clientToken', token, {
-          expire: 360000 + Date.now()
-        });
-        console.log(token, "token")
-        return res.send(token) //res.redirect('/dashboard')
+        // res.cookie('clientToken', token, {
+        //   expire: 360000 + Date.now()
+        // });
+        // console.log(token, "token")
+        return res.status(200).send({ status: true, token: token }) //res.redirect('/dashboard')
       } catch (error) {
         return next(error);
       }
@@ -74,9 +74,9 @@ module.exports = {
           });
         }
         if (status)
-          return res.send({ status: true, message: "signup successful" }) //res.send({ status, info })
+          return res.status(200).send({ status: true, message: "signup successful" }) //res.send({ status, info })
         else
-          return res.send({ status: true, message: info }) //res.send({ status, info })
+          return res.status(302).send({ status: true, message: info }) //res.send({ status, info })
       }
       catch (error) {
         return next(error);
@@ -218,55 +218,56 @@ module.exports = {
   },
 
   getProjectArray: (req, res) => {
-    var email = req.user.email;
-    var projectArray = [];
-    client.find({
-      where: {
-        'email': email
-      },
-      include: [{
-        model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
-      }],
-    }).then(client => {
-      client.projectConfigurations.forEach(element => {
-        projectArray.push(element.dataValues);
+    try {
+      var email = req.user.email;
+      var projectArray = [];
+      client.find({
+        where: {
+          'email': email
+        },
+        include: [{
+          model: ProjectConfiguration,
+          attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+        }],
+      }).then(client => {
+        client.projectConfigurations.forEach(element => {
+          projectArray.push(element.dataValues);
+        });
+        // res.send({'projectArray': projectArray});
+        res.status(200).send({ status: true, data: projectArray });
       });
-      // res.send({'projectArray': projectArray});
-      res.send(projectArray);
-    });
+    } catch (error) {
+      res.status(400).send({ status: false, message: "error occurred" });
+    }
   },
 
   getProfileDetails: async (req, res) => {
-    var projectArray = await getProjectArray(req.user.email);
-    var address = req.cookies['address'];
-    res.send({
-      name: req.user.name,
-      email: req.user.email,
-      verification: req.user.kyc_verified,
-      accountStatus: req.user.status,
-      package1: req.user.package1,
-      package2: req.user.package2,
-      isd_code: req.user.isd_code,
-      mobile: req.user.mobile,
-      address: address,
-      ProjectConfiguration: projectArray,
-    });
-  },
-
-  getAPIProfileDetails: async (req, res) => {
-    userdata = new Object();
-    userdata.id = req.user.uniqueId
-    userdata.name = req.user.name;
-    userdata.email = req.user.email;
-    userdata.isd_code = req.user.isd_code;
-    userdata.mobile = req.user.mobile;
-    userdata.kyc_verified = req.user.kyc_verified;
-    userdata.status = req.user.status;
-    userdata.address = req.user.userCurrencyAddresses[0].address
-    userdata.package1 = req.user.package1
-    userdata.package2 = req.user.package2
-    res.send({ status: true, data: userdata })
+    try {
+      var projectArray = await getProjectArray(req.user.email);
+      var address = req.cookies['address'];
+      Promise.all([paymentListener.checkBalance(req.user.userCurrencyAddresses[0].address), paymentListener.checkEtherBalance(req.user.userCurrencyAddresses[0].address)]).then(([balance, ethBalance]) => {
+        var XDCEBalance = balance;
+        var ETHBalance = ethBalance;
+        res.status(200).send({
+          status: true, data: {
+            name: req.user.name,
+            email: req.user.email,
+            verification: req.user.kyc_verified,
+            accountStatus: req.user.status,
+            package1: req.user.package1,
+            package2: req.user.package2,
+            isd_code: req.user.isd_code,
+            mobile: req.user.mobile,
+            address: address,
+            ProjectConfiguration: projectArray,
+            XDCEBalance: XDCEBalance,
+            ETHBalance: ETHBalance
+          }
+        });
+      });
+    } catch (err) {
+      res.status(400).send({ status: false, message: "error occurred" })
+    }
   },
   updatePassword: (req, res) => {
     client.find({
@@ -335,12 +336,12 @@ module.exports = {
       }
     }).then(result => {
       if (result == null) {
-        res.send({ error: "no user found", status: false })
+        res.status(409).send({ error: "no user found", status: false })
       } else if (result.password == null) {
-        res.send({ error: "no password found", status: false })
+        res.status(302).send({ error: "no password found", status: false })
       } else {
         mailer.forgotPasswordMailer(req, req.body.email, bcrypt.hashSync(result.dataValues.uniqueId, bcrypt.genSaltSync(8), null));
-        res.send({ error: "email sent", status: true })
+        res.status(200).send({ error: "email sent", status: true })
       }
     })
   },

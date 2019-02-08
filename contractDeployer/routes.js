@@ -9,17 +9,16 @@ var ProjectConfiguration = db.projectConfiguration;
 
 
 module.exports = function (app) {
-  app.post('/api/automaticDeployer', isLoggedIn, checkSecret, impl.getAutomaticDeployer);
-  app.post('/api/projectContractData', isLoggedIn, checkSecret, impl.projectContractData);
-
+  app.post('/v1/smartcontract/deploy', isLoggedIn, checkSecret, impl.getAutomaticDeployer);
+  app.post('/v1/smartcontract/details', isLoggedIn, checkSecret, impl.projectContractData);
 }
 
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-  var token = req.cookies['clientToken'];
+  // var token = req.cookies['clientToken'];
   // JWT enabled login strategy for end user
-  jwt.verify(token, configAuth.jwtAuthKey.secret, function (err, decoded) {
+  jwt.verify(req.headers.authorization, configAuth.jwtAuthKey.secret, function (err, decoded) {
     if (err) {
       return res.send({ status: false, message: "please login again" })
     } else {
