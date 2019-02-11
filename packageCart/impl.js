@@ -7,6 +7,8 @@ var ProjectConfiguration = db.projectConfiguration;
 var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
 var admin = db.admin;
+var randomNumber = require("random-number")
+
 module.exports = {
   buyPackage: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
@@ -32,12 +34,14 @@ module.exports = {
           'email': req.user.email
         }
       }).then(client => {
+        let otp = randomNumber.generator({ min: 10000, max: 99999, integer: true });
         client.update({
-          paymentOTP: Math.floor(Math.random() * 9999) + 1
+          paymentOTP: otp(),
+          otpStatus: true
         }).then(result => {
           console.log(req.user.email, result.dataValues.paymentOTP);
           otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
-          // res.send({ status: true, message: "OTP  sent to your respective email address." })
+          res.status(200).send({ status: true, message: "OTP  sent to your respective email address." })
         })
       });
     } else {
@@ -46,7 +50,9 @@ module.exports = {
           'email': req.user.email
         }
       }).then(result => {
-        if (result.dataValues.paymentOTP == req.body.otpValue) {
+        if (result.dataValues.otpStatus == true && result.dataValues.paymentOTP == req.body.otpValue) {
+          result.otpStatus = false
+          result.save();
           Address.find({
             where: {
               'address': req.user.userCurrencyAddresses[0].address
@@ -54,19 +60,19 @@ module.exports = {
           }).then(address => {
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1200000) {
-                var receipt = paymentListener.sendToParent(address.address, address.privateKey,"1200000000000000000000000");
+                var receipt = paymentListener.sendToParent(address.address, address.privateKey, "1200000000000000000000000");
                 console.log(receipt)
                 paymentListener.attachListener(address.address);
-                res.send({ status: true, message: 'Successfully initiated payment. You will be shortly alloted package credits' });
+                res.status(200).send({ message: 'Successfully initiated payment. You will be shortly alloted package credits' });
               } else {
-                res.send({ status: false, message: 'Insufficient funds to buy Package' });
+                res.status(200).send({ message: 'Insufficient funds to buy Package' });
               }
             });
           })
         }
         else {
           console.log(false)
-          res.send({ status: false });
+          res.status(400).send({ message: "Incorrect OTP value" });
         }
       })
     }
@@ -77,6 +83,7 @@ module.exports = {
   },
 
   getBalances: (req, res) => {
+    console.log(req.user.userCurrencyAddresses[0].address)
     Promise.all([paymentListener.checkBalance(req.user.userCurrencyAddresses[0].address), paymentListener.checkEtherBalance(req.user.userCurrencyAddresses[0].address)]).then(([balance, ethBalance]) => {
       res.send({
         'XDCE': balance,

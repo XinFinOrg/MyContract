@@ -59,6 +59,7 @@
     "pg-hstore": "^2.3.2",
     "qrcode": "^1.2.2",
     "qrcode-generator": "^1.4.0",
+    "random-number": "0.0.9",
     "react": "^16.5.1",
     "read-chunk": "^3.0.0",
     "sequelize": "^4.38.0",

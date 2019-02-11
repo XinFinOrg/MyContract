@@ -99,6 +99,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.NUMERIC
     },
+    otpStatus:
+    {
+      type:DataTypes.BOOLEAN
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
