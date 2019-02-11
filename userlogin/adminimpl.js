@@ -14,6 +14,8 @@ var fs = require('fs');
 var otpMailer = require("../emailer/impl");
 var Address = db.userCurrencyAddress;
 var paymentListener = require('../packageCart/paymentListener');
+var randomNumber = require("random-number")
+
 
 
 
@@ -58,8 +60,10 @@ module.exports = {
                     'email': req.user.email
                 }
             }).then(admin => {
+                let otp = randomNumber.generator({ min: 10000, max: 99999, integer: true });
                 admin.update({
-                    paymentOTP: Math.floor(Math.random() * 9999) + 1
+                    paymentOTP: otp,
+                    otpStatus: true
                 }).then(result => {
                     console.log(req.user.email, result.dataValues.paymentOTP);
                     otpMailer.sendConfirmationOTP(req.user.email, result.dataValues.paymentOTP)
@@ -72,6 +76,8 @@ module.exports = {
                     'email': req.user.email
                 }
             }).then(result => {
+                result.otpStatus = false
+                result.save();
                 if (result.dataValues.paymentOTP == req.body.otpValue) {
                     Address.find({
                         where: {
