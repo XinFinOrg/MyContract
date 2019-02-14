@@ -7,6 +7,9 @@ module.exports = function(app) {
   app.get('/getBalances', isLoggedIn, impl.getBalances);
   app.post('/api/getPaymentToken', isLoggedIn, impl.getPaymentToken);
   app.post('/api/sendPaymentInfo', isLoggedIn, impl.sendPaymentInfo);
+  app.get('/paypal',impl.getPaypalPayment)
+  app.post('/paypal',impl.postPaypalPayment)
+  app.get('/paypal/process',impl.paymentProcess)
 }
 
 // route middleware to make sure a user is logged in

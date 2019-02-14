@@ -1,6 +1,4 @@
 // JavaScript Document
-   
-<!-- Copy to clipboard -->
 (function() {
 	'use strict';  
   // click events
@@ -11,9 +9,10 @@
     var 
       t = e.target,
       c = t.dataset.copytarget,
-      inp = (c ? document.querySelector(c) : null);      
+      inp = (c ? document.querySelector(c) : null);  
     // is element selectable?
-    if (inp && inp.select) {      
+    if (inp && inp.select) { 
+      console.log(inp.select())     
       // select text
       inp.select();
       try {

@@ -6,6 +6,14 @@ var paymentListener = require('./paymentListener');
 var ProjectConfiguration = db.projectConfiguration;
 var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
+var paypal = require('paypal-rest-sdk');
+var axios = require('axios');
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AR8oYc8pYp90H_9qN6JcjvSgS5nbCq_hFvc5ue4Twzdh-ZefahoeLmVKEem2OxbLNlK2nM-Zv74F3iPI',
+  'client_secret': 'ELBjQfb3aGNze4S-wbaHHndGmv4DQzqfOoeu1NAphrOwdwxHSjaHLR_zP-u4hBLGJPAyCXdTPAFD8BKk'
+});
+
 module.exports = {
   buyPackage: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
@@ -52,7 +60,7 @@ module.exports = {
               'address': addressCookie
             }
           }).then(address => {
-            console.log(address,"address");
+            console.log(address, "address");
             Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
               if (balance >= 1200000) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);
@@ -94,7 +102,7 @@ module.exports = {
       userHash: req.user.uniqueId,
       address: req.body.address
     }, configAuth.jwtAuthKey.secret, {
-        expiresIn: 60*3
+        expiresIn: 60 * 3
       });
     //Send back the token to the user
     res.cookie('paymentToken', token, {
@@ -107,9 +115,130 @@ module.exports = {
 
   sendPaymentInfo: (req, res) => {
     // console.log(req.cookies['paymentToken']);
-    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function(err, decoded) {
+    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
       console.log(decoded);
       paymentListener.attachListenerWithUserHash(decoded.userHash, decoded.address);
+    });
+  },
+  getPaypalPayment: (req, res) => {
+    let message = (req.query.errors == "false" || req.query.errors == undefined) ? "" : "Somthing went wrong please try again later"
+    let txHash = (req.query.txHash == null) ? "" : req.query.txHash
+    axios.get('https://api.coinmarketcap.com/v1/ticker/xinfin-network/')
+      .then(function (response) {
+        res.render('paypalPage', { data: response.data[0], message: message, txHash: txHash })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  postPaypalPayment: (req, res) => {
+    let description = JSON.stringify({ address: req.body.address, amount: req.body.amount })
+    console.log(description)
+    var payReq = JSON.stringify({
+      intent: 'order',
+      payer: {
+        payment_method: 'paypal'
+      },
+      redirect_urls: {
+        return_url: 'https://mycontract.co/paypal/process',
+        cancel_url: 'https://mycontract.co/paypal?errors=true'
+      },
+      transactions: [{
+        amount: {
+          total: Math.floor(req.body.price * 100) / 100,
+          currency: 'USD',
+          "details": {
+            "subtotal": Math.floor(req.body.price * 100) / 100,
+            "tax": "0",
+            "shipping": "0",
+            "handling_fee": "0",
+            "shipping_discount": "0",
+            "insurance": "0"
+          }
+        },
+        description: description,
+        invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
+        payment_options: {
+          allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+        },
+      }]
+    });
+
+    paypal.payment.create(payReq, function (error, payment) {
+      var links = {};
+
+      if (error) {
+        console.error(JSON.stringify(error));
+      } else {
+        // Capture HATEOAS links
+        payment.links.forEach(function (linkObj) {
+          links[linkObj.rel] = {
+            href: linkObj.href,
+            method: linkObj.method
+          };
+        })
+
+        // If redirect url present, redirect user
+        if (links.hasOwnProperty('approval_url')) {
+          console.log(links['approval_url'].href)
+          // REDIRECT USER TO links['approval_url'].href;
+          res.redirect(links['approval_url'].href)
+
+        } else {
+          res.redirect('/paypal?errors=true')
+        }
+      }
+    });
+  },
+  paymentProcess: (req, res) => {
+    var paymentId = req.query.paymentId;
+    var payerId = { 'payer_id': req.query.PayerID };
+    var order;
+
+    paypal.payment.execute(paymentId, payerId, function (error, payment) {
+      if (error) {
+        console.error(JSON.stringify(error));
+      } else {
+        if (payment.state === 'approved'
+          && payment.transactions
+          && payment.transactions[0].related_resources
+          && payment.transactions[0].related_resources[0].order) {
+          console.log('order authorization completed successfully');
+          // Capture order id
+          order = payment.transactions[0].related_resources[0].order.id;
+          var capture_details = {
+            amount: {
+              currency: payment.transactions[0].amount.currency,
+              total: payment.transactions[0].amount.total
+            }
+          };
+
+          //make token transfer
+          let temp = JSON.parse(payment.transactions[0].description);
+          paymentListener.sendToken(temp.address, temp.amount).then((result => {
+            //take payment 
+            paypal.order.authorize(order, capture_details, function (error, authorization) {
+              if (error) {
+                console.error(JSON.stringify(error));
+              } else {
+                paypal.order.capture(order, capture_details, function (error, capture) {
+                  if (error) {
+                    console.error(error);
+                  } else {
+                    console.log("ORDER CAPTURE SUCCESS");
+                    res.redirect('/paypal?txHash=' + result.transactionHash)
+                  }
+                });
+              }
+            });
+
+          }))
+        } else {
+          console.log('payment not successful');
+          // res.send({ error: error })
+          res.redirect('/paypal?errors=true')
+        }
+      }
     });
   }
 }
@@ -123,7 +252,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash','networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {

@@ -13,7 +13,7 @@ provider.on('error', e => {
   console.log('Attempting to reconnect...');
   provider = new Web3.providers.WebsocketProvider(ws_provider);
 
-  provider.on('connect', function() {
+  provider.on('connect', function () {
     console.log('WSS Reconnected');
   });
 
@@ -24,7 +24,7 @@ provider.on('end', e => {
   console.log('Attempting to reconnect...');
   provider = new Web3.providers.WebsocketProvider(ws_provider);
 
-  provider.on('connect', function() {
+  provider.on('connect', function () {
     console.log('WSS Reconnected');
   });
 
@@ -77,7 +77,7 @@ module.exports = {
   },
 
   sendToParent: (address, privateKey) => {
-    return new Promise(async function(resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       var amountToSend = web3.utils.toWei('0.001', 'ether');
       var rawTransaction = {
         "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
@@ -109,7 +109,7 @@ module.exports = {
   },
 
   checkBalance: (address) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       contractInstance.methods.balanceOf(address).call().then(balance => {
         resolve(balance / 10 ** 18);
       }).catch(error => {
@@ -119,7 +119,7 @@ module.exports = {
   },
 
   checkEtherBalance: (address) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       web3.eth.getBalance(address).then(balance => {
         resolve(web3.utils.fromWei(balance));
       }).catch(error => {
@@ -129,5 +129,27 @@ module.exports = {
         reject(error);
       });
     });
+  },
+  sendToken: (address, amount) => {
+    return new Promise(function (resolve, reject) {
+      var provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
+      var web3 = new Web3(provider);
+      console.log("Ether receipt generated");
+      var transaction = {
+        "from": "0x14649976AEB09419343A54ea130b6a21Ec337772",
+        "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
+        "to": "0xc573c48aD1037DD92cB39281e5f55DCb5e033A70",
+        "value": "0x0",
+        "data": contractInstance.methods.transfer(address, amount + "000000000000000000").encodeABI()
+      };
+      web3.eth.estimateGas(transaction).then(gasLimit => {
+        transaction["gasLimit"] = gasLimit;
+        web3.eth.accounts.signTransaction(transaction, "0x25F8170BA33240C0BD2C8720FE09855ADA9D07E38904FC5B6AEDCED71C0A3142").then(result => {
+          web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
+            resolve(receipt);
+          });
+        });
+      });
+    })
   }
 }
