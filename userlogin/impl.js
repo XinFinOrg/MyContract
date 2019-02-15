@@ -240,7 +240,7 @@ module.exports = {
     } finally {
       if (fd !== undefined)
         fs.closeSync(fd);
-      res.redirect('/');
+      res.send('sdlkjfjkldsfjkd');
     }
   }
 };

@@ -13,6 +13,10 @@ module.exports = function (app) {
   });
   app.get('/faqs', function (req, res) {
     res.render('faqs')
+  });
+  app.get('/downloadFAQs', function (req, res) {
+    var file = __dirname + '/public/MC-FAQs.pdf';
+    res.download(file);
   })
 };
 

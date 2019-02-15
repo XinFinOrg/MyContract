@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    <title>AutoCoin</title>
+    <title>MyContract</title>
 
     <!-- Favicon Icon -->
     <script src="https://www.googletagmanager.com/gtag/js?id=UA-124166989-1"></script>
@@ -60,49 +60,67 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <div class="content_box">
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.2s"><strong>Note:</strong></p>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.3s">Please make sure you
-                                use your real identity to do this verification. We will protect your personal information.
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.2s">
+                                <strong>Note:</strong></p>
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.3s">Please make sure
+                                you
+                                use your real identity to do this verification. We will protect your personal
+                                information.
                             </p>
-                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.4s"> You can use any one
+                            <p class="animation" data-animation="fadeInUp" data-animation-delay="0.4s"> You can use any
+                                one
                                 of the below metioned document for kyc verification:</p>
                             <p class="animation" data-animation="fadeInUp" data-animation-delay="0.5s"> 1. Passport </p>
                             <p>
-                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.6s">2. Driver's License
+                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.6s">2. Driver's
+                                    License
                                 </p>
-                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.7s"> 3. National ID
+                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.7s"> 3. National
+                                    ID
                                     Card
                                 </p>
-                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s"> Please provide
+                                <p class="animation" data-animation="fadeInUp" data-animation-delay="0.8s"> Please
+                                    provide
                                     full name as shown in your passport.</p>
-                                <form id="kyc" method="post" action="/KYCpage/KYCdocUpload" enctype="multipart/form-data">
+                                <form id="kyc" method="post" action="/KYCpage/KYCdocUpload"
+                                    enctype="multipart/form-data">
                                     <div class="row field_form mt-30">
                                         <div class="col-md-6">
-                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                                                <input type="text" class="form-control" required="required" value="" placeholder="First Name" name="first_name">
+                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                                data-animation-delay="0.2s">
+                                                <input type="text" class="form-control" required="required" value=""
+                                                    placeholder="First Name" name="first_name">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
-                                                <input type="text" name="last_name" value="" placeholder="Last Name" required="required" class="form-control">
+                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                                data-animation-delay="0.4s">
+                                                <input type="text" name="last_name" value="" placeholder="Last Name"
+                                                    required="required" class="form-control">
                                             </div>
 
                                         </div><br><br>
                                         <div class="col-md-6">
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class=" col-md-3 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                                                        <input type="text" class="form-control" required="required" value="" placeholder="ISD code" name="isd_code">
+                                                    <div class=" col-md-3 animation" data-animation="fadeInUp"
+                                                        data-animation-delay="0.2s">
+                                                        <input type="text" class="form-control" required="required"
+                                                            value="" placeholder="ISD code" name="isd_code">
                                                     </div>
-                                                    <div class="col-md-9 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                                                        <input type="text" value="" placeholder="mobile Number" name="phone_no" required="required" class="form-control">
+                                                    <div class="col-md-9 animation" data-animation="fadeInUp"
+                                                        data-animation-delay="0.2s">
+                                                        <input type="text" value="" placeholder="mobile Number"
+                                                            name="phone_no" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1s">
-                                                <select name="country_id" class="form-control" id="country_id" onchange="set_country()">
+                                            <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                                data-animation-delay="1s">
+                                                <select name="country_id" class="form-control" id="country_id"
+                                                    onchange="set_country()">
                                                     <option value="">Select Country</option>
                                                     <option value="Afghanistan" data-id="af">Afghanistan</option>
                                                     <option value="Albania" data-id="al">Albania</option>
@@ -112,7 +130,8 @@
                                                     <option value="Angola" data-id="ao">Angola</option>
                                                     <option value="Anguilla" data-id="ai">Anguilla</option>
                                                     <option value="Antarctica" data-id="aq">Antarctica</option>
-                                                    <option value="Antigua and Barbuda" data-id="ag">Antigua and Barbuda</option>
+                                                    <option value="Antigua and Barbuda" data-id="ag">Antigua and Barbuda
+                                                    </option>
                                                     <option value="Argentina" data-id="ar">Argentina</option>
                                                     <option value="Armenia" data-id="am">Armenia</option>
                                                     <option value="Aruba" data-id="aw">Aruba</option>
@@ -130,13 +149,16 @@
                                                     <option value="Bermuda" data-id="bm">Bermuda</option>
                                                     <option value="Bhutan" data-id="bt">Bhutan</option>
                                                     <option value="Bolivia" data-id="bo">Bolivia</option>
-                                                    <option value="Bosnia and Herzegovina" data-id="ba">Bosnia and Herzegovina</option>
+                                                    <option value="Bosnia and Herzegovina" data-id="ba">Bosnia and
+                                                        Herzegovina</option>
                                                     <option value="Botswana" data-id="bw">Botswana</option>
                                                     <option value="Bouvet Island" data-id="bv">Bouvet Island</option>
                                                     <option value="Brazil" data-id="br">Brazil</option>
-                                                    <option value="British Indian Ocean Territory" data-id="io">British Indian
+                                                    <option value="British Indian Ocean Territory" data-id="io">British
+                                                        Indian
                                                         Ocean Territory</option>
-                                                    <option value="Brunei Darussalam" data-id="bn">Brunei Darussalam</option>
+                                                    <option value="Brunei Darussalam" data-id="bn">Brunei Darussalam
+                                                    </option>
                                                     <option value="Bulgaria" data-id="bg">Bulgaria</option>
                                                     <option value="Burkina Faso" data-id="bf">Burkina Faso</option>
                                                     <option value="Burundi" data-id="bi">Burundi</option>
@@ -145,25 +167,29 @@
                                                     <option value="Canada" data-id="ca">Canada</option>
                                                     <option value="Cape Verde" data-id="cv">Cape Verde</option>
                                                     <option value="Cayman Islands" data-id="ky">Cayman Islands</option>
-                                                    <option value="Central African Republic" data-id="cf">Central African
+                                                    <option value="Central African Republic" data-id="cf">Central
+                                                        African
                                                         Republic
                                                     </option>
                                                     <option value="Chad" data-id="td">Chad</option>
                                                     <option value="Chile" data-id="cl">Chile</option>
                                                     <option value="China" data-id="cn">China</option>
-                                                    <option value="Christmas Island" data-id="cx">Christmas Island</option>
+                                                    <option value="Christmas Island" data-id="cx">Christmas Island
+                                                    </option>
                                                     <option value="Cocos (Keeling) Islands" data-id="cc">Cocos (Keeling)
                                                         Islands
                                                     </option>
                                                     <option value="Colombia" data-id="co">Colombia</option>
                                                     <option value="Comoros" data-id="km">Comoros</option>
                                                     <option value="Congo" data-id="cg">Congo</option>
-                                                    <option value="Congo, The Democratic Republic" data-id="cd">Congo, The
+                                                    <option value="Congo, The Democratic Republic" data-id="cd">Congo,
+                                                        The
                                                         Democratic Republic
                                                     </option>
                                                     <option value="Cook Islands" data-id="ck">Cook Islands</option>
                                                     <option value="Costa Rica" data-id="cr">Costa Rica</option>
-                                                    <option value="Cote D&#039;Ivoire" data-id="ci">Cote D&#039;Ivoire</option>
+                                                    <option value="Cote D&#039;Ivoire" data-id="ci">Cote D&#039;Ivoire
+                                                    </option>
                                                     <option value="Croatia" data-id="hr">Croatia</option>
                                                     <option value="Cuba" data-id="cu">Cuba</option>
                                                     <option value="Cyprus" data-id="cy">Cyprus</option>
@@ -171,15 +197,18 @@
                                                     <option value="Denmark" data-id="dk">Denmark</option>
                                                     <option value="Djibouti" data-id="dj">Djibouti</option>
                                                     <option value="Dominica" data-id="dm">Dominica</option>
-                                                    <option value="Dominican Republic" data-id="do">Dominican Republic</option>
+                                                    <option value="Dominican Republic" data-id="do">Dominican Republic
+                                                    </option>
                                                     <option value="Ecuador" data-id="ec">Ecuador</option>
                                                     <option value="Egypt" data-id="eg">Egypt</option>
                                                     <option value="El Salvador" data-id="sv">El Salvador</option>
-                                                    <option value="Equatorial Guinea" data-id="gq">Equatorial Guinea</option>
+                                                    <option value="Equatorial Guinea" data-id="gq">Equatorial Guinea
+                                                    </option>
                                                     <option value="Eritrea" data-id="er">Eritrea</option>
                                                     <option value="Estonia" data-id="ee">Estonia</option>
                                                     <option value="Ethiopia" data-id="et">Ethiopia</option>
-                                                    <option value="Falkland Islands (Malvinas)" data-id="fk">Falkland Islands
+                                                    <option value="Falkland Islands (Malvinas)" data-id="fk">Falkland
+                                                        Islands
                                                         (Malvinas)
                                                     </option>
                                                     <option value="Faroe Islands" data-id="fo">Faroe Islands</option>
@@ -187,8 +216,10 @@
                                                     <option value="Finland" data-id="fi">Finland</option>
                                                     <option value="France" data-id="fr">France</option>
                                                     <option value="French Guiana" data-id="gf">French Guiana</option>
-                                                    <option value="French Polynesia" data-id="pf">French Polynesia</option>
-                                                    <option value="French Southern Territories" data-id="tf">French Southern
+                                                    <option value="French Polynesia" data-id="pf">French Polynesia
+                                                    </option>
+                                                    <option value="French Southern Territories" data-id="tf">French
+                                                        Southern
                                                         Territories
                                                     </option>
                                                     <option value="Gabon" data-id="ga">Gabon</option>
@@ -209,7 +240,8 @@
                                                     <option value="Haiti" data-id="ht">Haiti</option>
                                                     <option value="Heard Island and Mcdonald Islands" data-id="hm">Heard
                                                         Island and Mcdonald Islands</option>
-                                                    <option value="Holy See (Vatican City State)" data-id="va">Holy See (Vatican
+                                                    <option value="Holy See (Vatican City State)" data-id="va">Holy See
+                                                        (Vatican
                                                         City State)</option>
                                                     <option value="Honduras" data-id="hn">Honduras</option>
                                                     <option value="Hong Kong" data-id="hk">Hong Kong</option>
@@ -217,7 +249,8 @@
                                                     <option value="Iceland" data-id="is">Iceland</option>
                                                     <option value="India" data-id="in">India</option>
                                                     <option value="Indonesia" data-id="id">Indonesia</option>
-                                                    <option value="Iran, Islamic Republic" data-id="ir">Iran, Islamic Republic
+                                                    <option value="Iran, Islamic Republic" data-id="ir">Iran, Islamic
+                                                        Republic
                                                     </option>
                                                     <option value="Iraq" data-id="iq">Iraq</option>
                                                     <option value="Ireland" data-id="ie">Ireland</option>
@@ -232,13 +265,15 @@
                                                     <option value="Korea" data-id="kp">Korea</option>
                                                     <option value="Kuwait" data-id="kw">Kuwait</option>
                                                     <option value="Kyrgyzstan" data-id="kg">Kyrgyzstan</option>
-                                                    <option value="Lao People&#039;s Democratic Republic" data-id="la">Lao
+                                                    <option value="Lao People&#039;s Democratic Republic" data-id="la">
+                                                        Lao
                                                         People&#039;s Democratic Republic</option>
                                                     <option value="Latvia" data-id="lv">Latvia</option>
                                                     <option value="Lebanon" data-id="lb">Lebanon</option>
                                                     <option value="Lesotho" data-id="ls">Lesotho</option>
                                                     <option value="Liberia" data-id="lr">Liberia</option>
-                                                    <option value="Libyan Arab Jamahiriya" data-id="ly">Libyan Arab Jamahiriya</option>
+                                                    <option value="Libyan Arab Jamahiriya" data-id="ly">Libyan Arab
+                                                        Jamahiriya</option>
                                                     <option value="Liechtenstein" data-id="li">Liechtenstein</option>
                                                     <option value="Lithuania" data-id="lt">Lithuania</option>
                                                     <option value="Luxembourg" data-id="lu">Luxembourg</option>
@@ -250,7 +285,8 @@
                                                     <option value="Maldives" data-id="mv">Maldives</option>
                                                     <option value="Mali" data-id="ml">Mali</option>
                                                     <option value="Malta" data-id="mt">Malta</option>
-                                                    <option value="Marshall Islands" data-id="mh">Marshall Islands</option>
+                                                    <option value="Marshall Islands" data-id="mh">Marshall Islands
+                                                    </option>
                                                     <option value="Martinique" data-id="mq">Martinique</option>
                                                     <option value="Mauritania" data-id="mr">Mauritania</option>
                                                     <option value="Mauritius" data-id="mu">Mauritius</option>
@@ -268,7 +304,8 @@
                                                     <option value="Nauru" data-id="nr">Nauru</option>
                                                     <option value="Nepal" data-id="np">Nepal</option>
                                                     <option value="Netherlands" data-id="nl">Netherlands</option>
-                                                    <option value="Netherlands Antilles" data-id="an">Netherlands Antilles</option>
+                                                    <option value="Netherlands Antilles" data-id="an">Netherlands
+                                                        Antilles</option>
                                                     <option value="New Caledonia" data-id="nc">New Caledonia</option>
                                                     <option value="New Zealand" data-id="nz">New Zealand</option>
                                                     <option value="Nicaragua" data-id="ni">Nicaragua</option>
@@ -276,17 +313,20 @@
                                                     <option value="Nigeria" data-id="ng">Nigeria</option>
                                                     <option value="Niue" data-id="nu">Niue</option>
                                                     <option value="Norfolk Island" data-id="nf">Norfolk Island</option>
-                                                    <option value="Northern Mariana Islands" data-id="mp">Northern Mariana
+                                                    <option value="Northern Mariana Islands" data-id="mp">Northern
+                                                        Mariana
                                                         Islands
                                                     </option>
                                                     <option value="Norway" data-id="no">Norway</option>
                                                     <option value="Oman" data-id="om">Oman</option>
                                                     <option value="Pakistan" data-id="pk">Pakistan</option>
                                                     <option value="Palau" data-id="pw">Palau</option>
-                                                    <option value="Palestinian Territory, Occupied" data-id="ps">Palestinian
+                                                    <option value="Palestinian Territory, Occupied" data-id="ps">
+                                                        Palestinian
                                                         Territory, Occupied</option>
                                                     <option value="Panama" data-id="pa">Panama</option>
-                                                    <option value="Papua New Guinea" data-id="pg">Papua New Guinea</option>
+                                                    <option value="Papua New Guinea" data-id="pg">Papua New Guinea
+                                                    </option>
                                                     <option value="Paraguay" data-id="py">Paraguay</option>
                                                     <option value="Peru" data-id="pe">Peru</option>
                                                     <option value="169" data-id="ph">Philippines</option>
@@ -297,32 +337,40 @@
                                                     <option value="Qatar" data-id="qa">Qatar</option>
                                                     <option value="Reunion" data-id="re">Reunion</option>
                                                     <option value="Romania" data-id="ro">Romania</option>
-                                                    <option value="Russian Federation" data-id="ru">Russian Federation</option>
+                                                    <option value="Russian Federation" data-id="ru">Russian Federation
+                                                    </option>
                                                     <option value="Rwanda" data-id="rw">Rwanda</option>
                                                     <option value="Saint Helena" data-id="sh">Saint Helena</option>
-                                                    <option value="Saint Kitts and Nevis" data-id="kn">Saint Kitts and Nevis
+                                                    <option value="Saint Kitts and Nevis" data-id="kn">Saint Kitts and
+                                                        Nevis
                                                     </option>
                                                     <option value="Saint Lucia" data-id="lc">Saint Lucia</option>
-                                                    <option value="Saint Pierre and Miquelon" data-id="pm">Saint Pierre and
+                                                    <option value="Saint Pierre and Miquelon" data-id="pm">Saint Pierre
+                                                        and
                                                         Miquelon
                                                     </option>
-                                                    <option value="Saint Vincent and the Grenadines" data-id="vc">Saint Vincent
+                                                    <option value="Saint Vincent and the Grenadines" data-id="vc">Saint
+                                                        Vincent
                                                         and the Grenadines</option>
                                                     <option value="Samoa" data-id="ws">Samoa</option>
                                                     <option value="San Marino" data-id="sm">San Marino</option>
-                                                    <option value="Sao Tome and Principe" data-id="st">Sao Tome and Principe</option>
+                                                    <option value="Sao Tome and Principe" data-id="st">Sao Tome and
+                                                        Principe</option>
                                                     <option value="Saudi Arabia" data-id="sa">Saudi Arabia</option>
                                                     <option value="Senegal" data-id="sn">Senegal</option>
-                                                    <option value="Serbia and Montenegro" data-id="cs">Serbia and Montenegro</option>
+                                                    <option value="Serbia and Montenegro" data-id="cs">Serbia and
+                                                        Montenegro</option>
                                                     <option value="Seychelles" data-id="sc">Seychelles</option>
                                                     <option value="Sierra Leone" data-id="sl">Sierra Leone</option>
                                                     <option value="Singapore" data-id="sg">Singapore</option>
                                                     <option value="Slovakia" data-id="sk">Slovakia</option>
                                                     <option value="Slovenia" data-id="si">Slovenia</option>
-                                                    <option value="Solomon Islands" data-id="sb">Solomon Islands</option>
+                                                    <option value="Solomon Islands" data-id="sb">Solomon Islands
+                                                    </option>
                                                     <option value="Somalia" data-id="so">Somalia</option>
                                                     <option value="South Africa" data-id="za">South Africa</option>
-                                                    <option value="South Georgia and the South Sandwich Islands" data-id="gs">South
+                                                    <option value="South Georgia and the South Sandwich Islands"
+                                                        data-id="gs">South
                                                         Georgia and the South Sandwich Islands</option>
                                                     <option value="Spain" data-id="es">Spain</option>
                                                     <option value="Sri Lanka" data-id="lk">Sri Lanka</option>
@@ -334,8 +382,10 @@
                                                     <option value="Swaziland" data-id="sz">Swaziland</option>
                                                     <option value="Sweden" data-id="se">Sweden</option>
                                                     <option value="Switzerland" data-id="ch">Switzerland</option>
-                                                    <option value="Syrian Arab Republic" data-id="sy">Syrian Arab Republic</option>
-                                                    <option value="Taiwan, Province of China" data-id="tw">Taiwan, Province
+                                                    <option value="Syrian Arab Republic" data-id="sy">Syrian Arab
+                                                        Republic</option>
+                                                    <option value="Taiwan, Province of China" data-id="tw">Taiwan,
+                                                        Province
                                                         of China
                                                     </option>
                                                     <option value="Tajikistan" data-id="tj">Tajikistan</option>
@@ -345,20 +395,24 @@
                                                     <option value="Togo" data-id="tg">Togo</option>
                                                     <option value="Tokelau" data-id="tk">Tokelau</option>
                                                     <option value="Tonga" data-id="to">Tonga</option>
-                                                    <option value="Trinidad and Tobago" data-id="tt">Trinidad and Tobago</option>
+                                                    <option value="Trinidad and Tobago" data-id="tt">Trinidad and Tobago
+                                                    </option>
                                                     <option value="Tunisia" data-id="tn">Tunisia</option>
                                                     <option value="Turkey" data-id="tr">Turkey</option>
                                                     <option value="Turkmenistan" data-id="tm">Turkmenistan</option>
-                                                    <option value="Turks and Caicos Islands" data-id="tc">Turks and Caicos
+                                                    <option value="Turks and Caicos Islands" data-id="tc">Turks and
+                                                        Caicos
                                                         Islands
                                                     </option>
                                                     <option value="Tuvalu" data-id="tv">Tuvalu</option>
                                                     <option value="Uganda" data-id="ug">Uganda</option>
                                                     <option value="Ukraine" data-id="ua">Ukraine</option>
-                                                    <option value="United Arab Emirates" data-id="ae">United Arab Emirates</option>
+                                                    <option value="United Arab Emirates" data-id="ae">United Arab
+                                                        Emirates</option>
                                                     <option value="United Kingdom" data-id="gb">United Kingdom</option>
                                                     <option value="United States" data-id="us">United States</option>
-                                                    <option value="United States Minor Outlying Islands" data-id="um">United
+                                                    <option value="United States Minor Outlying Islands" data-id="um">
+                                                        United
                                                         States Minor Outlying Islands</option>
                                                     <option value="Uruguay" data-id="uy">Uruguay</option>
                                                     <option value="Uzbekistan" data-id="uz">Uzbekistan</option>
@@ -368,9 +422,11 @@
                                                     <option value="Virgin Islands, British" data-id="vg">Virgin Islands,
                                                         British
                                                     </option>
-                                                    <option value="Virgin Islands, U.s." data-id="vi">Virgin Islands, U.s.
+                                                    <option value="Virgin Islands, U.s." data-id="vi">Virgin Islands,
+                                                        U.s.
                                                     </option>
-                                                    <option value="Wallis and Futuna" data-id="wf">Wallis and Futuna</option>
+                                                    <option value="Wallis and Futuna" data-id="wf">Wallis and Futuna
+                                                    </option>
                                                     <option value="Western Sahara" data-id="eh">Western Sahara</option>
                                                     <option value="Yemen" data-id="ye">Yemen</option>
                                                     <option value="Zambia" data-id="zm">Zambia</option>
@@ -382,14 +438,16 @@
                                         </div>
 
                                         <div class="col-lg-12">
-                                            <div class="form-group radio-group col-md-12 animation" data-animation="fadeInUp" delay="0.1s">
+                                            <div class="form-group radio-group col-md-12 animation"
+                                                data-animation="fadeInUp" delay="0.1s">
                                                 <label for="gender" class="gender-main-label">Gender </label>
                                                 <label class="radio-inline">
                                                     <input type="radio" name="gender" class="gender-list">
                                                     <span class="male-female">Male</span>
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="gender" class="gender-list"><span class="male-female">Female</span>
+                                                    <input type="radio" name="gender" class="gender-list"><span
+                                                        class="male-female">Female</span>
                                                 </label>
                                                 <label for="gender" class="error" generated="true"></label>
                                             </div>
@@ -398,91 +456,113 @@
 
                                         <div class="col-md-12 mt-40">
                                             <div class="row">
-                                                <div class="col-md-4 animation" data-animation="fadeInUp" data-animation-delay="0.1s">
+                                                <div class="col-md-4 animation" data-animation="fadeInUp"
+                                                    data-animation-delay="0.1s">
                                                     <label><strong>Identity Card Front Side:</strong></label>
 
                                                     <div class="form-group form-group-mobile col-md-12 custom-file">
-                                                        <input type="file" class="custom-file-input" name="f_side" id="f_side">
-                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                        <input type="file" class="custom-file-input" name="f_side"
+                                                            id="f_side">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
 
                                                     </div>
                                                     <label for="f_side" class="error" generated="true"></label>
                                                 </div>
-                                                <div class="col-md-12 colorblc  animation" data-animation="fadeInUp" data-animation-delay="0.8s">Please
-                                                    make sure that the photo is complete and clearly visible, in JPG format.
+                                                <div class="col-md-12 colorblc  animation" data-animation="fadeInUp"
+                                                    data-animation-delay="0.8s">Please
+                                                    make sure that the photo is complete and clearly visible, in JPG
+                                                    format.
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1s">
+                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                            data-animation-delay="1s">
                                             <div class="row justify-content-end align-items-center text-center">
                                                 <div class="col-md-5">
-                                                    <canvas id="cf_side" class="boxsixe" style="border:1px solid #d3d3d3;background:#ffffff;">
+                                                    <canvas id="cf_side" class="boxsixe"
+                                                        style="border:1px solid #d3d3d3;background:#ffffff;">
                                                     </canvas>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <span style="padding-toptop: 250px">Example</span>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <div class="imgboxs" data-toggle="modal" data-target="#myModal1"><img
-                                                            src="/assets1/images/passport.png" alt=""></div>
+                                                    <div class="imgboxs" data-toggle="modal" data-target="#myModal1">
+                                                        <img src="/assets1/images/passport.png" alt=""></div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 animation" data-animation="fadeInUp" data-animation-delay="0.1s">
+                                        <div class="col-md-12 animation" data-animation="fadeInUp"
+                                            data-animation-delay="0.1s">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label><strong>Identity Card Back Side:</strong></label>
                                                     <div class="form-group form-group-mobile col-md-12 custom-file">
-                                                        <input type="file" class="custom-file-input" name="b_side" id="b_side">
-                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                        <input type="file" class="custom-file-input" name="b_side"
+                                                            id="b_side">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
                                                     </div>
                                                     <label for="b_side" class="error" generated="true"></label>
                                                 </div>
-                                                <div class="col-md-12  colorblc">Please make sure that the photo is complete
-                                                    and clearly visible, in JPG format. Id card must be in the valid period
+                                                <div class="col-md-12  colorblc">Please make sure that the photo is
+                                                    complete
+                                                    and clearly visible, in JPG format. Id card must be in the valid
+                                                    period
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1.4s">
+                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                            data-animation-delay="1.4s">
                                             <div class="row justify-content-end align-items-center text-center">
                                                 <div class="col-md-5">
-                                                    <canvas id="cb_side" class="boxsixe" style="border:1px solid #d3d3d3;background:#ffffff;">
+                                                    <canvas id="cb_side" class="boxsixe"
+                                                        style="border:1px solid #d3d3d3;background:#ffffff;">
                                                     </canvas>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <span style="padding-toptop: 250px">Example</span>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <div class="imgboxs" data-toggle="modal" data-target="#myModal2"><img
-                                                            src="/assets1/images/back.png" alt=""></div>
+                                                    <div class="imgboxs" data-toggle="modal" data-target="#myModal2">
+                                                        <img src="/assets1/images/back.png" alt=""></div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1.6s">
+                                        <div class="col-md-12 animation" data-animation="fadeInUp"
+                                            data-animation-delay="1.6s">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label><strong>Selfie With Photo ID And Note:</strong></label>
                                                     <div class="form-group form-group-mobile col-md-12 custom-file">
-                                                        <input type="file" class="custom-file-input" name="h_side" id="h_side">
-                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                        <input type="file" class="custom-file-input" name="h_side"
+                                                            id="h_side">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
                                                     </div>
                                                     <label for="h_side" class="error" generated="true"></label>
                                                 </div>
-                                                <div class="col-md-12  colorblc">Please provide a photo of you holding your
-                                                    Identity Card front side. In the same picture, make a reference to MYCONTRACT.CO
-                                                    and today's date displayed. Make sure your face is clearly visible and
+                                                <div class="col-md-12  colorblc">Please provide a photo of you holding
+                                                    your
+                                                    Identity Card front side. In the same picture, make a reference to
+                                                    MYCONTRACT.CO
+                                                    and today's date displayed. Make sure your face is clearly visible
+                                                    and
                                                     that all passport details are clearly readable.</div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp" data-animation-delay="1.8s">
+                                        <div class="form-group col-md-12 animation" data-animation="fadeInUp"
+                                            data-animation-delay="1.8s">
                                             <div class="row justify-content-end align-items-center text-center">
                                                 <div class="col-md-5">
-                                                    <canvas id="ch_side" class="boxsixe" style="border:1px solid #d3d3d3;background:#ffffff;">
+                                                    <canvas id="ch_side" class="boxsixe"
+                                                        style="border:1px solid #d3d3d3;background:#ffffff;">
                                                     </canvas>
                                                 </div>
                                                 <div class="col-md-2">
@@ -496,7 +576,8 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <button class="btn btn-default mt10" type="submit" name="Submit">SUBMIT</button>
+                                            <button class="btn btn-default mt10" type="submit"
+                                                name="Submit">SUBMIT</button>
                                             <p>KYC verification would need 3 - 4 working days to be complete.</p>
                                             <br>
                                         </div>

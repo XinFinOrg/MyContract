@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="landingPageAssets/css/vendor.bundle.css">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="landingPageAssets/css/style.css">
+    <link rel="stylesheet" href="landingPageAssets/css/toastr.min.css">
     <link rel="stylesheet" href="landingPageAssets/css/theme.css" id="layoutstyle">
 
 </head>
@@ -163,8 +164,8 @@
                 </div>
                 <!-- .col -->
                 <div class="col-lg-7">
-                    <form id="contact-form" class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated" data-animate="fadeInUp"
-                        data-delay=".6" action="/contactUs" method="post">
+                    <form id="contactUsForm" class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated" data-animate="fadeInUp"
+                        data-delay=".6" action="javascript:void(0);">
                         <div class="form-results"></div>
                         <div class="input-field">
                             <input name="contact-name" type="text" placeholder="Your Name" class="input-border required" aria-required="true">
@@ -228,13 +229,13 @@
                 <div class="col-sm-3 col-lg-2 res-l-bttm-lg">
                     <ul class="link-widget one-column animated" data-animate="fadeInUp" data-delay=".4">
                         <li><a href="#contact" class="menu-link">Contact</a></li>
-                        <li><a href="https://mycontract.co/" class="menu-link">Login</a></li>
+                        <li><a href="https://mycontract.co/login" class="menu-link">Login</a></li>
                     </ul>
                 </div>
                 <!-- .col  -->
                 <div class="col-sm-6 col-lg-5">
                     <p class="text-white mb-1">Keep in touch with the latest news</p>
-                    <form id="subscribe-form" action="/subscribe" method="post" class="subscription-form inline-form-s2">
+                    <form id="subscribe-form" action="javascript:void(0);" class="subscription-form inline-form-s2">
                         <input type="text" name="youremail" class="input-round-s2 required email" placeholder="Email address">
                         <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
                         <button type="submit" class="btn btn-plane">Subscribe</button>
@@ -281,6 +282,75 @@
     <!-- JavaScript (include all script here) -->
     <script src="landingPageAssets/js/jquery.bundle.js"></script>
     <script src="landingPageAssets/js/script.js"></script>
+    <script src="landingPageAssets/js/toastr.min.js"></script>
+    <script>
+        $("#contactUsForm").submit(function (e) {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '/contactUs',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    toastr.info('Your Message Successfully sent to Administrator.')
+                    $("#contactUsForm")[0].reset()
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+        $("#subscribe-form").submit(function (e) {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '/subscribe',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    toastr.info('Thank you.')
+                    $("#subscribe-form")[0].reset()
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    </script>
 </body>
 
 </html>
