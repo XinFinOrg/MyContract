@@ -27,6 +27,11 @@ module.exports = {
   'binanceKey': {
     'apiKey': '8DFjjeVS0JhzVVcXuvUenxhDYBoO2OoAIJpCXJpy19rX1aaSfk6SZ9CiGFLiLTZI',
     'apiSecret': 'Cq0xxr0UPGSZOAKbvB6YbrueutUCSf2QrIyephBWZbOAkcBuOQd0tTwzat8MqsuR'
+  },
+  'paypal': {
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'AR8oYc8pYp90H_9qN6JcjvSgS5nbCq_hFvc5ue4Twzdh-ZefahoeLmVKEem2OxbLNlK2nM-Zv74F3iPI',
+    'client_secret': 'ELBjQfb3aGNze4S-wbaHHndGmv4DQzqfOoeu1NAphrOwdwxHSjaHLR_zP-u4hBLGJPAyCXdTPAFD8BKk'
   }
 
 };

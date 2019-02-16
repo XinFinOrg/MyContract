@@ -3,16 +3,13 @@ var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
 var paymentListener = require('./paymentListener');
+var auth = require('../config/auth')
 var ProjectConfiguration = db.projectConfiguration;
 var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
 var paypal = require('paypal-rest-sdk');
 var axios = require('axios');
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AR8oYc8pYp90H_9qN6JcjvSgS5nbCq_hFvc5ue4Twzdh-ZefahoeLmVKEem2OxbLNlK2nM-Zv74F3iPI',
-  'client_secret': 'ELBjQfb3aGNze4S-wbaHHndGmv4DQzqfOoeu1NAphrOwdwxHSjaHLR_zP-u4hBLGJPAyCXdTPAFD8BKk'
-});
+paypal.configure(auth.paypal);
 
 module.exports = {
   buyPackage: async function (req, res) {
@@ -237,6 +234,142 @@ module.exports = {
           console.log('payment not successful');
           // res.send({ error: error })
           res.redirect('/paypal?errors=true')
+        }
+      }
+    });
+  },
+  getPaypalDirect: (req, res) => {
+    var payReq = JSON.stringify({
+      intent: 'order',
+      payer: {
+        payment_method: 'paypal'
+      },
+      redirect_urls: {
+        return_url: 'http://mycontract.co/paypal/direct/process',
+        cancel_url: 'https://mycontract.co/error'
+      },
+      transactions: [{
+        amount: {
+          total: 15,
+          currency: 'USD',
+          "details": {
+            "subtotal": 15,
+            "tax": "0",
+            "shipping": "0",
+            "handling_fee": "0",
+            "shipping_discount": "0",
+            "insurance": "0"
+          }
+        },
+        description: "MyContract package 1",
+        invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
+        payment_options: {
+          allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+        },
+        "custom": req.user.email,
+        "item_list": {
+          "items": [
+            {
+              "name": "Mycontract Package 1",
+              "description": req.user.email,
+              "quantity": "1",
+              "price": "15",
+              "tax": "0",
+              "sku": "0",
+              "currency": "USD"
+            },
+          ]
+        }
+      }]
+    });
+
+    paypal.payment.create(payReq, function (error, payment) {
+      var links = {};
+      if (error) {
+        console.error(JSON.stringify(error));
+      } else {
+        // Capture HATEOAS links
+        payment.links.forEach(function (linkObj) {
+          links[linkObj.rel] = {
+            href: linkObj.href,
+            method: linkObj.method
+          };
+        })
+
+        // If redirect url present, redirect user
+        if (links.hasOwnProperty('approval_url')) {
+          console.log(links['approval_url'].href)
+          // REDIRECT USER TO links['approval_url'].href;
+          res.redirect(links['approval_url'].href)
+
+        } else {
+          res.redirect('/paypal?errors=true')
+        }
+      }
+    });
+
+  },
+  processPaypalDirect: (req, res) => {
+    var paymentId = req.query.paymentId;
+    var payerId = { 'payer_id': req.query.PayerID };
+    var order;
+
+    paypal.payment.execute(paymentId, payerId, function (error, payment) {
+      if (error) {
+        console.error(JSON.stringify(error));
+      } else {
+        if (payment.state === 'approved'
+          && payment.transactions
+          && payment.transactions[0].related_resources
+          && payment.transactions[0].related_resources[0].order) {
+          console.log('order authorization completed successfully');
+          // Capture order id
+          order = payment.transactions[0].related_resources[0].order.id;
+          var capture_details = {
+            amount: {
+              currency: payment.transactions[0].amount.currency,
+              total: payment.transactions[0].amount.total
+            }
+          };
+
+          //make token transfer
+          client.find({
+            where: {
+              email: payment.transactions[0].custom 
+            }
+          }).then(async client => {
+            client.package1 += 1;
+            await client.save().then((result, error) => {
+              if (error) {
+                paypal.order.capture(order, capture_details, function (error, capture) {
+                  if (error) {
+                    console.error(error);
+                  } else {
+                    console.log("ORDER CAPTURE SUCCESS");
+                    paypal.sale.refund(capture.id, capture_details, function (error, refund) {
+                      if (error) {
+                        console.error(JSON.stringify(error));
+                      } else {
+                        console.log("Refund Sale Response");
+                      }
+                    });
+                  }
+                });
+              }
+              paypal.order.capture(order, capture_details, function (error, capture) {
+                if (error) {
+                  console.error(error);
+                } else {
+                  console.log("ORDER CAPTURE SUCCESS");
+                  res.redirect('/dashboard')
+                }
+              });
+            });
+          });
+        } else {
+          console.log('payment not successful');
+          // res.send({ error: error })
+          res.redirect('/error')
         }
       }
     });

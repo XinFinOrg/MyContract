@@ -1,80 +1,86 @@
 <body>
   <% layout('./layouts/sidebar') -%>
-    <div class="preloader">
-      <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-      </div>
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
-    <!-- Page wrapper  -->
-    <div class="page-wrapper">
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
 
-      <!-- Container fluid  -->
-      <!-- Container fluid  -->
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Buy Package</h4>
-            <div class="row">
-              <div class="container-fluid">
-                <div class="clpricing-table cat-id-10">
-                  <div class="container-fluid">
-                    <div class="row align-items-center price-table style10">
-                      <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
-                        <div class="cl-pricetable-wrap price-1 category28 ">
-                          <div class="top">
-                            <div class="cl-header">
-                              <h4>Package 1</h4>
-                              <h5>STANDARD PLAN</h5>
-                            </div>
+    <!-- Container fluid  -->
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Buy Package</h4>
+          <div class="row">
+            <div class="container-fluid">
+              <div class="clpricing-table cat-id-10">
+                <div class="container-fluid">
+                  <div class="row align-items-center price-table style10">
+                    <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
+                      <div class="cl-pricetable-wrap price-1 category28 ">
+                        <div class="top">
+                          <div class="cl-header">
+                            <h4>Package 1</h4>
+                            <h5>STANDARD PLAN</h5>
                           </div>
-                          <div class="featured">
-                            <ul>
-                              <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Creation</li>
-                              <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Deployment</li>
-                            </ul>
+                        </div>
+                        <div class="featured">
+                          <ul>
+                            <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Creation</li>
+                            <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Deployment
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="bottom">
+                          <div class="cl-footer">
+                            <div class="dolar">1200000 <img src="assets/images/icons/xdce.png" width="25" height="25">
+                            </div>
+                            <% if(balance<1200000) { %>
+                            <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
+                            <% } else { %>
+                            <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap"
+                              class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="sendOTP()">Buy Now</a>
+                            <% } %>
                           </div>
-                          <div class="bottom">
-                            <div class="cl-footer">
-                              <div class="dolar">1200000 <img src="assets/images/icons/xdce.png" width="25" height="25"></div>
-                              <% if(balance<1200000) { %>
-                                <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
-                                <% } else { %>
-                                  <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap" class="btn-table btn-rounded btn-1 hvr-sweep-to-right"
-                                    onclick="sendOTP()">Buy Now</a>
-                                  <% } %>
-                            </div>
-                            <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div>
-                            <div id="metamaskButton" style="display:none">
-                              <br>
-                              <h5> You seem to be using Metamask wallet </h5>
-                              <a data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1" onclick="buyMetamask()">Buy
-                                Using Metamask</a>
-                            </div>
+                          <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div>
+                          <div id="metamaskButton" style="display:none">
+                            <br>
+                            <h5> You seem to be using Metamask wallet </h5>
+                            <a data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1"
+                              onclick="buyMetamask()">Buy
+                              Using Metamask</a><br><br>
+                            <h5>If you have Paypal account then buy using paypal </h5>
+                            <a class="btn btn-rounded btn-lg btn-info mr-1" href="/paypal/direct"> Paypal</a>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
-                        <div class="cl-pricetable-wrap price-2 category29 popular_plan">
-                          <div class="top">
-                            <span class="popular">COMING SOON</span>
-                            <div class="cl-header">
-                              <h4>Package 2</h4>
-                              <h5>PREMIUM PLAN</h5>
-                            </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-sm-6 col-xs-12">
+                      <div class="cl-pricetable-wrap price-2 category29 popular_plan">
+                        <div class="top">
+                          <span class="popular">COMING SOON</span>
+                          <div class="cl-header">
+                            <h4>Package 2</h4>
+                            <h5>PREMIUM PLAN</h5>
                           </div>
-                          <div class="featured">
-                            <ul>
-                              <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Creation</li>
-                              <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Deployment</li>
-                              <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> ICO Platfrom with Dashboard</li>
-                            </ul>
-                          </div>
-                          <div class="bottom">
-                            <div class="cl-footer">
-                              <div class="dolar">Coming Soon!</div>
-                              <a href="#" class="btn-table btn-1 hvr-sweep-to-right">Order Now</a>
-                            </div>
+                        </div>
+                        <div class="featured">
+                          <ul>
+                            <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Creation</li>
+                            <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> Smart Contract Deployment
+                            </li>
+                            <li><i class="feature_icon fa fa-check" aria-hidden="true"></i> ICO Platfrom with Dashboard
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="bottom">
+                          <div class="cl-footer">
+                            <div class="dolar">Coming Soon!</div>
+                            <a href="#" class="btn-table btn-1 hvr-sweep-to-right">Order Now</a>
                           </div>
                         </div>
                       </div>
@@ -83,22 +89,25 @@
                 </div>
               </div>
             </div>
-
           </div>
 
         </div>
-        <!-- End Container fluid  -->
 
-        <!-- Payment Confirmation modal Start-->
-        <div class="modal fade bs-example-modal-lg" id="paymentConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="paymentConfirmationModal">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">Payment Confirmation</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              </div>
-              <div class="modal-body mb-3">
-                <!-- <form action="/payment" method="GET">
+      </div>
+      <!-- End Container fluid  -->
+
+      <!-- Payment Confirmation modal Start-->
+      <div class="modal fade bs-example-modal-lg" id="paymentConfirmationModal" tabindex="-1" role="dialog"
+        aria-labelledby="paymentConfirmationModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel1">Payment Confirmation</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body mb-3">
+              <!-- <form action="/payment" method="GET">
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-2 col-form-label">OTP</label>
                                     <div class="col-10">
@@ -110,22 +119,23 @@
                                     <button type="button" class="btn btn-rounded btn-lg btn-info"  onclick="makePayment()">Make Payment</button>
                                 </div>
                             </form> -->
-                <form action="/payment">
-                  <label class="col-12 col-form-label">Confirmation Email is sent. Please enter OTP sent to you on your Registerd
-                    Email</label>
-                  <label for="example-text-input" class="col-2 col-form-label">OTP</label>
-                  <input type="text" class="form-control" name="otpValue"><br>
-                  <div class="text-center">
-                    <input type="submit" class="btn btn-rounded btn-lg btn-info" value="Submit">
-                  </div>
-                </form>
-              </div>
+              <form action="/payment">
+                <label class="col-12 col-form-label">Confirmation Email is sent. Please enter OTP sent to you on your
+                  Registerd
+                  Email</label>
+                <label for="example-text-input" class="col-2 col-form-label">OTP</label>
+                <input type="text" class="form-control" name="otpValue"><br>
+                <div class="text-center">
+                  <input type="submit" class="btn btn-rounded btn-lg btn-info" value="Submit">
+                </div>
+              </form>
             </div>
           </div>
-
         </div>
+
       </div>
-      <!-- / Payment Confirmation modal End -->
+    </div>
+    <!-- / Payment Confirmation modal End -->
 </body>
 <script>
   // function makePayment() {
@@ -268,7 +278,7 @@
       console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
   });
-  
+
 </script>
 
 </html>

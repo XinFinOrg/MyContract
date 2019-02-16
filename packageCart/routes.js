@@ -1,5 +1,5 @@
 const impl = require('./impl');
-module.exports = function(app) {
+module.exports = function (app) {
 
   app.get('/buyPackage', isLoggedIn, impl.buyPackage);
   app.get('/payment', isLoggedIn, impl.payment);
@@ -7,9 +7,11 @@ module.exports = function(app) {
   app.get('/getBalances', isLoggedIn, impl.getBalances);
   app.post('/api/getPaymentToken', isLoggedIn, impl.getPaymentToken);
   app.post('/api/sendPaymentInfo', isLoggedIn, impl.sendPaymentInfo);
-  app.get('/paypal',impl.getPaypalPayment)
-  app.post('/paypal',impl.postPaypalPayment)
-  app.get('/paypal/process',impl.paymentProcess)
+  app.get('/paypal', impl.getPaypalPayment)
+  app.post('/paypal', impl.postPaypalPayment)
+  app.get('/paypal/process', impl.paymentProcess)
+  app.get('/paypal/direct',isLoggedIn, impl.getPaypalDirect)
+  app.get('/paypal/direct/process',isLoggedIn, impl.processPaypalDirect)
 }
 
 // route middleware to make sure a user is logged in
