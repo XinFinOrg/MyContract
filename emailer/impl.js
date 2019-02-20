@@ -3,8 +3,8 @@ var nodemailer = require('nodemailer');
 var ejs = require("ejs");
 var fs = require('fs');
 var transporter = nodemailer.createTransport({
-  host: nodemailerAuth.Host,
-  port: nodemailerAuth.port,
+  host: 'mail-b01.cloudmailbox.in',
+  port: 25,
   auth: nodemailerAuth
 });
 
@@ -16,7 +16,7 @@ module.exports = {
       var mailOptions = {
         from: "contract@autocoin.com",
         to: email,
-        subject: "Mycontract.co - Smart Contract generation(" +coinName+"-"+ smartcontractType +")",
+        subject: "Mycontract.co - Smart Contract generation(" + coinName + "-" + smartcontractType + ")",
         html: data,
         attachments: [{
           filename: "coin.sol",
@@ -102,6 +102,35 @@ module.exports = {
       };
       triggerEmail(mailOptions);
     });
+  },
+  // contact us
+  contactUs: function (req) {
+    ejs.renderFile(__dirname + '/emailerTemplates/contactUsAdmin.ejs', {
+      contactName: req.body.contactName,
+      contactMessage: req.body.contactMessage,
+      email: req.body.contactEmail
+    }, (err, data1) => {
+      ejs.renderFile(__dirname + '/emailerTemplates/contactUs.ejs', {
+        contactName: req.body.contactName,
+        // contactMessage: req.body.contactMessage
+      }, (err, data2) => {
+        console.log(err);
+        var mailOptions1 = {
+          from: "admin@mycontract.co",
+          to: req.body.contactEmail,
+          subject: "Mycontract enquiry",
+          html: data2
+        };
+        var mailOptions2 = {
+          from: "admin@mycontract.co",
+          to: 'info@xinfin.org',
+          subject: "Mycontract enquiry",
+          html: data1
+        };
+        triggerEmail(mailOptions1);
+        triggerEmail(mailOptions2);
+      });
+    })
   },
 
 }

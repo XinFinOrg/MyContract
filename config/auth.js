@@ -14,9 +14,7 @@ module.exports = {
 
   'nodemailerAuth': {
     'user': 'contract@mail-b01.cloudmailbox.in',
-    'pass': 'Dhh%Xg$545d4',
-    'Host': 'mail-b01.cloudmailbox.in',
-    'port': 25
+    'pass': 'Hak-ess@2018**',
   },
 
   'jwtAuthKey': {

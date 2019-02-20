@@ -153,13 +153,17 @@ module.exports = {
   },
 
   getFAQ: async (req, res) => {
-    var projectArray = await getProjectArray(req.user.email);
-    var address = req.cookies['address'];
-    res.render('faq', {
-      user: req.user,
-      address: address,
-      ProjectConfiguration: projectArray,
+    // var projectArray = await getProjectArray(req.user.email);
+    // var address = req.cookies['address'];
+    // res.render('faq', {
+    //   user: req.user,
+    //   address: address,
+    //   ProjectConfiguration: projectArray,
+    // });
+    res.writeHead(301, {
+      Location: 'https://articles.xinfin.org/mycontract'
     });
+    res.end();
   },
 
   forgotPassword: (req, res) => {
@@ -218,10 +222,11 @@ module.exports = {
     });
   },
   subscribe: (req, res) => {
+    console.log(req.body)
     let fd;
     try {
       fd = fs.openSync('./subscribeData.txt', 'a');
-      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+      fs.appendFileSync(fd, JSON.stringify(req.body) + '\r\n', 'utf8');
     } catch (err) {
       console.log(err);
     } finally {
@@ -231,16 +236,11 @@ module.exports = {
     }
   },
   contactUs: (req, res) => {
-    let fd;
+    console.log(req.body)
     try {
-      fd = fs.openSync('./contactUsData.txt', 'a');
-      fs.appendFileSync(fd, JSON.stringify(req.body)+'\r\n', 'utf8');
+      mailer.contactUs(req);
     } catch (err) {
       console.log(err);
-    } finally {
-      if (fd !== undefined)
-        fs.closeSync(fd);
-      res.send('sdlkjfjkldsfjkd');
     }
   }
 };

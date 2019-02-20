@@ -50,7 +50,9 @@
                             <div class="auth-box login-box">
                                 <div id="loginform">
                                     <div class="logo">
-                                        <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        <a class="navbar-brand" href="/">
+                                            <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
+                                        </a>
                                         <h2 class="font-medium m-t-20 m-b-20">Welcome to MyContract</h2>
                                         <h5 class="font-normal m-b-20">Enter your details to Sign In</h5>
                                     </div>
@@ -58,56 +60,70 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <% if (message.length > 0) { %>
-                                                <div class="alert alert-danger">
-                                                    <%= message %>
+                                            <div class="alert alert-danger">
+                                                <%= message %>
+                                            </div>
+                                            <% } %>
+                                            <form class="form-horizontal m-t-20" id="loginform" action="/login"
+                                                method="post">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="emailid" class="form-control" id="emailid" name="email"
+                                                        placeholder="Enter email" data-validation="email">
                                                 </div>
-                                                <% } %>
-                                                    <form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">
-                                                        <div class="form-group">
-                                                            <label for="email">Email</label>
-                                                            <input type="emailid" class="form-control" id="emailid" name="email" placeholder="Enter email">
+                                                <span class="alert-danger" id="inputVal_error"></span>
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" class="form-control" id="password"
+                                                        name="password" placeholder="Enter password"
+                                                        data-validation="length" data-validation-length="min8">
+                                                </div>
+                                                <span class="alert-danger" id="inputVal_error1"></span>
+                                                <div class="form-group">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-12 p-b-20">
+                                                            <button class="btn btn-lg btn-rounded btn-info"
+                                                                id="loginButton" type="submit">LOGIN</button>
+                                                            <span class="pl-5"><a href="javascript:void(0)"
+                                                                    id="to-recover" class="text-dark"><i
+                                                                        class="fa fa-lock m-r-5"></i>
+                                                                    Forgot password?</a></span>
                                                         </div>
-                                                        <span class="alert-danger" id="inputVal_error"></span>
-                                                        <div class="form-group">
-                                                            <label for="password">Password</label>
-                                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
-                                                        </div>
-                                                         <span class="alert-danger" id="inputVal_error1"></span>
-                                                        <div class="form-group">
-                                                            <div class="row align-items-center">
-                                                                <div class="col-md-12 p-b-20">
-                                                                    <button class="btn btn-lg btn-rounded btn-info" id="loginButton" type="submit">LOGIN</button>
-                                                                    <span class="pl-5"><a href="javascript:void(0)" id="to-recover"
-                                                                            class="text-dark"><i class="fa fa-lock m-r-5"></i>
-                                                                            Forgot password?</a></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                                        <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR
-                                                                continue with</span></p>
+                                                <p class="line-on-side text-muted text-center font-small-3 mx-2">
+                                                    <span>OR
+                                                        continue with</span></p>
 
-                                                        <div class="row full-width">
-                                                            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                                                                <div class="social">
-                                                                    <a href="/auth/google" class="btn btn-lg btn-rounded btn-googleplus m-b-15" data-toggle="tooltip" title="" data-original-title="Login with Google">
-                                                                        <i aria-hidden="true" class="fab fa-google"></i>
-                                                                        Google</a>
-                                                                    <a href="/auth/github" class="btn btn-lg btn-rounded btn-github m-b-15" data-toggle="tooltip" title="" data-original-title="Login with GitHub">
-                                                                        <i aria-hidden="true" class="fab fa-github"></i>
-                                                                        GitHub</a>
+                                                <div class="row full-width">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                                                        <div class="social">
+                                                            <a href="/auth/google"
+                                                                class="btn btn-lg btn-rounded btn-googleplus m-b-15"
+                                                                data-toggle="tooltip" title=""
+                                                                data-original-title="Login with Google">
+                                                                <i aria-hidden="true" class="fab fa-google"></i>
+                                                                Google</a>
+                                                            <a href="/auth/github"
+                                                                class="btn btn-lg btn-rounded btn-github m-b-15"
+                                                                data-toggle="tooltip" title=""
+                                                                data-original-title="Login with GitHub">
+                                                                <i aria-hidden="true" class="fab fa-github"></i>
+                                                                GitHub</a>
 
-                                                                </div>
-                                                            </div>
                                                         </div>
-                                                        <div class="form-group m-b-0 m-t-15">
-                                                            <div class="col-sm-12">
-                                                                Don't have an account? <a href="/signup" class="text-info m-l-5"><b>Sign
-                                                                        Up
-                                                                    </b></a>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group m-b-0 m-t-15">
+                                                    <div class="col-sm-12">
+                                                        Don't have an account? <a href="/signup"
+                                                            class="text-info m-l-5"><b>Sign
+                                                                Up
+                                                            </b></a>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -121,12 +137,14 @@
                                     </div>
                                     <div class="row m-t-20">
                                         <!-- <form class="col-12" action="/forgotPassword" method="GET"> -->
-                                        <form class="col-12">
-                                            <label for="email">Email</label> <input class="form-control" type="text" name="email"
-                                                id="emailid" placeholder="email">
+                                        <form class="col-12" id="forgotPassword">
+                                            <label for="email">Email</label> <input class="form-control" type="text"
+                                                name="email" id="forgotMail" placeholder="email" data-validation="email">
                                             <br> <span class="alert-danger" id="inputVal_error"></span>
                                             <br><br>
-                                            <button class="btn btn-lg btn-rounded btn-info" type="button" onsubmit="forgotPassword()" value="Submit" id="to-recoveremailsent">Submit</button>
+                                            <button class="btn btn-lg btn-rounded btn-info" type="button"
+                                                onsubmit="forgotPassword()" value="Submit"
+                                                id="to-recoveremailsent">Submit</button>
                                         </form>
 
                                     </div>
@@ -142,7 +160,8 @@
                                 <div id="noUserFound">
                                     <div class="logo">
                                         <span class="db"><img src="assets/images/logo.png" alt="AltCoin" /></span>
-                                        <h2 class="font-medium m-t-20 m-b-20"> No user found with this email address!</h2>
+                                        <h2 class="font-medium m-t-20 m-b-20"> No user found with this email address!
+                                        </h2>
                                     </div>
 
                                 </div>
@@ -179,6 +198,11 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/libs/popper.js/popper.min.js"></script>
     <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="../../../landingPageAssets/js/toastr.min.js"></script>
+    <script src="../../../landingPageAssets/js/toastr.js.map"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
 
     <!-- This page plugin js -->
 
@@ -196,7 +220,7 @@
             $("#recoverform").fadeIn();
         });
         $('#to-recoveremailsent').on("click", function () {
-            $.get("/forgotPassword?email=" + $('#emailid').val()).then(
+            $.get("/forgotPassword?email=" + $('#forgotMail').val()).then(
                 result => {
                     if (result === "success") {
                         console.log(result)
@@ -217,33 +241,11 @@
         });
     </script>
     <script>
-        // document.getElementById("to-recoveremailsent").disabled = "disabled";
-        var myInput = document.getElementById("emailid");
-        myInput.onkeyup = function () {
-            if (myInput.value === '' || myInput.value.indexOf(" ") == 0) {
-                document.getElementById("inputVal_error").innerHTML = 'Please enter valid email';
-                document.getElementById("to-recoveremailsent").disabled = "disabled";
-                document.getElementById("loginButton").disabled = "disabled";
-            } else {
-                document.getElementById("inputVal_error").innerHTML = '';
-                document.getElementById("to-recoveremailsent").disabled ='';
-                document.getElementById("loginButton").disabled = "";
-
-            }
-        }
-        var myInput2 = document.getElementById("password");
-        myInput2.onkeyup = function () {
-            if (myInput2.value === '' || myInput2.value.indexOf(" ") == 0) {
-                document.getElementById("inputVal_error1").innerHTML = 'Please enter valid password';
-                // document.getElementById("to-recoveremailsent").disabled = "disabled";
-                document.getElementById("loginButton").disabled = "disabled";
-            } else {
-                document.getElementById("inputVal_error1").innerHTML = '';
-                // document.getElementById("to-recoveremailsent").disabled = "";
-                document.getElementById("loginButton").disabled = "";
-
-            }
-        }
+        $.validate({
+            form: '#loginform',
+            onValidate: function ($form) {
+            },
+        });
     </script>
 </body>
 

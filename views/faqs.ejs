@@ -248,15 +248,17 @@
                         <div class="form-results"></div>
                         <div class="input-field">
                             <input name="contact-name" type="text" placeholder="Your Name" class="input-border required"
-                                aria-required="true">
+                                aria-required="true" data-validation="custom"
+                                data-validation-regexp="[a-zA-Z][a-zA-Z0-9-_]{3,32}">
                         </div>
                         <div class="input-field">
-                            <input name="contact-email" type="email" placeholder="Your Email"
+                            <input name="contact-email" type="email" data-validation="email" placeholder="Your Email"
                                 class="input-border required email" aria-required="true">
                         </div>
                         <div class="input-field">
                             <textarea name="contact-message" placeholder="Your Message"
-                                class="txtarea input-border required" aria-required="true"></textarea>
+                                class="txtarea input-border required" aria-required="true" data-validation="custom"
+                                data-validation-regexp="^([a-z]+)$"></textarea>
                         </div>
                         <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
                         <div class="input-field">
@@ -322,10 +324,9 @@
                 <!-- .col  -->
                 <div class="col-sm-6 col-lg-5">
                     <p class="text-white mb-1">Keep in touch with the latest news</p>
-                    <form id="subscribe-form" action="javascript:void(0);"
-                        class="subscription-form inline-form-s2">
+                    <form id="subscribe-form" action="javascript:void(0);" class="subscription-form inline-form-s2">
                         <input type="text" name="youremail" class="input-round-s2 required email"
-                            placeholder="Email address">
+                            placeholder="Email address" data-validation="email">
                         <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
                         <button type="submit" class="btn btn-plane">Subscribe</button>
                         <div class="subscribe-results"></div>
@@ -373,72 +374,136 @@
     <script src="landingPageAssets/js/jquery.bundle.js"></script>
     <script src="landingPageAssets/js/script.js"></script>
     <script src="landingPageAssets/js/toastr.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <script>
-        $("#contactUsForm").submit(function (e) {
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-bottom-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+        //contact form
+        $.validate({
+            form: '#contactUsForm',
+            onError: function (form) {
+
+            },
+            onSuccess: function (form) {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                var formData = new FormData(form[0]);
+                console.log(formData)
+                $.ajax({
+                    url: '/contactUs',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        toastr.info('Your Message Successfully sent to Administrator.')
+                        $("#contactUsForm")[0].reset()
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                return false; // Will stop the submission of the form
+            },
+            onValidate: function ($form) {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.error("Please enter valid data!", "Error")
+            },
+            onElementValidate: function (valid, $el, $form, errorMess) {
+                // console.log('Input ' + $el.attr('name') + ' is ' + (valid ? 'VALID' : 'NOT VALID'));
             }
-            e.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                url: '/contactUs',
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    toastr.info('Your Message Successfully sent to Administrator.')
-                    $("#contactUsForm")[0].reset()
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
         });
-        $("#subscribe-form").submit(function (e) {
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-bottom-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+        //subscribe form
+        $.validate({
+            form: '#subscribe-form',
+            onError: function (form) {
+
+            },
+            onSuccess: function (form) {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                var formData = new FormData(form[0]);
+                console.log(formData)
+                $.ajax({
+                    url: '/subscribe',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        toastr.info('Thank you.')
+                        $("#subscribe-form")[0].reset()
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                return false; // Will stop the submission of the form
+            },
+            onValidate: function ($form) {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.error("not a valid email !", "Email")
+            },
+            onElementValidate: function (valid, $el, $form, errorMess) {
+                // console.log('Input ' + $el.attr('name') + ' is ' + (valid ? 'VALID' : 'NOT VALID'));
             }
-            e.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                url: '/subscribe',
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    toastr.info('Thank you.')
-                    $("#subscribe-form")[0].reset()
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
         });
     </script>
 </body>
