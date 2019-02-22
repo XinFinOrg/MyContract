@@ -96,9 +96,8 @@
             Transaction Hash : <%= txHash %>
           </div>
           <% } %>
-          <form
-            class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated"
-            data-animate="fadeInUp" data-delay=".6" action="/paypal" method="post">
+          <form class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated"
+            data-animate="fadeInUp" data-delay=".6" name="paypalForm" action="/paypal" method="post">
             <div class="form-results"></div>
             <div class="input-field">
               <input type="text" placeholder="Address" value="<%- data.price_usd -%>" id="priceNow" class="input-border"
@@ -114,7 +113,7 @@
             </div>
             <div class="input-field">
               <input name="price" type="text" placeholder="Price in $" id="price_id" class="input-border required "
-               aria-required="true">
+                aria-required="true">
             </div>
             <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
             <div class="input-field">
@@ -227,18 +226,47 @@
   <!-- JavaScript (include all script here) -->
   <script src="landingPageAssets/js/jquery.bundle.js"></script>
   <script src="landingPageAssets/js/script.js"></script>
-  <script> console.log("ldfssjdkfkjlsdfkjlsd")
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+  <script>
+    jQuery.validator.addMethod("isTwoDecimal", function (value, element) {
+      return this.optional(element) || /^\d{0,4}(\.\d{0,2})?$/i.test(value);
+    }, "You must include two decimal places");
+    jQuery.validator.addMethod("isAddress", function (value, element) {
+      return this.optional(element) || /^0x[a-fA-F0-9]{40}$/g.test(value);
+    }, "You must include two decimal places");
+
+    $(function () {
+      $("form[name='paypalForm']").validate({
+        rules: {
+          address: {
+            required: true,
+            isAddress: true
+          },
+          amount: {
+            required: true,
+            min: 100
+          },
+          price: {
+            required: true,
+            isTwoDecimal: true
+          }
+        },
+        messages: {
+          address: "Please enter valid ethereum address",
+          amount: "Amount must be greater then 100 $ ",
+        },
+        submitHandler: function (form) {
+          form.submit();
+        }
+      });
+    });
+  </script>
+  <script>
     var myInput2 = document.getElementById("amount_id");
-    console.log(myInput2)
     myInput2.onkeyup = function () {
-      if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
-        document.getElementById("submitButton").disabled = "disabled";
-      } else {
-        document.getElementById("submitButton").disabled = "";
-        var priceNow = document.getElementById("priceNow");
-        document.getElementById("price_id").value = priceNow.value * myInput2.value
-        console.log(priceNow.value, priceNow.value * myInput2.value)
-      }
+      var priceNow = document.getElementById("priceNow");
+      let amt = priceNow.value * myInput2.value
+      document.getElementById("price_id").value = amt.toFixed(2)
     }
   </script>
 </body>

@@ -14,7 +14,7 @@ module.exports = {
       email: email
     }, (err, data) => {
       var mailOptions = {
-        from: "contract@autocoin.com",
+        from: "contract@mycontract.com",
         to: email,
         subject: "Mycontract.co - Smart Contract generation(" + coinName + "-" + smartcontractType + ")",
         html: data,
@@ -122,7 +122,7 @@ module.exports = {
           html: data2
         };
         var mailOptions2 = {
-          from: "admin@mycontract.co",
+          from: "support@mycontract.co",
           to: 'info@xinfin.org',
           subject: "Mycontract enquiry",
           html: data1

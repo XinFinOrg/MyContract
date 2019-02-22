@@ -206,8 +206,8 @@
                 <!-- .col -->
                 <div class="col-lg-7">
                     <form class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated"
-                        data-animate="fadeInUp" data-delay=".6" id="contactUsForm" action="javascript:void(0);"
-                        onSubmit="signIn()">
+                        data-animate="fadeInUp" data-delay=".6" name="contactForm" id="contactUsForm"
+                        action="javascript:void(0);" onSubmit="signIn()">
                         <div class="form-results"></div>
                         <div class="input-field">
                             <input name="contactName" type="text" placeholder="Your Name" data-validation="custom"
@@ -287,12 +287,10 @@
                 <!-- .col  -->
                 <div class="col-sm-6 col-lg-5">
                     <p class="text-white mb-1">Keep in touch with the latest news</p>
-                    <form id="subscribe-form" action="javascript:void(0);" class="subscription-form inline-form-s2">
-                        <input type="text" name="youremail" class="input-round-s2 required email"
-                            placeholder="Email address" data-validation="email">
-                        <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
+                    <form action="javascript:void(0);" name="subscribeForm" class="subscription-form inline-form-s2">
+                        <input type="text" name="subscriberEmail" id="subscriberEmail"
+                            class="input-round-s2 required email" placeholder="Email address" />
                         <button type="submit" class="btn btn-plane">Subscribe</button>
-                        <div class="subscribe-results"></div>
                     </form>
                 </div>
                 <!-- .col  -->
@@ -309,7 +307,7 @@
                 <!-- .col  -->
                 <div class="col-md-5 text-right mobile-left">
                     <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="/privacyPolicy">Privacy Policy</a></li>
                         <li><a href="/termsConditions">Terms & Conditions</a></li>
                     </ul>
                 </div>
@@ -337,136 +335,130 @@
     <script src="landingPageAssets/js/jquery.bundle.js"></script>
     <script src="landingPageAssets/js/script.js"></script>
     <script src="landingPageAssets/js/toastr.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
     <script>
-        //contact form
-        $.validate({
-            form: '#contactUsForm',
-            onError: function (form) {
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                toastr.error("Please enter valid data!", "Error")
-            },
-            onSuccess: function (form) {
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                toastr.info('Your Message Successfully sent to Administrator.')
-                var formData = new FormData(form[0]);
-                console.log(formData)
-                $.ajax({
-                    url: '/contactUs',
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        $("#contactUsForm")[0].reset()
+        $(function () {
+            $("form[name='contactForm']").validate({
+                rules: {
+                    contactName: {
+                        required: true,
+                        minlength: 3
                     },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-                return false; // Will stop the submission of the form
-            },
-            onValidate: function ($form) {
-
-            },
-            onElementValidate: function (valid, $el, $form, errorMess) {
-                // console.log('Input ' + $el.attr('name') + ' is ' + (valid ? 'VALID' : 'NOT VALID'));
-            }
+                    contactEmail: {
+                        required: true,
+                        email: true
+                    },
+                    contactMessage: {
+                        required: true,
+                        minlength: 10
+                    }
+                },
+                messages: {
+                    contactName: {
+                        required: "Please provide your full name",
+                        minlength: "Your name must be at least 3 characters long"
+                    },
+                    contactEmail: "Please enter a valid email address",
+                    contactMessage: "Message must be at least 10 characters long"
+                },
+                submitHandler: function (form) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-bottom-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.info('Your Message Successfully sent to Administrator.')
+                    var formData = new FormData(form);
+                    console.log(formData)
+                    $.ajax({
+                        url: '/contactUs',
+                        type: 'POST',
+                        data: formData,
+                        success: function (data) {
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                    $("#contactUsForm")[0].reset()
+                }
+            });
         });
-        //subscribe form
-        $.validate({
-            form: '#subscribe-form',
-            onError: function (form) {
-
-            },
-            onSuccess: function (form) {
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                var formData = new FormData(form[0]);
-                console.log(formData)
-                $.ajax({
-                    url: '/subscribe',
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        toastr.info('Thank you.')
-                        $("#subscribe-form")[0].reset()
+        $(function () {
+            $("form[name='subscribeForm']").validate({
+                rules: {
+                    subscriberEmail: {
+                        required: true,
+                        email: true
                     },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-                return false; // Will stop the submission of the form
-            },
-            onValidate: function ($form) {
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
+                },
+                invalidHandler: function (form, validator) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-bottom-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.error("not a valid email !", "Email")
+
+                },
+                submitHandler: function (form) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-bottom-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    var formData = new FormData(form[0]);
+                    console.log(formData)
+                    $.ajax({
+                        url: '/subscribe',
+                        type: 'POST',
+                        data: formData,
+                        success: function (data) {
+                            toastr.info('Thank you.')
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                    $("subscription-form")[0].reset()
                 }
-                toastr.error("not a valid email !", "Email")
-            },
-            onElementValidate: function (valid, $el, $form, errorMess) {
-                // console.log('Input ' + $el.attr('name') + ' is ' + (valid ? 'VALID' : 'NOT VALID'));
-            }
+            });
         });
     </script>
 </body>
