@@ -1,3 +1,7 @@
+[![Build Status](https://badgen.net/badge/Product-Status/Live/blue)](https://github.com/XinFinOrg/MyContract/blob/master/README.md)
+[![Stage](https://badgen.net/badge/Product-Stage/Beta/green)](https://github.com/XinFinOrg/MyContract)
+[![License](https://badgen.net/badge/License/ApacheV2.0/grey)](https://github.com/XinFinOrg/MyContract/blob/master/LICENSE)
+
 # Introduction Summary
 
 <p align="center">
