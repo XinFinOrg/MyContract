@@ -1,8 +1,39 @@
 # Introduction Summary
 
-![image](https://user-images.githubusercontent.com/35517875/51681029-6b63ae00-2009-11e9-9188-fee8e6a06f44.png)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/35517875/51681029-6b63ae00-2009-11e9-9188-fee8e6a06f44.png" alt="51681029-6b63ae00-2009-11e9-9188-fee8e6a06f44.png">
+</p>
 
 MyContract.co a WebApp that allows users to create smart contracts for issuing tokens to crowdsale or asset tokenization without a need for any programming expertise, just in a few clicks. MyContract.co initially allows contract creation on Ethereum public blockchain with any of the ERC standards for issuing or tokenizing an array of asset classes: fungible cryptocurrencies and tradable assets (ERC 20 and ERC 223), non-fungible assets (ERC 721), or fixed income financial instruments (ERC 888).
+
+# Table of Content
+- [Current Problem Statement](#current-problem-statement)
+- [Light Paper](#light-paper)
+    - [About Smart Contracts & Token Systems]
+    - [About ERC20 & Features]
+    - [About ERC223 & Features]
+    - [About Tokenization Platform & Features]
+- [How is Mycontract Useful](#how-is-mycontract-useful)
+    - [Advantages of Tokenization using Mycontract.co]
+    - [Industrial Use Cases]
+- [What you can build on Mycontract.co](#what-you-can-build-on-mycontractco)
+    -  [Smart Contracts](#what-you-can-build-on-mycontractco/smart-contracts)
+    -  [Crowdsale Contract]
+    -  [Automatic Contract Deployment]
+    -  [Contract Interaction]
+    -  [Tokenization Platform]
+    -  [Currency Support]
+- [How it works](#how-it-works)
+- [FAQs](#faqs)
+- [Technical Overview](#technical-overview)
+- [Whitelable Smart Contract and Tokenization](#how-can-you-do-whitelable-setup-for-reselling-smart-contracts--tokenization-platform-without-coding-knowledge)
+- [Want a Customised Solution on Mycontract.co?](#want-a-customised-solution-on-mycontractco)
+- [How to Contribute?](#how-to-contribute)
+- [Where can you get more help?](#where-can-you-get-more-help)
+- [Terms & Condition for Commercial usage](#terms--condition-for-commercial-usage)
+    
+
+
 
 # Current Problem Statement
 
