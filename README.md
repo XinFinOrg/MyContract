@@ -13,20 +13,20 @@ MyContract.co a WebApp that allows users to create smart contracts for issuing t
 # Table of Content
 - [Current Problem Statement](#current-problem-statement)
 - [Light Paper](#light-paper)
-    - [About Smart Contracts & Token Systems]
-    - [About ERC20 & Features]
-    - [About ERC223 & Features]
-    - [About Tokenization Platform & Features]
+    - About Smart Contracts & Token Systems
+    - About ERC20 & Features
+    - About ERC223 & Features
+    - About Tokenization Platform & Features
 - [How is Mycontract Useful](#how-is-mycontract-useful)
-    - [Advantages of Tokenization using Mycontract.co]
-    - [Industrial Use Cases]
+    - Advantages of Tokenization using Mycontract.co
+    - Industrial Use Cases
 - [What you can build on Mycontract.co](#what-you-can-build-on-mycontractco)
-    -  [Smart Contracts](#what-you-can-build-on-mycontractco/smart-contracts)
-    -  [Crowdsale Contract]
-    -  [Automatic Contract Deployment]
-    -  [Contract Interaction]
-    -  [Tokenization Platform]
-    -  [Currency Support]
+    -  Smart Contracts
+    -  Crowdsale Contract
+    -  Automatic Contract Deployment
+    -  Contract Interaction
+    -  Tokenization Platform
+    -  Currency Support
 - [How it works](#how-it-works)
 - [FAQs](#faqs)
 - [Technical Overview](#technical-overview)
