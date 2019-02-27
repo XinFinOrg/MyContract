@@ -164,6 +164,7 @@ module.exports = {
         privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
             console.log(r, "here 1")
+            nodemailerservice.sendContractEmail(req.user.email, projectData.tokenContractCode, req.query.coinName, "Token Contract");
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
@@ -212,6 +213,7 @@ module.exports = {
       try {
         etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
+            nodemailerservice.sendContractEmail(req.user.email, projectData.tokenContractCode, req.query.coinName, "Token Contract");
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
@@ -257,6 +259,7 @@ module.exports = {
     else {
       try {
         console.log(accountData.address, "heello")
+        nodemailerservice.sendContractEmail(req.user.email, projectData.tokenContractCode, req.query.coinName, "Token Contract");
         byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
         projectData.tokenByteCode = byteCode.bytecode;
         projectData.tokenABICode = byteCode.interface;
@@ -299,6 +302,9 @@ module.exports = {
     }
     res.redirect('/')
   },
+  mainDeployment: (req, res) => {
+    res.render('mainDeploymentPage')
+  },
 };
 
 function getProjectArray(email) {
@@ -310,7 +316,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+        attributes: ['coinName','coinSymbol', 'ETHRate', 'tokenContractAddress', 'tokenContractCode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractAddress', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {

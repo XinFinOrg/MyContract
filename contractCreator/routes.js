@@ -1,7 +1,7 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
 var client = db.client;
-
+var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = function (app) {
 
@@ -9,9 +9,10 @@ module.exports = function (app) {
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
   app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
+  app.get('/preDeployment', isLoggedIn, hasDeploymentPackage, impl.predeploymentPage);
   app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
-  app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
-  app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
+  app.post('/createERC20Contract', isLoggedIn, coinNameExist, impl.createERC20Contract);
+  app.post('/createERC223Contract', isLoggedIn, coinNameExist, impl.createERC223Contract);
 
 }
 
@@ -65,4 +66,23 @@ function hasPackage1(req, res, next) {
       res.redirect('/generatedContract');
     }
   });
+}
+
+function hasDeploymentPackage(req, res, next) {
+  client.find({
+    where: {
+      'email': req.user.email
+    }, include: [{
+      model: ProjectConfiguration,
+      where: { coinSymbol: req.query.coinSymbol },
+      required: false // as you want it in OR relation relation
+    }]
+  }).then(result => {
+    console.log(result.ProjectConfigurations)
+    if (result.projectConfigurations[0].isAllowedForDeployment) {
+      next();
+    } else {
+      res.redirect('/generatedContract?coinSymbol=' + req.query.coinSymbol)
+    }
+  })
 }

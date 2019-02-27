@@ -138,9 +138,8 @@ module.exports = function (passport) {
       client.find({
         where: {
           'email': email
-        }
+        },
       }).then(client => {
-        // console.log(client);
 
         // if no user is found, return the message
         if (!client)
@@ -182,7 +181,7 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status = false;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
@@ -211,7 +210,7 @@ module.exports = function (passport) {
         client.find({
           where: {
             'email': profile.emails[0].value
-          }
+          },
         }).then(async result => {
           if (result) {
             result.google_id = profile.id;
@@ -226,7 +225,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -255,7 +254,7 @@ module.exports = function (passport) {
         client.find({
           where: {
             'email': profile.emails[0].value
-          }
+          },
         }).then(async result => {
           if (result) {
             result.github_id = profile.id;
@@ -270,7 +269,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 1;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);

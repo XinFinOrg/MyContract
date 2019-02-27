@@ -13,7 +13,8 @@ module.exports = function (app, express) {
   app.get('/getBytecode', isLoggedIn, impl.getBytecode);
   app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
   app.get('/generatedCrowdsaleContract', isLoggedIn, impl.generatedContract);
-  app.get('/crowdsaleDeployer',isLoggedIn,impl.crowdsaleDeployer);
+  app.get('/crowdsaleDeployer', isLoggedIn, impl.crowdsaleDeployer);
+  app.get('/deployment', isLoggedIn, impl.mainDeployment)
 
   // app.get('/test',impl.test);
 

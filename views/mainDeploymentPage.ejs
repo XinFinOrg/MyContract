@@ -1,0 +1,53 @@
+<% layout('./layouts/sidebar') -%>
+<link rel="stylesheet" type="text/css" href="assets/libs/prism/prism.css">
+
+<body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Generated Contract</h4>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="well">
+                                <div class="col-md-12">
+                                    <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract</h4>
+                                    <pre class="language-markup scrollable">
+                                        <code class="blur"><%= contract %>
+                                        </code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Contract Byte</h4>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <div class="well">
+                                <div class="col-md-12">
+                                    <h4 class="text-black-50 mt-4 mb-4">Solidity Smart Contract</h4>
+                                    <pre class="language-markup scrollable">
+                                        <code class="blur"><%= contractByte %>
+                                        </code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>sessionStorage.clear();</script>
+</body>
+
+</html>

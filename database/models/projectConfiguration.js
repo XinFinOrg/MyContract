@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    
+
     coinName: {
       type: DataTypes.STRING,
       primaryKey: true,
@@ -52,12 +52,16 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 1
     },
     bonusStatus: {
-      type:DataTypes.BOOLEAN,
-      defaultValue:false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     isAllowedForICO: {
-      type:DataTypes.BOOLEAN,
-      defaultValue:false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    isAllowedForDeployment: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     startDate: {
       type: DataTypes.DATE,

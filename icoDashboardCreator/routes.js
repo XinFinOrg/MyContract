@@ -12,17 +12,17 @@ module.exports = function (app, express) {
   app.get('/icoDashboard/icoDashboardSetup/project/:projectName', isLoggedIn, hasVerified, hasPackage3, impl.icoDashboardSetup);
   app.get('/icoDashboard/siteConfiguration/project/:projectName', isLoggedIn, hasVerified, impl.siteConfiguration);
   app.get('/icoDashboard/siteConfiguration/project/:projectName/getSiteConfiguration', hasVerified, isLoggedIn, impl.getSiteConfiguration);
-  app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration',hasVerified, isLoggedIn, impl.updateSiteConfiguration)
-  app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer',isLoggedIn,impl.tokenTrasfer)
-  app.post('/icoDashboard/project/:projectName/updateColor',impl.updateColor)
+  app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration', hasVerified, isLoggedIn, impl.updateSiteConfiguration)
+  app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer', isLoggedIn, impl.tokenTrasfer)
+  app.post('/icoDashboard/project/:projectName/updateColor', impl.updateColor)
 
-  app.get('/icoDashboard/transaction/project/:projectName',isLoggedIn, impl.getTransaction)
-  app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq',isLoggedIn,impl.initiateTransferReq)
+  app.get('/icoDashboard/transaction/project/:projectName', isLoggedIn, impl.getTransaction)
+  app.post('/icoDashboard/transaction/project/:projectName/initiateTransferReq', isLoggedIn, impl.initiateTransferReq)
 
-  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab',isLoggedIn, impl.getKYCPage);
-  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/getICOdata',isLoggedIn, impl.getICOdata);
-  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData',isLoggedIn, impl.getUserData);
-  app.post('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', isLoggedIn,impl.updateUserData);
+  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab', isLoggedIn, impl.getKYCPage);
+  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/getICOdata', isLoggedIn, impl.getICOdata);
+  app.get('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/getUserData', isLoggedIn, impl.getUserData);
+  app.post('/icoDashboard/icoDashboardSetup/project/:projectName/kyctab/:uniqueId/updateUserData', isLoggedIn, impl.updateUserData);
 
   app.get('/:projectName/userSignup', impl.getUserSignup);
   app.get('/:projectName/userLogin', impl.getUserLogin);
@@ -52,16 +52,17 @@ function hasPackage3(req, res, next) {
       'coinName': req.params.projectName
     },
     attributes: {
-      exclude: ['coinName', 'ETHRate', 'tokenContractCode','tokenABICode','crowdsaleABICode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
+      exclude: ['coinName', 'ETHRate', 'tokenContractCode', 'tokenABICode', 'crowdsaleABICode', 'tokenByteCode', 'tokenContractHash', 'crowdsaleContractCode', 'crowdsaleByteCode', 'crowdsaleContractHash']
     }
   }).then(result => {
-    console.log(result.dataValues.isAllowedForICO,"result.dataValues.isAllowedForICO")
+    console.log(result.dataValues.isAllowedForICO, "result.dataValues.isAllowedForICO")
     if (result.dataValues.isAllowedForICO == true) {
       console.log("here")
       return next();
     } else {
-      req.flash('package_flash', 'You need to buy this package ');
-      res.redirect('/dashboard');
+      // req.flash('package_flash', 'You need to buy this package ');
+      // res.redirect('/dashboard');
+      res.redirect('/paypal/direct/package2?coinSymbol=' + result.coinSymbol)
     }
   })
 }

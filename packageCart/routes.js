@@ -10,8 +10,8 @@ module.exports = function (app) {
   app.get('/paypal', impl.getPaypalPayment)
   app.post('/paypal', impl.postPaypalPayment)
   app.get('/paypal/process', impl.paymentProcess)
-  app.get('/paypal/direct',isLoggedIn, impl.getPaypalDirect)
-  app.get('/paypal/direct/process',isLoggedIn, impl.processPaypalDirect)
+  app.get('/paypal/direct/:package',isLoggedIn, impl.getPaypalDirect)
+  app.get('/paypal/package/process',isLoggedIn, impl.processPaypalDirect)
 }
 
 // route middleware to make sure a user is logged in

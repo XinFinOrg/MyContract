@@ -158,14 +158,14 @@
             <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
                 href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy
-                  Pending Contracts </span></a>
+                  Pending Contracts <%- ProjectConfiguration.coinSymbol %> </span></a>
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                 <% if(ProjectConfiguration.networkType != "mainnet") {%>
                 <!-- <li class="sidebar-item"><a href="/generatedContract"
                         class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
-                <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
+                <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinSymbol %>",false)'
                   class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
                       class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
                 </li>
@@ -334,10 +334,11 @@
         checkBalances();
       }, 30000);
       function deploy(coinName, istoken) {
-        console.log(coinName, "here")
-        window.sessionStorage.setItem("deploymentName", coinName);
-        if (!istoken) { window.location.href = "/deployer"; }
-        else { window.location.href = "/deployer?coinName=" + coinName; }
+        // console.log(coinName, "here")
+        // window.sessionStorage.setItem("deploymentName", coinName);
+        // if (!istoken) { window.location.href = "/deployer"; }
+        // else { window.location.href = "/deployer?coinName=" + coinName; }
+        window.location.href = "/preDeployment?coinSymbol="+coinName
       }
       function autoDeploy(coinName, istoken, isMainnet) {
         console.log(istoken, "is here", isMainnet)

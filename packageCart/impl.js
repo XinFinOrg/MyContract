@@ -239,52 +239,100 @@ module.exports = {
     });
   },
   getPaypalDirect: (req, res) => {
-    var payReq = JSON.stringify({
-      intent: 'order',
-      payer: {
-        payment_method: 'paypal'
-      },
-      redirect_urls: {
-        return_url: 'http://mycontract.co/paypal/direct/process',
-        cancel_url: 'https://mycontract.co/error'
-      },
-      transactions: [{
-        amount: {
-          total: 15,
-          currency: 'USD',
-          "details": {
-            "subtotal": 15,
-            "tax": "0",
-            "shipping": "0",
-            "handling_fee": "0",
-            "shipping_discount": "0",
-            "insurance": "0"
-          }
+    let payReq
+    if (req.params.package == "package1") {
+      payReq = JSON.stringify({
+        intent: 'order',
+        payer: {
+          payment_method: 'paypal'
         },
-        description: "MyContract package 1",
-        invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
-        payment_options: {
-          allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+        redirect_urls: {
+          return_url: 'http://localhost/paypal/package/process',
+          cancel_url: 'https://mycontract.co/paypal?errors=true'
         },
-        "custom": req.user.email,
-        "item_list": {
-          "items": [
-            {
-              "name": "Mycontract Package 1",
-              "description": req.user.email,
-              "quantity": "1",
-              "price": "15",
+        transactions: [{
+          amount: {
+            total: 1,
+            currency: 'USD',
+            "details": {
+              "subtotal": 1,
               "tax": "0",
-              "sku": "0",
-              "currency": "USD"
-            },
-          ]
-        }
-      }]
-    });
-
+              "shipping": "0",
+              "handling_fee": "0",
+              "shipping_discount": "0",
+              "insurance": "0"
+            }
+          },
+          description: 'package1',
+          invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
+          payment_options: {
+            allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+          },
+          custom: req.query.coinSymbol,
+          "item_list": {
+            "items": [
+              {
+                "name": "Mycontract Package 1",
+                "description": req.user.email,
+                "quantity": "1",
+                "price": "1",
+                "tax": "0",
+                "sku": "0",
+                "currency": "USD"
+              },
+            ]
+          }
+        }]
+      });
+    }
+    else {
+      payReq = JSON.stringify({
+        intent: 'order',
+        payer: {
+          payment_method: 'paypal'
+        },
+        redirect_urls: {
+          return_url: 'http://localhost/paypal/package/process',
+          cancel_url: 'https://mycontract.co/paypal?errors=true'
+        },
+        transactions: [{
+          amount: {
+            total: 2,
+            currency: 'USD',
+            "details": {
+              "subtotal": 2,
+              "tax": "0",
+              "shipping": "0",
+              "handling_fee": "0",
+              "shipping_discount": "0",
+              "insurance": "0"
+            }
+          },
+          description: 'package2',
+          invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
+          payment_options: {
+            allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+          },
+          custom: req.query.coinSymbol,
+          "item_list": {
+            "items": [
+              {
+                "name": "Mycontract Package 1",
+                "description": req.user.email,
+                "quantity": "1",
+                "price": "2",
+                "tax": "0",
+                "sku": "0",
+                "currency": "USD"
+              },
+            ]
+          }
+        }]
+      });
+    }
     paypal.payment.create(payReq, function (error, payment) {
       var links = {};
+
       if (error) {
         console.error(JSON.stringify(error));
       } else {
@@ -307,7 +355,6 @@ module.exports = {
         }
       }
     });
-
   },
   processPaypalDirect: (req, res) => {
     var paymentId = req.query.paymentId;
@@ -331,15 +378,23 @@ module.exports = {
               total: payment.transactions[0].amount.total
             }
           };
-
+          // res.send({ payment: payment })
           //make token transfer
-          client.find({
+          ProjectConfiguration.find({
             where: {
-              email: payment.transactions[0].custom 
+              coinSymbol: payment.transactions[0].custom
             }
-          }).then(async client => {
-            client.package1 += 1;
-            await client.save().then((result, error) => {
+          }).then(async project => {
+            if (payment.transactions[0].description == 'package1') {
+              project.isAllowedForDeployment = true;
+            }
+            else if (payment.transactions[0].description == 'package2') {
+              project.isAllowedForICO = true;
+            }
+            else {
+              return null;
+            }
+            await project.save().then((result, error) => {
               if (error) {
                 paypal.order.capture(order, capture_details, function (error, capture) {
                   if (error) {
@@ -361,7 +416,14 @@ module.exports = {
                   console.error(error);
                 } else {
                   console.log("ORDER CAPTURE SUCCESS");
-                  res.redirect('/dashboard')
+                  if (payment.transactions[0].description == 'package1') {
+                    // res.redirect('/preDeployment?coinSymbol=' + payment.transactions[0].custom)
+                    res.redirect('/')
+                  }
+                  else {
+                    // res.redirect('/icoDashboard/icoDashboardSetup/project/' + payment.transactions[0].custom)
+                    res.redirect('/')
+                  }
                 }
               });
             });

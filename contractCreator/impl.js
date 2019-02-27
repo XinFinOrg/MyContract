@@ -14,6 +14,8 @@ let Promise = require('bluebird');
 var Address = db.userCurrencyAddress;
 const Web3 = require('web3');
 const web3 = new Web3();
+const solc = require("solc");
+
 
 module.exports = {
 
@@ -125,35 +127,52 @@ module.exports = {
     }, async (err, data) => {
       if (err)
         console.log(err);
-      req.session.contract = data;
-      req.session.coinName = req.body.token_name;
-      req.session.coinSymbol = req.body.token_symbol;
-      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
-      var clientdata = await client.find({
-        where: {
-          'email': req.user.email
-        }
-      });
-      var objdata = new Object();
-      objdata.contractCode = result;
-      objdata.coinName = req.body.token_name;
-      objdata.tokenSupply = req.body.token_supply;
-      objdata.coinSymbol = req.body.token_symbol;
-      objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate = req.body.eth_tokens;
-      objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      objdata.minimumContribution = req.body.minimum_contribution;
-      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
-        var projectData = await ProjectConfiguration.create(objdata)
-        await clientdata.addProjectConfiguration(projectData);
-        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-        clientdata.package1 -= 1;
-        clientdata.save();
+
+      //crowdsale contract creation
+      var IERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/IERC20.sol');
+      var SafeERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/SafeERC20.sol');
+      var SafeMath = await fileReader.readEjsFile(__dirname + '/ERC20contracts/SafeMath.sol');
+      ejs.renderFile(__dirname + '/ERC20contracts/Crowdsale.sol', {
+        "SafeERC20": SafeERC20,
+        "SafeMath": SafeMath,
+        "IERC20": IERC20,
+      }, async (err, data1) => {
+        if (err)
+          console.log(err);
+        // req.session.contract = ERC20;
+        // req.session.coinName = req.body.token_name;
+        // req.session.coinSymbol = req.body.token_symbol;
+        // nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
+        let compiledTokenContract = await solc.compile(data, 1).contracts[':Coin']
+        var clientdata = await client.find({
+          where: {
+            'email': req.user.email
+          }
+        });
+        var objdata = new Object();
+        objdata.contractCode = result;
+        objdata.coinName = req.body.token_name;
+        objdata.tokenSupply = req.body.token_supply;
+        objdata.coinSymbol = req.body.token_symbol;
+        objdata.hardCap = req.body.token_sale;
+        objdata.ETHRate = req.body.eth_tokens;
+        objdata.tokenContractCode = data;
+        objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
+        objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
+        objdata.minimumContribution = req.body.minimum_contribution;
+        objdata.crowdsaleContractCode = data1;
+        objdata.tokenByteCode = compiledTokenContract.bytecode;
+        objdata.tokenABICode = compiledTokenContract.interface;
+        Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+          var projectData = await ProjectConfiguration.create(objdata)
+          await clientdata.addProjectConfiguration(projectData);
+          await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+          await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+          // clientdata.package1 -= 1;
+          await clientdata.save();
+        })
+        res.redirect('/generatedContract?coinSymbol=' + req.body.token_symbol);
       })
-      res.redirect('/generatedContract');
     });
   },
   createERC223Contract: async (req, res) => {
@@ -255,8 +274,8 @@ module.exports = {
         await clientdata.addProjectConfiguration(projectData);
         await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
         await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
-        clientdata.package1 -= 1;
-        clientdata.save();
+        // await clientdata.package1 -= 1;
+        await clientdata.save();
       });
       res.redirect('/generatedContract');
     });
@@ -317,17 +336,36 @@ module.exports = {
   getGeneratedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    console.log(req.session.coinName, req.session.coinSymbol);
-    res.render('deployedContract', {
-      message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
+    res.render('deployedContract2', {
       user: req.user,
       address: address,
       ProjectConfiguration: projectArray,
-      contract: req.session.contract,
-      coinName: req.session.coinName,
-      coinSymbol: req.session.coinSymbol
-    });
+      coinSymbol: req.query.coinSymbol
+    })
   },
+  predeploymentPage: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    client.find({
+      where: {
+        'email': req.user.email
+      }, include: [{
+        model: ProjectConfiguration,
+        where: { coinSymbol: req.query.coinSymbol },
+        required: false // as you want it in OR relation relation
+      }]
+    }).then(result => {
+      res.render('deployedContract', {
+        message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
+        user: req.user,
+        address: address,
+        ProjectConfiguration: projectArray,
+        contract: result.projectConfigurations[0].tokenContractCode,
+        coinName: result.projectConfigurations[0].coinName,
+        coinSymbol: result.projectConfigurations[0].coinSymbol
+      });
+    })
+  }
 }
 
 function generateEthAddress() {
@@ -368,7 +406,7 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'crowdsaleContractCode']
+        attributes: ['coinName', 'coinSymbol', 'tokenContractAddress', 'tokenContractHash', 'crowdsaleContractCode']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {
