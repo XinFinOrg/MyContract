@@ -193,6 +193,7 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                       await projectData.save();
+                       res.redirect('/')
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -240,6 +241,7 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                       await projectData.save();
+                       res.redirect('/')
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -286,6 +288,7 @@ module.exports = {
                   projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                   projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                   await projectData.save();
+                   res.redirect('/')
                 })
                 .catch(async e => {
                   console.error('error in 2st deployment', e)
@@ -300,7 +303,7 @@ module.exports = {
         console.error('error in deployment ', e);
       }
     }
-    res.redirect('/')
+    // res.redirect('/')
   },
   mainDeployment: (req, res) => {
     res.render('mainDeploymentPage')

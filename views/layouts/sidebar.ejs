@@ -341,6 +341,7 @@
         window.location.href = "/preDeployment?coinSymbol="+coinName
       }
       function autoDeploy(coinName, istoken, isMainnet) {
+        // $("#wait").css("display", "block");
         console.log(istoken, "is here", isMainnet)
         window.sessionStorage.setItem("deploymentName", coinName);
         if (!istoken) { window.location.href = "/deployer"; }

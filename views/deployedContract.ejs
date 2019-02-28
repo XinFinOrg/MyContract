@@ -20,7 +20,7 @@
             <h4>This contract will be used to handle your crowdsale! Please do not close this tab.</h4>
             <% } else { %>
             <h4>
-            <%- message1 %>
+              <%- message1 %>
             </h4>
             <% } %>
             <div class="col-sm-12 text-center">
@@ -86,6 +86,11 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                               aria-hidden="true">&times;</span></button>
+                          <div id=""
+                            style="display:none;width:69px;height:89px;;position:absolute;top:50%;left:50%;padding:2px;">
+                            <img
+                              src='data:image/gif;base64,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'
+                              width="64" height="64" /><br>Loading..</div>
                         </div>
                         <div class="modal-body">
                           <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Choose
@@ -168,11 +173,13 @@ contract ERC20 {
 </code>
                   <h5 class="text-dark text-center blur-overlay"><span>Please buy package to unlock contract!</br>
                       <button type="button" class="btn btn-rounded btn-info mt-4"
-                        onclick="location.href='/buyPackage';"><i class="fa fa-dollar-sign"></i> Buy Package</button><br>
-                        <span>If you have Paypal account then buy using paypal</span>
-                        <button type="button" class="btn btn-rounded btn-info mt-4" onclick="location.href='/paypal/direct';">
-                          <i class="fa fa-dollar-sign">Paypal</i>
-                        </button>
+                        onclick="location.href='/buyPackage';"><i class="fa fa-dollar-sign"></i> Buy
+                        Package</button><br>
+                      <span>If you have Paypal account then buy using paypal</span>
+                      <button type="button" class="btn btn-rounded btn-info mt-4"
+                        onclick="location.href='/paypal/direct';">
+                        <i class="fa fa-dollar-sign">Paypal</i>
+                      </button>
                   </h5>
                   <code class="blur">
 /**

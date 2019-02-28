@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "soL@37Ar",
-    "database": "testDB",
+    "database": "MycontractDB",
     "host": "78.129.208.54",
     "logging": false,
     "freezeTableName": true,
