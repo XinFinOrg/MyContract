@@ -279,7 +279,7 @@ All files structures as per the standard the code Node.js Express framework.
 
 # Want a Customised Solution on Mycontract.co?
 
-**API Link : http://api.mycontract.co:3001/#introduction  
+**API Link : http://api.mycontract.co/#introduction  
 
 # How to Contribute?
     
