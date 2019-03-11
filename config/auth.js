@@ -28,8 +28,8 @@ module.exports = {
   },
   'paypal': {
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AR8oYc8pYp90H_9qN6JcjvSgS5nbCq_hFvc5ue4Twzdh-ZefahoeLmVKEem2OxbLNlK2nM-Zv74F3iPI',
-    'client_secret': 'ELBjQfb3aGNze4S-wbaHHndGmv4DQzqfOoeu1NAphrOwdwxHSjaHLR_zP-u4hBLGJPAyCXdTPAFD8BKk'
+    'client_id': 'AS6VqkeWb21auRN3SR84tPGRkyf-xQCXZEZOgoxelpV6yoYFl5Dwfd9dlM5Z7o9-G8NRaPMgT9_x4-AG',
+    'client_secret': 'ED1HZd7sHgPRrDk7OjpBEsF1-cw2aWB9qiWVgOot6FL5YtCw83oAsfEooPEcwcm2S2CP3Xd5yg1Z7lo0'
   }
 
 };
