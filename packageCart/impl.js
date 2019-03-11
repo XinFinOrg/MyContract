@@ -240,6 +240,7 @@ module.exports = {
       }
     });
   },
+  
   getPaypalDirect: (req, res) => {
     var payReq = JSON.stringify({
       intent: 'order',
@@ -247,7 +248,7 @@ module.exports = {
         payment_method: 'paypal'
       },
       redirect_urls: {
-        return_url: 'http://mycontract.co/paypal/direct/process',
+        return_url: 'https://mycontract.co/paypal/direct/process',
         cancel_url: 'https://mycontract.co/error'
       },
       transactions: [{
