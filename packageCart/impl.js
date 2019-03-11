@@ -289,7 +289,7 @@ module.exports = {
     paypal.payment.create(payReq, function (error, payment) {
       var links = {};
       if (error) {
-        console.log("Error in Paypal payment request creation")
+        console.log("Error in Paypal payment request while creation")
         console.error(JSON.stringify(error));
       } else {
         // Capture HATEOAS links
