@@ -9,11 +9,7 @@ var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
 var paypal = require('paypal-rest-sdk');
 var axios = require('axios');
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AS6VqkeWb21auRN3SR84tPGRkyf-xQCXZEZOgoxelpV6yoYFl5Dwfd9dlM5Z7o9-G8NRaPMgT9_x4-AG',
-  'client_secret': 'ED1HZd7sHgPRrDk7OjpBEsF1-cw2aWB9qiWVgOot6FL5YtCw83oAsfEooPEcwcm2S2CP3Xd5yg1Z7lo0'
-});
+paypal.configure(auth.paypal);
 
 module.exports = {
   buyPackage: async function (req, res) {
