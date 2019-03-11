@@ -16,7 +16,9 @@ module.exports = {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     var otpExist = false;
-    if (req.user.paymentOTP) { otpExist = true }
+    if (req.user.paymentOTP) {
+       otpExist = true 
+      }
     Promise.all([paymentListener.checkBalance(address)]).then(([balance]) => {
       res.render('buyPackage', {
         user: req.user,
@@ -282,10 +284,12 @@ module.exports = {
         }
       }]
     });
+    console.log(payReq)
 
     paypal.payment.create(payReq, function (error, payment) {
       var links = {};
       if (error) {
+        console.log()
         console.error(JSON.stringify(error));
       } else {
         // Capture HATEOAS links
