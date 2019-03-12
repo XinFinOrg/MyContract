@@ -145,6 +145,7 @@ module.exports = {
       objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
       objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
       objdata.minimumContribution = req.body.minimum_contribution;
+      objdata.isAllowedForICOboolean = true;
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
         await clientdata.addProjectConfiguration(projectData);

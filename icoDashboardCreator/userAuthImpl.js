@@ -185,7 +185,7 @@ module.exports = {
         currencyType: 'masterEthereum'
       }
     });
-    eth_address = eth_addresses[0].address;
+    eth_address = eth_addresses[0].address; 
 
     var btc_addresses = await req.user.getUserCurrencyAddresses({
       where: {

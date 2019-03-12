@@ -119,7 +119,7 @@ module.exports = {
         'kycDoc1': await ImageDataURI.encodeFromFile(req.files[0].path),
         'kycDoc2': await ImageDataURI.encodeFromFile(req.files[1].path),
         'kycDoc3': await ImageDataURI.encodeFromFile(req.files[2].path),
-        "kyc_verified": "pending"
+        "kyc_verified": "active"
       }, {
           where: {
             'email': req.user.email
@@ -128,7 +128,7 @@ module.exports = {
           res.redirect('/KYCpage/pending');
         });
     } else {
-      res.send("Error occured while uploading! Please check your images!")
+      res.send("Error occured while uploading! Please check your images! it should be jpeg images")
     }
   },
 
