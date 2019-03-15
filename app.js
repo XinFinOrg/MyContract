@@ -94,6 +94,7 @@ app.use('/v1/:projectName/user', require('./icoDashboardCreator/userAuthRoutes')
 require('./routes')(app);
 require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);
+require('./createdContracts/routes')(app,express);
 require('./contractDeployer/routes')(app, express);
 require('./packageCart/routes')(app);
 require('./icoDashboardCreator/routes')(app, express);
