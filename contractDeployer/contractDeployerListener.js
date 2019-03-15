@@ -19,7 +19,7 @@ module.exports =
     //this method is used to deploy contract to the preferend network separately
     createAutomaticDeployer: async function(req,projectData,accountData)
     {
-        console.log('inside automatic deployerlistener');
+        console.log('inside automatic deployerlistener',req.body);
         byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
         projectData.tokenByteCode = byteCode.bytecode;
         projectData.tokenABICode = byteCode.interface;
