@@ -24,7 +24,7 @@ module.exports =
         projectData.tokenByteCode = byteCode.bytecode;
         projectData.tokenABICode = byteCode.interface;
         //for ropsten network 
-        if(req.body.network == 'tesnet')
+        if(req.body.network == 'testnet')
         {
             
             etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
