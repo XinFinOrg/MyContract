@@ -67,7 +67,8 @@ module.exports = {
         try {
           privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {
-              // console.log(r, "here 1")
+              res.send({"status":"working"})
+              console.log("Step 2 deployment starts here")
               byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
               projectData.tokenByteCode = byteCode.bytecode;
               projectData.tokenABICode = byteCode.interface;
