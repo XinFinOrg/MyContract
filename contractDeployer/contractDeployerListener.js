@@ -17,7 +17,7 @@ var web3 = new Web3(provider);
 module.exports =
 {
     //this method is used to deploy contract to the preferend network separately
-    createAutomaticDeployer: function(req,projectData,accountData)
+    createAutomaticDeployer: async function(req,projectData,accountData)
     {
         console.log('inside automatic deployerlistener');
         byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
@@ -170,8 +170,8 @@ module.exports =
                     await projectData.save();
                 }
                 // res.status(400).send({ status: false, message: "Network error occured! Please try again" })
+            }
             );
-        }
         console.log("listener function ends here");
         return;
     }
