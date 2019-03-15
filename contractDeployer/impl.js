@@ -92,7 +92,7 @@ module.exports = {
                     projectData.crowdsaleContractCode = data;
                     privateICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                       .then(async crowdsaleReceipt => {
-                        // console.log(crowdsaleReceipt, "here 3")
+                        console.log(crowdsaleReceipt, "here 3")
                         projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                         projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                         await projectData.save();
@@ -126,6 +126,7 @@ module.exports = {
               projectData.tokenABICode = byteCode.interface;
               etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
                 .then(async tokenReceipt => {
+                  console.log("Here:Ropsten Send Token reciept:",tokenReceipt)
                   projectData.tokenContractAddress = tokenReceipt.contractAddress;
                   projectData.tokenContractHash = tokenReceipt.transactionHash;
                   var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
@@ -144,6 +145,7 @@ module.exports = {
                     projectData.crowdsaleContractCode = data;
                     etherRopstenICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                       .then(async crowdsaleReceipt => {
+                        console.log("Here:Ropsten Send Crowdsale reciept:",crowdsaleReceipt)
                         projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                         projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                         await projectData.save();
