@@ -63,7 +63,7 @@ module.exports =
                       })
                   })
                 })
-                .catch(e => 
+                .catch(async e => 
                     {
                         console.error('error in 2st deployment', e)
                         projectData.crowdsaleContractAddress = "Network error occured! Please try again";
@@ -113,7 +113,7 @@ module.exports =
                     })
                 })
               })
-              .catch(e => 
+              .catch(async e => 
                 {
                     projectData.crowdsaleContractAddress = "Network error occured! Please try again";
                     projectData.tokenContractAddress = "Network error occured!  Please try again";
@@ -163,14 +163,13 @@ module.exports =
                   })
               })
             })
-            .catch(e => 
+            .catch(async e => 
                 {
                     projectData.crowdsaleContractAddress = "Network error occured! Please try again";
                     projectData.tokenContractAddress = "Network error occured!  Please try again";
                     await projectData.save();
                 }
                 // res.status(400).send({ status: false, message: "Network error occured! Please try again" })
-            }
             );
         console.log("listener function ends here");
         return;
