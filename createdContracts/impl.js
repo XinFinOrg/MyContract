@@ -40,10 +40,10 @@ function getProjectArray(email) {
         },
         include: [{
           model: ProjectConfiguration,
-          attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+          attributes: ['coinName','coinSymbol', 'tokenSupply','ETHRateinteger','tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
         }],
       }).then(client => {
-        client.projectConfigurations.forEach(element => {
+        client.projectConfigurations.forEach(element => { 
           projectArray.push(element.dataValues);
         });
         // res.send({'projectArray': projectArray});
