@@ -1,3 +1,6 @@
+var db = require('../database/models/index');
+var client = db.client;
+var ProjectConfiguration = db.projectConfiguration;
 
 module.exports ={
     getContracts : async function(req,res){
