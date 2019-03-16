@@ -38,9 +38,12 @@ function getProjectArray(email) {
         where: {
           'email': email
         },
+        order:[
+            ['createdAt','DESC']
+        ],
         include: [{
           model: ProjectConfiguration,
-          attributes: ['coinName','coinSymbol', 'tokenSupply','ETHRate','tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+          attributes: ['coinName','coinSymbol', 'tokenSupply','ETHRate','tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash','createdAt']
         }],
       }).then(client => {
         client.projectConfigurations.forEach(element => { 
