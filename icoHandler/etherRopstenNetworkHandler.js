@@ -77,6 +77,7 @@ module.exports = {
             "to": projectData.tokenContractAddress,
             "data": data,
         }
+        console.log("encoded Abi",txData)
         return new Promise(async function (resolve, reject) {
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
                 console.log(gasLimit);
@@ -90,7 +91,10 @@ module.exports = {
                                 }
                             }
                         })
-                        .on('error', async function (error) { reject(error) })
+                        .on('error', async function (error) {
+                            console.log("Error while transferring token".error)
+                            reject(error) 
+                            })
                 })
             })
         })
