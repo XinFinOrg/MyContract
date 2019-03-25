@@ -259,9 +259,21 @@ module.exports = {
 
   //user login
   userLogin: function (req, res) {
-    res.render("userLogin.ejs", {
-      message: req.flash('loginMessage')
-    });
+    ProjectConfiguration.find({
+      where: {
+        coinName: req.params.projectName
+      }
+    }).then(project => {
+      if (project) {
+        res.render("userLogin.ejs", {
+          projectName: req.params.projectName,
+          message: req.flash('signupMessage')
+        });
+      }
+      else {
+        res.send("404 Not Found");
+      }
+    })
   },
   getUserSignup: function (req, res) {
     ProjectConfiguration.find({
@@ -297,6 +309,7 @@ module.exports = {
         if (err || !user) {
           const error = new Error('An Error occured')
           console.log();
+          req.flash('error','Something went wrong please try again later.')
           return res.json({
             'token': "failure",
             'message': info
@@ -312,6 +325,7 @@ module.exports = {
         res.cookie('token', token, {
           expire: 360000 + Date.now()
         });
+        req.flash('error','Something went wrong please try again later.')
         return res.json({
           'token': "success"
         });
@@ -328,10 +342,13 @@ module.exports = {
       console.log(user);
       try {
         if (err || !user) {
+          req.flash('error','Some error occurred during Signup,please try again after sometime.')
           return res.redirect('./userSignup');
         }
+        req.flash('success','Please check your email address and verified your email address to activate your account.')
         return res.redirect('./userLogin');
       } catch (error) {
+        req.flash('error','Something went wrong please try again later.')
         return next(error);
       }
     })(req, res, next);
@@ -347,6 +364,7 @@ module.exports = {
     }).then((user) => {
       user.emailVerified = true;
       user.save().then((user) => {
+        req.flash('success','Email verified successfully.')
         res.redirect('./' + user.projectConfigurationCoinName + '/userLogin');
       });
     });

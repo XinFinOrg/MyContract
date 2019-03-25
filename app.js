@@ -12,6 +12,9 @@ var engine = require('ejs-mate')
 var validator = require('express-validator');
 var winston = require('./config/winston');
 
+// express-toastr
+var toastr = require('express-toastr');
+
 
 const app = express();
 const session = require('express-session');
@@ -63,6 +66,16 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
 app.use(flash()); // use connect-flash for flash messages stored in session
+var sessionFlash = function(req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  next();
+
+}
+app.use(sessionFlash);
+
+app.use(toastr()); //use toastr notification
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -115,7 +128,7 @@ app.use(function (err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log("Sync done");
 });
 // require('./coinPayments/impl');

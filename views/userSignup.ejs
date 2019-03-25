@@ -337,6 +337,36 @@
   <!-- END SECTION SIGN UP -->
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <% include partials/icoScripts %>
+  <script src="landingPageAssets/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+     
+    <script>
+        toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }  
+   if("<%=success%>")
+   {
+    toastr.success("<%=success%>");
+   }
+   else if("<%=error%>")
+   {
+       toastr.error("<%=error%>");
+   }
+  </script> 
   <script type="text/javascript">
     $('body').addClass('login');
     $('#root-view').addClass('auth-layout');

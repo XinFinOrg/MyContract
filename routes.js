@@ -1,6 +1,6 @@
 module.exports = function (app) {
   app.get('/', isLoggedIn, function (req, res) {
-
+    req.flash('success', 'Welcome to MyContract');
     res.render('landingPage');
   });
   app.get('/privacyPolicy', function (req, res) {

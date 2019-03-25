@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "pm2" : "pm2 start ./bin/www"
+    "pm2": "pm2 start ./bin/www"
   },
   "dependencies": {
     "app-root-path": "^2.1.0",
@@ -31,6 +31,7 @@
     "events": "^3.0.0",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
+    "express-toastr": "^2.0.2",
     "express-validator": "^5.3.0",
     "file-type": "^10.1.0",
     "force": "0.0.3",

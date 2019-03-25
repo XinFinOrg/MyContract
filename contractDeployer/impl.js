@@ -224,8 +224,8 @@ module.exports = {
                 var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
                 ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
                   "SafeERC20": SafeERC20,
-                  "SafeMath": SafeMath,
                   "IERC20": IERC20,
+                  "SafeMath": SafeMath,
                 }, async (err, data) => {
                   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
                   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];

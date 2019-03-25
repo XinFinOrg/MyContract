@@ -77,10 +77,16 @@ function hasVerified(req, res, next) {
         { next(); }
         break;
       case "pending":
-        { res.redirect('/KYCpage/pending'); }
+        {
+          req.flash('info','Your KYC is in pending state.')
+           res.redirect('/KYCpage/pending');
+           }
         break;
       case "notInitiated":
-        { res.redirect('/KYCpage'); }
+        {
+          req.flash('error','Your have to first complete your KYC.') 
+          res.redirect('/KYCpage');
+         }
         break;
       default:
         { res.redirect('/'); }
