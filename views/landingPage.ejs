@@ -70,7 +70,7 @@
                                 target="_blank">Get Started</a></li>
                        
                                 <li class="nav-item"><a class="nav-link menu-link"
-                                    href=" https://docs.mycontract.co/Guide/reseller/">Storefront Reseller</a></li>
+                                    href=" https://docs.mycontract.co/Guide/reseller/">Storefront Reseller : Become a Reseller</a></li>
                     </ul>
                     <ul class="navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
                         <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link"
@@ -499,8 +499,34 @@
     <script src="landingPageAssets/js/script.js"></script>
     <script src="landingPageAssets/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+     
     <script>
-        $(function () {
+        toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }  
+   if("<%=success%>")
+   {
+    toastr.info("<%=success%>");
+   }
+   else
+   {
+       toastr.error("<%=error%>");
+   }
+         $(function () {
             $("form[name='contactForm']").validate({
                 rules: {
                     contactName: {
