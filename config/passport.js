@@ -239,7 +239,7 @@ module.exports = function (passport) {
 
     }));
 
-  //passpoort strategy for facebook login
+  // //passpoort strategy for facebook login
   passport.use(new FacebookStrategy({
     clientID : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
