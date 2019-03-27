@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 var configAuth = require('./auth');
 var fs = require('fs');
@@ -237,6 +238,47 @@ module.exports = function (passport) {
       });
 
     }));
+
+  //passpoort strategy for facebook login
+  passport.use(new FacebookStrategy({
+    clientID : configAuth.facebookAuth.clientID,
+    clientSecret : configAuth.facebookAuth.clientSecret,
+    callbackURL : configAuth.facebookAuth.callbackURL,
+  },
+     
+  // facebook will send back the token and profile
+  function (token,refreshToken,profile,done) {
+    // asynchronous
+    process.nextTick(function () {
+      // try to find the user based on their google id
+      client.find({
+        where: {
+          'email': profile.emails[0].value
+        }
+      }).then(async result => {
+        if (result) {
+          result.facebook.id = profile.id;
+          result.status = true;
+          await result.save();
+          return done(null, result.dataValues);
+        } else {
+          // if the user isnt in our database, create a new user
+          var newUser = new Object();
+          // set all of the relevant information
+          newUser.google_id = profile.id;
+          newUser.name = profile.displayName;
+          newUser.email = profile.emails[0].value; // pull the first email
+          newUser.status = true;
+          newUser.package1 = 1 ;
+          Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
+            var createdClient = await client.create(newUser);
+            createdClient.addUserCurrencyAddress(createdEthAddress);
+            return done(null, createdClient.dataValues);
+          })
+        }
+      });
+    });
+  }));  
 
   //passport strategy for github login
   passport.use(new GitHubStrategy({
