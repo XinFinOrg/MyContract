@@ -1,9 +1,16 @@
 module.exports = function (app) {
   app.get('/', isLoggedIn, function (req, res) {
-    req.flash('success', 'Welcome to MyContract');
-    res.render('landingPage');
+    req.toastr.info('Welcome to MyContract.',null,{"closeButton": true,"debug": false,
+    "newestOnTop": false,"progressBar": false,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"});
+    res.render('landingPage',{req:req});
   });
-  app.get('/privacyPolicy', function (req, res) {
+  app.get('/privacyPolicy', function (req, res) { 
 
     res.render('privacyPolicy');
   });

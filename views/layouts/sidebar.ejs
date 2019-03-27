@@ -293,6 +293,10 @@
         </div>
       </div>
     </div>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+<%- req.toastr.render() %>  
     <!-- footer -->
     <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
     <!-- End footer -->
@@ -383,7 +387,10 @@
     <script src="assets/libs/toastr/toastr.min.js"></script>
     <!--Custom JavaScript -->
     <script src="assets/js/custom.min.js"></script>
-    <script src="assets/js/custom.js"></script>   
+    <script src="assets/js/custom.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>   
     <script>
         toastr.options = {
         "closeButton": false,
@@ -401,13 +408,5 @@
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-    }  
-   if("<%=success%>")
-   {
-    toastr.success("<%=success%>");
-   }
-   else if("<%=error%>")
-   {
-       toastr.error("<%=error%>");
-   }
+    }
    </script>

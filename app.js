@@ -77,6 +77,13 @@ app.use(sessionFlash);
 
 app.use(toastr()); //use toastr notification
 
+app.use(function (req, res, next)
+{
+    res.locals.toasts = req.toastr.render()
+    next()
+});
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, __dirname + '/kycDump')
