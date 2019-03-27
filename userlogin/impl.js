@@ -56,7 +56,7 @@ module.exports = {
         res.cookie('address', address, {
           expire: 360000 + Date.now()
         });
-        req.toastr.success('You have successfully logged in.', 'Hello',req.user.email)
+        req.toastr.info('You have successfully logged in.','Hello '+ req.user.email)
         res.render('profile.ejs', {
           req:req,
           user: req.user, // get the user out of session and pass to template
