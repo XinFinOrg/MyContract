@@ -56,7 +56,7 @@ module.exports = {
         res.cookie('address', address, {
           expire: 360000 + Date.now()
         });
-        req.toastr.info('You have successfully logged in.','Hello '+ req.user.email)
+        req.toastr.info('You have successfully logged in.','Hello '+ req.user.email,{"positionClass": "toast-top-right","closeButton": true})
         res.render('profile.ejs', {
           req:req,
           user: req.user, // get the user out of session and pass to template
@@ -83,6 +83,15 @@ module.exports = {
   }),
 
   googleLoginCallback: passport.authenticate("google", {
+    successRedirect: '/dashboard',
+    failureRedirect: '/'
+  }),
+
+  facebookLogin: passport.authenticate("facebook", {
+    scope: ["public_profile ", "email"]
+  }),
+
+  facebookLoginCallback: passport.authenticate("facebook", {
     successRedirect: '/dashboard',
     failureRedirect: '/'
   }),

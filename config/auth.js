@@ -12,6 +12,14 @@ module.exports = {
     'callbackURL': '/auth/google/callback'
   },
 
+  'facebookAuth' : {
+    'clientID'      : '257057545245950', // your App ID
+    'clientSecret'  : '0134a4bf8842cca0f616bee3b30f8803', // your App Secret
+    'callbackURL'   : '/auth/facebook/callback',
+    'profileURL'    : 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email',
+    'profileFields' : ['id', 'email', 'name'] // For requesting permissions from Facebook API
+},
+
   'nodemailerAuth': {
     'user': 'contract@mail-b01.cloudmailbox.in',
     'pass': 'Hak-ess@2018**',
