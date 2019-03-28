@@ -253,10 +253,10 @@ module.exports = {
       },
       transactions: [{
         amount: {
-          total: 15,
+          total: 1500,
           currency: 'USD',
           "details": {
-            "subtotal": 15,
+            "subtotal": 1500,
             "tax": "0",
             "shipping": "0",
             "handling_fee": "0",
@@ -276,7 +276,7 @@ module.exports = {
               "name": "Mycontract Package 1",
               "description": req.user.email,
               "quantity": "1",
-              "price": "15",
+              "price": "1500",
               "tax": "0",
               "sku": "0",
               "currency": "USD"

@@ -15,9 +15,7 @@ module.exports = {
   'facebookAuth' : {
     'clientID'      : '257057545245950', // your App ID
     'clientSecret'  : '0134a4bf8842cca0f616bee3b30f8803', // your App Secret
-    'callbackURL'   : '/auth/facebook/callback',
-    'profileURL'    : 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email',
-    'profileFields' : ['id', 'email', 'name'] // For requesting permissions from Facebook API
+    'callbackURL'   : '/auth/facebook/callback'
 },
 
   'nodemailerAuth': {
@@ -35,7 +33,7 @@ module.exports = {
     'apiSecret': 'Cq0xxr0UPGSZOAKbvB6YbrueutUCSf2QrIyephBWZbOAkcBuOQd0tTwzat8MqsuR'
   },
   'paypal': {
-    'mode': 'sandbox',
+    'mode': 'live',
     'client_id': 'AS6VqkeWb21auRN3SR84tPGRkyf-xQCXZEZOgoxelpV6yoYFl5Dwfd9dlM5Z7o9-G8NRaPMgT9_x4-AG',
     'client_secret': 'ED1HZd7sHgPRrDk7OjpBEsF1-cw2aWB9qiWVgOot6FL5YtCw83oAsfEooPEcwcm2S2CP3Xd5yg1Z7lo0'
   }
