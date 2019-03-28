@@ -34,8 +34,8 @@ module.exports = {
   },
   'paypal': {
     'mode': 'live',
-    'client_id': 'AS6VqkeWb21auRN3SR84tPGRkyf-xQCXZEZOgoxelpV6yoYFl5Dwfd9dlM5Z7o9-G8NRaPMgT9_x4-AG',
-    'client_secret': 'ED1HZd7sHgPRrDk7OjpBEsF1-cw2aWB9qiWVgOot6FL5YtCw83oAsfEooPEcwcm2S2CP3Xd5yg1Z7lo0'
+    'client_id': 'AcYZI1aF91ZLF_SimfdvKZrgKtgB2dwipISU1mq1tV-Upj3S63B3Z6S1Q1a8SUBhdrxeX1dXxyy3Ytw-',
+    'client_secret': 'EJF-gFuJuzkkQ2a78Y1tFtjbfTGtq9IKc2aZ-qc11scF2MF152lnYlBrn6xOC9eCVVF0xYUGmfiI5Akn'
   }
 
 };
