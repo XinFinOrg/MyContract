@@ -245,7 +245,7 @@ module.exports = function (passport) {
     {
     clientID : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
-    callbackURL : configAuth.facebookAuth.callbackURL,
+    callbackURL : "https://mycontract.co/auth/facebook/callback",
     // profileURL: 'https://graph.facebook.com/v2.10/me',
     // authorizationURL: 'https://www.facebook.com/v2.10/dialog/oauth',
     // tokenURL: 'https://graph.facebook.com/v2.10/oauth/access_token',
