@@ -17,7 +17,7 @@ module.exports = function (app) {
   app.get('/auth/github', impl.githubLogin);
   app.get('/auth/github/callback', impl.githubLoginCallback);
   app.get('/auth/facebook',impl.facebookLogin);
-  app.get('auth/facebook/callback',impl.facebookLoginCallback);
+  app.get('/auth/facebook/callback',impl.facebookLoginCallback);
   app.get('/projectList', impl.getProjectList);
   app.get('/forgotPassword', impl.forgotPassword);
   app.get('/resetPassword', impl.resetPassword);
