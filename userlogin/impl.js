@@ -94,7 +94,7 @@ module.exports = {
   facebookLoginCallback: passport.authenticate("facebook", {
     successRedirect: '/dashboard',
     failureRedirect: '/'
-  }),
+  }), 
 
   getLogout: function (req, res) {
     req.logout();

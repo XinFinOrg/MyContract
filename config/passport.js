@@ -240,16 +240,23 @@ module.exports = function (passport) {
     }));
 
   // //passpoort strategy for facebook login
-  passport.use(new FacebookStrategy({
+  passport.use(new FacebookStrategy(
+    
+    {
     clientID : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
     callbackURL : configAuth.facebookAuth.callbackURL,
+    // profileURL: 'https://graph.facebook.com/v2.10/me',
+    // authorizationURL: 'https://www.facebook.com/v2.10/dialog/oauth',
+    // tokenURL: 'https://graph.facebook.com/v2.10/oauth/access_token',
+    profileFields: ['email','first_name','last_name','gender','link']
   },
      
   // facebook will send back the token and profile
   function (token,refreshToken,profile,done) {
     // asynchronous
     process.nextTick(function () {
+      console.log("inside facebook",profile);
       // try to find the user based on their google id
       client.find({
         where: {
@@ -265,7 +272,7 @@ module.exports = function (passport) {
           // if the user isnt in our database, create a new user
           var newUser = new Object();
           // set all of the relevant information
-          newUser.google_id = profile.id;
+          newUser.facebook_id = profile.id;
           newUser.name = profile.displayName;
           newUser.email = profile.emails[0].value; // pull the first email
           newUser.status = true;
