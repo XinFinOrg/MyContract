@@ -264,7 +264,7 @@ module.exports = function (passport) {
         }
       }).then(async result => {
         if (result) {
-          result.facebook.id = profile.id;
+          result.facebook_id = profile.id;
           result.status = true;
           await result.save();
           return done(null, result.dataValues);
