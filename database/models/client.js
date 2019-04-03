@@ -30,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:true,
     },
+    facebook_id:
+    {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
     github_id:
     {
       type:DataTypes.STRING,
