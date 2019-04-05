@@ -160,10 +160,10 @@
                                                 <%= transactionLog[i].tokenTransferStatus %>
                                             </td>
                                             <td class="break">
-                                                <%=  Date(transactionLog[i].createdAt) %>
+                                                <%=  transactionLog[i].createdAt.toDateString() %>
                                             </td>
                                             <td class="break">
-                                                <%=   Date(transactionLog[i].updatedAt) %>
+                                                <%=  transactionLog[i].updatedAt.toDateString() %>
                                             </td>
                                         </tr>
                                         <% } %>
