@@ -20,7 +20,7 @@ module.exports =
             clientId : "Q0HfsP9G5GK7bmhTgVRaQB9c0S5CT30blk93a4QSTZy2Sbtfoc",
             clientSecret : "tT041hb4Je3EQemUZYa98LDHPEXXkvNbqqKJFQea",
             environment : "sandbox",
-            redirectUri : "http://localhost/quickbook/callback"
+            redirectUri : "https://mycontract.co/quickbook/callback"
         });
         var authUri = oauthClient.authorizeUri({scope:[OAuthClient.scopes.Accounting],state:'intuit-test'});
         return res.send({status : true, authUrl : authUri});
