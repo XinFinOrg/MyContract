@@ -76,7 +76,7 @@ const ipfs = new IPFS({
 
     //quickbook upload invoice
     uploadInvoice:(req,res)=>{
-        console.log(req.body);
+        console.log("file",req.body.myFile);
         console.log("inside erc721 contract 3");
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {
