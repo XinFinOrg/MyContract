@@ -1,7 +1,7 @@
 var OAuthClient = require('intuit-oauth');
 const IPFS = require('ipfs-http-client');
 const fs = require('fs');
-const multer = require('multer');
+
 
 
 
@@ -77,21 +77,27 @@ const ipfs = new IPFS({
     //quickbook upload invoice
     uploadInvoice:(req,res)=>{
         try{
-            console.log(req.file);
-            console.log("file",req.body.myFile);
-        console.log("inside erc721 contract 3");
-        req.pipe(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-           console.log("Uploading: " + filename); 
+            console.log(req.invoice);
+            ipfs.add(req.invoice, (err, ipfsHash) => {
+       
+                         console.log(ipfsHash[0].hash);
+                         objData.ipfsHash = ipfsHash[0].hash
+                         res.status(200).send({status:true,hash:ipfsHash[0].hash})
+            });
+    //         console.log("file",req.body.myFile);
+    //     console.log("inside erc721 contract 3");
+    //     req.pipe(req.busboy);
+    //     req.busboy.on('file', function (fieldname, file, filename) {
+    //        console.log("Uploading: " + filename); 
          
    
-           ipfs.add(file, (err, ipfsHash) => {
+    //        ipfs.add(file, (err, ipfsHash) => {
        
-             console.log(ipfsHash[0].hash);
-             objData.ipfsHash = ipfsHash[0].hash
-             res.status(200).send({status:true,hash:ipfsHash[0].hash})
-       });
-     });
+    //          console.log(ipfsHash[0].hash);
+    //          objData.ipfsHash = ipfsHash[0].hash
+    //          res.status(200).send({status:true,hash:ipfsHash[0].hash})
+    //    });
+    //  });
 
         }catch(e){
             console.log(e);
