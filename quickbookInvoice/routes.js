@@ -42,7 +42,7 @@ module.exports = function (app, express) {
         // let buffer = Buffer.from(data);
         let path1 = path.join(__dirname,'../');
         console.log(path1);
-        let data = fs.readFileSync( path1+ 'kycDump/'+req.files.filename);
+        let data = fs.readFileSync( path1+ 'kycDump/'+req.files[0].filename);
           let buffer = Buffer.from(data);
         ipfs.add(data, (err, ipfsHash) => {
           
