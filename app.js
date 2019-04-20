@@ -99,6 +99,7 @@ require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);
 require('./createdContracts/routes')(app,express);
 require('./contractDeployer/routes')(app, express);
+require('./quickbookInvoice/routes')(app, express);
 require('./packageCart/routes')(app);
 require('./icoDashboardCreator/routes')(app, express);
 // catch 404 and forward to error handler
