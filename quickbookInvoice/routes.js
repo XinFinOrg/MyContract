@@ -3,9 +3,16 @@ var db = require('../database/models/index');
 var client = db.client;
 var projectConfiguration = db.projectConfiguration;
 
+var OAuthClient = require('intuit-oauth');
+const IPFS = require('ipfs-http-client');
+const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
-
+const ipfs = new IPFS({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https'
+  })
  
 // SET STORAGE
 var storage = multer.diskStorage({
