@@ -275,7 +275,7 @@ module.exports = {
     });
   },
   createERC721Contract: async (req, res) => {
-    console.log("inside erc721 contract");
+    console.log("inside erc721 contract",req);
     var SafeMath = await fileReader.readEjsFile(__dirname + '/ERC721contracts/SafeMath.sol');
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC721contracts/Roles.sol');
     var ERC721Holder = await fileReader.readEjsFile(__dirname + '/ERC721contracts/ERC721Holder.sol');
@@ -336,7 +336,7 @@ module.exports = {
        req.pipe(req.busboy);
        await req.busboy.on('file', function (fieldname, file, filename) {
           console.log("Uploading: " + filename); 
-          console.log(file);
+        
   
           ipfs.add(file, (err, ipfsHash) => {
       
