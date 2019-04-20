@@ -12,7 +12,6 @@ const ipfs = new IPFS({
   })
   
   require('dotenv').config();
-  var router = express.Router();
 
   module.exports ={
 
