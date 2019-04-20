@@ -5,7 +5,7 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/login', isLoggedIn, impl.quickbooklogin);
     app.get('/v1/invoice/quickbook/callback', isLoggedIn, impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
-    app.get('/v1/invoice/quickbook/uploadInvoice', impl.uploadInvoice);
+    app.post('/v1/invoice/quickbook/uploadInvoice', impl.uploadInvoice);
 }   
 
 // route middleware to make sure a user is logged in
