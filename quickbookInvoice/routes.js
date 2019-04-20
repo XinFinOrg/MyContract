@@ -36,6 +36,7 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
     app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
         console.log(req.file);
+        console.log(req);
         
         // let data = fs.readFileSync(__dirname + '/private_account.pdf');
         // let buffer = Buffer.from(data);
