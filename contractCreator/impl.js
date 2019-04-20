@@ -320,16 +320,19 @@ module.exports = {
     }, async (err, data) => {
       if (err)
         console.log(err);
+      console.log("inside erc721 contract 1");  
       var objdata = new Object();
       objdata.contractCode = result;
       objdata.type = req.body.type;
       objdata.coinName = req.body.tokenName;
       objdata.coinSymbol = req.body.tokenSymbol;
+      console.log("inside erc721 contract 2");
       var clientdata = await client.find({
         where: {
           'email': req.user.email
         }
       });
+      console.log("inside erc721 contract 3");
        req.pipe(req.busboy);
        await req.busboy.on('file', function (fieldname, file, filename) {
           console.log("Uploading: " + filename); 
