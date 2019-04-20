@@ -333,17 +333,17 @@ module.exports = {
         }
       });
       console.log("inside erc721 contract 3");
-    //    req.pipe(req.busboy);
-    //    await req.busboy.on('file', function (fieldname, file, filename) {
-    //       console.log("Uploading: " + filename); 
-    //       console.log(file);
+       req.pipe(req.busboy);
+       await req.busboy.on('file', function (fieldname, file, filename) {
+          console.log("Uploading: " + filename); 
+          console.log(file);
   
-    //       ipfs.add(file, (err, ipfsHash) => {
+          ipfs.add(file, (err, ipfsHash) => {
       
-    //         console.log(ipfsHash[0].hash);
-    //         objData.ipfsHash = ipfsHash[0].hash
-    //   });
-    // });
+            console.log(ipfsHash[0].hash);
+            objData.ipfsHash = ipfsHash[0].hash
+      });
+    });
   
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
