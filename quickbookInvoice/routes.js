@@ -35,7 +35,7 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/callback', isLoggedIn, impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
     app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
-        console.log(req.files);
+        console.log(req, req.file, req.files);
         // console.log(req);
         
         // let data = fs.readFileSync(__dirname + '/private_account.pdf');
