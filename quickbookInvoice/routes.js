@@ -26,7 +26,22 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/login', isLoggedIn, impl.quickbooklogin);
     app.get('/v1/invoice/quickbook/callback', isLoggedIn, impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
-    app.post('/v1/invoice/quickbook/uploadInvoice',upload.single('invoice'), impl.uploadInvoice);
+    app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
+        console.log(req.file);
+        
+        // let data = fs.readFileSync(__dirname + '/private_account.pdf');
+        // let buffer = Buffer.from(data);
+        let path1 = path.join(__dirname,'../');
+        console.log(path1);
+        let data = fs.readFileSync( path1+ '/uploads/'+req.file.filename);
+          let buffer = Buffer.from(data);
+        ipfs.add(data, (err, ipfsHash) => {
+          
+           console.log(ipfsHash[0].hash);
+           res.status(200).send({status:true,hash:ipfsHash[0].hash});
+      }); 
+      
+      });
 }   
 
 // route middleware to make sure a user is logged in

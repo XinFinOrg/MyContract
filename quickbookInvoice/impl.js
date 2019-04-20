@@ -77,8 +77,8 @@ const ipfs = new IPFS({
     //quickbook upload invoice
     uploadInvoice:(req,res)=>{
         try{
-            console.log(req.invoice);
-            ipfs.add(req.invoice, (err, ipfsHash) => {
+            console.log(req.file);
+            ipfs.add(req.file, (err, ipfsHash) => {
        
                          console.log(ipfsHash[0].hash);
                          objData.ipfsHash = ipfsHash[0].hash
