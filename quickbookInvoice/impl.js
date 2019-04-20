@@ -77,7 +77,19 @@ const ipfs = new IPFS({
 
     //quickbook upload invoice
     uploadInvoice:(req,res)=>{
-
+        console.log("inside erc721 contract 3");
+        req.pipe(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename) {
+           console.log("Uploading: " + filename); 
+         
+   
+           ipfs.add(file, (err, ipfsHash) => {
+       
+             console.log(ipfsHash[0].hash);
+             objData.ipfsHash = ipfsHash[0].hash
+             res.status(200).send({status:true,hash:ipfsHash[0].hash})
+       });
+     });
 
     }
     

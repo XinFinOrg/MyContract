@@ -326,24 +326,14 @@ module.exports = {
       objdata.type = req.body.type;
       objdata.coinName = req.body.tokenName;
       objdata.coinSymbol = req.body.tokenSymbol;
+      objdata.ipfsHash = req.body.hash;
       console.log("inside erc721 contract 2",objdata);
       var clientdata = await client.find({
         where: {
           'email': req.user.email
         }
       });
-      console.log("inside erc721 contract 3");
-       req.pipe(req.busboy);
-       await req.busboy.on('file', function (fieldname, file, filename) {
-          console.log("Uploading: " + filename); 
-        
-  
-          ipfs.add(file, (err, ipfsHash) => {
       
-            console.log(ipfsHash[0].hash);
-            objData.ipfsHash = ipfsHash[0].hash
-      });
-    });
   
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
