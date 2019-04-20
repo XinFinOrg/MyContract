@@ -119,6 +119,21 @@ module.exports = {
       name: req.body.tokenName,
       symbol: req.body.tokenSymbol,
       decimal: req.body.tokenDecimals,
+      industry: req.body.industry,
+      isin: req.body.isin,
+      cusip:req.body.cusip,
+      moodys: req.body.moodys,
+      snp: req.body.snp,
+      fitch: req.body.fitch,
+      fsdate: req.body.fsdate,
+      maturitydate: req.body.maturitydate,
+      facevalue: req.body.ethRate,
+      amtstanding: req.body.amtstanding,
+      type: req.body.type,
+      frequency: req.body.frequency,
+      firstdate: req.body.firstdate,
+      rate: req.body.rate,
+      benchmark: req.body.benchmark,
       decimalInZero: decimalInZero,
       ERC20CappedSign: ERC20CappedSign
     }, async (err, data) => {
@@ -152,7 +167,6 @@ module.exports = {
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(objdata.tokenContractCode);
-      res.end();
     });
   },
   createERC223Contract: async (req, res) => {
@@ -307,6 +321,7 @@ module.exports = {
         console.log(err);
       var objdata = new Object();
       objdata.contractCode = result;
+      objdata.type = req.body.type;
       objdata.coinName = req.body.tokenName;
       objdata.coinSymbol = req.body.tokenSymbol;
       var clientdata = await client.find({
@@ -314,6 +329,18 @@ module.exports = {
           'email': req.user.email
         }
       });
+       req.pipe(req.busboy);
+       await req.busboy.on('file', function (fieldname, file, filename) {
+          console.log("Uploading: " + filename); 
+          console.log(file);
+  
+          ipfs.add(file, (err, ipfsHash) => {
+      
+            console.log(ipfsHash[0].hash);
+            objData.ipfsHash = ipfsHash[0].hash
+      });
+    });
+  
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
         await clientdata.addProjectConfiguration(projectData);

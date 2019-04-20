@@ -19,7 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: true,
     },
-
+    type:{
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
+    ipfsHash:{
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
     coinSymbol: {
       type: DataTypes.STRING,
       allowNull: true,

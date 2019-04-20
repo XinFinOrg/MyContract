@@ -13,6 +13,8 @@ var validator = require('express-validator');
 var cors = require('cors')
 var fs = require('fs')
 var winston = require('./config/winston');
+var busboy = require('connect-busboy');
+ 
 
 const app = express();
 const session = require('express-session');
@@ -27,6 +29,7 @@ app.use(session({
     maxAge: 1000 * 60 * 30
   }
 }));
+app.use(busboy());
 
 // app.use(helmet.contentSecurityPolicy({
 //   directives: {
