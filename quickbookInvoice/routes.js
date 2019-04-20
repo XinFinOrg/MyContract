@@ -35,14 +35,14 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/callback', isLoggedIn, impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
     app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
-        console.log(req.file);
-        console.log(req);
+        console.log(req.files);
+        // console.log(req);
         
         // let data = fs.readFileSync(__dirname + '/private_account.pdf');
         // let buffer = Buffer.from(data);
         let path1 = path.join(__dirname,'../');
         console.log(path1);
-        let data = fs.readFileSync( path1+ '/uploads/'+req.file.filename);
+        let data = fs.readFileSync( path1+ '/kycDump/'+req.files.filename);
           let buffer = Buffer.from(data);
         ipfs.add(data, (err, ipfsHash) => {
           
