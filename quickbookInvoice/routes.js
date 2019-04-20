@@ -1,5 +1,10 @@
 const impl = require("./impl");
+var db = require('../database/models/index');
 var client = db.client;
+var projectConfiguration = db.projectConfiguration;
+
+var jwt = require('jsonwebtoken');
+var configAuth = require('../config/auth');
 module.exports = function (app, express) {
 
     app.get('/v1/invoice/quickbook/login', isLoggedIn, impl.quickbooklogin);
