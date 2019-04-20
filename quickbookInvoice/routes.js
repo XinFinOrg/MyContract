@@ -4,6 +4,7 @@ var client = db.client;
 var projectConfiguration = db.projectConfiguration;
 
 const multer = require('multer');
+const path = require('path');
 
  
 // SET STORAGE
