@@ -52,6 +52,7 @@ module.exports = {
     })
   },
   getAutomaticDeployer: async function (req, res) {
+    var type = req.body.type;
     let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.body.coinName, 'client_id': req.user.uniqueId } });
     if (projectData == null) {
       console.log("herewS")
@@ -81,7 +82,7 @@ module.exports = {
         try {
           etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {
-              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData);
+              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData,type);
               res.send({status:true,message:"Deployment is in process"})
               // res.send({"status":"working"});
             })
