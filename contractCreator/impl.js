@@ -324,6 +324,7 @@ module.exports = {
       var objdata = new Object();
       objdata.contractCode = result;
       objdata.type = req.body.type;
+      oobjdata.tokenContractCode = data;
       objdata.coinName = req.body.tokenName;
       objdata.coinSymbol = req.body.tokenSymbol;
       objdata.ipfsHash = req.body.hash;
@@ -343,7 +344,7 @@ module.exports = {
         clientdata.package1 -= 1;
         clientdata.save();
       })
-      nodemailerservice.sendContractEmail(req.user.email, result);
+      nodemailerservice.sendContractEmail(req.user.email, data);
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(data);
