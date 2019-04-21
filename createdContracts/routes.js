@@ -8,6 +8,7 @@ var ProjectConfiguration = db.projectConfiguration;
 
 module.exports = function (app) {
     app.post('/v1/smartcontract/contracts', isLoggedIn, checkSecret, impl.getContracts);
+    app.post('/v1/smartcontract/invoices', isLoggedIn, checkSecret, impl.getInvoices);
   }
   
   

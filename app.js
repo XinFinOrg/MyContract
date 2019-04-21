@@ -48,7 +48,7 @@ app.use(busboy());
 //   setAllHeaders: false,
 //   disableAndroid: false
 // }));
-app.use(cors())
+app.use(cors());
 app.use(validator());
 app.use(function (req, res, next) {
   for (var item in req.body) {
