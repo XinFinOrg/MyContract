@@ -38,7 +38,7 @@ module.exports ={
             }
             else {
                 let email = req.user.email;
-                // let projectData = await getInvoiceArray(email);
+                 let projectData = await getInvoiceArray(email);
                 console.log("project Data found",projectData)
                 res.status(200).send(
                     {
@@ -94,6 +94,7 @@ function getProjectArray(email) {
         ],
         include: [{
           model: ProjectConfiguration,
+          where:{'type':'invoice'},
           attributes: ['coinName','coinSymbol', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL','ipfsHash','createdAt']
         }],
       }).then(client => {
