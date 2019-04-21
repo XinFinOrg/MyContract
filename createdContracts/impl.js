@@ -38,7 +38,7 @@ module.exports ={
             }
             else {
                 let email = req.user.email;
-                let projectData = await getInvoiceArray(email);
+                // let projectData = await getInvoiceArray(email);
                 console.log("project Data found",projectData)
                 res.status(200).send(
                     {
@@ -62,7 +62,8 @@ function getProjectArray(email) {
     return new Promise(async function (resolve, reject) {
       client.find({
         where: {
-          'email': email
+          'email': email,
+          
         },
         order:[
             ['createdAt','DESC']
