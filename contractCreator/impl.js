@@ -320,7 +320,7 @@ module.exports = {
     }, async (err, data) => {
       if (err)
         console.log(err);
-      console.log("inside erc721 contract 1");  
+      console.log("inside erc721 contract 1",req.body);  
       var objdata = new Object();
       objdata.contractCode = result;
       objdata.type = req.body.type;
