@@ -28,6 +28,13 @@ module.exports = {
   'binanceKey': {
     'apiKey': 'NOyC5fjJ8StEWnwcKN8BOIvkRLyGO6ESpZSkgdt1XzP8il34gWrP7KtDmEtZPzuc',
     'apiSecret': 'kOozwAkqmHap9XVqzrviTAjFxXm7MqVoKPYgqEhHIzjYkiAvRT37jtk61omHQZbD'
+  },
+
+  'quickbook':{
+    'clientId':'Q0HfsP9G5GK7bmhTgVRaQB9c0S5CT30blk93a4QSTZy2Sbtfoc',
+    'clientSecret':'tT041hb4Je3EQemUZYa98LDHPEXXkvNbqqKJFQea',
+    'environment':'sandbox',
+    'redirectUri':"https://api.mycontract.co/v1/invoice/quickbook/callback"
   }
 
 };
