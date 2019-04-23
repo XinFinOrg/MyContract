@@ -1,6 +1,7 @@
 var OAuthClient = require('intuit-oauth');
 const IPFS = require('ipfs-http-client');
 const fs = require('fs');
+var configAuth = require('./auth');
 
 
 
@@ -19,10 +20,10 @@ const ipfs = new IPFS({
        try{
         console.log("env",process.env);
         oauthClient = new OAuthClient({
-            clientId : process.env.clientId,
-            clientSecret : process.env.clientSecret,
-            environment : process.env.environment,
-            redirectUri : process.env.redirectUri
+            clientId : configAuth.quickbook.clientId,
+            clientSecret : configAuth.quickbook.clientSecret,
+            environment : configAuth.quickbook.environment,
+            redirectUri : configAuth.quickbook.redirectUri
         });
         var authUri = oauthClient.authorizeUri({scope:[OAuthClient.scopes.Accounting],state:'intuit-test'});
         // return res.send({status : true, authUrl : authUri});
