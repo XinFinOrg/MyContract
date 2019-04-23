@@ -53,7 +53,17 @@ const ipfs = new IPFS({
         
     });
     },
-    
+    //quickbook accesstoken valid or not 
+    accessTokenValidity:(req,res)=>{
+
+        if(oauthClient.isAccessTokenValid()) {
+            console.log("The access_token is valid");
+            res.send({status:true,message:"Succesfully logged in"});
+        }
+        else{
+            res.send({status:false,message:"Failed"});
+        } 
+    },
     //quickbook dashboard
     dashboard:(req,res)=>{
         var companyID = oauthClient.getToken().realmId;

@@ -34,6 +34,7 @@ module.exports = function (app, express) {
     app.get('/v1/invoice/quickbook/login',isLoggedIn, impl.quickbooklogin);
     app.get('/v1/invoice/quickbook/callback', impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
+    app.get('/v1/invoice/quickbook/logincheck', isLoggedIn, impl.accessTokenValidity);
     app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
         console.log(req, req.file, req.files);
         // console.log(req);
