@@ -31,8 +31,8 @@ var jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 module.exports = function (app, express) {
 
-    app.get('/v1/invoice/quickbook/login', impl.quickbooklogin);
-    app.get('/v1/invoice/quickbook/callback', isLoggedIn, impl.callback);
+    app.get('/v1/invoice/quickbook/login',isLoggedIn, impl.quickbooklogin);
+    app.get('/v1/invoice/quickbook/callback', impl.callback);
     app.get('/v1/invoice/quickbook/dashboard', isLoggedIn, impl.dashboard);
     app.post('/v1/invoice/quickbook/uploadinvoice',upload.single('invoice'), (req, res) => {
         console.log(req, req.file, req.files);
