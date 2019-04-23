@@ -1,7 +1,7 @@
 var OAuthClient = require('intuit-oauth');
 const IPFS = require('ipfs-http-client');
 const fs = require('fs');
-var configAuth = require('./auth');
+var configAuth = require('../config/auth');
 
 
 
