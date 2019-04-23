@@ -19,6 +19,7 @@ const ipfs = new IPFS({
     quickbooklogin:(req, res, next)=> {
        try{
         console.log("env",process.env);
+        console.log("env1",configAuth.quickbook.clientId);
         oauthClient = new OAuthClient({
             clientId : configAuth.quickbook.clientId,
             clientSecret : configAuth.quickbook.clientSecret,
@@ -29,7 +30,8 @@ const ipfs = new IPFS({
         // return res.send({status : true, authUrl : authUri});
         res.status(200).send({ status: true, login_url:authUri});
        }
-       catch{
+       catch(e){
+           console.log(e);
         res.status(400).send({ status: false, message: "no project found" })
        } 
       },
