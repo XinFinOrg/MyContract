@@ -17,6 +17,7 @@ const ipfs = new IPFS({
 
     quickbooklogin:(req, res, next)=> {
        try{
+           console.log(process.env.clientId);
         oauthClient = new OAuthClient({
             clientId : process.env.clientId,
             clientSecret : process.env.clientSecret,
