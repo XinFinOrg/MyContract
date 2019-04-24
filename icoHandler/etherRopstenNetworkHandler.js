@@ -185,7 +185,9 @@ module.exports = {
                                 }
                             }
                         })
-                        .on('error', async function (error) { reject(error) })
+                        .on('error', async function (error) {
+                            console.log("error",error)
+                            reject(error) })
                 })
             })
         })
