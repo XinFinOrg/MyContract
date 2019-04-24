@@ -344,7 +344,7 @@ module.exports = {
         clientdata.package1 -= 1;
         clientdata.save();
       })
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      // nodemailerservice.sendContractEmail(req.user.email, data);
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(data);
