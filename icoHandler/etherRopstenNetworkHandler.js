@@ -173,29 +173,19 @@ module.exports = {
                 console.log(gasLimit);
                 txData["gasLimit"] = gasLimit;
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
-                    web3.eth.sendSignedTransaction(result.rawTransaction,function(error,txid){
-                        if(error){
-                            console.log(error);
-                            reject(error);
-                        }
-                        else{
-                            console.log("TxID:",txid);
-                            web3.eth.getTransactionReceipt(txid, function(err, transaction) {
-                                console.log("contract Reciept",transaction);
-                                resolve(transaction);
-                              })
-                        }
-                    })
-                        // .on('confirmation', async function (confirmationNumber, receipt) {
-                        //     console.log("confirmation",confirmationNumber);
-                        //     console.log("reciept",reciept);
-                        //     if (confirmationNumber == 3) {
-                        //         if (receipt.status == true) {
-                        //             resolve(receipt)
-                        //         }
-                        //     }
-                        // })
-                        // .on('error', async function (error) { reject(error) })
+                    web3.eth.sendSignedTransaction(result.rawTransaction,(err,txHash)=>{
+                        console.log('err : ',err,'txHash : ',txHash)
+                        //use this hash to find smartcontract on etherscan
+                        }).on('confirmation', async function (confirmationNumber, receipt) {
+                            console.log("confirmation",confirmationNumber);
+                            console.log("reciept",reciept);
+                            if (confirmationNumber == 3) {
+                                if (receipt.status == true) {
+                                    resolve(receipt)
+                                }
+                            }
+                        })
+                        .on('error', async function (error) { reject(error) })
                 })
             })
         })
