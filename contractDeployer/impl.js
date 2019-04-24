@@ -80,8 +80,10 @@ module.exports = {
       }
       else if (req.body.network == 'testnet') {
         try {
+          console.log("inside ether send testnet")
           etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {
+              console.log("ether sent");
               res.send({status:true,message:"Deployment is in process"})
               console.log('inside automatic deployer');
               contractDeployerListener.createAutomaticDeployer(req,projectData,accountData,type);
