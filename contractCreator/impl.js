@@ -51,6 +51,7 @@ module.exports = {
     });
   },
   createERC20Contract: async (req, res) => {
+    console.log("body",req.body);
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
@@ -139,6 +140,7 @@ module.exports = {
     }, async (err, data) => {
       if (err)
         console.log(err);
+        console.log("file rendered erc20");
       req.session.contract = data;
       req.session.coinName = req.body.tokenName;
       // nodemailerservice.sendContractEmail(req.user.email, data);
@@ -156,6 +158,7 @@ module.exports = {
       objdata.tokenContractCode = data;
       objdata.bonusRate = req.body.bonusRate == '' ? 0 : req.body.bonusRate;
       objdata.bonusStatus = req.body.bonusRate == null ? true : false;
+      console.log("object",objdata);
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
         await clientdata.addProjectConfiguration(projectData);
@@ -164,6 +167,7 @@ module.exports = {
         clientdata.package1 -= 1;
         clientdata.save();
       })
+      console.log("data to be send");
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(objdata.tokenContractCode);
