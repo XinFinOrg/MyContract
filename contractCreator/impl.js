@@ -141,7 +141,7 @@ module.exports = {
         console.log(err);
       req.session.contract = data;
       req.session.coinName = req.body.tokenName;
-      nodemailerservice.sendContractEmail(req.user.email, data);
+      // nodemailerservice.sendContractEmail(req.user.email, data);
       var clientdata = await client.find({
         where: {
           'email': req.user.email
