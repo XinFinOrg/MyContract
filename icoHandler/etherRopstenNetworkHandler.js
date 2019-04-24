@@ -173,7 +173,7 @@ module.exports = {
                 console.log(gasLimit);
                 txData["gasLimit"] = gasLimit;
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
-                    web3.eth.sendSignedTransaction(result.rawTransactionresult.rawTransaction,function(error,txid){
+                    web3.eth.sendSignedTransaction(result.rawTransaction,function(error,txid){
                         if(error){
                             console.log(error);
                             reject(error);
