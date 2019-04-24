@@ -173,17 +173,29 @@ module.exports = {
                 console.log(gasLimit);
                 txData["gasLimit"] = gasLimit;
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
-                    web3.eth.sendSignedTransaction(result.rawTransaction)
-                        .on('confirmation', async function (confirmationNumber, receipt) {
-                            console.log("confirmation",confirmationNumber);
-                            console.log("reciept",reciept);
-                            if (confirmationNumber == 3) {
-                                if (receipt.status == true) {
-                                    resolve(receipt)
-                                }
-                            }
-                        })
-                        .on('error', async function (error) { reject(error) })
+                    web3.eth.sendSignedTransaction(result.rawTransactionresult.rawTransaction,function(error,txid){
+                        if(error){
+                            console.log(error);
+                            reject(error);
+                        }
+                        else{
+                            console.log("TxID:",txid);
+                            web3.eth.getTransactionReceipt(txid).then(result=>{
+                                console.log("contractRecipet:",result);
+                                resolve(result);
+                            })
+                        }
+                    })
+                        // .on('confirmation', async function (confirmationNumber, receipt) {
+                        //     console.log("confirmation",confirmationNumber);
+                        //     console.log("reciept",reciept);
+                        //     if (confirmationNumber == 3) {
+                        //         if (receipt.status == true) {
+                        //             resolve(receipt)
+                        //         }
+                        //     }
+                        // })
+                        // .on('error', async function (error) { reject(error) })
                 })
             })
         })
