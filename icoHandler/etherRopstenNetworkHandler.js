@@ -145,13 +145,27 @@ module.exports = {
                 txData["gasLimit"] = '0x5208';
                 web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
+                        .on('confirmation',async function(confirmationNumber,receipt){
+                            console.log(confirmationNumber);
+                            if (confirmationNumber == 3) {
+                                if (receipt.status == true) {
+                                    resolve(receipt)
+                                }
+                            }
+                        })
+
                         .on('receipt', async function (receipt) {
                             console.log("reciept",receipt) 
                             resolve(receipt) 
                             })
+                            .catch((err) => {
+                                console.log('This does not work', err)
+                                resolve(false)
+                              })    
                         .on('error', async function (error) {
                             console.log("Error in ether",error);
                             reject(error) })
+
                 })
             })
         })
