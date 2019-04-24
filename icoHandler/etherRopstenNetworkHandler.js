@@ -175,6 +175,8 @@ module.exports = {
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
                         .on('confirmation', async function (confirmationNumber, receipt) {
+                            console.log("confirmation",confirmationNumber);
+                            console.log("reciept",reciept);
                             if (confirmationNumber == 3) {
                                 if (receipt.status == true) {
                                     resolve(receipt)

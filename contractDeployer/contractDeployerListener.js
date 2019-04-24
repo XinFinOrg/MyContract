@@ -27,6 +27,7 @@ module.exports =
         if(req.body.network == 'testnet')
         {
            if(type=='erc721'){
+             console.log("ERC721 contract deploying")
             etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
             .then(async tokenReceipt =>{
               console.log("Here:Ropsten Send Token reciept:",tokenReceipt)
