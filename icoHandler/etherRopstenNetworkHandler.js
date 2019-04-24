@@ -154,7 +154,15 @@ module.exports = {
                             resolve(txid);
                         }
                     })
-                        // .on('confirmation',async function(confirmationNumber,receipt){
+                        
+
+                })
+            })
+        })
+    },
+
+    sendTransaction: async (address, data, privateKey) => {
+        // .on('confirmation',async function(confirmationNumber,receipt){
                         //     console.log(confirmationNumber);
                         //     if (confirmationNumber == 3) {
                         //         if (receipt.status == true) {
@@ -174,13 +182,6 @@ module.exports = {
                         // .on('error', async function (error) {
                         //     console.log("Error in ether",error);
                         //     reject(error) })
-
-                })
-            })
-        })
-    },
-
-    sendTransaction: async (address, data, privateKey) => {
         return new Promise(async function (resolve, reject) {
             let txData = {
                 "nonce": await web3.eth.getTransactionCount(address),
