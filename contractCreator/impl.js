@@ -171,6 +171,7 @@ module.exports = {
       res.setHeader('Content-Type', 'text/plain');
       res.writeHead("200");
       res.write(objdata.tokenContractCode);
+      res.end();
     });
   },
   createERC223Contract: async (req, res) => {
