@@ -180,10 +180,10 @@ module.exports = {
                         }
                         else{
                             console.log("TxID:",txid);
-                            web3.eth.getTransactionReceipt(txid).then(result=>{
-                                console.log("contractRecipet:",result);
-                                resolve(result);
-                            })
+                            web3.eth.getTransactionReceipt(txid, function(err, transaction) {
+                                console.log("contract Reciept",transaction);
+                                resolve(transaction);
+                              })
                         }
                     })
                         // .on('confirmation', async function (confirmationNumber, receipt) {
