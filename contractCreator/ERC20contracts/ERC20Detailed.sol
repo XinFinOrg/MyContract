@@ -20,7 +20,7 @@ contract ERC20Detailed is IERC20 {
   string private _maturitydate;
   string private _facevalue;
   string private _amtstanding;
-  string private _type;
+  string private _types;
   string private _frequency;
   string private _firstDate;
   string private _rate;
@@ -31,7 +31,7 @@ contract ERC20Detailed is IERC20 {
 
 
   constructor(string name, string symbol,string industry,string isin,string cusip,string moodys,
-  string snp,string fitch, string fsdate, string maturitydate,string facevalue,string amtstanding,string type,
+  string snp,string fitch, string fsdate, string maturitydate,string facevalue,string amtstanding,string types,
   string frequency,string firstDate,string rate,string benchmark, uint8 decimals) public {
     _name = name;
     _symbol = symbol;
@@ -46,7 +46,7 @@ contract ERC20Detailed is IERC20 {
     _maturitydate = maturitydate;
     _facevalue = facevalue;
     _amtstanding = amtstanding;
-    _type = type;
+    _types = types;
     _frequency = frequency;
     _firstDate = firstDate;
     _rate = rate;    
@@ -147,8 +147,8 @@ contract ERC20Detailed is IERC20 {
    /**
    * @return the type of the token.
    */
-  function type() public view returns(string) {
-    return _type;
+  function types() public view returns(string) {
+    return _types;
   }
 
    /**

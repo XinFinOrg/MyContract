@@ -130,7 +130,7 @@ module.exports = {
       maturitydate: req.body.maturitydate,
       facevalue: req.body.ethRate,
       amtstanding: req.body.amtstanding,
-      type: req.body.type,
+      types: req.body.type,
       frequency: req.body.frequency,
       firstdate: req.body.firstdate,
       rate: req.body.rate,
