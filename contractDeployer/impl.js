@@ -82,8 +82,8 @@ module.exports = {
         try {
           etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {
-              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData,type);
               res.send({status:true,message:"Deployment is in process"})
+              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData,type);
               // res.send({"status":"working"});
             })
             .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
