@@ -144,17 +144,11 @@ module.exports = {
                 console.log(gasLimit);
                 txData["gasLimit"] = '0x5208';
                 web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
-                    web3.eth.sendSignedTransaction(result.rawTransaction,function(error,txid){
-                        if(error){
-                            console.log(error);
-                            reject(error);
-                        }
-                        else{
-                            console.log("TxID:",txid);
-                            resolve(txid);
-                        }
-                    })
-                        
+                    web3.eth.sendSignedTransaction(result.rawTransaction)
+                        .on('receipt', async function (receipt) {
+                            console.log("reciept hash",receipt) 
+                            resolve(receipt) })
+                        .on('error', async function (error) { reject(error) })   
 
                 })
             })
