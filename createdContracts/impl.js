@@ -1,6 +1,7 @@
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
+const Op = Sequelize.Op;
 
 module.exports ={
     getContracts : async function(req,res){
@@ -13,7 +14,7 @@ module.exports ={
             else {
                 let email = req.user.email;
                 let projectData = await getProjectArray(email);
-                console.log("project Data found",projectData)
+                // console.log("project Data found",projectData)
                 res.status(200).send(
                     {
                         status:true,
@@ -39,7 +40,7 @@ module.exports ={
             else {
                 let email = req.user.email;
                  let projectData = await getInvoiceArray(email);
-                console.log("project Data found",projectData)
+                // console.log("project Data found",projectData)
                 res.status(200).send(
                     {
                         status:true,
@@ -70,6 +71,9 @@ function getProjectArray(email) {
         ],
         include: [{
           model: ProjectConfiguration,
+          where:{'type':{
+              [Op.ne]:'invocie'
+          }},
           attributes: ['coinName','coinSymbol', 'tokenSupply','ETHRate','tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash','createdAt']
         }],
       }).then(client => {
