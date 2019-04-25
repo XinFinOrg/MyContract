@@ -72,7 +72,7 @@ function getProjectArray(email) {
         ],
         include: [{
           model: ProjectConfiguration,
-          where:{type:{[Op.ne]:'invoice'}},
+          where:{'type':null},
           attributes: ['coinName','coinSymbol', 'tokenSupply','ETHRate','tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash','createdAt']
         }],
       }).then(client => {
