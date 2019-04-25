@@ -1,6 +1,7 @@
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
+const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 module.exports ={
