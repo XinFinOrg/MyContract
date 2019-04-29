@@ -28,7 +28,8 @@ const ipfs = new IPFS({
         });
         var authUri = oauthClient.authorizeUri({scope:[OAuthClient.scopes.Accounting],state:'intuit-test'});
         // return res.send({status : true, authUrl : authUri});
-        res.status(200).send({ status: true, login_url:authUri});
+        // res.status(200).send({ status: true, login_url:authUri});
+        //
        }
        catch(e){
            console.log(e);
@@ -46,7 +47,8 @@ const ipfs = new IPFS({
         // console.log('The Token is  '+ JSON.stringify(authResponse.getJson()));
         oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
         
-        res.status(200).send({ status: true, message:"successfully logged in with quickbook"});
+        // res.status(200).send({ status: true, message:"successfully logged in with quickbook"});
+        res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
     })
     .catch(function(e) {
         res.status(404).send({ status: false, message: "please try again" })
