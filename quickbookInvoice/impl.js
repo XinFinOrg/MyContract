@@ -42,7 +42,7 @@ const ipfs = new IPFS({
         var parseRedirect = req.url;
         var clientdata = await client.find({
             where: {
-              'email': req.user.email
+              'email': 'mansi@xinfin.org'
             }
           });
 
