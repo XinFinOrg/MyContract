@@ -28,7 +28,7 @@ const ipfs = new IPFS({
         });
         var authUri = oauthClient.authorizeUri({scope:[OAuthClient.scopes.Accounting],state:'intuit-test'});
         // return res.send({status : true, authUrl : authUri});
-        // res.status(200).send({ status: true, login_url:authUri});
+        res.status(200).send({ status: true, login_url:authUri});
         //
        }
        catch(e){
