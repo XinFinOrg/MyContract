@@ -2,8 +2,7 @@ var OAuthClient = require('intuit-oauth');
 const IPFS = require('ipfs-http-client');
 const fs = require('fs');
 var configAuth = require('../config/auth');
-
-
+var client = db.client;
 
 
 const ipfs = new IPFS({
@@ -37,23 +36,33 @@ const ipfs = new IPFS({
        } 
       },
 
-    callback:(req,res)=>{
+    callback:async (req,res)=>{
+        // console.log(res)
         var parseRedirect = req.url;
+        var clientdata = await client.find({
+            where: {
+              'email': req.user.email
+            }
+          });
 
-//  Exchange the auth code retrieved from the **req.url** on the redirectUri
-    oauthClient.createToken(parseRedirect)
-    .then(function(authResponse) {
-        console.log("Token::",oauthClient.getToken().getToken);
-        // console.log('The Token is  '+ JSON.stringify(authResponse.getJson()));
-        oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
+          clientdata.quickbook_url = parseRedirect;
+          await clientdata.save();
+          res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
+
+// //  Exchange the auth code retrieved from the **req.url** on the redirectUri
+//     oauthClient.createToken(parseRedirect)
+//     .then(function(authResponse) {
+//         console.log("Token::",oauthClient.getToken().getToken);
+//         // console.log('The Token is  '+ JSON.stringify(authResponse.getJson()));
+//         oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
         
-        // res.status(200).send({ status: true, message:"successfully logged in with quickbook"});
-        res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
-    })
-    .catch(function(e) {
-        res.status(404).send({ status: false, message: "please try again" })
+//         // res.status(200).send({ status: true, message:"successfully logged in with quickbook"});
         
-    });
+//     })
+//     .catch(function(e) {
+//         res.status(404).send({ status: false, message: "please try again" })
+        
+//     });
     },
     //quickbook accesstoken valid or not 
     accessTokenValidity:(req,res)=>{
@@ -66,12 +75,20 @@ const ipfs = new IPFS({
             res.send({status:false,message:"Failed"});
         } 
     },
+      
+
     //quickbook dashboard
     dashboard:(req,res)=>{
-        var companyID = oauthClient.getToken().realmId;
-        // console.log(oauthClient.environment,req.url);
-        
-        lastUpdate = '2010-01-01';
+        parseRedirect = req.user.quickbook_url
+        console.log("url",parseRedirect)
+        oauthClient.createToken(parseRedirect)
+          .then(function(authResponse) {
+              console.log("Token::",oauthClient.token.getToken());
+              oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
+              var companyID = oauthClient.getToken().realmId;
+              console.log(companyID);
+      
+              lastUpdate = '2010-01-01';
         var url = oauthClient.environment == 'sandbox' ? OAuthClient.environment.sandbox : OAuthClient.environment.production;
         oauthClient.makeApiCall({url:url + 'v3/company/' + companyID +'/cdc?entities=Invoice, Customer&changedSince=' + lastUpdate})
         .then(function(authResponse){
@@ -79,15 +96,25 @@ const ipfs = new IPFS({
           //   res.send(JSON.parse(authResponse.text()));
           data = JSON.parse(authResponse.text());
           dashboardData = data.CDCResponse[0].QueryResponse[0].Invoice;
-          console.log(dashboardData);
-          res.status(200).send({ status: true, data:dashboardData});
+          // console.log(dashboardData);
+            res.send({data:dashboardData});
             
             // res,render('',{invoices:JSON.parse(authResponse.text())});
         })
         .catch(function(e) {
             console.error("Error make api call",e);
-            res.status(400).send({ status: false, message: "server Error" })
         });
+      
+              // res.send(oauth2_token_json);
+      
+      
+              //  oauthClient.setToken(oauth2_token_json);
+              //  res.redirect('/dashboard');
+          })
+          .catch(function(e) {
+              console.error("The error message is :"+e);
+              console.error(e.intuit_tid);
+          });
     },
 
     //quickbook upload invoice

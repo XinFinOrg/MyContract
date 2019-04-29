@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:true,
     },
+    quickbook_url:
+    {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
     isd_code:
     {
       type:DataTypes.INTEGER,
