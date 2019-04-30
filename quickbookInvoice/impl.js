@@ -24,7 +24,7 @@ const ipfs = new IPFS({
             clientId : configAuth.quickbook.clientId,
             clientSecret : configAuth.quickbook.clientSecret,
             environment : configAuth.quickbook.environment,
-            redirectUri : configAuth.quickbook.redirectUri
+            redirectUri : configAuth.quickbook.redirectUri,
         });
         var authUri = oauthClient.authorizeUri({scope:[OAuthClient.scopes.Accounting],state:'intuit-test'});
         // return res.send({status : true, authUrl : authUri});
@@ -40,15 +40,26 @@ const ipfs = new IPFS({
     callback:async (req,res)=>{
         // console.log(res)
         var parseRedirect = req.url;
-        var clientdata = await client.find({
-            where: {
-              'email': 'mansi@xinfin.org'
-            }
-          });
+        // var clientdata = await client.find({
+        //     where: {
+        //       'email': 'mansi@xinfin.org'
+        //     }
+        //   });
 
-          clientdata.quickbook_url = parseRedirect;
-          await clientdata.save();
-          res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
+        //   clientdata.quickbook_url = parseRedirect;
+        //   await clientdata.save();
+          oauthClient.createToken(parseRedirect)
+          .then(function(authResponse) {
+              console.log("Token::",oauthClient.token.getToken());
+              oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
+              res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
+    
+          })
+          .catch(function(e) {
+              console.error("The error message is :"+e);
+              console.error(e.intuit_tid);
+          });
+          
 
 // //  Exchange the auth code retrieved from the **req.url** on the redirectUri
 //     oauthClient.createToken(parseRedirect)
@@ -80,16 +91,12 @@ const ipfs = new IPFS({
 
     //quickbook dashboard
     dashboard:(req,res)=>{
-        parseRedirect = req.user.quickbook_url
-        console.log("url",parseRedirect)
-        oauthClient.createToken(parseRedirect)
-          .then(function(authResponse) {
-              console.log("Token::",oauthClient.token.getToken());
-              oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
-              var companyID = oauthClient.getToken().realmId;
-              console.log(companyID);
-      
-              lastUpdate = '2010-01-01';
+        // parseRedirect = req.user.quickbook_url
+        // console.log("url",parseRedirect)
+        var companyID = oauthClient.getToken().realmId;
+        console.log(companyID);
+
+        lastUpdate = '2010-01-01';
         var url = oauthClient.environment == 'sandbox' ? OAuthClient.environment.sandbox : OAuthClient.environment.production;
         oauthClient.makeApiCall({url:url + 'v3/company/' + companyID +'/cdc?entities=Invoice, Customer&changedSince=' + lastUpdate})
         .then(function(authResponse){
@@ -105,17 +112,6 @@ const ipfs = new IPFS({
         .catch(function(e) {
             console.error("Error make api call",e);
         });
-      
-              // res.send(oauth2_token_json);
-      
-      
-              //  oauthClient.setToken(oauth2_token_json);
-              //  res.redirect('/dashboard');
-          })
-          .catch(function(e) {
-              console.error("The error message is :"+e);
-              console.error(e.intuit_tid);
-          });
     },
 
     //quickbook upload invoice
