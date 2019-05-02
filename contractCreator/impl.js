@@ -257,7 +257,7 @@ module.exports = {
       amtstanding: req.body.amtstanding,
       types: req.body.type,
       frequency: req.body.frequency,
-      firstdate: req.body.firstdate,
+      firstDate: req.body.firstdate,
       rate: req.body.rate,
       benchmark: req.body.benchmark,
       decimalInZero: decimalInZero,
