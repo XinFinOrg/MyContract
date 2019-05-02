@@ -21,6 +21,6 @@ pragma solidity ^0.4.24;
 
 
 contract Coin is ERC20,Ownable,ERC20Detailed<%- inherits %>{
-        constructor() ERC20(<%- totalSupply %><%- decimalInZero %>)ERC20Detailed('<%- name %>','<%- symbol %>','<%- industry %>','<%- isin %>','<%- cusip %>','<%- moodys %>','<%- snp %>','<%- fitch %>','<%-fsdate  %>','<%- maturitydate %>', '<%- facevalue %>', '<%-amtstanding  %>','<%- types %>','<%- frequency %>', '<%- firstDate %>','<%- rate %>','<%-benchmark  %>',<%- decimal %>)<%- ERC20CappedSign %>{}
+        constructor() ERC20(<%- totalSupply %><%- decimalInZero %>)ERC20Detailed('<%- name %>','<%- symbol %>','<%- industry %>','<%- isin %>','<%- cusip %>','<%- moodys %>','<%- snp %>','<%- fitch %>','<%-fsdate  %>','<%- maturitydate %>', '<%- facevalue %>', '<%-amtstanding  %>','<%- types %>','<%- frequency %>', '<%- firstDate %>',<%- decimal %>)<%- ERC20CappedSign %>{}
 
 }
