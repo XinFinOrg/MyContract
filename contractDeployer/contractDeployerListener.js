@@ -47,7 +47,7 @@ module.exports =
            else{
             etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
             .then(async tokenReceipt => {
-              console.log("Here:Ropsten Send Token reciept:",tokenReceipt)
+              console.log("Here:Ropsten Send ERC20 Token reciept:",tokenReceipt)
               projectData.tokenContractAddress = tokenReceipt.contractAddress;
               projectData.tokenContractHash = tokenReceipt.transactionHash;
               var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
