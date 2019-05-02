@@ -174,6 +174,131 @@ module.exports = {
       res.end();
     });
   },
+
+  createZeroBondContract: async (req, res) => {
+    console.log("body",req.body);
+    var Roles = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/Roles.sol');
+    var ERC20 = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20.sol');
+    var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Detailed.sol');
+    var IERC20 = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/IERC20.sol');
+    var Ownable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/Ownable.sol');
+    var SafeERC20 = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/SafeERC20.sol');
+    var SafeMath = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/SafeMath.sol');
+    var SignerRole = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/SignerRole.sol');
+    var isPausable = (req.body.isPausable == "on") ? true : false;
+    var isBurnable = (req.body.isBurnable == "on") ? true : false;
+    var isMintable = (req.body.isMintable == "on") ? true : false;
+    var isUpgradeable = (req.body.isUpgradeable == "on") ? true : false;
+    var ERC20CappedSign = "";
+    inherits = "";
+    var decimalInZero = "";
+
+    for (let index = 0; index < req.body.tokenDecimals; index++) {
+      decimalInZero += "0"
+
+    }
+
+    if (isBurnable) {
+      var ERC20Burnable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Burnable.sol');
+      inherits += ", ERC20Burnable";
+    }
+    if (isPausable) {
+      var Pausable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/Pausable.sol');
+      var PauserRole = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/PauserRole.sol');
+      var ERC20Pausable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Pausable.sol');
+      inherits += " , ERC20Pausable";
+    }
+    if (isMintable) {
+      var MinterRole = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/MinterRole.sol');
+      var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Capped.sol');
+      var ERC20Mintable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Mintable.sol');
+      var CapperRole = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/CapperRole.sol');
+      var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/ERC20Capped.sol');
+
+      ERC20CappedSign = "ERC20Capped(" + req.body.token_supply * 10 + "000000000000000000)"
+      inherits += ", ERC20Mintable,ERC20Capped";
+    }
+    if (isUpgradeable) {
+      var Upgradable = await fileReader.readEjsFile(__dirname + '/ZEROBondcontracts/Upgradable.sol');
+      inherits += " , Upgradeable";
+    }
+    ejs.renderFile(__dirname + '/ZEROBondcontracts/Coin.sol', {
+      "SafeERC20": SafeERC20,
+      "SafeMath": SafeMath,
+      "IERC20": IERC20,
+      "ERC20": ERC20,
+      "ERC20Capped": ERC20Capped,
+      "ERC20Detailed": ERC20Detailed,
+      "MinterRole": MinterRole,
+      "Ownable": Ownable,
+      "Pausable": Pausable,
+      "PauserRole": PauserRole,
+      "Roles": Roles,
+      "CapperRole": CapperRole,
+      "SignerRole": SignerRole,
+      "ERC20Burnable": ERC20Burnable,
+      "ERC20Pausable": ERC20Pausable,
+      "Upgradable": Upgradable,
+      "ERC20Mintable": ERC20Mintable,
+      //data from form
+      totalSupply: req.body.tokenSupply,
+      name: req.body.tokenName,
+      symbol: req.body.tokenSymbol,
+      decimal: req.body.tokenDecimals,
+      industry: req.body.industry,
+      isin: req.body.isin,
+      cusip:req.body.cusip,
+      moodys: req.body.moodys,
+      snp: req.body.snp,
+      fitch: req.body.fitch,
+      fsdate: req.body.fsdate,
+      maturitydate: req.body.maturitydate,
+      facevalue: req.body.ethRate,
+      amtstanding: req.body.amtstanding,
+      types: req.body.type,
+      frequency: req.body.frequency,
+      firstdate: req.body.firstdate,
+      rate: req.body.rate,
+      benchmark: req.body.benchmark,
+      decimalInZero: decimalInZero,
+      ERC20CappedSign: ERC20CappedSign
+    }, async (err, data) => {
+      if (err)
+        console.log(err);
+        console.log("file rendered erc20");
+      req.session.contract = data;
+      req.session.coinName = req.body.tokenName;
+      // nodemailerservice.sendContractEmail(req.user.email, data);
+      var clientdata = await client.find({
+        where: {
+          'email': req.user.email
+        }
+      });
+      var objdata = new Object();
+      objdata.contractCode = result;
+      objdata.coinName = req.body.tokenName;
+      objdata.tokenSupply = req.body.tokenSupply;
+      objdata.coinSymbol = req.body.tokenSymbol;
+      objdata.ETHRate = req.body.ethRate;
+      objdata.tokenContractCode = data;
+      objdata.bonusRate = req.body.bonusRate == '' ? 0 : req.body.bonusRate;
+      objdata.bonusStatus = req.body.bonusRate == null ? true : false;
+      console.log("object",objdata);
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      })
+      console.log("data to be send");
+      res.setHeader('Content-Type', 'text/plain');
+      res.writeHead("200");
+      res.write(objdata.tokenContractCode);
+      res.end();
+    });
+  },
   createERC223Contract: async (req, res) => {
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC223contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC223contracts/ERC20.sol');

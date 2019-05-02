@@ -9,6 +9,7 @@ var configAuth = require('../config/auth');
 module.exports = function (app) {
   app.post("/v1/smartcontract/ERC721", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC721Contract);
   app.post("/v1/smartcontract/ERC20", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC20Contract);
+  app.post("/v1/smartcontract/ZEROBond", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createZeroBondContract);
   app.post("/v1/smartcontract/ERC223", isLoggedIn, checkSecret, coinNameExist, hasPackage1, impl.createERC223Contract);
 }
 
