@@ -52,7 +52,7 @@ const ipfs = new IPFS({
           .then(function(authResponse) {
               console.log("Token::",oauthClient.token.getToken());
               oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
-              res.status(301).redirect("https://demo.tradefinex.org/publicv/quickbook_dashboard");
+              res.status(301).redirect("http://localhost/DemoTradeFinex/publicv/quickbook_dashboard");
     
           })
           .catch(function(e) {
