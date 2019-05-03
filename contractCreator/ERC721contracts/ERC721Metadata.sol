@@ -15,6 +15,10 @@ contract ERC721Metadata is ERC165, ERC721, IERC721Metadata {
   // Token symbol
   string internal _symbol;
 
+  string internal _duedate;
+
+  string internal _amount;
+
   // Optional mapping for token URIs
   mapping(uint256 => string) private _tokenURIs;
 
@@ -29,9 +33,11 @@ contract ERC721Metadata is ERC165, ERC721, IERC721Metadata {
   /**
    * @dev Constructor function
    */
-  constructor(string name, string symbol) public {
+  constructor(string name, string symbol,string duedate,string amount) public {
     _name = name;
     _symbol = symbol;
+    _duedate = duedate;
+    _amount = amount;
 
     // register the supported interfaces to conform to ERC721 via ERC165
     _registerInterface(InterfaceId_ERC721Metadata);
@@ -51,6 +57,22 @@ contract ERC721Metadata is ERC165, ERC721, IERC721Metadata {
    */
   function symbol() external view returns (string) {
     return _symbol;
+  }
+
+   /**
+   * @dev Gets the token date
+   * @return string representing the token symbol
+   */
+  function duedate() external view returns (string) {
+    return _duedate;
+  }
+
+   /**
+   * @dev Gets the token amount
+   * @return string representing the token symbol
+   */
+  function amount() external view returns (string) {
+    return _amount;
   }
 
   /**

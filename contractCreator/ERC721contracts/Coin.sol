@@ -385,7 +385,7 @@ contract ERC721 is ERC165, IERC721 {
  * @dev see https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
  */
 contract ERC721Full is ERC721, ERC721Enumerable, ERC721Metadata {
-  constructor(string name, string symbol) ERC721Metadata(name, symbol) public
+  constructor(string name, string symbol,string duedate, string amount) ERC721Metadata(name, symbol,duedate,amount) public
   {
   }
 }
@@ -399,6 +399,6 @@ contract ERC721Full is ERC721, ERC721Enumerable, ERC721Metadata {
 <%- Ownable %>
 
 contract Coin is ERC721Full<%=inherits %> {
-  constructor() ERC721Full("<%= tokenName %>", "<%= tokenSymbol %>") public {
+  constructor() ERC721Full("<%= tokenName %>", "<%= tokenSymbol %>","<%= duedate %>","<%= amount %>") public {
   }
 }

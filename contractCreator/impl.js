@@ -446,6 +446,8 @@ module.exports = {
       'Ownable': Ownable,
       'tokenName': req.body.tokenName,
       'tokenSymbol': req.body.tokenSymbol,
+      'duedate':req.body.date,
+      'amount':req.body.amount,
       'inherits': inherits
     }, async (err, data) => {
       if (err)
