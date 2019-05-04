@@ -4,6 +4,7 @@ const fs = require('fs');
 var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
+const path = require('path');
 
 
 const ipfs = new IPFS({
