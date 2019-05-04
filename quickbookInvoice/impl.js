@@ -144,6 +144,24 @@ const ipfs = new IPFS({
         }
         
 
+    },
+
+    //quickbook invoice manual
+    upload:(req,res)=>{
+        try{
+            let path1 = path.join(__dirname, '../');
+  console.log(path1);
+  let data = fs.readFileSync(path1 + '/uploads/invoice_1245.pdf');
+  let buffer = Buffer.from(data);
+  ipfs.add(data, (err, ipfsHash) => {
+
+    console.log(ipfsHash[0].hash);
+    res.status(200).send({status:true,hash:ipfsHash[0].hash});
+        });
+    }catch(e){
+        console.log(e);
+        res.status(200).send({status:false,hash:"Server Error"});
+    }
     }
     
-  }
+}
