@@ -5,6 +5,8 @@ var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
 const path = require('path');
+var ejs = require('ejs');
+var pdf = require('html-pdf');
 
 
 const ipfs = new IPFS({
@@ -113,6 +115,54 @@ const ipfs = new IPFS({
         .catch(function(e) {
             console.error("Error make api call",e);
         });
+    },
+
+    //upload invoice to ipfs
+    uploadQuickBookInvoice:(req,res)=>{
+        try{
+            var companyID = oauthClient.getToken().realmId;
+  console.log(req.query.id);
+  lastUpdate = '2010-01-01';
+  var url = oauthClient.environment == 'sandbox' ? OAuthClient.environment.sandbox : OAuthClient.environment.production;
+  oauthClient.makeApiCall({ url: url + 'v3/company/' + companyID + '/invoice/'+req.query.id})
+    .then(function (authResponse) {
+      data = JSON.parse(authResponse.text());
+      console.log(data);
+      dashboardData = data.Invoice;
+      console.log(dashboardData.CustomerRef.name);
+      let path1 = path.join(__dirname, '../');
+      console.log(path1+'/views/invoice.ejs');
+      ejs.renderFile(path1+'/views/invoice.ejs',{data:dashboardData}, function(err, result) {
+        // render on success
+        if (result) {
+           html = result;
+        //    console.log(html);
+           var options = { filename: 'invoice_'+req.id+'.pdf', format: 'A3', orientation: 'portrait',type: "pdf" };
+           pdf.create(result, options).toFile('./uploads/invoice_'+req.id+'.pdf', function(err, result) {
+            if (err) return console.log(err);
+            console.log(result.filename);
+            let data = fs.readFileSync(result.filename);
+
+            ipfs.add(data, (err, ipfsHash) => {
+
+              console.log(ipfsHash);
+              res.status(200).send({status:true,hash:ipfsHash[0].hash});
+            });
+            console.log(res); // { filename: '/app/businesscard.pdf' }
+           })
+        }
+        // render or error
+        else {
+           res.end('An error occurred');
+           console.log(err);
+        }
+    });
+  })
+        }
+        catch(e){
+            console.log(e);
+            res.send({status:false,message:"Failed"});
+        }
     },
 
     //quickbook upload invoice

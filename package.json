@@ -36,6 +36,7 @@
     "fs-extra": "^7.0.1",
     "helmet": "^3.14.0",
     "helmet-csp": "^2.7.1",
+    "html-pdf": "^2.2.0",
     "http-errors": "~1.6.2",
     "image-data-uri": "^1.1.1",
     "intuit-oauth": "^1.1.3",
