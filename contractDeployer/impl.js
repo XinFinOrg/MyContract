@@ -20,11 +20,17 @@ var web3 = new Web3();
 
 
 module.exports = {
-  getBytecode: async function (req, res) {
+  getBytecode: async function(req, res) {
     console.log(req.body)
     var coinName = req.query.coinName;
     var address = req.cookies['address'];
-    let eth_address = await db.userCurrencyAddress.findAll({ where: { "client_id": req.user.uniqueId, "currencyType": "masterEthereum" }, raw: true, })
+    let eth_address = await db.userCurrencyAddress.findAll({
+      where: {
+        "client_id": req.user.uniqueId,
+        "currencyType": "masterEthereum"
+      },
+      raw: true,
+    })
     ProjectConfiguration.find({
       where: {
         'coinSymbol': coinName
@@ -45,7 +51,7 @@ module.exports = {
       } else {
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
-          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']    //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
+          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'] //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
           projectData.tokenByteCode = byteCode.bytecode;
           projectData.tokenABICode = byteCode.interface;
           byteCode = byteCode.bytecode
@@ -57,7 +63,7 @@ module.exports = {
       })
     });
   },
-  saveDeploymentData: async function (req, res) {
+  saveDeploymentData: async function(req, res) {
     console.log(req.query)
     ProjectConfiguration.find({
       where: {
@@ -91,7 +97,7 @@ module.exports = {
       }
     })
   },
-  generatedContract: async function (req, res) {
+  generatedContract: async function(req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     ProjectConfiguration.find({
@@ -126,7 +132,7 @@ module.exports = {
     })
   },
 
-  crowdsaleDeployer: async function (req, res) {
+  crowdsaleDeployer: async function(req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     res.render(path.join(__dirname, './', 'dist', 'crowdsaleDeployer.ejs'), {
@@ -136,7 +142,7 @@ module.exports = {
     });
   },
 
-  getDeployer: async function (req, res) {
+  getDeployer: async function(req, res) {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     if (req.query.coinName == null) {
@@ -151,9 +157,19 @@ module.exports = {
     }
   },
 
-  getAutomaticDeployer: async function (req, res) {
-    let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.query.coinName } });
-    let accountData = await userCurrencyAddress.find({ where: { 'client_id': req.user.uniqueId, 'currencyType': 'Ethereum', 'project_id': req.query.coinName } })
+  getAutomaticDeployer: async function(req, res) {
+    let projectData = await ProjectConfiguration.find({
+      where: {
+        'coinName': req.query.coinName
+      }
+    });
+    let accountData = await userCurrencyAddress.find({
+      where: {
+        'client_id': req.user.uniqueId,
+        'currencyType': 'Ethereum',
+        'project_id': req.query.coinName
+      }
+    })
     projectData.crowdsaleContractAddress = "Deployment is in process";
     projectData.tokenContractAddress = "Deployment is in process";
     projectData.networkType = req.query.network;
@@ -170,7 +186,7 @@ module.exports = {
             privateICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
               .then(async tokenReceipt => {
                 console.log(tokenReceipt, "here 2")
-                projectData.tokenContractAddress = tokenReceipt.contractAddress;
+                projectData.tokenContractAddress = "0x" + tokenReceipt.contractAddress.substring(3);
                 projectData.tokenContractHash = tokenReceipt.transactionHash;
                 var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
                 var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
@@ -182,7 +198,7 @@ module.exports = {
                 }, async (err, data) => {
                   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
                   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
-                  byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
+                  byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)
                   projectData.crowdsaleByteCode = byteCode2.bytecode;
                   projectData.crowdsaleABICode = byteCode2.interface;
                   projectData.crowdsaleContractCode = data;
@@ -190,7 +206,7 @@ module.exports = {
                     .then(async crowdsaleReceipt => {
                       console.log(tokenReceipt, "here 3")
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
-                      projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
+                      projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
                     })
                     .catch(async e => {
@@ -207,8 +223,7 @@ module.exports = {
       } catch (e) {
         console.error('error in deployment ', e);
       }
-    }
-    else if (req.query.network == 'testnet') {
+    } else if (req.query.network == 'testnet') {
       try {
         etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
@@ -253,8 +268,7 @@ module.exports = {
       } catch (e) {
         console.error('error in deployment ', e);
       }
-    }
-    else {
+    } else {
       try {
         console.log(accountData.address, "heello")
         byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
@@ -303,7 +317,7 @@ module.exports = {
 
 function getProjectArray(email) {
   var projectArray = [];
-  return new Promise(async function (resolve, reject) {
+  return new Promise(async function(resolve, reject) {
     client.find({
       where: {
         'email': email

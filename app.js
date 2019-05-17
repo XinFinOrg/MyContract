@@ -111,7 +111,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 //Creating all app routes
-app.use('/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));
+// app.use('/:projectName/user', require('./icoDashboardCreator/userAuthRoutes'));
 require('./routes')(app);
 require('./userlogin/routes')(app);
 require('./contractCreator/routes')(app);
@@ -137,7 +137,7 @@ app.use(function (err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({sync:false}).then(() => {
+db.sequelize.sync({force:false}).then(() => {
   console.log("Sync done");
 });
 // require('./coinPayments/impl');
