@@ -73,9 +73,9 @@
     "sequelize-auto-migrations": "^1.0.2",
     "sequelize-cli": "^5.3.0",
     "sleep": "^5.2.3",
-    "solc": "^0.4.25",
+    "solc": "0.4.25",
     "w": "^1.1.0",
-    "web3": "^1.0.0-beta.31",
+    "web3": "1.0.0-beta.36",
     "winston": "^3.1.0"
   }
 }
