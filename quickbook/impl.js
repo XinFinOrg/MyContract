@@ -108,18 +108,6 @@ module.exports =
            
             res.send(ipfsHash);
           }); 
-    // ipfs.add(fileDetails, options)
-    //   .then((response) => {
-    //     console.log(response)
-    //     // CID of wrapping directory is returned last
-    //     ipfsId = response[response.length - 1].hash
-    //     console.log(ipfsId)
-    //     res.send(ipfsId);
-    //   }).catch((err) => {
-    //     console.error(err)
-    //   })
-
-    //     res.send ('200');
     },
 
 }
