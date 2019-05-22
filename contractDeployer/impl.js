@@ -65,7 +65,7 @@ module.exports = {
       projectData.networkURL = "#"
       await projectData.save();
       // res.send({status:true,message:"Deployment is in process"})
-      if (req.body.network == 'private') {
+      if (req.body.network == 'apothem') {
         try {
           privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {

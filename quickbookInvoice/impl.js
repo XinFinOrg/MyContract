@@ -63,21 +63,6 @@ const ipfs = new IPFS({
               console.error(e.intuit_tid);
           });
           
-
-// //  Exchange the auth code retrieved from the **req.url** on the redirectUri
-//     oauthClient.createToken(parseRedirect)
-//     .then(function(authResponse) {
-//         console.log("Token::",oauthClient.getToken().getToken);
-//         // console.log('The Token is  '+ JSON.stringify(authResponse.getJson()));
-//         oauth2_token_json = JSON.stringify(authResponse.getJson(), null,2);
-        
-//         // res.status(200).send({ status: true, message:"successfully logged in with quickbook"});
-        
-//     })
-//     .catch(function(e) {
-//         res.status(404).send({ status: false, message: "please try again" })
-        
-//     });
     },
     //quickbook accesstoken valid or not 
     accessTokenValidity:(req,res)=>{

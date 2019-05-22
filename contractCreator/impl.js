@@ -437,6 +437,7 @@ module.exports = {
       'Roles': Roles,
       'ERC721Holder': ERC721Holder,
       'Address': Address,
+      
       'ERC165': ERC165,
       'ERC721Enumerable': ERC721Enumerable,
       'ERC721Metadata': ERC721Metadata,

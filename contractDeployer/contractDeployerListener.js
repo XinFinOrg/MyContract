@@ -94,12 +94,12 @@ module.exports =
             
         }
         //for xinfin network
-        else if(req.body.network == 'private')
+        else if(req.body.network == 'apothem')
         {
             privateICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
               .then(async tokenReceipt => {
                 // console.log(tokenReceipt, "here 2")
-                projectData.tokenContractAddress = tokenReceipt.contractAddress;
+                projectData.tokenContractAddress = "0x" + tokenReceipt.contractAddress.substring(3);
                 projectData.tokenContractHash = tokenReceipt.transactionHash;
                 var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
                 var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
@@ -115,11 +115,12 @@ module.exports =
                   projectData.crowdsaleByteCode = byteCode2.bytecode;
                   projectData.crowdsaleABICode = byteCode2.interface;
                   projectData.crowdsaleContractCode = data;
-                  privateICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
+                  if(type !='erc721'){
+                    privateICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
                     .then(async crowdsaleReceipt => {
                       console.log(crowdsaleReceipt, "here 3")
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
-                      projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
+                      projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);;
                       await projectData.save();
                     //   res.status(200).send({ tokenReceipt: tokenReceipt, crowdsaleReceipt: crowdsaleReceipt })
                     })
@@ -131,6 +132,11 @@ module.exports =
                     //   res.status(200).send({ status: false, message: "Network error occured! Please try again" })
                         
                     })
+                  }
+                  else{
+                    await projectData.save();
+                  }
+                  
                 })
               })
               .catch(async e => 
