@@ -52,6 +52,7 @@ module.exports = {
     })
   },
   getAutomaticDeployer: async function (req, res) {
+    console.log("Body",req.body);
     var type = req.body.type;
     let projectData = await ProjectConfiguration.find({ where: { 'coinName': req.body.coinName, 'client_id': req.user.uniqueId } });
     if (projectData == null) {
@@ -69,8 +70,9 @@ module.exports = {
         try {
           privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
             .then(async r => {
-              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData);
               res.send({status:true,message:"Deployment is in process"})
+              contractDeployerListener.createAutomaticDeployer(req,projectData,accountData,type);
+              
             })
             .catch(e => res.status(400).send({ status: false, message: "Network error occured! Please try again" })
             );
