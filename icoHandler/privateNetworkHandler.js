@@ -39,6 +39,7 @@ module.exports = {
     return new Promise(async function(resolve, reject) {
       web3.eth.estimateGas(txData).then(gasLimit => {
         txData["gasLimit"] = gasLimit;
+        console.log("txData",txData);
         web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
           // web3.eth.sendSignedTransaction(result.rawTransaction)
           //   .on('receipt', async function(receipt) {
@@ -47,6 +48,7 @@ module.exports = {
           //   .on('error', async function(error) {
           //     reject(error)
           //   })
+          console.log("Sign",result);
           axios({
               method: 'post',
               url: 'https://testnet.xinfin.network',
