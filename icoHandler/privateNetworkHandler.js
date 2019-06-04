@@ -3,7 +3,7 @@ var config = require('../config/paymentListener');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider('https://testnet.xinfin.network'));
+var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
 var axios = require("axios");
 
 
@@ -31,7 +31,7 @@ module.exports = {
     });
   },
   sendEther: async (address, amount) => {
-    var mainPrivateKey = '0x473CF6798C051906295607033DA211FF4DF476E327C971F6891C4C23CE4AB5EA';
+    var mainPrivateKey = '045c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
     var txData = {
       "to": address,
       "value": amount, // "0x06f05b59d3b200000"
@@ -51,7 +51,7 @@ module.exports = {
           console.log("Sign",result);
           axios({
               method: 'post',
-              url: 'https://testnet.xinfin.network',
+              url: 'https://rpc.xinfin.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -70,7 +70,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://testnet.xinfin.network',
+                    url: 'https://rpc.xinfin.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -129,7 +129,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://testnet.xinfin.network',
+              url: 'https://rpc.xinfin.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -148,7 +148,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://testnet.xinfin.network',
+                    url: 'https://rpc.xinfin.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -207,7 +207,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://testnet.xinfin.network',
+              url: 'https://rpc.xinfin.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -250,7 +250,7 @@ module.exports = {
         web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
           axios({
               method: 'post',
-              url: 'https://testnet.xinfin.network',
+              url: 'https://rpc.xinfin.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -269,7 +269,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://testnet.xinfin.network',
+                    url: 'https://rpc.xinfin.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
