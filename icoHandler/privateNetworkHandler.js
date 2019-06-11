@@ -31,7 +31,7 @@ module.exports = {
     });
   },
   sendEther: async (address, amount) => {
-    var mainPrivateKey = '045c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
+    var mainPrivateKey = '0x45c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
     var txData = {
       "to": address,
       "value": amount, // "0x06f05b59d3b200000"
