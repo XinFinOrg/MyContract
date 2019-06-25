@@ -101,7 +101,7 @@
                                  <%= if(ProjectConfiguration.networkType == 'mainnet'){%>
                                   <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.tokenContractHash %>"
                                       target="_blank">Click here</a> </td>
-                                  <% } elseif(ProjectConfiguration.networkType == 'apothem'){%>
+                                  <% } else if(ProjectConfiguration.networkType == 'apothem'){%>
                                     <td><a href="https://explorer.apothem.network/tx/<%= ProjectConfiguration.tokenContractHash %>"
                                       target="_blank">Click here</a></td> 
                                       <% } else { %>
