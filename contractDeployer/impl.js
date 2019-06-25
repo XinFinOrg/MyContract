@@ -175,7 +175,7 @@ module.exports = {
     projectData.networkType = req.query.network;
     projectData.networkURL = "#"
     await projectData.save();
-    if (req.query.network == 'private') {
+    if (req.query.network == 'mainnet') {
       try {
         privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
