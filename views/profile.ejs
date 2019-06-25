@@ -98,13 +98,8 @@
                                   <td>
                                     <%= ProjectConfiguration.tokenContractAddress %>
                                   </td>
-                                 <%= if(ProjectConfiguration.networkType == 'mainnet'){ %>
-                                  <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.tokenContractHash %>"
-                                      target="_blank">Click here</a> </td>
-                                      <% } else { %>
-                                        <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>"
-                                          target="_blank">Click here</a></td>
-                                          <% } %>           
+                                  <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>"
+                                    target="_blank">Click here</a></td>          
                                   <% } else { %>
                                     <td colspan="2"> Not deployed yet
                                       <% } %>
