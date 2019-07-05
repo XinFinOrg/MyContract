@@ -354,7 +354,7 @@
           if (isMainnet == '1') {
             console.log('in here 1')
             if (globalEthBalance == 0.5) {
-              window.location.href = "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
+              window.location.href = "/api/automaticDeployment?network=ethereum&coinName=" + coinName;
             } else {
               $('#networkModal').modal('hide');
               $('#mainnetBalanceError').modal('show');
@@ -363,9 +363,13 @@
             console.log('in here 2')
             window.location.href = "/api/automaticDeployment?network=testnet&coinName=" + coinName;
           }
-          else {
+          else if(isMainnet =='3') {
             console.log('in here 3')
             window.location.href = "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
+          }
+          else{
+            console.log('in here 4')
+            window.location.href = "/api/automaticDeployment?network=apothem&coinName=" + coinName;
           }
         }
       }
