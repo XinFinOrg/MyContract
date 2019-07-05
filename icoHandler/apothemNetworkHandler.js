@@ -3,7 +3,7 @@ var config = require('../config/paymentListener');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://apothem.xinfin.network'));
+var web3 = new Web3(new Web3.providers.HttpProvider('http://rpc.apothem.network'));
 var axios = require("axios");
 
 
@@ -53,7 +53,7 @@ module.exports = {
           console.log("SignedTransaction",result);
           axios({
               method: 'post',
-              url: 'http://apothem.xinfin.network',
+              url: 'http://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
