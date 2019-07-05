@@ -72,7 +72,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    url: 'http://rpc.apothem.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -131,7 +131,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              url: 'http://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -150,7 +150,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    url: 'http://rpc.apothem.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -209,7 +209,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              url: 'http://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -252,7 +252,7 @@ module.exports = {
         web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              url: 'http://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -271,7 +271,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    url: 'http://rpc.apothem.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
