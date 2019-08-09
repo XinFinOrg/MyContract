@@ -62,7 +62,23 @@ module.exports = {
         });
       });
     }
-    else if (projectConfi.networkType == 'mainnet') {
+    else if (projectConfi.networkType == 'mainnet'){
+      console.log("in mainnet xinfin");
+      await Promise.all([privateListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), privateListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), privateListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
+        res.render('icoDashboard', {
+          'ethBalance': ethBalance,
+          'btcBalance': btcBalance,
+          'user': req.user,
+          'projectName': req.params.projectName,
+          'userCount': userCount,
+          'verifiedUserCount': verifiedUserCount,
+          'transactionLog': transactionLog,
+          'tokenBalance': tokenBalance,
+          'crowdsaleBalance': crowdsaleBalance
+        });
+      })
+    }
+    else{
       console.log("in mainnet"); await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), icoListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), icoListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
         res.render('icoDashboard', {
           'ethBalance': ethBalance,
@@ -77,22 +93,7 @@ module.exports = {
         });
       });
     }
-    else {
-      console.log("in private");
-      await Promise.all([icoListener.checkEtherBalance(eth_address[0].address), icoListener.checkBalance(btc_address[0].address), privateListener.checkTokenBalance(projectConfi.tokenContractAddress, projectConfi.tokenContractAddress), privateListener.checkTokenBalance(projectConfi.crowdsaleContractAddress, projectConfi.tokenContractAddress)]).then(([ethBalance, btcBalance, tokenBalance, crowdsaleBalance]) => {
-        res.render('icoDashboard', {
-          'ethBalance': ethBalance,
-          'btcBalance': btcBalance,
-          'user': req.user,
-          'projectName': req.params.projectName,
-          'userCount': userCount,
-          'verifiedUserCount': verifiedUserCount,
-          'transactionLog': transactionLog,
-          'tokenBalance': tokenBalance,
-          'crowdsaleBalance': crowdsaleBalance
-        });
-      })
-    }
+    
   },
   tokenTrasfer: async function (req, res) {
     let projectConfi = await ProjectConfiguration.find({ where: { 'coinName': req.params.projectName } })
