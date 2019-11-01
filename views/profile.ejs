@@ -104,8 +104,11 @@
                                  <% }else if(ProjectConfiguration.networkType == "apothem") { %>
                                   <td><a href="https://explorer.apothem.network/tx/<%= ProjectConfiguration.tokenContractHash %>"
                                     target="_blank">Click here</a></td>  
+                                  <%} else if (ProjectConfiguration.networkType == "ethereum") { %>
+                                  <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>"
+                                    target="_blank">Click here</a></td> 
                                   <%} else { %>
-                                  <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>"
+                                    <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.tokenContractHash %>"
                                     target="_blank">Click here</a></td> 
                                     <% } %>         
                                   <% } else { %>
@@ -115,7 +118,7 @@
                                           <td>
                                             <%= ProjectConfiguration.crowdsaleContractAddress %>
                                           </td>
-                                          <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
+                                          <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
                                               target="_blank">Click here
                                             </a> </td>
                                           <% } else { %>
