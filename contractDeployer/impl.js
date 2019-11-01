@@ -321,46 +321,93 @@ module.exports = {
       }
     } else {
       try {
-        console.log(accountData.address, "heello")
-        byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
-        projectData.tokenByteCode = byteCode.bytecode;
-        projectData.tokenABICode = byteCode.interface;
-        etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
-          .then(async tokenReceipt => {
-            projectData.tokenContractAddress = tokenReceipt.contractAddress;
-            projectData.tokenContractHash = tokenReceipt.transactionHash;
-            var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
-            var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
-            var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
-            ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
-              "SafeERC20": SafeERC20,
-              "SafeMath": SafeMath,
-              "IERC20": IERC20,
-            }, async (err, data) => {
-              nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-              byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
-              byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
-              projectData.crowdsaleByteCode = byteCode2.bytecode;
-              projectData.crowdsaleABICode = byteCode2.interface;
-              projectData.crowdsaleContractCode = data;
-              etherRopstenICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
-                .then(async crowdsaleReceipt => {
-                  projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
-                  projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
-                  await projectData.save();
+        etherMainnetICOhandler.sendEther(accountData.address, '0x2386F26FC10000')
+          .then(async r => {
+            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            projectData.tokenByteCode = byteCode.bytecode;
+            projectData.tokenABICode = byteCode.interface;
+            etherMainnetICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
+              .then(async tokenReceipt => {
+                projectData.tokenContractAddress = tokenReceipt.contractAddress;
+                projectData.tokenContractHash = tokenReceipt.transactionHash;
+                var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+                var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+                var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+                ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+                  "SafeERC20": SafeERC20,
+                  "SafeMath": SafeMath,
+                  "IERC20": IERC20,                  
+                }, async (err, data) => {
+                  nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
+                  byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                  byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
+                  projectData.crowdsaleByteCode = byteCode2.bytecode;
+                  projectData.crowdsaleABICode = byteCode2.interface;
+                  projectData.crowdsaleContractCode = data;
+                  etherMainnetICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
+                    .then(async crowdsaleReceipt => {
+                      projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
+                      projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
+                      await projectData.save();
+                    })
+                    .catch(async e => {
+                      console.error('error in 2st deployment', e)
+                      projectData.crowdsaleContractAddress = "Network error occured! Please try again";
+                      projectData.tokenContractAddress = "Network error occured!  Please try again";
+                      await projectData.save();
+                    })
                 })
-                .catch(async e => {
-                  console.error('error in 2st deployment', e)
-                  projectData.crowdsaleContractAddress = "Network error occured! Please try again";
-                  projectData.tokenContractAddress = "Network error occured! Please try again";
-                  await projectData.save();
-                })
-            })
+              })
+              .catch(e => console.error('error in 1st deployment', e));
           })
-          .catch(e => console.error('error in 1st deployment', e));
+          .catch(e => console.error('error in sendEther', e));
       } catch (e) {
         console.error('error in deployment ', e);
       }
+      // try {
+        
+      //   console.log(accountData, "heello")
+      //   byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+      //   projectData.tokenByteCode = byteCode.bytecode;
+      //   projectData.tokenABICode = byteCode.interface;
+      //   etherMainnetICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
+      //     .then(async tokenReceipt => {
+      //       projectData.tokenContractAddress = tokenReceipt.contractAddress;
+      //       projectData.tokenContractHash = tokenReceipt.transactionHash;
+      //       var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
+      //       var SafeERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeERC20.sol');
+      //       var SafeMath = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/SafeMath.sol');
+      //       ejs.renderFile(__dirname + '/../contractCreator/ERC20contracts/Crowdsale.sol', {
+      //         "SafeERC20": SafeERC20,
+      //         "SafeMath": SafeMath,
+      //         "IERC20": IERC20,
+      //       }, async (err, data) => {
+      //         nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
+      //         byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+      //         byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
+      //         projectData.crowdsaleByteCode = byteCode2.bytecod
+      //         e;
+      //         projectData.crowdsaleABICode = byteCode2.interface;
+      //         projectData.crowdsaleContractCode = data;
+      //         console.log("PVTKEY",accountData.privateKey)
+      //         etherMainnetICOhandler.sendTransaction(accountData.address, byteCode2.bytecode, accountData.privateKey)
+      //           .then(async crowdsaleReceipt => {
+      //             projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
+      //             projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
+      //             await projectData.save();
+      //           })
+      //           .catch(async e => {
+      //             console.error('error in 2st deployment', e)
+      //             projectData.crowdsaleContractAddress = "Network error occured! Please try again";
+      //             projectData.tokenContractAddress = "Network error occured! Please try again";
+      //             await projectData.save();
+      //           })
+      //       })
+      //     })
+      //     .catch(e => console.error('all_ELSE_error in 1st deployment', e));
+      // } catch (e) {
+      //   console.error('error in deployment ', e);
+      // }
     }
     res.redirect('/')
   },

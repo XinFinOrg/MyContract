@@ -300,7 +300,7 @@
   <%- req.toastr.render() %>
   <% } %>
     <!-- footer -->
-    <footer class="footer text-center">Copyright © 2018 MyContract. All rights reserved.</footer>
+    <footer class="footer text-center">Copyright © 2019 MyContract. All rights reserved.</footer>
     <!-- End footer -->
     <!-- / ICO Plarform Coming Soon modal -->
 
@@ -353,7 +353,7 @@
           console.log('in here ')
           if (isMainnet == '1') {
             console.log('in here 1')
-            if (globalEthBalance == 0.5) {
+            if (globalEthBalance <= 0.1) {
               window.location.href = "/api/automaticDeployment?network=ethereum&coinName=" + coinName;
             } else {
               $('#networkModal').modal('hide');

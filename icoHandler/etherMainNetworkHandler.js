@@ -55,6 +55,7 @@ module.exports = {
             "to": projectData.tokenContractAddress,
             "data": data,
         }
+        // console.log("encoded Abi",txData)
         return new Promise(async function (resolve, reject) {
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
                 console.log(gasLimit);
@@ -68,18 +69,21 @@ module.exports = {
                                 }
                             }
                         })
-                        .on('error', async function (error) { reject(error) })
+                        .on('error', async function (error) {
+                            console.log("Error while transferring token".error)
+                            reject(error) 
+                            })
                 })
             })
         })
     },
 
     // sendTokenFromcrowdsaleContract: async (projectData, address, tokenAmount, tokenAddress, privateKey) => {
-    //     var contractfunc = new web3.eth.Contract(config.crowdsaleABI, projectData.tokenContractAddress, { from: address });
+    //     var contractfunc = new web3.eth.Contract(config.crowdsaleABI, projectData.crowdsaleContractAddress, { from: address });
     //     let data = contractfunc.methods.dispenseTokensToInvestorAddressesByValue(tokenAddress, tokenAmount).encodeABI();
     //     let txData = {
     //         "nonce": await web3.eth.getTransactionCount(address),
-    //         "data":  data,
+    //         "data": data,
     //         'to': projectData.crowdsaleContractAddress,
     //     }
     //     return new Promise(async function (resolve, reject) {
@@ -133,11 +137,33 @@ module.exports = {
         });
     },
 
+    sendEther: async (address, amount) => {
+        return new Promise(async function (resolve, reject) {
+            var mainPrivateKey = '';
+            var txData = {
+                "nonce": await web3.eth.getTransactionCount(''),
+                "to": address,
+                "value": amount, // "0x06f05b59d3b200000"
+            }
+            web3.eth.estimateGas(txData).then(gasLimit => {
+                console.log(gasLimit);
+                txData["gasLimit"] = '0x5208';
+                web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
+                    web3.eth.sendSignedTransaction(result.rawTransaction)
+                        .on('receipt', async function (receipt) { resolve(receipt) })
+                        .on('error', async function (error) { reject(error) })
+                })
+            })
+        })
+    },
+
     sendTransaction: async (address, data, privateKey) => {
         return new Promise(async function (resolve, reject) {
             let txData = {
                 "nonce": await web3.eth.getTransactionCount(address),
                 "data": '0x' + data,
+                // "gasPrice": "0x170cdc1e00",
+                // "gasLimit": "0x2625A0",
             }
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
                 console.log(gasLimit);
