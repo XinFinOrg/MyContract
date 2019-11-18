@@ -880,7 +880,7 @@ a {
 .io-jasmine .heading-sm {
   color: rgba(34, 59, 85, 0.6); }
   .io-jasmine .heading-sm-s2 {
-    color: #16a1ff; }
+    color: #27b79a; }
 .io-jasmine .timeline-title {
   color: #1b6b88; }
 .io-jasmine .timeline-done .timeline-title {
@@ -889,52 +889,52 @@ a {
   color: #4c5a77; }
 .io-jasmine .btn {
   border-radius: 60px;
-  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #16a1ff 100%);
-  background-image: linear-gradient(to right, #1b6b88 0%, #16a1ff 100%); }
+  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #27b79a 100%);
+  background-image: linear-gradient(to right, #1b6b88 0%, #27b79a 100%); }
   .io-jasmine .btn:before {
     border-radius: 60px;
-    background-image: -webkit-linear-gradient(to right, #16a1ff 0%, #1b6b88 100%);
-    background-image: linear-gradient(to right, #16a1ff 0%, #1b6b88 100%); }
+    background-image: -webkit-linear-gradient(to right, #27b79a 0%, #1b6b88 100%);
+    background-image: linear-gradient(to right, #27b79a 0%, #1b6b88 100%); }
   .io-jasmine .btn-outline {
-    border: 2px solid #16a1ff; }
+    border: 2px solid #27b79a; }
     .io-jasmine .btn-outline:hover {
       color: #fff;
-      background: #16a1ff !important; }
+      background: #27b79a !important; }
   .io-jasmine .btn.btn-plane {
-    background: #1b6b88; }
+    background: #27b79a; }
 .io-jasmine .text-block ul:not(.btns) li:before {
-  background: linear-gradient(to right, #1b6b88 0%, #16a1ff 100%); }
+  background: linear-gradient(to right, #1b6b88 0%, #27b79a 100%); }
 .io-jasmine .contact-info-alt li .fa {
-  color: #16a1ff;
+  color: #27b79a;
   background: transparent;
-  border-color: #16a1ff; }
+  border-color: #27b79a; }
 .io-jasmine .navbar-toggler {
-  background: linear-gradient(to right, #1b6b88 0%, #16a1ff 100%); }
+  background: linear-gradient(to right, #1b6b88 0%, #27b79a 100%); }
   .io-jasmine .navbar-toggler:hover, .io-jasmine .navbar-toggler:focus {
-    background: linear-gradient(to right, #16a1ff 0%, #1b6b88 100%); }
+    background: linear-gradient(to right, #27b79a 0%, #1b6b88 100%); }
 .io-jasmine .team-circle-des {
   background: #fff; }
   .io-jasmine .team-circle-des h5 {
     color: #4c5a77; }
   .io-jasmine .team-circle-des span {
-    color: #16a1ff; }
+    color: #27b79a; }
   .io-jasmine .team-circle-des p {
     color: #223b55; }
 .io-jasmine .team-circle-social li a {
-  color: #16a1ff; }
+  color: #27b79a; }
   .io-jasmine .team-circle-social li a:hover {
     color: #1b6b88; }
 .io-jasmine .site-header .navbar-nav > li > a {
   color: #223b55; }
   .io-jasmine .site-header .navbar-nav > li > a:hover, .io-jasmine .site-header .navbar-nav > li > a.active {
-    color: #16a1ff; }
+    color: #27b79a; }
 .io-jasmine .site-header.has-fixed .navbar {
   background: #FFF;
   box-shadow: 0px 1px 21px -1px rgba(108, 102, 231, 0.2) }
 .io-jasmine .lang-switch a {
   color: #223b55; }
   .io-jasmine .lang-switch a:hover {
-    color: #16a1ff;
+    color: #27b79a;
     background-color: transparent; }
 .io-jasmine .loader-section {
   background: #e7edf5; }
@@ -950,7 +950,7 @@ a {
 .banner-jasmine {
   background: linear-gradient(-135deg, #eff4fa 0%, #f9fbfe 100%); }
   .banner-jasmine .token-countdown .countdown-text {
-    color: #16a1ff; }
+    color: #27b79a; }
 
 .circle-animation .ca {
   border-color: rgba(34, 59, 85, 0.15); }
@@ -962,9 +962,9 @@ a {
     background: #93a6ba; }
 
 .heading-sm-s2 {
-  color: #16a1ff; }
+  color: #27b79a; }
   .heading-sm-s2:before {
-    background: #16a1ff; }
+    background: #27b79a; }
 
 .btn-icon-s2 {
   color: #000;
@@ -998,10 +998,10 @@ a {
 .features-subtitle-s3 {
   color: #9fa9b3; }
   .features-subtitle-s3:after {
-    background: #16a1ff; }
+    background: #27b79a; }
 .features-action {
-  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #16a1ff 100%);
-  background-image: linear-gradient(to right, #1b6b88 0%, #16a1ff 100%);
+  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #27b79a 100%);
+  background-image: linear-gradient(to right, #1b6b88 0%, #27b79a 100%);
   color: #fff; }
   .features-action:hover {
     color: #fff;
@@ -1020,10 +1020,10 @@ a {
 .token-details-title {
   color: #223b55; }
 .token-details-info {
-  color: #16a1ff; }
+  color: #27b79a; }
 .token-stage-title {
   color: #fff;
-  background: #16a1ff; }
+  background: #27b79a; }
 .token-stage-pre {
   background: #63c0ff; }
 .token-stage-date {
@@ -1031,7 +1031,7 @@ a {
 .token-stage-info {
   border-color: #d8e0ff; }
 .token-stage-bonus {
-  color: #16a1ff; }
+  color: #27b79a; }
 .token-stage-cap {
   color: #6a7894; }
 .token-stage-amount {
@@ -1079,7 +1079,7 @@ a {
   border-color: #d8e0ff; }
 
 .timeline-item:before, .timeline-item:after {
-  background: #16a1ff; }
+  background: #27b79a; }
 .timeline-date {
   color: #6a7894; }
   .timeline-date:after {
@@ -1105,7 +1105,7 @@ a {
   .timeline-row:after {
     border-color: rgba(186, 188, 195, 0.3); }
   .timeline-row-done:after {
-    border-color: #16a1ff; }
+    border-color: #27b79a; }
 
 @media only screen and (max-width: 991px) {
   .timeline-title:before {
@@ -1116,7 +1116,7 @@ a {
   background: rgba(34, 59, 85, 0.07);
   color: #4c5a77; }
   .tab-custom-s3 .nav-tabs .nav-link.active {
-    color: #16a1ff;
+    color: #27b79a;
     background: rgba(22, 161, 255, 0.1); }
 
 .accordion-s2 .card {
@@ -1125,17 +1125,17 @@ a {
   .accordion-s2 .card.active {
     border-color: rgba(22, 161, 255, 0.3); }
   .accordion-s2 .card-header a {
-    color: #16a1ff; }
+    color: #27b79a; }
     .accordion-s2 .card-header a:hover {
-      color: #16a1ff; }
+      color: #27b79a; }
 .accordion-s2 .plus-minus .ti {
-  color: #16a1ff; }
+  color: #27b79a; }
 .accordion-s2 .collapsed .plus-minus .ti {
   color: rgba(34, 59, 85, 0.5); }
 
 .footer-jasmine .social li a {
   color: #fff;
-  background: #16a1ff; }
+  background: #27b79a; }
   .footer-jasmine .social li a:hover {
     color: #fff;
     background: #1b6b88; }
@@ -1370,8 +1370,8 @@ a {
   .features-subtitle-s4:after {
     background: #0d9ee0; }
 .features-action {
-  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #16a1ff 100%);
-  background-image: linear-gradient(to right, #1b6b88 0%, #16a1ff 100%);
+  background-image: -webkit-linear-gradient(to right, #1b6b88 0%, #27b79a 100%);
+  background-image: linear-gradient(to right, #1b6b88 0%, #27b79a 100%);
   color: #fff; }
   .features-action:hover {
     color: #fff;

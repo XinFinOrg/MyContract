@@ -8100,15 +8100,18 @@ label.error {
     color: rgba(34, 59, 85, 0.5); }
 
 .input-border {
-  width: 100%;
-  line-height: 20px;
-  font-size: .93em;
-  padding: 13px 20px;
-  background: transparent;
-  border-radius: 6px;
-  border: 2px solid rgba(34, 59, 85, 0.15); }
+	width: 100%;
+    line-height: 20px;
+    font-size: .93em;
+    padding: 13px 20px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 6px;
+    border: 1px solid rgba(34, 59, 85, 0.15);
+}
+  
   .input-border:focus {
-    outline: none;
+    border-color: #27b79a;
+	outline: none;
     box-shadow: none; }
   .input-border::-moz-placeholder {
     opacity: .8;
