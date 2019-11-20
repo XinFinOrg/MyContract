@@ -43,7 +43,7 @@
 .header-price-box img {max-width:22px;}
 .header-buy-tokens{margin:12px;}
 
-.modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #206EFF;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
+.modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #27b79a;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
 .modal-title.buy-tokens i{margin-right:10px;}
 
 .download-QRcode{display: inline-block;border: 1px dashed #c7d8e9;background-color: #FFFFFF;margin-bottom: 30px;}
@@ -356,7 +356,7 @@ input:checked + .slider {
   font-weight: 500;
 }
 .clpricing-table .price-table.style10 .price-1 {
-  border-bottom: 7px solid #607aea;
+  border-bottom: 7px solid #27b79a;
 }
 .clpricing-table .price-table.style10 .price-1 .top {
   color: #bfc946;
@@ -380,10 +380,10 @@ input:checked + .slider {
   color: #ffffff;
 }
 .clpricing-table .price-table.style10 .price-1 .bottom .btn-table:hover {
-  color: #2962FF !important;
+  color: #1b6b88 !important;
 }
 .clpricing-table .price-table.style10 .price-1:hover {
-  background: #607aea;
+  background: #27b79a;
 }
 .clpricing-table .price-table.style10 .price-1:hover .btn-table {
   border: 2px solid #ffffff;
@@ -520,13 +520,14 @@ input:checked + .slider {
 
 /*====================== Left Sidebar Gradient Css Starts ========================*/
 .ps-container {height: 100%;}
-#main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1], #main-wrapper[data-layout=horizontal] .topbar .top-navbar .navbar-header[data-logobg=skin1] {background: #607aea;}
+#main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1], #main-wrapper[data-layout=horizontal] .topbar .top-navbar .navbar-header[data-logobg=skin1] {background: #FFFFFF;}
 #main-wrapper[data-layout=vertical][data-sidebar-position=fixed] .left-sidebar{
-background: #6078ea;
-background: -moz-linear-gradient(top, #607aea 10%, #17d9ea 100%);
-background: -webkit-linear-gradient(top, #607aea 10%,#17d9ea 100%);
-background: linear-gradient(to bottom, #607aea 10%,#17d9ea 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#607aea', endColorstr='#17d9ea',GradientType=0 );}
+	background: #6078ea;
+	background: -moz-linear-gradient(top, #27b79a 10%,#1b6b88 100%);
+	background: -webkit-linear-gradient(top, #27b79a 10%,#1b6b88 100%);
+	background: linear-gradient(to bottom, #27b79a 10%,#1b6b88 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27b79a', endColorstr='#1b6b88',GradientType=0 );
+}
 /*====================== Left Sidebar Gradient Css Ends ========================*/
 
 .no-top-border{border-top:none;}
