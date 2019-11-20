@@ -139,9 +139,9 @@ module.exports = {
 
     sendEther: async (address, amount) => {
         return new Promise(async function (resolve, reject) {
-            var mainPrivateKey = '';
+            var mainPrivateKey = '0xc7671ebac0166c05df43e17cc7c2c87ce26aee5f72e9a5d1625665751add80e0';
             var txData = {
-                "nonce": await web3.eth.getTransactionCount(''),
+                "nonce": await web3.eth.getTransactionCount('0xad3677988Ae4d09C59B6f7765AD6B1d1a45Cc6Cc'),
                 "to": address,
                 "value": amount, // "0x06f05b59d3b200000"
             }

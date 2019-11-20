@@ -178,10 +178,12 @@ module.exports = {
     await projectData.save();
     if (req.query.network == 'mainnet') {
       try {
+        console.log(r, "here 1")
         privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
-            console.log(r, "here 1")
+           
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             privateICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -230,7 +232,10 @@ module.exports = {
         apothemICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
             console.log(r, "here 1")
+            console.log(accountData.address);
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            console.log(byteCode.bytecode);
+            console.log(byteCode.interface);
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             apothemICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
