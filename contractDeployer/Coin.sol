@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.25;
 
 
 
@@ -18,7 +18,7 @@ contract Context {
     constructor () internal { }
     // solhint-disable-previous-line no-empty-blocks
 
-    function _msgSender() internal view returns (address payable) {
+    function _msgSender() internal view returns (address) {
         return msg.sender;
     }
 
@@ -345,7 +345,7 @@ interface IERC1400  {
 
     // Document Management
     function getDocument(bytes32 name) external view returns (string memory, bytes32); // 1/9
-    function setDocument(bytes32 name, string calldata uri, bytes32 documentHash) external; // 2/9
+    function setDocument(bytes32 name, string uri, bytes32 documentHash) external; // 2/9
     event Document(bytes32 indexed name, string uri, bytes32 documentHash);
 
     // Controller Operation
@@ -353,17 +353,17 @@ interface IERC1400  {
 
     // Token Issuance
     function isIssuable() external view returns (bool); // 4/9
-    function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data) external; // 5/9
+    function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes data) external; // 5/9
     event IssuedByPartition(bytes32 indexed partition, address indexed operator, address indexed to, uint256 value, bytes data, bytes operatorData);
 
     // Token Redemption
-    function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data) external; // 6/9
-    function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data, bytes calldata operatorData) external; // 7/9
+    function redeemByPartition(bytes32 partition, uint256 value, bytes data) external; // 6/9
+    function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes data, bytes operatorData) external; // 7/9
     event RedeemedByPartition(bytes32 indexed partition, address indexed operator, address indexed from, uint256 value, bytes data, bytes operatorData);
 
     // Transfer Validity
-    function canTransferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) external view returns (byte, bytes32, bytes32); // 8/9
-    function canOperatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) external view returns (byte, bytes32, bytes32); // 9/9
+    function canTransferByPartition(bytes32 partition, address to, uint256 value, bytes data) external view returns (byte, bytes32, bytes32); // 8/9
+    function canOperatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes data, bytes operatorData) external view returns (byte, bytes32, bytes32); // 9/9
 
 }
 
@@ -375,12 +375,12 @@ interface IERC1400Partition {
     function partitionsOf(address tokenHolder) external view returns (bytes32[] memory); // 2/10
 
     // Token Transfers
-    function transferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data) external returns (bytes32); // 3/10
-    function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) external returns (bytes32); // 4/10
+    function transferByPartition(bytes32 partition, address to, uint256 value, bytes data) external returns (bytes32); // 3/10
+    function operatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes data, bytes operatorData) external returns (bytes32); // 4/10
 
     // Default Partition Management
     function getDefaultPartitions() external view returns (bytes32[] memory); // 5/10
-    function setDefaultPartitions(bytes32[] calldata partitions) external; // 6/10
+    function setDefaultPartitions(bytes32[] partitions) external; // 6/10
 
     // Operators
     function controllersByPartition(bytes32 partition) external view returns (address[] memory); // 7/10
@@ -419,8 +419,8 @@ interface IERC1400TokensSender {
     address from,
     address to,
     uint value,
-    bytes calldata data,
-    bytes calldata operatorData
+    bytes data,
+    bytes operatorData
   ) external view returns(bool);
 
   function tokensToTransfer(
@@ -429,8 +429,8 @@ interface IERC1400TokensSender {
     address from,
     address to,
     uint value,
-    bytes calldata data,
-    bytes calldata operatorData
+    bytes data,
+    bytes operatorData
   ) external;
 
 }
@@ -443,8 +443,8 @@ interface IERC1400TokensRecipient {
     address from,
     address to,
     uint value,
-    bytes calldata data,
-    bytes calldata operatorData
+    bytes data,
+    bytes operatorData
   ) external view returns(bool);
 
   function tokensReceived(
@@ -453,8 +453,8 @@ interface IERC1400TokensRecipient {
     address from,
     address to,
     uint value,
-    bytes calldata data,
-    bytes calldata operatorData
+    bytes data,
+    bytes operatorData
   ) external;
 
 }
@@ -599,11 +599,11 @@ interface IERC1400Raw {
   function revokeOperator(address operator) external; // 8/13
   function isOperator(address operator, address tokenHolder) external view returns (bool); // 9/13
 
-  function transferWithData(address to, uint256 value, bytes calldata data) external; // 10/13
-  function transferFromWithData(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData) external; // 11/13
+  function transferWithData(address to, uint256 value, bytes  data) external; // 10/13
+  function transferFromWithData(address from, address to, uint256 value, bytes  data, bytes  operatorData) external; // 11/13
 
-  function redeem(uint256 value, bytes calldata data) external; // 12/13
-  function redeemFrom(address from, uint256 value, bytes calldata data, bytes calldata operatorData) external; // 13/13
+  function redeem(uint256 value, bytes  data) external; // 12/13
+  function redeemFrom(address from, uint256 value, bytes  data, bytes  operatorData) external; // 13/13
 
   event TransferWithData(
     address indexed operator,
@@ -776,7 +776,7 @@ contract ERC1400Raw is IERC1400Raw, Ownable, ERC1820Client, CertificateControlle
    * @param value Number of tokens to transfer.
    * @param data Information attached to the transfer, by the token holder. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function transferWithData(address to, uint256 value, bytes calldata data)
+  function transferWithData(address to, uint256 value, bytes  data)
     external
     isValidCertificate(data)
   {
@@ -792,7 +792,7 @@ contract ERC1400Raw is IERC1400Raw, Ownable, ERC1820Client, CertificateControlle
    * @param data Information attached to the transfer, and intended for the token holder ('from').
    * @param operatorData Information attached to the transfer by the operator. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function transferFromWithData(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function transferFromWithData(address from, address to, uint256 value, bytes  data, bytes  operatorData)
     external
     isValidCertificate(operatorData)
   {
@@ -807,7 +807,7 @@ contract ERC1400Raw is IERC1400Raw, Ownable, ERC1820Client, CertificateControlle
    * @param value Number of tokens to redeem.
    * @param data Information attached to the redemption, by the token holder. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function redeem(uint256 value, bytes calldata data)
+  function redeem(uint256 value, bytes  data)
     external
     isValidCertificate(data)
   {
@@ -822,7 +822,7 @@ contract ERC1400Raw is IERC1400Raw, Ownable, ERC1820Client, CertificateControlle
    * @param data Information attached to the redemption.
    * @param operatorData Information attached to the redemption, by the operator. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function redeemFrom(address from, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function redeemFrom(address from, uint256 value, bytes  data, bytes  operatorData)
     external
     isValidCertificate(operatorData)
   {
@@ -1146,7 +1146,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
     bytes32 partition,
     address to,
     uint256 value,
-    bytes calldata data
+    bytes  data
   )
     external
     isValidCertificate(data)
@@ -1171,8 +1171,8 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
     address from,
     address to,
     uint256 value,
-    bytes calldata data,
-    bytes calldata operatorData
+    bytes  data,
+    bytes  operatorData
   )
     external
     isValidCertificate(operatorData)
@@ -1200,7 +1200,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
    * Function used for ERC1400Raw and ERC20 backwards compatibility.
    * @param partitions partitions to use by default when not specified.
    */
-  function setDefaultPartitions(bytes32[] calldata partitions) external onlyOwner {
+  function setDefaultPartitions(bytes32[]  partitions) external onlyOwner {
     _defaultPartitions = partitions;
   }
 
@@ -1348,7 +1348,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
       require(index2 > 0, "A8"); // Transfer Blocked - Token restriction
 
       // move the last item into the index being vacated
-      bytes32 lastValue = _partitionsOf[from][_partitionsOf[from].length - 1];
+      lastValue = _partitionsOf[from][_partitionsOf[from].length - 1];
       _partitionsOf[from][index2 - 1] = lastValue;  // adjust for 1-based indexing
       _indexOfPartitionsOf[from][lastValue] = index2;
 
@@ -1443,7 +1443,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
    * @param value Number of tokens to transfer.
    * @param data Information attached to the transfer, by the token holder. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function transferWithData(address to, uint256 value, bytes calldata data)
+  function transferWithData(address to, uint256 value, bytes  data)
     external
     isValidCertificate(data)
   {
@@ -1459,7 +1459,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
    * @param data Information attached to the transfer, and intended for the token holder ('from'). [CAN CONTAIN THE DESTINATION PARTITION]
    * @param operatorData Information attached to the transfer by the operator. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function transferFromWithData(address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function transferFromWithData(address from, address to, uint256 value, bytes  data, bytes  operatorData)
     external
     isValidCertificate(operatorData)
   {
@@ -1472,7 +1472,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
    * [NOT MANDATORY FOR ERC1400Partition STANDARD][OVERRIDES ERC1400Raw METHOD]
    * @dev Empty function to erase ERC1400Raw redeem() function since it doesn't handle partitions.
    */
-  function redeem(uint256 /*value*/, bytes calldata /*data*/) external { // Comments to avoid compilation warnings for unused variables.
+  function redeem(uint256 /*value*/, bytes  /*data*/) external { // Comments to avoid compilation warnings for unused variables.
     revert("A8: Transfer Blocked - Token restriction");
   }
 
@@ -1480,7 +1480,7 @@ contract ERC1400Partition is IERC1400Partition, ERC1400Raw {
    * [NOT MANDATORY FOR ERC1400Partition STANDARD][OVERRIDES ERC1400Raw METHOD]
    * @dev Empty function to erase ERC1400Raw redeemFrom() function since it doesn't handle partitions.
    */
-  function redeemFrom(address /*from*/, uint256 /*value*/, bytes calldata /*data*/, bytes calldata /*operatorData*/) external { // Comments to avoid compilation warnings for unused variables.
+  function redeemFrom(address /*from*/, uint256 /*value*/, bytes  /*data*/, bytes  /*operatorData*/) external { // Comments to avoid compilation warnings for unused variables.
     revert("A8: Transfer Blocked - Token restriction");
   }
 
@@ -1601,7 +1601,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param uri Document content.
    * @param documentHash Hash of the document [optional parameter].
    */
-  function setDocument(bytes32 name, string calldata uri, bytes32 documentHash) external {
+  function setDocument(bytes32 name, string  uri, bytes32 documentHash) external {
     require(_isController[msg.sender]);
     _documents[name] = Doc({
       docURI: uri,
@@ -1637,7 +1637,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param value Number of tokens issued.
    * @param data Information attached to the issuance, by the issuer. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data)
+  function issueByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes  data)
     external
     onlyMinter
     issuableToken
@@ -1653,7 +1653,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param value Number of tokens redeemed.
    * @param data Information attached to the redemption, by the redeemer. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function redeemByPartition(bytes32 partition, uint256 value, bytes calldata data)
+  function redeemByPartition(bytes32 partition, uint256 value, bytes  data)
     external
     isValidCertificate(data)
   {
@@ -1669,7 +1669,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param data Information attached to the redemption.
    * @param operatorData Information attached to the redemption, by the operator. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function operatorRedeemByPartition(bytes32 partition, address tokenHolder, uint256 value, bytes  data, bytes  operatorData)
     external
     isValidCertificate(operatorData)
   {
@@ -1691,7 +1691,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * transfer restriction rule responsible for making the transfer operation invalid).
    * @return Destination partition.
    */
-  function canTransferByPartition(bytes32 partition, address to, uint256 value, bytes calldata data)
+  function canTransferByPartition(bytes32 partition, address to, uint256 value, bytes  data)
     external
     view
     returns (byte, bytes32, bytes32)
@@ -1718,7 +1718,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * transfer restriction rule responsible for making the transfer operation invalid).
    * @return Destination partition.
    */
-  function canOperatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function canOperatorTransferByPartition(bytes32 partition, address from, address to, uint256 value, bytes  data, bytes  operatorData)
     external
     view
     returns (byte, bytes32, bytes32)
@@ -1860,7 +1860,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @dev Set list of token controllers.
    * @param operators Controller addresses.
    */
-  function setControllers(address[] calldata operators) external onlyOwner {
+  function setControllers(address[]  operators) external onlyOwner {
     _setControllers(operators);
   }
 
@@ -1870,7 +1870,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param partition Name of the partition.
    * @param operators Controller addresses.
    */
-   function setPartitionControllers(bytes32 partition, address[] calldata operators) external onlyOwner {
+   function setPartitionControllers(bytes32 partition, address[]  operators) external onlyOwner {
      _setPartitionControllers(partition, operators);
    }
 
@@ -1892,7 +1892,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param value Number of tokens to redeem.
    * @param data Information attached to the redemption, by the token holder. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function redeem(uint256 value, bytes calldata data)
+  function redeem(uint256 value, bytes  data)
     external
     isValidCertificate(data)
   {
@@ -1907,7 +1907,7 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
    * @param data Information attached to the redemption.
    * @param operatorData Information attached to the redemption, by the operator. [CONTAINS THE CONDITIONAL OWNERSHIP CERTIFICATE]
    */
-  function redeemFrom(address from, uint256 value, bytes calldata data, bytes calldata operatorData)
+  function redeemFrom(address from, uint256 value, bytes  data, bytes  operatorData)
     external
     isValidCertificate(operatorData)
   {
@@ -1955,7 +1955,6 @@ contract ERC1400 is IERC1400, ERC1400Partition, MinterRole {
   }
 
 }
-
 
 
 

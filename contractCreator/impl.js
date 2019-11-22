@@ -79,12 +79,7 @@ try
   //   };
   //  console.log("test deploy 3 ");
 
-  ejs.renderFile(__dirname + '/ERC1400contracts/Coin.sol', {
-    "ERC1400ERC20": ERC1400ERC20,
-    "controller":[controller],
-    "CERTIFICATE_SIGNER":CERTIFICATE_SIGNER,
-    "partitions":partitions
-  }, async (err, data) => {
+  ejs.renderFile(__dirname + '/ERC1400contracts/Coin.sol', async (err, data) => {
     if (err)
       console.log(err);
     //console.log(result);
