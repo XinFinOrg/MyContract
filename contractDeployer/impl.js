@@ -158,6 +158,30 @@ module.exports = {
     }
   },
 
+
+  solctest : async()=>{
+    let pathvar = path.resolve(__dirname,'./','Coin.sol');
+    let source = fs.readFileSync(pathvar,'UTF-8');
+    // console.log(`here is Source ${source}`)
+    console.log(solc.compile(source,'1'))
+
+
+  },
+
+  // solctest: async function(){
+  //   let projectData = await ProjectConfiguration.find({
+  //     where: {
+  //       'coinName': 'Demo'
+  //     }
+  //   });
+  //   // console.log("Here is PR",projectData)
+  //   byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+  //   console.log(byteCode.interface)
+  //   return byteCode.interface
+    
+
+  // },
+  
   getAutomaticDeployer: async function(req, res) {
     let projectData = await ProjectConfiguration.find({
       where: {
