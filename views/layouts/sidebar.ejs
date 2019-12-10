@@ -178,27 +178,6 @@
                 <% } %>
               </ul>
             </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-creation"></i><span
-                  class="hide-menu">Contract Interaction </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <% if (ProjectConfiguration.crowdsaleContractAddress>0) { %>
-                <li class="sidebar-item"><a href="/contractInteraction/project/<%= ProjectConfiguration.coinName %>"
-                    class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% } else { %>
-                <!-- <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                              class="hide-menu"> <%= ProjectConfiguration.coinName %> (Not Deployed Yet) </span></a></li> -->
-                <% } %>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
-                <% } %>
-              </ul>
-            </li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal"
                 data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span
                   class="hide-menu">Buy Tokens </span></a></li>
