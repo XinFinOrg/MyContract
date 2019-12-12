@@ -62,7 +62,7 @@
                                                     <%= message %>
                                                 </div>
                                                 <% } %>
-                                                    <form class="form-horizontal m-t-20" id="loginform" action="/adminLogin" method="post">
+                                                    <form class="form-horizontal m-t-20" id="adminloginform" action="/adminLogin" method="post">
                                                         <div class="form-group">
                                                             <label for="email">Email</label>
                                                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
@@ -74,7 +74,7 @@
                                                         <div class="form-group">
                                                             <div class="row align-items-center">
                                                                 <div class="col-md-12 p-b-20">
-                                                                    <button class="btn btn-lg btn-rounded btn-info" type="submit">LOGIN</button>
+                                                                    <button class="btn btn-lg btn-rounded btn-info" type="submit" onclick="adminlogin()">LOGIN</button>
                                                                     <!-- <span class="pl-5"><a href="javascript:void(0)" id="to-recover"
                                                                             class="text-dark"><i class="fa fa-lock m-r-5"></i>
                                                                             Forgot password?</a></span> -->
@@ -185,8 +185,12 @@
         //     console.log("inside forgotPassword")
         //     $.get("/forgotPassword")
         // }
-
+function adminlogin()
+{
+    alert("login");
+}
     </script>
+
 </body>
 
 

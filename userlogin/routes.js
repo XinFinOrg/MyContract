@@ -1,11 +1,11 @@
 var impl = require('./impl');
 var superAdminimpl = require('./superAdminimpl');
 var db = require('../database/models/index');
-var client = db.client;
-module.exports = function (app) {
 
   app.get('/login', impl.getLogin);
   app.post('/login', impl.postLogin);
+var client = db.client;
+module.exports = function (app) {
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
   app.get('/dashboard', isLoggedIn, impl.getDashboard);

@@ -15,12 +15,24 @@ var Address = db.userCurrencyAddress;
 const Web3 = require('web3');
 const web3 = new Web3();
 
+
 module.exports = {
 
   getCustomContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
     res.render('customContract', {
+      user: req.user,
+      message: req.flash('package_flash'),
+      message2: req.flash('project_flash'),
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
+  getERC1400ContractForm: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('ERC1400Contract', {
       user: req.user,
       message: req.flash('package_flash'),
       message2: req.flash('project_flash'),
@@ -51,6 +63,81 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
+
+  // create ERC1400
+
+createERC1400Contract: async (req, res) => {
+
+  // console.log(req.body);
+  //var ERC1400ERC20 = artifacts.require(__dirname + '/ERC1400contracts/ERC1400.sol');
+var ERC1400 = await fileReader.readEjsFile(__dirname + '/ERC1400contracts/ERC1400.sol', 'utf8');
+const CERTIFICATE_SIGNER = '0xe31C41f0f70C5ff39f73B4B94bcCD767b3071630';
+const controller = '0xb5747835141b46f7C472393B31F8F5A57F74A44f'
+const partition1 = '0x5265736572766564000000000000000000000000000000000000000000000000'; // Reserved in hex
+const partition2 = '0x4973737565640000000000000000000000000000000000000000000000000000'; // Issued in hex
+const partition3 = '0x4c6f636b65640000000000000000000000000000000000000000000000000000'; // Locked in hex
+const partitions = [partition1, partition2, partition3];
+console.log("start ERC1400");
+try
+{
+  ejs.renderFile(__dirname + '/ERC1400contracts/ERC1400.sol',{
+    "name": 'ERC1400Token',
+    "symbol": 'DAU',
+    "granularity": 1,
+    "controllers": [controller],
+    "certificateSigner": CERTIFICATE_SIGNER,
+    "defaultPartitions": partitions 
+  }
+  , async (err, data) => {
+    if (err)
+      console.log(err);
+    //console.log(result);
+    // console.log(data);
+
+    req.session.contract = data;
+    req.session.coinName = req.body.token_name;
+    req.session.coinSymbol = req.body.token_symbol;
+    nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
+    var clientdata = await client.find({
+      where: {
+        'email': req.user.email
+      }
+    });
+    var objdata = new Object();
+    objdata.contractCode = result;
+    objdata.coinName = req.body.token_name;
+    objdata.tokenSupply = req.body.token_supply;
+    objdata.coinSymbol = req.body.token_symbol;
+    objdata.hardCap = req.body.token_sale;
+    objdata.ETHRate = req.body.eth_tokens;
+    objdata.tokenContractCode = data;
+    objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
+    objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
+    objdata.minimumContribution = req.body.minimum_contribution;
+    objdata.isAllowedForICOboolean = true;
+    Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+      var projectData = await ProjectConfiguration.create(objdata)
+      await clientdata.addProjectConfiguration(projectData);
+      await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+      await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+      clientdata.package1 -= 1;
+      clientdata.save();
+    })
+   // console.log(clientdata);
+    //console.log(objectdata);
+    res.redirect('/generatedContract');
+
+  })
+}
+catch (e)
+{
+  console.log(e);
+}
+
+},
+
+// end create 1400
+
   createERC20Contract: async (req, res) => {
     console.log("exist 3");
     // console.log(req.body);

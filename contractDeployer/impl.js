@@ -158,6 +158,31 @@ module.exports = {
     }
   },
 
+
+  // solctest : async()=>{
+  //   let pathvar = path.resolve(__dirname,'./','Coin.sol');
+  //   let source = fs.readFileSync(pathvar,'UTF-8');
+  //   // console.log(`here is Source ${source}`)
+  //   console.log("solc.compile(source,'1')")
+
+  //   let mig = await solc.compile(source,'1')
+  //   console.log("mig.byteCode")
+  // },
+
+  solctest: async function(){
+    let projectData = await ProjectConfiguration.find({
+      where: {
+        'coinName': 'TOK1524'
+      }
+    });
+    // console.log("Here is PR",projectData)
+    byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':ERC1400']
+    console.log(byteCode)
+    return byteCode.interface
+    
+
+  },
+  
   getAutomaticDeployer: async function(req, res) {
     let projectData = await ProjectConfiguration.find({
       where: {
@@ -178,10 +203,12 @@ module.exports = {
     await projectData.save();
     if (req.query.network == 'mainnet') {
       try {
+        console.log(r, "here 1")
         privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
-            console.log(r, "here 1")
+           
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             privateICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -229,13 +256,18 @@ module.exports = {
       try {
         apothemICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
-            console.log(r, "here 1")
-            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            //console.log(r, "here 1")
+           // console.log(accountData.address);
+            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':ERC1400']
+            console.log(byteCode.bytecode);
+            //console.log(byteCode.interface);
+            console.log(accountData.privateKey);
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             apothemICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
               .then(async tokenReceipt => {
-                console.log(tokenReceipt, "here 2")
+               // console.log(tokenReceipt, "here 2")
+               console.log("here 2")
                 projectData.tokenContractAddress = "0x" + tokenReceipt.contractAddress.substring(3);
                 projectData.tokenContractHash = tokenReceipt.transactionHash;
                 var IERC20 = await fileReader.readEjsFile(__dirname + '/../contractCreator/ERC20contracts/IERC20.sol');
@@ -246,6 +278,7 @@ module.exports = {
                   "SafeMath": SafeMath,
                   "IERC20": IERC20,
                 }, async (err, data) => {
+                  console.log("here 3")
                   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
                   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
                   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)

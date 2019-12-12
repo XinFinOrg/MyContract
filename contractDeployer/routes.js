@@ -10,6 +10,7 @@ module.exports = function (app, express) {
   app.use(express.static(path.join(__dirname, './dist')));
   app.get('/deployer', isLoggedIn, impl.getDeployer);
   app.get('/api/automaticDeployment', isLoggedIn, impl.getAutomaticDeployer);
+  app.get('/api/solctest',impl.solctest)
   app.get('/getBytecode', isLoggedIn, impl.getBytecode);
   app.post('/saveDeploymentData', isLoggedIn, impl.saveDeploymentData);
   app.get('/generatedCrowdsaleContract', isLoggedIn, impl.generatedContract);

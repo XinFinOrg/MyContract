@@ -239,17 +239,22 @@ module.exports = {
   },
 
   sendTransaction: async (address, data, privateKey) => {
+    console.log('ASAS',address,privateKey)
     let txData = {
       "data": '0x' + data,
     }
     return new Promise(async function(resolve, reject) {
-      web3.eth.estimateGas({
-        data: txData.data,
-        from: address
-      }).then(gasLimit => {
+      console.log(address)
+      // web3.eth.estimateGas({
+      //   data: txData.data,
+      //   from: address
+      // }).then(gasLimit => {
+        gasLimit = '420000000'
         console.log(gasLimit);
-        txData["gasLimit"] = gasLimit;
+        txData["gasLimit"] = '420000000';
+        txData["gas"] = '420000000';
         web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
+          // console.log(result) 
           axios({
               method: 'post',
               url: 'http://rpc.apothem.network',
@@ -267,6 +272,7 @@ module.exports = {
               }
             })
             .then(function(response) {
+              // console.log(response)
               //handle success
               setTimeout(function() {
                 axios({
@@ -300,6 +306,6 @@ module.exports = {
             });
         })
       })
-    })
+    // })
   },
 }
