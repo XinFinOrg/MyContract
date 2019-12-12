@@ -29,6 +29,17 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
+  getERC1400ContractForm: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('ERC1400Contract', {
+      user: req.user,
+      message: req.flash('package_flash'),
+      message2: req.flash('project_flash'),
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
   getERC223ContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
@@ -56,30 +67,28 @@ module.exports = {
   // create ERC1400
 
 createERC1400Contract: async (req, res) => {
-  console.log("test");
+
   // console.log(req.body);
   //var ERC1400ERC20 = artifacts.require(__dirname + '/ERC1400contracts/ERC1400.sol');
-  var ERC1400ERC20 = await fileReader.readEjsFile(__dirname + '/ERC1400contracts/ERC1400.sol', 'utf8');
+var ERC1400 = await fileReader.readEjsFile(__dirname + '/ERC1400contracts/ERC1400.sol', 'utf8');
 const CERTIFICATE_SIGNER = '0xe31C41f0f70C5ff39f73B4B94bcCD767b3071630';
-const controller = '0xb5747835141b46f7C472393B31F8F5A57F74A44f';
-
+const controller = '0xb5747835141b46f7C472393B31F8F5A57F74A44f'
 const partition1 = '0x5265736572766564000000000000000000000000000000000000000000000000'; // Reserved in hex
 const partition2 = '0x4973737565640000000000000000000000000000000000000000000000000000'; // Issued in hex
 const partition3 = '0x4c6f636b65640000000000000000000000000000000000000000000000000000'; // Locked in hex
 const partitions = [partition1, partition2, partition3];
-console.log("test start deploy ");
+console.log("start ERC1400");
 try
 {
-  
-  //this.token = await ERC1400ERC20('ERC1410Token', 'DAU', 1, [controller], CERTIFICATE_SIGNER, partitions);
-  // module.exports =  function (deployer, network, accounts) {
-  //   console.log("test deploy 1 ");
-  //   deployer.deploy(ERC1400ERC20, 'ERC1400Token', 'DAU', 1, [controller], CERTIFICATE_SIGNER, partitions);
-  //   console.log("test deploy 2 ");
-  //   };
-  //  console.log("test deploy 3 ");
-
-  ejs.renderFile(__dirname + '/ERC1400contracts/Coin.sol', async (err, data) => {
+  ejs.renderFile(__dirname + '/ERC1400contracts/ERC1400.sol',{
+    "name": 'ERC1400Token',
+    "symbol": 'DAU',
+    "granularity": 1,
+    "controllers": [controller],
+    "certificateSigner": CERTIFICATE_SIGNER,
+    "defaultPartitions": partitions 
+  }
+  , async (err, data) => {
     if (err)
       console.log(err);
     //console.log(result);
