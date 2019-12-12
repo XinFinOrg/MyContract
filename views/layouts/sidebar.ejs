@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
   <!-- Favicon icon -->
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-  <title>MyContract</title>
+  <title>Gravitas</title>
   <!-- Custom CSS -->
   <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
   <!-- Custom CSS -->
@@ -63,7 +63,7 @@
               <!-- dark Logo text -->
               <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
               <!-- Light Logo text -->
-              <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+              
             </span>
           </a>
           <!-- End Logo -->
@@ -82,7 +82,7 @@
           <ul class="navbar-nav float-left mr-auto pl-2">
             <li class="">
               <div class="header-price-box">
-                <img src="assets/images/icons/xdce.png"> XDCE Balance: <span id="xdce">0000</span>
+                <img src="assets/images/icons/xdce.png"> Gravitas Tokens: <span id="xdce">0000</span>
               </div>
             </li>
             <li class="">
@@ -180,48 +180,9 @@
                 <% } %>
               </ul>
             </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-creation"></i><span
-                  class="hide-menu">Contract Interaction </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <% if (ProjectConfiguration.crowdsaleContractAddress>0) { %>
-                <li class="sidebar-item"><a href="/contractInteraction/project/<%= ProjectConfiguration.coinName %>"
-                    class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% } else { %>
-                <!-- <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                              class="hide-menu"> <%= ProjectConfiguration.coinName %> (Not Deployed Yet) </span></a></li> -->
-                <% } %>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
-                <% } %>
-              </ul>
-            </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"><i
-                  class="mdi mdi-creation"></i><span class="hide-menu">Tokenization Platform</span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <li class="sidebar-item"><a
-                    href="/icoDashboard/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>"
-                    class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
-                <% } %>
-              </ul>
-            </li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal"
                 data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span
                   class="hide-menu">Buy Tokens </span></a></li>
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="https://articles.xinfin.org/mycontract" target="_blank"
-                aria-expanded="false"><i class="fa fa-question-circle"></i><span class="hide-menu">FAQ</span></a></li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout"
                 aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
           </ul>
@@ -245,7 +206,7 @@
           </div>
           <div class="modal-body">
             <div class="text-center">
-              <h5> Please send XDCE to the following address:</h5>
+              <h5> Please send Gravitas Tokens to the following address:</h5>
               <div class="download-QRcode">
                 <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=<%= address %>">
               </div>
@@ -302,7 +263,7 @@
   <%- req.toastr.render() %>
   <% } %>
     <!-- footer -->
-    <footer class="footer text-center">Copyright © 2019 MyContract. All rights reserved.</footer>
+    <footer class="footer text-center">Copyright © 2019 Gravitas International. All rights reserved.</footer>
     <!-- End footer -->
     <!-- / ICO Plarform Coming Soon modal -->
 

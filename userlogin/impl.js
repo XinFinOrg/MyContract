@@ -174,7 +174,7 @@ module.exports = {
     //   ProjectConfiguration: projectArray,
     // });
     res.writeHead(301, {
-      Location: 'https://articles.xinfin.org/mycontract'
+      Location: ''
     });
     res.end();
   },

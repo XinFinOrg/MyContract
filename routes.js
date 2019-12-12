@@ -1,6 +1,6 @@
 module.exports = function (app) {
   app.get('/', isLoggedIn, function (req, res) {
-    req.toastr.info('Welcome to MyContract.',null,{"closeButton": true,"debug": false,
+    req.toastr.info('Welcome to Gravitas.',null,{"closeButton": true,"debug": false,
     "newestOnTop": false,"progressBar": false,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000",
     "timeOut": "5000",
     "extendedTimeOut": "1000",
