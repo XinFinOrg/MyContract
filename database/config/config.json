@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "postgres",
-    "password": "123",
-    "database": "autoCoin",
+    "password": "don45678",
+    "database": "gravitas",
     "host": "localhost",
     "logging": false,
     "freezeTableName": true,

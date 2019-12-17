@@ -6,3 +6,5 @@ icoDashboardCreator/etherwallet/node_modules
 logs/
 config/
 package-lock.json
+contractcreator/ERC1400contracts
+contractcreator/ERC223contracts

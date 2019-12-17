@@ -75,7 +75,7 @@ ERC-20 is the universal language that all tokens on the Ethereum network use. It
 
 SafeMath - This prevents unsigned integer overflow issue.
 
-OpenZeppelin - OpenZeppelin is a library for secure smart contract development. It provides implementations of standards like ERC20 and ERC721 which you can deploy as-is or extend to suit your needs, as well as Solidity components to build custom contracts and more complex decentralized systems.
+OpenZeppelin - OpenZeppelin is a library for secure smart contract development. It provides implementations of standards like ERC20 and ERC1400 which you can deploy as-is or extend to suit your needs, as well as Solidity components to build custom contracts and more complex decentralized systems.
 
 SafeERC20 - The library SafeERC20 is to safely interact with a third party token. for eg. token.safeTransfer(...), etc.
 

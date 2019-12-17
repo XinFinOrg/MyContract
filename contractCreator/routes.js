@@ -7,12 +7,11 @@ module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
-  app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
+  app.get('/ERC1400Contract', isLoggedIn, impl.getERC1400ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
-  app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
   app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
   app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
-
+  app.post('/createERC1400Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC1400Contract);
 }
 
 // route middleware to make sure a user is logged in
