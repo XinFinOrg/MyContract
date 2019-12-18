@@ -40,9 +40,7 @@
                               <button type="button" id="deployment" data-toggle="modal" data-target="#networkModal" data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1">Automatic
                                 Deploy
                                 <%= coinSymbol %></button>
-                              <button type="button" id="deployment" onclick=deploy("<%=coinSymbol %>",false) class="btn btn-rounded btn-lg btn-info mr-1">Manual
-                                Deploy
-                                <%= coinSymbol %></button>
+
                               <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
                                   class="ti-help-alt"></i></button>
                               <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
@@ -59,13 +57,6 @@
                                         deploying the contract. The deployment will be handled by the platform itself. you
                                         can check the status of Deployment on the Dashboard.
                                       </p>
-                                      <!-- <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Manual
-                                          Deployment
-                                        </span></h5>
-                                      <p>Manual deployment is where user have to deploy smart contract with help of any digital
-                                        wallet, metamask , keystore , private key. this option will require 0.5 ETH approx
-                                        in your account in order to deploy the smart contract.
-                                      </p> -->
                                     </div>
                                     <div class="modal-footer text-center">
                                       <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>

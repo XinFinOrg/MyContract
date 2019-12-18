@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "don45678",
-    "database": "gravitas",
+    "database": "tokengravitas",
     "host": "localhost",
     "logging": false,
     "freezeTableName": true,

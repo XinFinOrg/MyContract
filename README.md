@@ -232,7 +232,7 @@ The primary objective of Mycontract.co is to provide Token-as-a-Service (TAAS) w
 This is a Audited smart contract with additional features for eg, Bonus rates, Send tokens to Investor etc.
 
 **Automatic Contract Deployment :**
-Automatic & Manual Deployment with various ways to access wallets.
+Automatic with various ways to access wallets.
 
 **Contract Interaction :**
 This Features can enable easy smart contract interaction with built in interaction platform.
