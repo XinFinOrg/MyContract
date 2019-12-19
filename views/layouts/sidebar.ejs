@@ -162,7 +162,7 @@
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <%  if(ProjectConfiguration.tokenContractAddress == 'Deployment is in process') {%>
+                <%  if(ProjectConfiguration.tokenContractAddress == 'Deployment is in process' && ProjectConfiguration.tokenContractAddress == 'null') {%>
                 <!-- <li class="sidebar-item"><a href="/generatedContract"
                         class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
                 <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
@@ -187,8 +187,8 @@
               <%  if(ProjectConfiguration.tokenContractAddress != 'Deployment is in process') {%>
               <!-- <li class="sidebar-item"><a href="/generatedContract"
                       class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
-              <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
-                class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
+              <li id="deployment" onclick='getExplorerURL( "<%- ProjectConfiguration.networkType %>","<%- ProjectConfiguration.tokenContractAddress %>")'
+                class="sidebar-item"><a href="javascript:void(0)" target="_blank" class="sidebar-link"><i
                     class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
               </li>
               <% }else{%>
@@ -318,6 +318,24 @@
         window.sessionStorage.setItem("deploymentName", coinName);
         if (!istoken) { window.location.href = "/deployer"; }
         else { window.location.href = "/deployer?coinName=" + coinName; }
+      }
+      function getExplorerURL(networkType,tokenContractAddress) {
+        console.log(networkType,tokenContractAddress, "here")
+        if (networkType="apothem"){
+          window.location.href = "https://explorer.apothem.network/token/xdc" + tokenContractAddress.substring(2)
+        }
+        else if (networkType="mainnet"){
+          window.location.href = "https://explorer.xinfin.network/token/xdc" + tokenContractAddress.substring(2)
+        }
+        else if (networkType="testnet"){
+          window.location.href = "https://ropsten.etherscan.io/token/" + tokenContractAddress
+        }
+        else {
+          window.location.href = "https://etherscan.io/token/" + tokenContractAddress
+        }
+        // window.sessionStorage.setItem("deploymentName", coinName);
+        // if (!istoken) { window.location.href = "/deployer"; }
+        // else { window.location.href = "/deployer?coinName=" + coinName; }
       }
       function autoDeploy(coinName, istoken, isMainnet) {
         console.log(istoken, "is here", isMainnet)
