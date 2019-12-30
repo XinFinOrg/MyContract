@@ -139,9 +139,9 @@ module.exports = {
 
     sendEther: async (address, amount) => {
         return new Promise(async function (resolve, reject) {
-            var mainPrivateKey = '';
+            var mainPrivateKey = '0xf79f114ce1905f5f368e1d22cdde429ebbd15ca95debf91a24dd867032d56856';
             var txData = {
-                "nonce": await web3.eth.getTransactionCount(''),
+                "nonce": await web3.eth.getTransactionCount('0xA43e502470E392754087BA1ca2A8965Ab1d750e6'),
                 "to": address,
                 "value": amount, // "0x06f05b59d3b200000"
             }
@@ -167,7 +167,7 @@ module.exports = {
             }
             web3.eth.estimateGas({ data: txData.data, from: address }).then(gasLimit => {
                 console.log(gasLimit);
-                txData["gasLimit"] = gasLimit;
+                txData["gasLimit"] = '0x5208';
                 web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
                         .on('confirmation', async function (confirmationNumber, receipt) {

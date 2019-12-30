@@ -184,7 +184,7 @@
             <ul aria-expanded="false" class="collapse first-level">
               <% if (ProjectConfiguration.length>0) { %>
               <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-              <%  if(ProjectConfiguration.tokenContractAddress != 'Deployment is in process') {%>
+              <%  if(ProjectConfiguration.tokenContractAddress != 'Deployment is in process' || ProjectConfiguration.tokenContractAddress == null) {%>
               <!-- <li class="sidebar-item"><a href="/generatedContract"
                       class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
               <li id="deployment" onclick='getExplorerURL( "<%- ProjectConfiguration.networkType %>","<%- ProjectConfiguration.tokenContractAddress %>")'
