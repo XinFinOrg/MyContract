@@ -4,7 +4,7 @@ var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
-var apothemweb3 = new Web3(new Web3.providers.HttpProvider('http://rpc.apothem.network'));
+var apothemweb3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
 var axios = require("axios");
 
 
