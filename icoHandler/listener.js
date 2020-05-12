@@ -5,7 +5,7 @@ var config = require('../config/paymentListener');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
-var ws_provider = "wss://ropsten.infura.io/ws";
+var ws_provider = "wss://ropsten.infura.io/ws/v3/02804fed8a0244ab9cf60f13abebd0a7";
 var web3 = new Web3();
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 web3.setProvider(provider);

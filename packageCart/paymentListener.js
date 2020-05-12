@@ -132,7 +132,7 @@ module.exports = {
   },
   sendToken: (address, amount) => {
     return new Promise(function (resolve, reject) {
-      var provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws');
+      var provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws/v3/02804fed8a0244ab9cf60f13abebd0a7');
       var web3 = new Web3(provider);
       console.log("Ether receipt generated");
       var transaction = {
