@@ -8,28 +8,42 @@ var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
 provider.on('connect', () => console.log('WS Connected'))
-provider.on('error', e => {
-  console.log('WS error occured');
-  console.log('Attempting to reconnect...');
-  provider = new Web3.providers.WebsocketProvider(ws_provider);
 
-  provider.on('connect', function () {
-    console.log('WSS Reconnected');
-  });
+let inReconn = false;
 
-  web3.setProvider(provider);
-});
-provider.on('end', e => {
-  console.log('WS closed');
-  console.log('Attempting to reconnect...');
-  provider = new Web3.providers.WebsocketProvider(ws_provider);
+connectionHeartbeat();
 
-  provider.on('connect', function () {
-    console.log('WSS Reconnected');
-  });
+function connectionHeartbeat() {
+  setInterval(async () => {
+    try {
+      const isActive = await web3.eth.net.isListening();
+      console.log(`connection status web3 paymentListener:${isActive}`);
+      if (!isActive && inReconn === false) web3Reconn();
+    } catch (e) {
+      if (inReconn === false) web3Reconn();
+    }
+  }, 5000);
+}
 
-  web3.setProvider(provider);
-});
+function web3Reconn() {
+  try {
+    console.log("[*] reconn web3 running");
+    inReconn = true;
+    let currInterval = setInterval(() => {
+      let web3Provider = new Web3.providers.WebsocketProvider(ws_provider);
+      web3 = new Web3(web3Provider);
+      web3Provider.on("connect", () => {
+        console.log(`[*] web3 reconnected to ws at ${__filename}`);
+        inReconn = false;
+        clearInterval(currInterval);
+      });
+    }, 5000);
+  } catch (e) {
+    console.log(`exception at ${__filename}.web3Reconn: `, e);
+  }
+}
+
+
 var contractInstance = new web3.eth.Contract(config.erc20ABI, config.tokenAddress);
 var gasPriceGwei = 12;
 module.exports = {
