@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
   app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
   app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
-
+  app.post('/createUSDCToken', impl.createUSDCToken);
 }
 
 // route middleware to make sure a user is logged in
