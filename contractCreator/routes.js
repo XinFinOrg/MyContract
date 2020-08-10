@@ -6,6 +6,7 @@ var client = db.client;
 module.exports = function (app) {
 
   app.get('/customContract', isLoggedIn, impl.getCustomContractForm);
+  app.get('/stablecoin', isLoggedIn, impl.getStablecoinForm);
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
   app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);

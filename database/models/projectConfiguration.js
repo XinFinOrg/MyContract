@@ -143,7 +143,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     },
     metadata:{
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     }
   }, {});
   projectConfiguration.associate = function (models) {

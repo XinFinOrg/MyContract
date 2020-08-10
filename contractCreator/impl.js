@@ -28,6 +28,17 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
+  getStablecoinForm: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('stableCoin', {
+      user: req.user,
+      message: req.flash('package_flash'),
+      message2: req.flash('project_flash'),
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
   getERC223ContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
@@ -326,10 +337,10 @@ module.exports = {
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
       req.session.coinSymbol = req.body.token_symbol;
-      nodemailerservice.sendContractEmail('rudresh@xinfin.org', data, req.body.token_name, "Token Contract");
+      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
       var clientdata = await client.find({
         where: {
-          'email': 'rudresh@xinfin.org'
+          'email': req.user.email
         }
       });
 
@@ -353,7 +364,7 @@ module.exports = {
       objdata.metadata = JSON.stringify(metadataObj);
       // objdata.hardCap = req.body.token_sale;
       // objdata.ETHRate = req.body.eth_tokens;
-      // objdata.tokenContractCode = data;
+      objdata.tokenContractCode = data;
       // objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
       // objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
       // objdata.minimumContribution = req.body.minimum_contribution;

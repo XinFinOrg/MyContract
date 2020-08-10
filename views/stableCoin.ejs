@@ -1,0 +1,368 @@
+<body>
+  <% layout('./layouts/sidebar') -%>
+    <div class="preloader">
+      <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+      </div>
+    </div>
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+
+      <!-- Container fluid  -->
+      <!-- Container fluid  -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Create Stable Coin</h4>
+            <div class="row">
+              <div class="col-md-8">
+                <% if (message2.length >0) { %>
+                  <div class="alert alert-danger">
+                    <%= message2 %>
+                  </div>
+                  <% } %>
+                    <form class="form-horizontal m-t-20" id="createContract" action="/createUSDCToken" method="post">
+                      <div class="form-group">
+                        <label for="tokenName">Token Name</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" id="token_name" name="token_name" placeholder="Enter Token Name">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="token_name_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="tokenSymbol">Token Symbol</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Symbol (eg. ETH, BTC, XDC)"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="token_symbol_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="tokenDecimals">Token Decimals</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_decimals" id="token_decimals" value="18">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Decimals (eg. 18)"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="token_decimals_error"></span>
+                      </div>
+
+                      <hr>
+
+                      <div class="form-group">
+                        <label for="currency">Currency</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="currency" id="currency" placeholder="Enter Currency Name">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Currency"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="currency_error"></span>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="master_minter">Master Minter Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="master_minter" id="master_minter" placeholder="Enter Master Minter Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Master Minter Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="master_minter_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="owner">Owner Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="owner" id="owner" placeholder="Enter Owner Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Owner Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="owner_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="pauser">Pauser Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="pauser" id="pauser" placeholder="Enter Pauser Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Pauser Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="pauser_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="blacklister">Blacklister Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="blacklister" id="blacklister" placeholder="Enter Blacklister Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Blacklister Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="blacklister_error"></span>
+                      </div>
+
+
+                      <!-- <div class="form-group">
+                        <label for="1ETHTokens">1 ETH = ? <span id="tokenname"></span></label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens"><br>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="How many tokens will you be able to buy using 1 Eth ?"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="eth_tokens_error"></span>
+                      </div> -->
+                      <!-- <div class="form-group">
+                        <label for="bonus_rate">Bonus Percentage</label>
+                        <div class="input-group mb-3">
+
+                          <input type="text" class="form-control" name="bonus_rate" id="bonus_rate" placeholder="please enter bonus rate in whole Number."><br>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Here you can define bonus rate for crowdsale smartcontract. In case any changes in future you can change bonus rate with contract interaction"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="bonus_rate_error"></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="bonus_rate">Minimum Contribution</label>
+                        <div class="input-group mb-3">
+
+                          <input type="text" class="form-control" name="minimum_contribution" id="minimum_contribution" placeholder="please enter minimum contribution."><br>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Here you can define minimum contribution value in terms of token."><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="minimum_contribution_error"></span>
+                      </div>
+                      <hr>
+
+                      <h4>Advanced Functionalities (all are seleted as a default.)</h4><br>
+                      <div class="row mb-4 ml-1">
+                        <div class="checkbox-btn" data-toggle="buttons">
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isPausable" checked autocomplete="on"> Pausable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isUpgradeable" checked autocomplete="on"> Upgradeable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isBurnable" checked autocomplete="on"> Burnable
+                          </label>
+                          <label class="btn btn-checkbox mr-2 active">
+                            <input type="checkbox" name="isMintable" checked autocomplete="on"> Mintable
+                          </label>
+                          <button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i
+                              class="ti-help-alt"></i></button>
+                        </div>
+                      </div>
+                      <hr> -->
+
+                      <div class="form-actions mb-3">
+                        <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
+                        <!-- <button type="button" class="btn btn-rounded btn-lg btn-light">Cancel</button> -->
+                      </div>
+
+                    </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Container fluid  -->
+
+
+    <!-- RUBM modal -->
+    <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Pausable</span></h5>
+            <p>Pausing token transfer during some initial period (e.g. while a crowdsale is taking place), to enable pause/release
+              transfers
+            </p>
+
+            <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Upgradeable</span></h5>
+            <p>Token issuer may wish to upgrade or migrate the token to a new address to comply with a upgraded or new token
+              standard.
+            </p>
+            <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
+            <p>Keeps the token’s “totalSupply” value up to date, Useful in case someone wants to burn some tokens to reduce
+              the supply for their project or burn unsold tokens</p>
+            <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Mintable</span></h5>
+            <p>Building distribution / crowdsale logic directly into the token contract or by including a generic mint function
+              that can be called by an external contract to establish the initial allocations.</p>
+          </div>
+          <div class="modal-footer text-center">
+            <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / RUBM modal -->
+
+    </div>
+</body>
+<script>
+  window.setTimeout(function () {
+    if (window.sessionStorage.getItem("tokenName")) {
+      $("#token_name").val(window.sessionStorage.getItem("tokenName"));
+      $("#token_symbol").val(window.sessionStorage.getItem("tokenSymbol"));
+      $("#token_decimals").val(window.sessionStorage.getItem("tokenDecimals"));
+      $("#token_supply").val(window.sessionStorage.getItem("tokenSupply"));
+      $("#token_sale").val(window.sessionStorage.getItem("tokenSale"));
+      $("#eth_tokens").val(window.sessionStorage.getItem("ethTokens"));
+    }
+  }, 1000);
+
+  function submitForm() {
+    window.sessionStorage.setItem("tokenName", $("#token_name").val());
+    window.sessionStorage.setItem("tokenSymbol", $("#token_symbol").val());
+    window.sessionStorage.setItem("tokenDecimals", $("#token_decimals").val());
+    window.sessionStorage.setItem("tokenSupply", $("#token_supply").val());
+    window.sessionStorage.setItem("tokenSale", $("#token_sale").val());
+    window.sessionStorage.setItem("ethTokens", $("#eth_tokens").val());
+    // window.sessionStorage.setItem("tokenName", )
+    $("#createContract").submit();
+  }
+</script>
+<script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
+<script>
+  $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+  var radioswitch = function () {
+    var bt = function () {
+      $(".radio-switch").on("switch-change", function () {
+        $(".radio-switch").bootstrapSwitch("toggleRadioState")
+      }), $(".radio-switch").on("switch-change", function () {
+        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+      }), $(".radio-switch").on("switch-change", function () {
+        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+      })
+    };
+    return {
+      init: function () {
+        bt()
+      }
+    }
+  }();
+  $(document).ready(function () {
+    radioswitch.init()
+  });
+</script>
+<script>
+  document.getElementById("submitButton").disabled = "disabled";
+ 
+  // var myInput2 = document.getElementById("eth_tokens");
+  // myInput2.onkeyup = function () {
+  //   if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
+  //     document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("eth_tokens_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
+  var myInput3 = document.getElementById("currency");
+  myInput3.onkeyup = function () {
+    if (myInput3.value.contains(" ") || myInput3.value.trim()==="" ) {
+      document.getElementById("currency_error").innerHTML = 'Please enter valid currency name';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("currency_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  var myInput4 = document.getElementById("token_decimals");
+  myInput4.onkeyup = function () {
+    if (myInput4.value % 1 != 0 || myInput4.value < 1 || myInput4.value.indexOf(" ") == 0) {
+      document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("token_decimals_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  // var myInput5 = document.getElementById("bonus_rate");
+  // str = myInput5.value.toString();
+  // myInput5.onkeyup = function () {
+  //   if (myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+  //     document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("bonus_rate_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
+  var myInput6 = document.getElementById("token_symbol");
+  myInput6.onkeyup = function () {
+    if (myInput6.value.indexOf(" ") == 0) {
+      document.getElementById("token_symbol_error").innerHTML = 'Enter Valid String';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("tokenname").innerHTML = myInput6.value;
+      document.getElementById("token_symbol_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  var myInput7 = document.getElementById("token_name");
+  myInput7.onkeyup = function () {
+    if (myInput7.value.indexOf(" ") == 0) {
+      document.getElementById("token_name_error").innerHTML = 'Enter Valid String';
+      document.getElementById("submitButton").disabled = "disabled";
+    } else {
+      document.getElementById("token_name_error").innerHTML = '';
+      document.getElementById("submitButton").disabled = "";
+    }
+  }
+  // var myInput8 = document.getElementById("minimum_contribution");
+  // myInput8.onkeyup = function () {
+  //   if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+  //     document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("minimum_contribution_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
+</script>
+
+</html>
