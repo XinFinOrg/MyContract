@@ -142,6 +142,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
+    metadata:{
+      type: DataTypes.TEXT
+    }
   }, {});
   projectConfiguration.associate = function (models) {
     // associations can be defined here
