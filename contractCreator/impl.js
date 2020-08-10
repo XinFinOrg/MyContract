@@ -28,6 +28,17 @@ module.exports = {
       ProjectConfiguration: projectArray,
     });
   },
+  getStablecoinForm: async (req, res) => {
+    var projectArray = await getProjectArray(req.user.email);
+    var address = req.cookies['address'];
+    res.render('stableCoin', {
+      user: req.user,
+      message: req.flash('package_flash'),
+      message2: req.flash('project_flash'),
+      address: address,
+      ProjectConfiguration: projectArray,
+    });
+  },
   getERC223ContractForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
@@ -313,6 +324,61 @@ module.exports = {
       nodemailerservice.sendContractEmail(req.user.email, result);
       res.redirect('/generatedContract');
     });
+  },
+
+  createUSDCToken: async function (req, res) {
+    // const tokenCode = await fileReader.readEjsFile(__dirname+"../USDC/Token.sol")
+
+
+    ejs.renderFile(__dirname + '/USDC/Token.sol', {
+    }, async (err, data) => {
+      if (err)
+        console.log(err);
+      req.session.contract = data;
+      req.session.coinName = req.body.token_name;
+      req.session.coinSymbol = req.body.token_symbol;
+      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
+      var clientdata = await client.find({
+        where: {
+          'email': req.user.email
+        }
+      });
+
+      const metadataObj = {
+        name:req.body.token_name,
+        symbol:req.body.token_symbol,
+        currency:req.body.currency,
+        decimals:req.body.token_decimals,
+        masterMinter:req.body.master_minter,
+        pauser:req.body.pauser,
+        blacklister:req.body.blacklister,
+        owner:req.body.owner
+      }
+
+      // console.log("client:", clientdata);
+      var objdata = new Object();
+      objdata.contractCode = result;
+      objdata.coinName = req.body.token_name;
+      // objdata.tokenSupply = req.body.token_supply;
+      objdata.coinSymbol = req.body.token_symbol;
+      objdata.metadata = JSON.stringify(metadataObj);
+      // objdata.hardCap = req.body.token_sale;
+      // objdata.ETHRate = req.body.eth_tokens;
+      objdata.tokenContractCode = data;
+      // objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
+      // objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
+      // objdata.minimumContribution = req.body.minimum_contribution;
+      Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
+        var projectData = await ProjectConfiguration.create(objdata)
+        await clientdata.addProjectConfiguration(projectData);
+        await clientdata.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        await projectData.addUserCurrencyAddresses([createdEthAddress, createdBTCAddress]);
+        clientdata.package1 -= 1;
+        clientdata.save();
+      });
+      res.redirect('/generatedContract');
+    });
+
   },
 
   getGeneratedContract: async function (req, res) {
