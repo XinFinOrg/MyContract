@@ -99,12 +99,20 @@
           </div>
           <div class="modal-body">
             <div class="text-center">
-              <h5> Please enter your password to confirm</h5>              
-            </div>
+              <% if (socialClient===true) {%>
+                <h5> Please confirm to export private key</h5>              
+                <% } else { %>
+                  <h5> Please enter your password to confirm</h5>              
+                  <% } %>            </div>
             <form id="form-exportPrivKey">
               <div class="input-group mb-3">
-                <input type="password" class="form-control text-center" placeholder="" aria-label=""
-                  id="export-key-pwd" />
+                <% if (socialClient===true) {%>
+                  <input type="password" style="display: none;" class="form-control text-center" placeholder="" aria-label=""
+                  id="export-key-pwd" />   
+                  <% } else { %>
+                    <input type="password" class="form-control text-center" placeholder="" aria-label=""
+                    id="export-key-pwd" />                    
+                  <% } %>
                 <!-- <div class="input-group-append">
                     <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
                   </div> -->

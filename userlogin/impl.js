@@ -66,18 +66,29 @@ module.exports = {
           ProjectConfiguration: projectArray,
           message: req.flash('package_flash'),
           contractMessage: req.flash('contract_flash'),
-          address: address
+          address: address,
+          socialClient:client.password===null
         });
       });
     } else {
-      res.render('profile.ejs', {
-        req:req,
-        user: req.user, // get the user out of session and pass to template
-        ProjectConfiguration: projectArray,
-        message: req.flash('package_flash'),
-        contractMessage: req.flash('contract_flash'),
-        address: address
-      });
+      client.find({
+        where: {
+          'email': req.user.email
+        }
+      }).then(async client => {
+        res.render('profile.ejs', {
+          req:req,
+          user: req.user, // get the user out of session and pass to template
+          ProjectConfiguration: projectArray,
+          message: req.flash('package_flash'),
+          contractMessage: req.flash('contract_flash'),
+          address: address,
+          socialClient:client.password===null          
+        });
+      }).catch(e =>{
+        console.log(e);
+      })
+      
     }
   },
 
@@ -159,13 +170,21 @@ module.exports = {
   },
 
   getProfileDetails: async (req, res) => {
-    var projectArray = await getProjectArray(req.user.email);
-    var address = req.cookies['address'];
-    res.render('profileDetails', {
-      user: req.user,
-      address: address,
-      ProjectConfiguration: projectArray,
-    });
+    try{
+      var projectArray = await getProjectArray(req.user.email);
+      var address = req.cookies['address'];
+      const userClient = await client.findOne({where:{email:req.user.email}})
+      res.render('profileDetails', {
+        user: req.user,
+        address: address,
+        ProjectConfiguration: projectArray,
+        socialClient:userClient.password===null
+      });
+    }
+    catch(e){
+      console.log(e);
+    }
+
   },
 
   getFAQ: async (req, res) => {
@@ -265,29 +284,48 @@ module.exports = {
     try {
       const userEmail = req.user.email;
       const pwd = req.body.password;
-      if (_.isEmpty(pwd)) {
-        return res.json({ status: false, error: "Invalid password" });
-      }
-      const userClient = await client.findOne({ where: { email: userEmail } });
+      
+      const userClient = await client.findOne({ where: { [Op.and]:[{email: userEmail},{status: true }]}});
       if (userClient === null) {
         return res.json({ status: false, error: "User not found" });
       }
-      if (!bcrypt.compareSync(pwd, userClient.password)) {
-        return res.json({ status: false, error: "Incorrect password" });
+      // console.log(userEmail.password,userEmail.password===null,userEmail.password==null);
+      if (userEmail.password!=null){
+        if (_.isEmpty(pwd)) {
+          return res.json({ status: false, error: "Invalid password" });
+        }
+        if (!bcrypt.compareSync(pwd, userClient.password)) {
+          return res.json({ status: false, error: "Incorrect password" });
+        }
+        const userAddress = await userAddressDB.findOne({
+          where: {
+            [Op.and]: [
+              { currencyType: "masterEthereum" },
+              { client_id: userClient.uniqueId },
+            ],
+          },
+        });
+        if (userAddress === null) {
+          return res.json({ status: false, error: "User not found" });
+        }
+        const privKey = userAddress.privateKey;
+        res.json({ status: true, privKey: privKey });
+      }else{
+        const userAddress = await userAddressDB.findOne({
+          where: {
+            [Op.and]: [
+              { currencyType: "masterEthereum" },
+              { client_id: userClient.uniqueId },
+            ],
+          },
+        });
+        if (userAddress === null) {
+          return res.json({ status: false, error: "User not found" });
+        }
+        const privKey = userAddress.privateKey;
+        res.json({ status: true, privKey: privKey });
       }
-      const userAddress = await userAddressDB.findOne({
-        where: {
-          [Op.and]: [
-            { currencyType: "masterEthereum" },
-            { client_id: userClient.uniqueId },
-          ],
-        },
-      });
-      if (userAddress === null) {
-        return res.json({ status: false, error: "User not found" });
-      }
-      const privKey = userAddress.privateKey;
-      res.json({ status: true, privKey: privKey });
+
     } catch (e) {
       console.log("exception at userLogin.getPrivateKey: ", e);
       res.json({ status: false, error: "internal error" });
@@ -300,33 +338,55 @@ module.exports = {
       const projectId = req.body.projectId;
       const userEmail = req.user.email;
       const pwd = req.body.password;
-      if (_.isEmpty(projectId) && _.isEmpty(pwd)) {
+      if (_.isEmpty(projectId)) {
         return res.json({
           status: false,
           error: "bad request, missing parameter(s)",
         });
       }
-      const userClient = await client.findOne({ where: { email: userEmail } });
+      const userClient = await client.findOne({ where: { [Op.and]:[{email: userEmail},{status: true }]}});
       if (userClient === null) {
         return res.json({ status: false, error: "User not found" });
       }
-      if (!bcrypt.compareSync(pwd, userClient.password)) {
-        return res.json({ status: false, error: "Incorrect password" });
+      // console.log(userClient.password);
+      if (userClient.password!=null){
+        if (_.isEmpty(pwd)) {
+          return res.json({ status: false, error: "Invalid password" });
+        }
+        if (!bcrypt.compareSync(pwd, userClient.password)) {
+          return res.json({ status: false, error: "Incorrect password" });
+        }
+        const userAddress = await userAddressDB.findOne({
+          where: {
+            [Op.and]: [
+              { project_id: projectId },
+              { currencyType: "Ethereum" },
+              { client_id: userClient.uniqueId },
+            ],
+          },
+        });
+        if (userAddress === null) {
+          return res.json({ status: false, error: "User not found" });
+        }
+        const privKey = userAddress.privateKey;
+        res.json({ status: true, privKey: privKey });
+      }else{
+        const userAddress = await userAddressDB.findOne({
+          where: {
+            [Op.and]: [
+              { project_id: projectId },
+              { currencyType: "Ethereum" },
+              { client_id: userClient.uniqueId },
+            ],
+          },
+        });
+        if (userAddress === null) {
+          return res.json({ status: false, error: "User not found" });
+        }
+        const privKey = userAddress.privateKey;
+        res.json({ status: true, privKey: privKey });
       }
-      const userAddress = await userAddressDB.findOne({
-        where: {
-          [Op.and]: [
-            { project_id: projectId },
-            { currencyType: "Ethereum" },
-            { client_id: userClient.uniqueId },
-          ],
-        },
-      });
-      if (userAddress === null) {
-        return res.json({ status: false, error: "User not found" });
-      }
-      const privKey = userAddress.privateKey;
-      res.json({ status: true, privKey: privKey });
+      
     } catch (e) {
       console.log("exception ar userLogin/impl.getProjectKey: ", e);
       res.json({ error: "internal error", status: false });
