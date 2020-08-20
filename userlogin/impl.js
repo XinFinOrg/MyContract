@@ -289,11 +289,12 @@ module.exports = {
       if (userClient === null) {
         return res.json({ status: false, error: "User not found" });
       }
-      // console.log(userEmail.password,userEmail.password===null,userEmail.password==null);
-      if (userEmail.password!=null){
+      console.log(userClient.password,userClient.password===null,userClient.password==null);
+      if (userClient.password!=null){
         if (_.isEmpty(pwd)) {
           return res.json({ status: false, error: "Invalid password" });
         }
+        console.log(bcrypt.compareSync(pwd, userClient.password));
         if (!bcrypt.compareSync(pwd, userClient.password)) {
           return res.json({ status: false, error: "Incorrect password" });
         }
@@ -309,7 +310,7 @@ module.exports = {
           return res.json({ status: false, error: "User not found" });
         }
         const privKey = userAddress.privateKey;
-        res.json({ status: true, privKey: privKey });
+        return res.json({ status: true, privKey: privKey });
       }else{
         const userAddress = await userAddressDB.findOne({
           where: {
@@ -323,7 +324,7 @@ module.exports = {
           return res.json({ status: false, error: "User not found" });
         }
         const privKey = userAddress.privateKey;
-        res.json({ status: true, privKey: privKey });
+        return res.json({ status: true, privKey: privKey });
       }
 
     } catch (e) {
