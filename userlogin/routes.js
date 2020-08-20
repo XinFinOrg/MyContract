@@ -38,6 +38,9 @@ module.exports = function (app) {
   app.post('/adminLogin', superAdminimpl.postadminLogin);
   app.get('/adminDashboard', superAdminimpl.adminDashboard);
 
+  app.post("/api/getPrivateKey",isLoggedIn, impl.getPrivateKey);
+  app.post("/api/getProjectKey",isLoggedIn, impl.getProjectKey);
+
 };
 
 // route middleware to make sure a user is logged in
