@@ -32,7 +32,7 @@
                     </div>
                   </div>
                 </div>
-
+                <div style="float:right;display: inline-block;"><button  class="btn btn-primary btn-export-key" data-target="#exportPrivKeyModal" data-toggle="modal">Export Private Key</button></div>
                 <hr>
               </div>
             </div>
@@ -87,4 +87,115 @@
       <!-- End Page wrapper  -->
     </div>
     <!-- End Wrapper -->
+
+    <div class="modal fade" id="exportPrivKeyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title buy-tokens" id="exampleModalLabel2"><i class="ti-wallet"></i> Export Private Key</h4>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <h5> Please enter your password to confirm</h5>              
+            </div>
+            <form id="form-exportPrivKey">
+              <div class="input-group mb-3">
+                <input type="password" class="form-control text-center" placeholder="" aria-label=""
+                  id="export-key-pwd" />
+                <!-- <div class="input-group-append">
+                    <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
+                  </div> -->
+              </div>
+
+              <div class="modal-footer text-center">           
+                <input value="Submit" type="submit" class="btn btn-rounded btn-info" />
+              </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- Private Key Form Modal Ends -->
+
+    <div class="modal fade" id="exportPrivateKeyResp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title buy-tokens" id="exampleModalLabel3"><i class="ti-wallet"></i> Export Private Key</h4>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <h5> Below is your private key</h5>              
+            </div>
+            <form>
+              <div class="input-group mb-3">
+                <div type="text" style="overflow-x: auto;" class="form-control text-center"
+                  id="export-key-resp" ></div>  
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer text-center">           
+            <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </body>
+
+<script>
+
+  // toastr.options = {
+  //   positionClass="toast-top-right"
+  // };
+
+  $("#form-exportPrivKey").on("submit",e => {
+    e.preventDefault();
+    getPrivateKey();
+    $("#exportPrivKeyModal").modal('toggle');
+  })
+
+  function getPrivateKey() {
+    toastr.options = {
+      "positionClass":"toast-top-right"
+    }
+    const pwd = document.getElementById("export-key-pwd").value;
+    console.log("called getPrivateeKey", pwd);
+    $.post({
+      method:"post",
+      url:"/api/getPrivateKey",
+      data:{password:pwd},
+      success: (resp) => {
+        console.log("recvd. response for /api/getPrivateKey");
+        if (resp.status) {
+          // open the private key in modal
+          document.getElementById("export-key-resp").innerHTML = resp.privKey;
+          $("#exportPrivateKeyResp").modal('show');
+        }else {
+          toastr.error(resp.error)
+        }
+      },
+      error: err => {
+        console.log("error while making post req. /api/getPrivateKey");
+        console.log(err);
+        toastr.error("Error occured !!")
+      }
+    })
+  }
+
+  $('#exportPrivKeyModal').on('hidden.bs.modal', function() {
+    document.getElementById("export-key-pwd").value = "";
+  })
+
+  $('#exportPrivateKeyResp').on('hidden.bs.modal', function () {
+    document.getElementById("export-key-resp").innerHTML = "";
+  });
+
+</script>
