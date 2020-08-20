@@ -70,7 +70,7 @@
     "qrcode-generator": "^1.4.0",
     "react": "^16.5.1",
     "read-chunk": "^3.0.0",
-    "sequelize": "^4.38.0",
+    "sequelize": "^5.15.1",
     "sequelize-auto-migrations": "^1.0.2",
     "sequelize-cli": "^5.5.1",
     "sleep": "^5.2.3",
