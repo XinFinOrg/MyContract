@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2018-08-03
-*/
-
 pragma solidity ^0.4.24;
 
 // File: contracts/Ownable.sol
