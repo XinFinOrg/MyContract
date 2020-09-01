@@ -106,7 +106,16 @@
                                 </td>
                                 <% if(ProjectConfiguration.tokenContractAddress) {%>
                                   <td>
-                                    <%= ProjectConfiguration.tokenContractAddress %>
+                                    <% if (ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
+
+                                    <% if(ProjectConfiguration.networkType == "mainnet" || ProjectConfiguration.networkType == "apothem") { %>
+                                      <%= 'xdc'+ProjectConfiguration.tokenContractAddress.slice(2) %>
+                                    <% } else {%>
+                                      <%= ProjectConfiguration.tokenContractAddress %>
+                                    <% } %>
+                                    <% } else {%>
+                                      <%= ProjectConfiguration.crowdsaleContractAddress %>
+                                    <% } %>  
                                   </td>
                                   <% if(ProjectConfiguration.networkType == "mainnet") { %>
                                     <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.tokenContractHash %>"
@@ -123,11 +132,29 @@
                                       <% } %>
                                         <% if(ProjectConfiguration.crowdsaleContractAddress) {%>
                                           <td>
-                                            <%= ProjectConfiguration.crowdsaleContractAddress %>
+                                            <% if (ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
+                                              <% if(ProjectConfiguration.networkType == "mainnet" || ProjectConfiguration.networkType == "apothem") { %>
+                                                <%= 'xdc'+ProjectConfiguration.crowdsaleContractAddress.slice(2) %>
+                                              <% } else {%>
+                                                <%= ProjectConfiguration.crowdsaleContractAddress %>
+                                              <% } %>
+                                              <% } else {%>
+                                                <%= ProjectConfiguration.crowdsaleContractAddress %>
+                                              <% } %>  
+
                                           </td>
-                                          <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
-                                              target="_blank">Click here
-                                            </a> </td>
+                                          <td>
+                                            <% if(ProjectConfiguration.networkType == "mainnet") { %>
+                                              <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                                target="_blank">Click here</a></td>  
+                                           <% }else if(ProjectConfiguration.networkType == "apothem") { %>
+                                            <td><a href="https://explorer.apothem.network/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                              target="_blank">Click here</a></td>  
+                                            <%} else { %>
+                                            <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                              target="_blank">Click here</a></td> 
+                                              <% } %>   
+                                          </td>
                                           <% } else { %>
                                             <td colspan="2"> Not deployed yet
                                               <% } %>
