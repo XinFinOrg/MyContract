@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-exports.VerifyContract = async (address, code, net) => {
+exports.VerifyContract = async (address, code, net, tokenName="Coin") => {
   try {
     let url;
     switch (net) {
@@ -17,16 +17,17 @@ exports.VerifyContract = async (address, code, net) => {
         url = "https://explorer.apothem.network/compile";
       }
     }
-
+    // code = code.replace(/\"/g, '\\"');
     const resp = await axios.post(url, {
       address: address,
       optimization: false,
-      name: "Coin",
+      name: tokenName,
       version: "v0.4.24+commit.e67f0147",
       action: "compile",
       code: code,
     });
+    console.log(`token verified`,resp.data.valid);
   } catch (e) {
-    console.log("e:", e);
+    console.log("e:", e.response);
   }
 };
