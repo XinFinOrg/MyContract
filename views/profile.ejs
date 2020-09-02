@@ -106,7 +106,7 @@
                                 </td>
                                 <% if(ProjectConfiguration.tokenContractAddress) {%>
                                   <td>
-                                    <% if (ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
+                                    <% if ( ProjectConfiguration.crowdsaleContractAddress && ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
 
                                     <% if(ProjectConfiguration.networkType == "mainnet" || ProjectConfiguration.networkType == "apothem") { %>
                                       <%= 'xdc'+ProjectConfiguration.tokenContractAddress.slice(2) %>
@@ -132,7 +132,7 @@
                                       <% } %>
                                         <% if(ProjectConfiguration.crowdsaleContractAddress) {%>
                                           <td>
-                                            <% if (ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
+                                            <% if ( ProjectConfiguration.crowdsaleContractAddress && ProjectConfiguration.crowdsaleContractAddress.startsWith("0x")) {%>
                                               <% if(ProjectConfiguration.networkType == "mainnet" || ProjectConfiguration.networkType == "apothem") { %>
                                                 <%= 'xdc'+ProjectConfiguration.crowdsaleContractAddress.slice(2) %>
                                               <% } else {%>
