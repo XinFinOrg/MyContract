@@ -215,8 +215,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"mainnet");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"mainnet","Crowdsale");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"mainnet"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"mainnet",tokenName:"Crowdsale", abi:web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -266,8 +266,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"apothem");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"apothem","Crowdsale");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"apothem"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"apothem",tokenName:"Crowdsale", abi:web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -319,8 +319,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = crowdsaleReceipt.contractAddress;
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"testnet");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"testnet","Crowdsale");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"testnet"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"testnet",tokenName:"Crowdsale", abi:web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -440,8 +440,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"mainnet");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"mainnet");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"mainnet"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"mainnet"});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -483,8 +483,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"apothem");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"apothem");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"apothem"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"apothem"});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -525,8 +525,8 @@ module.exports = {
                       projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                       projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                       await projectData.save();
-                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"testnet");
-                      verifyContract(crowdsaleReceipt.contractAddress,data,"testnet");
+                      verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"testnet"});
+                      verifyContract(crowdsaleReceipt.contractAddress,data,{net:"testnet"});
                     })
                     .catch(async e => {
                       console.error('error in 2st deployment', e)
@@ -649,8 +649,8 @@ const deployUSDContract = async (req,res) => {
                     projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                     projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                     await projectData.save();
-                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"mainnet", "FiatTokenV1");
-                    verifyContract(crowdsaleReceipt.contractAddress,data,"mainnet", "FiatTokenProxy");
+                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"mainnet", tokenName:"FiatTokenV1", abi:web3.eth.abi.encodeParameters(['string','string','string', 'uint8', 'address', 'address', 'address','address'], [projectDataJson.name, projectDataJson.symbol, projectDataJson.currency, projectDataJson.decimals, projectDataJson.masterMinter, projectDataJson.pauser, projectDataJson.blacklister, projectDataJson.owner]).slice(2)});
+                    verifyContract(crowdsaleReceipt.contractAddress,data,{net:"mainnet", tokenName:"FiatTokenProxy", abi:web3.eth.abi.encodeParameters(['address'], ["0x" + tokenReceipt.contractAddress.substring(3)]).slice(2)});
                   })
                   .catch(async e => {
                     console.error('error in 2st deployment', e)
@@ -692,8 +692,8 @@ const deployUSDContract = async (req,res) => {
                     projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                     projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                     await projectData.save();
-                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"apothem", "FiatTokenV1");
-                    verifyContract(crowdsaleReceipt.contractAddress,data,"apothem", "FiatTokenProxy");
+                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"apothem", tokenName:"FiatTokenV1", abi:web3.eth.abi.encodeParameters(['string','string','string', 'uint8', 'address', 'address', 'address','address'], [projectDataJson.name, projectDataJson.symbol, projectDataJson.currency, projectDataJson.decimals, projectDataJson.masterMinter, projectDataJson.pauser, projectDataJson.blacklister, projectDataJson.owner]).slice(2)});
+                    verifyContract(crowdsaleReceipt.contractAddress,data,{net:"apothem", tokenName:"FiatTokenProxy", abi:web3.eth.abi.encodeParameters(['address'], ["0x" + tokenReceipt.contractAddress.substring(3)]).slice(2)});
                   })
                   .catch(async e => {
                     console.error('error in 2st deployment', e)
@@ -734,8 +734,8 @@ const deployUSDContract = async (req,res) => {
                     projectData.crowdsaleContractHash = crowdsaleReceipt.transactionHash;
                     projectData.crowdsaleContractAddress = "0x" + crowdsaleReceipt.contractAddress.substring(3);
                     await projectData.save();
-                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,"testnet", "FiatTokenV1");
-                    verifyContract(crowdsaleReceipt.contractAddress,data,"testnet", "FiatTokenProxy");
+                    verifyContract(tokenReceipt.contractAddress,projectData.tokenContractCode,{net:"testnet", tokenName:"FiatTokenV1",abi:web3.eth.abi.encodeParameters(['string','string','string', 'uint8', 'address', 'address', 'address','address'], [projectDataJson.name, projectDataJson.symbol, projectDataJson.currency, projectDataJson.decimals, projectDataJson.masterMinter, projectDataJson.pauser, projectDataJson.blacklister, projectDataJson.owner]).slice(2)});
+                    verifyContract(crowdsaleReceipt.contractAddress,data,{net:"testnet", tokenName:"FiatTokenProxy", abi:web3.eth.abi.encodeParameters(['address'], ["0x" + tokenReceipt.contractAddress.substring(3)]).slice(2)});
                   })
                   .catch(async e => {
                     console.error('error in 2st deployment', e)

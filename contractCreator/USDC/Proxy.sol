@@ -316,9 +316,6 @@ contract AdminUpgradeabilityProxy is UpgradeabilityProxy {
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-pragma solidity ^0.4.24;
-
-
 /**
  * @title FiatTokenProxy
  * @dev This contract proxies FiatToken calls and enables FiatToken upgrades
