@@ -128,7 +128,7 @@
                                     target="_blank">Click here</a></td> 
                                     <% } %>         
                                   <% } else { %>
-                                    <td colspan="2"> Not deployed yet
+                                    <td colspan="2"> Not deployed yet</td>
                                       <% } %>
                                         <% if(ProjectConfiguration.crowdsaleContractAddress) {%>
                                           <td>
@@ -143,7 +143,6 @@
                                               <% } %>  
 
                                           </td>
-                                          <td>
                                             <% if(ProjectConfiguration.networkType == "mainnet") { %>
                                               <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
                                                 target="_blank">Click here</a></td>  
@@ -154,9 +153,8 @@
                                             <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
                                               target="_blank">Click here</a></td> 
                                               <% } %>   
-                                          </td>
                                           <% } else { %>
-                                            <td colspan="2"> Not deployed yet
+                                            <td colspan="2"> Not deployed yet</td>
                                               <% } %>
                                               <td><button onclick="setCurrProjectId('<%= ProjectConfiguration.coinName %>')"  class="btn btn-primary btn-export-key" data-target="#exportPrivKeyModal" data-toggle="modal">Export Private Key</button></td>                                        
                               </tr>
