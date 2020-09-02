@@ -344,16 +344,39 @@ module.exports = {
         }
       });
 
+      let masterMinter=req.body.master_minter,
+      pauser=req.body.pauser,
+      blacklister=req.body.blacklister,
+      owner=req.body.owner;
+
+      if (masterMinter.startsWith("xdc")){
+        masterMinter = "0x"+masterMinter.slice(3)
+      }
+
+      if (pauser.startsWith("xdc")){
+        pauser = "0x"+pauser.slice(3)
+      }
+
+      if (blacklister.startsWith("xdc")){
+        blacklister = "0x"+blacklister.slice(3)
+      }
+
+      if (owner.startsWith("xdc")){
+        owner = "0x"+owner.slice(3)
+      }
+
       const metadataObj = {
         name:req.body.token_name,
         symbol:req.body.token_symbol,
         currency:req.body.currency,
         decimals:req.body.token_decimals,
-        masterMinter:req.body.master_minter,
-        pauser:req.body.pauser,
-        blacklister:req.body.blacklister,
-        owner:req.body.owner
+        masterMinter,
+        pauser,
+        blacklister,
+        owner,
       }
+
+      
 
       // console.log("client:", clientdata);
       var objdata = new Object();
