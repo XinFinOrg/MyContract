@@ -144,13 +144,13 @@
 
                                           </td>
                                             <% if(ProjectConfiguration.networkType == "mainnet") { %>
-                                              <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                              <td><a href="https://explorer.xinfin.network/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
                                                 target="_blank">Click here</a></td>  
                                            <% }else if(ProjectConfiguration.networkType == "apothem") { %>
-                                            <td><a href="https://explorer.apothem.network/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                            <td><a href="https://explorer.apothem.network/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
                                               target="_blank">Click here</a></td>  
                                             <%} else { %>
-                                            <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractAddress %>"
+                                            <td><a href="https://ropsten.etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
                                               target="_blank">Click here</a></td> 
                                               <% } %>   
                                           <% } else { %>
