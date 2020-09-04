@@ -37,7 +37,7 @@
     "force": "0.0.3",
     "fs": "0.0.1-security",
     "helmet": "3.14.0",
-    "helmet-csp": "^2.7.1",
+    "helmet-csp": "^2.9.1",
     "http-errors": "~1.6.2",
     "image-data-uri": "^1.1.1",
     "intuit-oauth": "^1.1.3",
