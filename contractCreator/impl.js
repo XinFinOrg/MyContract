@@ -100,8 +100,8 @@ module.exports = {
       var ERC20Mintable = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Mintable.sol');
       var CapperRole = await fileReader.readEjsFile(__dirname + '/ERC20contracts/CapperRole.sol');
       var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Capped.sol');
-
-      ERC20CappedSign = "ERC20Capped(" + req.body.token_supply * 10 + "000000000000000000)"
+      const amnt_cap = parseFloat(parseFloat(req.body.token_supply)  * 10);
+      ERC20CappedSign = "ERC20Capped(" + removeExpo(amnt_cap) + "000000000000000000)"
       inherits += ", ERC20Mintable,ERC20Capped";
     }
     if (isUpgradeable) {
@@ -205,8 +205,8 @@ module.exports = {
       var ERC20Mintable = await fileReader.readEjsFile(__dirname + '/ERC223contracts/ERC20Mintable.sol');
       var CapperRole = await fileReader.readEjsFile(__dirname + '/ERC223contracts/CapperRole.sol');
       var ERC20Capped = await fileReader.readEjsFile(__dirname + '/ERC223contracts/ERC20Capped.sol');
-
-      ERC20CappedSign = "ERC20Capped(" + req.body.token_supply * 10 + "000000000000000000)"
+      const amnt_cap = parseFloat(parseFloat(req.body.token_supply)  * 10);
+      ERC20CappedSign = "ERC20Capped(" + removeExpo(amnt_cap) + "000000000000000000)"
       inherits += ", ERC20Mintable,ERC20Capped";
     }
     if (isUpgradeable) {
@@ -469,3 +469,23 @@ function getProjectArray(email) {
     });
   });
 }
+
+
+function removeExpo(x) {
+  var data = String(x).split(/[eE]/);
+  if (data.length == 1) return data[0];
+
+  var z = "",
+    sign = x < 0 ? "-" : "",
+    str = data[0].replace(".", ""),
+    mag = Number(data[1]) + 1;
+
+  if (mag < 0) {
+    z = sign + "0.";
+    while (mag++) z += "0";
+    return z + str.replace(/^\-/, "");
+  }
+  mag -= str.length;
+  while (mag--) z += "0";
+  return str + z;
+};
