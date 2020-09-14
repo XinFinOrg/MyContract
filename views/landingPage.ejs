@@ -1,634 +1,647 @@
 <!DOCTYPE html>
-<html lang="zxx" class="js">
+<html lang="eng">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Develop a common framework platform on XDC Network nodes to run decentralized web3 APIs 24x7 without any centralized failure. Bring more use-cases to blockchains." />
+        <meta name="keywords" content="Secure, Scalable Blockchain-Agnostic Decentralized Oracle, XDC Network, Connect smart contracts with any API, Get Price/Data Feed, Start Your Price/Data Feed" />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="author" content="Softnio">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-        content="MyContract - Leading Platform for Smart Contract Creation, Deployment, Interaction & Token Offering.">
-    <meta name="Description"
-        content="Leading Platform for Smart Contract Creation, Deployment, Interaction & Token Offering. Create your Smart Contract without Coding.">
-    <meta name="Keywords"
-        content="Smart Contract , Smart Contract Creation , Token Offering , Cryptocurrency , MyContract , Create Smart Contract , Smart Contract Generator , Blockchain Technology , My Smart Contract , Token , Blockchain , Token Offering Platform , Create Smart Contract Online , Technology , Token Generator , Ethereum , Bitcoin , Generate ERC20 token , Smart , Contract">
+        <!-- Title -->
+        <title>MyContract - Secure, Scalable Blockchain-Agnostic Decentralized Oracle</title>
 
-    <!-- Fav Icon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="landingPageAssets/images/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="landingPageAssets/images/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="landingPageAssets/images/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="landingPageAssets/images/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="landingPageAssets/images/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="landingPageAssets/images/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="landingPageAssets/images/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="landingPageAssets/images/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="landingPageAssets/images/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="landingPageAssets/images/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="landingPageAssets/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="landingPageAssets/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="landingPageAssets/images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="landingPageAssets/images/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="landingPageAssets/images/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="img/favicon/android-icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="img/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png" />
+        <meta name="theme-color" content="#ffffff" />
 
-    <!-- Goole Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800,900" rel="stylesheet">
+        <!-- Core Stylesheet -->
+        <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Site Title  -->
-    <title>MyContract | Create your Smart Contract without Coding</title>
+        <!-- Responsive Stylesheet -->
+        <link rel="stylesheet" href="css/responsive.css" />
+    </head>
 
-    <!-- Vendor Bundle CSS -->
-    <link rel="stylesheet" href="landingPageAssets/css/vendor.bundle.css">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="landingPageAssets/css/style.css">
-    <link rel="stylesheet" href="landingPageAssets/css/toastr.min.css">
-    <link rel="stylesheet" href="landingPageAssets/css/theme.css" id="layoutstyle">
-
-</head>
-
-<body class="theme-light io-jasmine" data-spy="scroll" data-target="#mainnav" data-offset="80">
-    <!-- Header -->
-    <header class="site-header is-sticky mobile-sticky" id="about">
-        <!-- Place Particle Js -->
-        <div id="particles-js" class="particles-container particles-js"></div>
-        <!-- Navbar -->
-        <div class="navbar navbar-expand-lg is-transparent" id="mainnav">
-            <nav class="container">
-                <a class="navbar-brand animated" data-animate="fadeInDown" data-delay=".65" href="#"><img
-                        class="logo logo-dark" alt="logo" src="landingPageAssets/images/logo.png"><img
-                        class="logo logo-light" alt="logo" src="landingPageAssets/images/logo-white.png"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"><span
-                        class="navbar-toggler-icon"><span class="fa fa-bars"></span></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
-                    <ul class="navbar-nav animated remove-animation" data-animate="fadeInDown" data-delay=".9">
-                        
-                        <li class="nav-item"><a class="nav-link menu-link" href="#about">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link menu-link" href="#features">Features</a></li>
-                        <li class="nav-item"><a class="nav-link menu-link" href="#contact">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link menu-link" href="https://docs.mycontract.co"
-                                target="_blank">Get Started</a></li>
-                       
-                                <li class="nav-item"><a class="nav-link menu-link"
-                                    href="https://st.mycontract.co/">Create Stable Coin</a></li>
-                    </ul>
-                    <ul class="navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
-                        <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link"
-                                href="/login">LOGIN</a></li>
-                    </ul>
-                </div>
-            </nav>
+    <body class="light-version">
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="preload-content">
+                <div id="dream-load"></div>
+            </div>
         </div>
-        <!-- End Navbar -->
-        <!-- Banner/Slider -->
-        <div id="header" class="banner banner-full d-flex flex-column banner-jasmine">
-            <div class="background-shape"></div>
-            <div class="container zi6">
-                <div class="banner-content">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12 text-center">
-                            <div class="header-txt tab-center mobile-center">
-                                <h1 class="animated" data-animate="fadeInUp" data-delay="1">Leading Platform for Smart
-                                    Contract
-                                    Creation, Deployment, Interaction & Token Offering</h1>
-                                <p class="lead animated" data-animate="fadeInUp" data-delay="1.20">Create your Smart
-                                    Contract
-                                    without Coding</p>
-                                <ul class="btns mt-5 animated" data-animate="fadeInUp" data-delay="1.50"
-                                    style="visibility: visible; animation-delay: 0.7s;">
-                                    <li><a href="https://mycontract.co/login" class="btn">CODE YOUR CONTRACT</a></li>
-                                    <li><a href="https://www.youtube.com/watch?v=thR-pTpF7Sw"
-                                            class="btn btn-icon-s2 video-play"><em class="fa fa-play"></em>HOW IT
-                                            WORKS</a></li>
-                                </ul>
 
+        <!-- Header -->
+        <header class="header-nav">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <!-- Brand -->
+                    <a class="navbar-brand" href="/"><img src="img/mycontract-logo.png" alt="MyContract Logo" /></a>
+                    <!-- / -->
+
+                    <!-- Mobile Toggle -->
+                    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                    </button>-->
+                    
+                    <button class="navbar-toggler first-button" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <div class="animated-icon1"><span></span><span></span><span></span></div>
+                    </button>
+                    <!-- / -->
+
+                    <!-- Top Menu -->
+                    <div class="collapse navbar-collapse justify-content-end" id="navbar">
+                        <ul class="navbar-nav ml-auto align-items-lg-center">
+                            <li><a href="https://apidocs.xinfin.network/" target="_blank">Node HTTP API</a></li>
+                            <li class="m-dropdown m-dropdown-multilevel">
+                                <a class="nav-link" href="">SDK Frontend APIs</a><i class="fa fa-angle-down m-dropdown-toggle"></i>
+                                <ul class="m-dropdown-menu">
+                                    <li><a href="https://apidocs.xinfin.network/docs/?javascript#sha3request">JavaScript</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?python#sha3request">Python</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?go#sha3request">Go</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?java#sha3request">Java</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?ruby#sha3request">Ruby</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="nav-link" href="#sdkfordevelopers">SDK For Developers</a></li>
+                            <li>
+                                <a href="providers" class="btn nav-link-btn login-btn"><i class="fa fa-pencil"></i> Build with Blockchain</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- / -->
+                </div>
+                <!-- Container -->
+            </nav>
+            <!-- Navbar -->
+        </header>
+        <!-- Header End -->
+
+        <!-- Header Area Start 
+    	<header class="header-area fadeInDown" data-wow-delay="0.2s" style="margin-top:100px;">
+        <div class="classy-nav-container light breakpoint-off">
+            <div class="container">
+                <nav class="classy-navbar light justify-content-between" id="dreamNav">
+                    <a class="nav-brand light" href="/"><img src="img/mycontract-logo.png" alt="MyContract Logo"></a>
+                    <div class="classy-navbar-toggler demo">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+                    <div class="classy-menu">
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+                        <div class="classynav">
+                            <ul id="nav">
+                                <li><a href="https://apidocs.xinfin.network/" target="_blank">Node HTTP API</a></li>
+                                <li><a href="#" target="_blank">SDK Frontend APIs</a></li>
+                                <li><a href="#sdkfordevelopers">SDK for Developers</a></li>
+                            </ul>
+                            <a href="providers.html" class="btn login-btn ml-15"><i class="fa fa-pencil"></i> Build with Blockchain</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    	</header>
+    	<!-- Header Area Ends -->
+
+        <!-- Welcome Area Starts -->
+        <section class="hero-section light-blue-bg relative section-padding" id="home">
+            <div class="hero-section-content">
+                <div class="container h-100">
+                    <div class="row h-100 mt-70 mb-100 align-items-center">
+                        <!-- Welcome Content -->
+                        <div class="col-12 col-lg-7 col-md-6">
+                            <div class="welcome-content">
+                                <h1 class="b-text wow fadeInUp" data-wow-delay="0.2s">Secure, Scalable Blockchain-Agnostic Decentralized Oracle</h1>
+                                <p class="g-text wow fadeInUp" data-wow-delay="0.3s">Develop a common framework platform on XDC Network nodes to run decentralized web3 APIs 24x7 without any centralized failure.</p>
+                                <div class="promo-section wow fadeInUp" data-wow-delay="0.4s">
+                                    <h3 class="special-head blue-text">Bring more use-cases to blockchains.</h3>
+                                </div>
+                                <div class="dream-btn-group wow fadeInUp" data-wow-delay="0.5s">
+                                    <a href="getpricedatafeed" class="btn more-btn mr-2">Get Price/Data Feed <i class="fa fa-long-arrow-right"></i></a>
+                                    <a href="providers" class="btn more-btn-transparent">Start your Price/Data Feed <i class="fa fa-long-arrow-right"></i></a>
+                                </div>
                             </div>
                         </div>
-                        <!-- .col  -->
-                    </div>
-                    <!-- .row  -->
-                </div>
-                <!-- .banner-content  -->
-            </div>
-            <!-- .container  -->
-        </div>
-        <!-- End Banner/Slider -->
-    </header>
-    <!-- End Header -->
-
-    <!-- Start Section -->
-    <div class="section section-pad-md section-bg-packages">
-        <div class="container">
-            <div class="section-head-s8 text-center">
-                <h2 class="section-title text-white animated" data-animate="fadeInUp" data-delay=".1">Packages Provided
-                </h2>
-                <p class="animated text-white animated" data-animate="fadeInUp" data-delay=".2">Decentralized full cycle
-                    Platform for Smart Contracts Creation, Deployment, Interaction</p>
-            </div>
-
-            <div class="gaps size-2x"></div>
-
-            <div class="row flex-row justify-content-center">
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s4 animated" data-animate="fadeInUp" data-delay=".4">
-                        <div class="features-icon-s4"><img src="landingPageAssets/images/packages/standard.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s4">Standard Package</h5>
-                        <ul class="prblm-points">
-                            <li>Industry standard Smart Contract Creation</li>
-                            <li>Various Ethereum Networks as well as
-                            XinFin's Private Network option for Deployment</li>
-                            <li>Hassle free Smart Contract Interactions</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s4 animated" data-animate="fadeInUp" data-delay=".5">
-                        <div class="features-icon-s4"><img src="landingPageAssets/images/packages/premium.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s4">Premium Package</h5>
-                        <ul class="prblm-points">
-                            <li>All the facilities as per Standard Package</li>
-                            <li>Initial Token Offering Platform</li>
-                            <li>KYC and AML Services</li>
-                            <li>Token Wallet Platform</li>
-                            <li>Bitcoin & Ether support</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="features-box-s4 animated" data-animate="fadeInUp" data-delay=".6">
-                        <div class="features-icon-s4"><img src="landingPageAssets/images/packages/custom.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s4">Custom Package</h5>
-                        <ul class="prblm-points">
-                            <li>Custom Smart Contract logic</li>
-                            <li>Custom Initial Token Offering Platform</li>
-                            <li>KYC and AML Service</li>
-                            <li>Token Wallet Platform</li>
-                            <li>Bitcoin, Ether and various Standard Crypto Support</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- .conatiner  -->
-
-    </div>
-    <!-- Start Section -->
-
-    <!-- Start Section -->
-    <div class="section section-pad-md section-bg" id="howItWorks">
-        <div class="ui-shape ui-shape-s1"></div>
-        <div class="container">
-            <div class="section-head-s8 text-center">
-                <h2 class="section-title animated" data-animate="fadeInUp" data-delay=".1">How it Works</h2>
-            </div>
-
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="text-center desktop-diagram animated" data-animate="fadeInUp" data-delay=".3">
-                        <img src="landingPageAssets/images/howitworks-desktop.png" alt="graph">
-                    </div>
-                    <div class="text-center ipad-diagram animated" data-animate="fadeInUp" data-delay=".3">
-                        <img src="landingPageAssets/images/howitworks-ipad.png" alt="graph">
-                    </div>
-                    <div class="text-center mobile-diagram animated" data-animate="fadeInUp" data-delay=".3">
-                        <img src="landingPageAssets/images/howitworks-mobile.png" alt="graph">
-                    </div>
-                </div>
-            </div>
-            <!-- .row  -->
-        </div>
-        <!-- .conatiner  -->
-    </div>
-    <!-- Start Section -->
-
-
-    <!-- Start Section -->
-    <div class="section section-pad-md section-bg-alt">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-md-6">
-                    <div class="text-block">
-                        <h2 class="animated" data-animate="fadeInUp" data-delay=".2">What are Smart Contracts?</h2>
-                        <p class="animated" data-animate="fadeInUp" data-delay=".3">Smart Contracts help you Exchange
-                            Money,
-                            Property, Shares or anything of value in a Transparent, Conflict-free way without the
-                            intervention
-                            of a middle party.</p>
-                        <a href="https://medium.com/xinfin/mycontract-smart-contracts-tokens-issuing-asset-tokenization-and-icos-made-easy-1879d523341"
-                            target="_blank" class="btn animated" data-animate="fadeInUp" data-delay=".5">Read More</a>
-                    </div>
-                </div>
-                <!-- .col  -->
-                <div class="col-md-5">
-                    <div class="res-m-btm animated" data-animate="fadeInUp" data-delay=".3"><img
-                            src="landingPageAssets/images/smart-contract.png" alt="Smart Contract"></div>
-                </div>
-                <!-- .col  -->
-            </div>
-            <!-- .row  -->
-        </div>
-        <!-- .conatiner  -->
-    </div>
-    <!-- Start Section -->
-
-    <!-- Start Section -->
-    <div class="section section-pad-md section-bg" id="features">
-        <div class="container">
-            <div class="section-head-s8 text-center">
-                <h2 class="section-title animated" data-animate="fadeInUp" data-delay=".1">Platform Features</h2>
-                <p class="animated animated" data-animate="fadeInUp" data-delay=".2">Creating and managing smart
-                    contracts
-                    without any programming skills</p>
-            </div>
-
-            <div class="gaps size-2x"></div>
-
-            <div class="row flex-row justify-content-center">
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".4">
-                        <div class="features-icon-s3"><img src="landingPageAssets/images/features/token-contract.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s3">Token Contract</h5>
-                        <p>ERC20 - Used for token Smart Contracts, ERC223 - Provides extra safety during token
-                            transfers,
-                            ERC 721 - Asset Tokenization, STO</p>
-                    </div>
-                </div>
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".5">
-                        <div class="features-icon-s3"><img
-                                src="landingPageAssets/images/features/crowdsale-contract.png" alt="icon"></div>
-                        <h5 class="features-title-s3">Crowdsale Contract</h5>
-                        <p>This is an audited smart contract with additional features For eg, Bonus rates, Send tokens to
-                            Investor etc.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 res-m-bttm-sm">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".6">
-                        <div class="features-icon-s3"><img src="landingPageAssets/images/features/easy-deployment.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s3">Easy Deployment</h5>
-                        <p>Automatic & Manual Deployment with various ways to access wallets.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gaps size-4x"></div>
-
-            <div class="row flex-row justify-content-center">
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".7">
-                        <div class="features-icon-s3"><img
-                                src="landingPageAssets/images/features/contract-interaction.png" alt="icon"></div>
-                        <h5 class="features-title-s3">Contract Interaction</h5>
-                        <p>This feature can enable easy smart contract interaction with built-in interaction platform.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4 res-m-bttm">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".8">
-                        <div class="features-icon-s3"><img src="landingPageAssets/images/features/token-offering.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s3">Token Offering Platform</h5>
-                        <p>This platform provides a convenient way to conduct initial coin offering with admin dashboard
-                            for
-                            KYC and AML support.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="features-box-s3 animated" data-animate="fadeInUp" data-delay=".9">
-                        <div class="features-icon-s3"><img src="landingPageAssets/images/features/currency-support.png"
-                                alt="icon"></div>
-                        <h5 class="features-title-s3">Currency Support</h5>
-                        <p>Ethereum and Bitcoin Support, Top 10 Cryptocurrency Support in near future and Secured
-                            Gateway
-                            for Keystore handling & withdrawal.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Section -->
-
-    <!-- Start Section -->
-    <div class="section section-pad-md section-bg-alt">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-md-5 order-md-first order-last">
-                    <div class="res-m-btm animated" data-animate="fadeInUp" data-delay=".1"><img
-                            src="landingPageAssets/images/additional-features.png" alt="Future Additions"></div>
-                </div>
-                <!-- .col  -->
-                <div class="col-md-6">
-                    <div class="text-block">
-                        <h2 class="animated" data-animate="fadeInUp" data-delay=".2">Future Additions</h2>
-                        <p class="animated" data-animate="fadeInUp" data-delay=".3">Smart Contracts calling system
-                            ensures
-                            that everything works exactly how you have planned.</p>
-                        <div class="text-block">
-                            <ul>
-                                <li class="animated" data-animate="fadeInUp" data-delay=".5">Wallet facility in Platform
-                                </li>
-                                <li class="animated" data-animate="fadeInUp" data-delay=".6">ERC 888 Support</li>
-                                <li class="animated" data-animate="fadeInUp" data-delay=".7">Top 10 Crypto Support</li>
-                                <li class="animated" data-animate="fadeInUp" data-delay=".8">Other Platform and Protocol
-                                </li>
-                            </ul>
+                        <div class="col-lg-5 col-md-6">
+                            <div class="wow fadeInUp" data-wow-delay="0.6s"><img src="img/banner-api-image.png" /></div>
                         </div>
                     </div>
                 </div>
-                <!-- .col  -->
             </div>
-            <!-- .row  -->
-        </div>
-    </div>
-    <!-- End Section -->
+        </section>
+        <!-- Welcome Area Ends -->
 
-    <!-- Start Section -->
-    <div class="section section-pad section-bg" id="contact">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-lg-4 res-m-bttm-sm">
-                    <div class="section-head-s6">
-                        <h2 class="section-title-s8 animated" data-animate="fadeInUp" data-delay=".2">Get In Touch</h2>
-                        <p class="animated" data-animate="fadeInUp" data-delay=".2">Any question? Reach out to us and
-                            we'll
-                            get back to you shortly.</p>
-                    </div>
-                    <ul class="contact-info-alt">
-                        <li class="animated" data-animate="fadeInUp" data-delay=".4"><em
-                                class="fa fa-envelope"></em><span>info@mycontract.co</span></li>
-                    </ul>
-                </div>
-                <!-- .col -->
-                <div class="col-lg-7">
-                    <form class="form-message form-message-s2 form-message-s3 text-left show-error-hint animated"
-                        data-animate="fadeInUp" data-delay=".6" name="contactForm" id="contactUsForm"
-                        action="javascript:void(0);" onSubmit="signIn()">
-                        <div class="form-results"></div>
-                        <div class="input-field">
-                            <input name="contactName" type="text" placeholder="Your Name" data-validation="custom"
-                                data-validation-regexp="[a-zA-Z][a-zA-Z0-9-_]{3,32}" class="input-border required"
-                                aria-required="true">
-                        </div>
-                        <div class="input-field">
-                            <input name="contactEmail" type="email" data-validation="email" placeholder="Your Email"
-                                class="input-border required email" aria-required="true">
-                        </div>
-                        <div class="input-field">
-                            <textarea name="contactMessage" placeholder="Your Message"
-                                class="txtarea input-border required" data-validation="length"
-                                data-validation-length="10-200" aria-required="true"></textarea>
-                        </div>
-                        <!-- <input type="text" class="d-none" name="form-anti-honeypot" value=""> -->
-                        <div class="input-field">
-                            <button type="submit" class="btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- .col -->
-            </div>
-        </div>
+        <div class="clearfix"></div>
 
-    </div>
-    <!-- End Section -->
-
-
-
-    <!-- Section -->
-    <div class="section footer-scetion footer-lavendar">
-        <div class="social-overlap">
+        <!-- Middleware, Decentralized Oracle Starts -->
+        <section id="about" class="section-padding-0-0 relative clearfix" style="margin-top: -100px;">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-10">
-                        <ul class="social-bar animated" data-animate="fadeInUp" data-delay=".1">
-                            <li>Follow us</li>
-                            <li><a href="https://facebook.com/XinFinHybridBlockchain" target="_blank"><em
-                                        class="fab fa-facebook-f"></em></a></li>
-                            <li><a href="https://twitter.com/XinFin_Official" target="_blank"><em
-                                        class="fab fa-twitter"></em></a></li>
-                            <li><a href="https://t.me/xinfin" target="_blank"><em class="fab fa-telegram"></em></a></li>
-                            <li><a href="https://www.linkedin.com/company/xinfin" target="_blank"><em
-                                        class="fab fa-linkedin"></em></a></li>
-                            <li><a href="https://www.youtube.com/channel/UCQaL6FixEQ80RJC0B2egX6g" target="_blank"><em
-                                        class="fab fa-youtube"></em></a></li>
-                            <li><a href="https://xinfin-public.slack.com/" target="_blank"><em
-                                        class="fab fa-slack"></em></a></li>
-                        </ul>
+                <div class="has-shadow agency-sec">
+                    <div class="section-heading text-center">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.2s">Middleware, Decentralized Oracle</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.3s">An API based blockchain/platform agnostic smart contract interaction layer.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="services-block-four v2 mb-40 wow fadeInUp" data-wow-delay="0.4s">
+                                <div class="inner-box">
+                                    <div class="icon-img-box">
+                                        <img src="img/icons/decentralized-web3-apis.png" alt="" />
+                                    </div>
+                                    <h3>Decentralized web3 APIs</h3>
+                                    <div class="text">Develop a common framework platform on XinFin Network nodes to run decentralised web3 APIs 24x7 without any centralised failure.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="services-block-four v2 mb-40 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="inner-box">
+                                    <div class="icon-img-box">
+                                        <img src="img/icons/standardised-protocol.png" alt="" />
+                                    </div>
+                                    <h3>Standardised Protocol</h3>
+                                    <div class="text">The APIs will offer standardised protocol for communicating with data</div>
+                                    <div class="side-feature-list-item v2">
+                                        <i class="fa fa-check check-mark-icon-font" aria-hidden="true"></i>
+                                        <div class="foot-c-info">Developers/institutions feed data to API</div>
+                                    </div>
+                                    <div class="side-feature-list-item v2">
+                                        <i class="fa fa-check check-mark-icon-font" aria-hidden="true"></i>
+                                        <div class="foot-c-info">Developers/institutions access data from API</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="services-block-four v2 mb-40 wow fadeInUp" data-wow-delay="0.6s">
+                                <div class="inner-box">
+                                    <div class="icon-img-box">
+                                        <img src="img/icons/agnostic-blockchain-platform.png" alt="" />
+                                    </div>
+                                    <h3>Agnostic Blockchain Platform</h3>
+                                    <div class="text">The APIs will be agnostic to underlying blockchain platform. They should be able to work on any blockchain, DLT or non-DLT platform.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Middleware, Decentralized Oracle Ends -->
+
+        <div class="clearfix"></div>
+
+        <!-- Create your Smart Contract Starts -->
+        <section class="special section-padding-70-50 clearfix" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-6 offset-lg-0">
+                        <div class="who-we-contant">
+                            <h4 class="wow fadeInUp" data-wow-delay="0.3s">Create your Smart Contract Without Coding</h4>
+                            <p class="wow fadeInUp" data-wow-delay="0.4s">
+                                Create Stable Coin Smart Contract, Token Contract (XRC20, XRC223, XRC721, ERC20, ERC223, ERC721 Standard), Crowdsale token for STO.Create Your Token with a few clicks.
+                            </p>
+                            <div class="list-wrap mb-10 wow fadeInUp" data-wow-delay="0.5s">
+                                <a href="https://mycontract.co/login" target="_blank" class="btn more-btn">Token Creation (ERC20/XRC20) <i class="fa fa-long-arrow-right"></i></a>
+                                <a href="https://mycontract.co/login" target="_blank" class="btn more-btn-transparent">STO/Crowdsale Contract (ERC223/XEC223) <i class="fa fa-long-arrow-right"></i></a>
+                                <a href="https://st.mycontract.co/" target="_blank" class="btn more-btn">Stablecoin Contract (ERC20/XRC20) <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <div class="list-wrap-block mt-20 wow fadeInUp" data-wow-delay="0.6s">
+                                <h6>Supported Blockchain Network</h6>
+                                <img src="img/ethereum-logo.png" width="128" height="80" />
+                                <img src="img/xdc-logo.png" width="128" height="80" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 offset-lg-0 col-md-12 no-padding-left">
+                        <div class="welcome-meter wow fadeInUp" data-wow-delay="0.7s">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe
+                                    class="embed-responsive-item"
+                                    src="https://www.youtube.com/embed/thR-pTpF7Sw?rel=0"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <h5 class="mt-3 wow fadeInUp" data-wow-delay="0.3s">How to Video Guide : Generate Smart Contract without code</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Create your Smart Contract Ends -->
+
+        <!-- Built For Developers Starts -->
+        <section class="about-us-area special section-padding-35-70 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="section-heading text-center">
+                            <h2 class="wow fadeInUp" data-wow-delay="0.2s">Monetize your data feeds and existing APIs by selling them directly to smart contracts</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <!--<div class="col-12 col-lg-7 col-md-6">
+                    <div class="built-for-developers-block fadeInUp" data-wow-delay="0.7s">
+                        <h1 class="v2 wow fadeInUp" data-wow-delay="0.2s">Built For Developers</h1>
+                        <p class="v2 wow fadeInUp" data-wow-delay="0.3s">XDC Network allows blockchain developers to easily create price feeds, event reports, and other data oracles to be used in decentralized applications.</p>
+                        <div class="dream-btn-group wow fadeInUp" data-wow-delay="0.4s">
+                        	<a href="https://github.com/XinFinorg" target="_blank" class="btn more-btn mr-2"><i class="fa fa-github"></i> View on Github</a>
+                            <a href="https://howto.xinfin.org/" target="_blank" class="btn more-btn-transparent"><i class="fa fa-book"></i> Developer Portal</a>
+                         </div>
+                    </div>
+                </div>-->
+                    <div class="col-12 col-lg-7 col-md-6">
+                        <div class="built-for-developers-block fadeInUp" data-wow-delay="0.7s">
+                            <h1 class="v2 wow fadeInUp" data-wow-delay="0.2s">Built For Developers</h1>
+                            <p class="v2 wow fadeInUp" data-wow-delay="0.3s">XDC Network allows blockchain developers to easily create price feeds, event reports, and other data oracles to be used in decentralized applications.</p>
+                            <div class="dream-btn-group wow fadeInUp" data-wow-delay="0.4s">
+                                <a href="https://github.com/XinFinOrg/MyContract" target="_blank" class="btn more-btn mr-2"><i class="fa fa-github"></i> View on Github</a>
+                                <a href="https://howto.xinfin.org/" target="_blank" class="btn more-btn-transparent"><i class="fa fa-book"></i> Developer Portal</a>
+                            </div>
+                            <div class="footer"></div>
+                        </div>
+                    </div>
+
+                    <div class="services-column col-lg-5 col-md-6 col-xs-12">
+                        <!--Services Block Four-->
+                        <div class="services-block-four how flex-parent space-between wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="media">
+                                <i class="fa"><img src="img/icons/api.png" class="img-responsive" /></i>
+                                <div class="align-self-center">
+                                    <p class="mb-0">Connect smart contracts with any API</p>
+                                </div>
+                            </div>
+                            <i class="fa fa-chevron-right align-self-center"></i>
+                        </div>
+
+                        <!--Services Block Four-->
+                        <div class="services-block-four how flex-parent space-between wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="media">
+                                <i class="fa"><img src="img/icons/crypto-prices.png" class="img-responsive" /></i>
+                                <div class="align-self-center">
+                                    <p class="mb-0">Get Crypto Prices in your Smart Contracts</p>
+                                </div>
+                            </div>
+                            <i class="fa fa-chevron-right align-self-center"></i>
+                        </div>
+
+                        <!--Services Block Four-->
+                        <div class="services-block-four how flex-parent space-between wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="media">
+                                <i class="fa"><img src="img/icons/external-api.png" class="img-responsive" /></i>
+                                <div class="align-self-center">
+                                    <p class="mb-0">Call External APIs from Smart Contracts</p>
+                                </div>
+                            </div>
+                            <i class="fa fa-chevron-right align-self-center"></i>
+                        </div>
+
+                        <!--Services Block Four-->
+                        <div class="services-block-four how flex-parent space-between wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="media">
+                                <i class="fa"><img src="img/icons/generate-random-numbers.png" class="img-responsive" /></i>
+                                <div class="align-self-center">
+                                    <p class="mb-0">Generate Verifiable Random Numbers</p>
+                                </div>
+                            </div>
+                            <i class="fa fa-chevron-right align-self-center"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Built For Developers Ends -->
+
+        
+        <!-- Open Source Software Development Kit Starts -->
+        <section id="sdkfordevelopers" class="section-padding-50-50 ico-about-bg relative clearfix">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.2s">Open Source Software Development Kit</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.3s">
+                        XDC Network is a High-performance Blockchain Built for Data Oracle. XDC Network can process thousands of transactions per second with instant finality and the ability to send oracle data across multiple blockchains.
+                    </p>
+                </div>
+
+                <div class="row opensource-toolkit">
+                    <div class="col-12 col-md-6 col-lg-2 mb-4 wow fadeInUp" data-wow-delay="0.2s">
+                        <!-- Content -->
+                        <div class="service_single_content text-center fadeInUp" data-wow-delay="0.2s">
+                            <!-- Icon -->
+                            <div class="service_icon">
+                                <img src="img/icons/xdc-explorer.png" />
+                            </div>
+                            <h6>XDC Network Explorer</h6>
+                            <p>XDCScan is a Block Explorer, Search, Public API for XinFin XDC Network, a decentralized smart contracts platform.</p>
+                            <div class="info-button">
+                                <a class="btn more-btn-transparent" href="https://explorer.xinfin.network/" target="_blank">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2 mb-4 wow fadeInUp" data-wow-delay="0.3s">
+                        <!-- Content -->
+                        <div class="service_single_content text-center fadeInUp" data-wow-delay="0.3s">
+                            <!-- Icon -->
+                            <div class="service_icon">
+                                <img src="img/icons/masternode-validator.png" />
+                            </div>
+                            <h6>Master Node/Validator</h6>
+                            <p>Deploying Masternode is conducive to trusted, scalable decentralised network infrastructure.</p>
+                            <div class="info-button">
+                                <a class="btn more-btn-transparent" href="https://master.xinfin.network/" target="_blank">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2 mb-4 wow fadeInUp" data-wow-delay="0.4s">
+                        <!-- Content -->
+                        <div class="service_single_content text-center fadeInUp" data-wow-delay="0.4s">
+                            <!-- Icon -->
+                            <div class="service_icon">
+                                <img src="img/icons/xinfin-remix.png" />
+                            </div>
+                            <h6>XinFin Remix</h6>
+                            <p>XinFin Remix is a web browser-based IDE that allows you to write solidity smart contracts.</p>
+                            <div class="info-button">
+                                <a class="btn more-btn-transparent" href="https://remix.xinfin.network/" target="_blank">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2 mb-4 wow fadeInUp" data-wow-delay="0.5s">
+                        <!-- Content -->
+                        <div class="service_single_content text-center fadeInUp" data-wow-delay="0.3s">
+                            <!-- Icon -->
+                            <div class="service_icon">
+                                <img src="img/icons/xinpay.png" />
+                            </div>
+                            <h6>XinPay</h6>
+                            <p>XinPay is a self-hosted wallet to store, send and receive XDC and XRC20.</p>
+                            <div class="info-button">
+                                <a class="btn more-btn-transparent" href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" target="_blank">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2 mb-4 wow fadeInUp" data-wow-delay="0.6s">
+                        <!-- Content -->
+                        <div class="service_single_content text-center fadeInUp" data-wow-delay="0.4s">
+                            <!-- Icon -->
+                            <div class="service_icon">
+                                <img src="img/icons/opensource-wallet.png" />
+                            </div>
+                            <h6>Opensource Wallet</h6>
+                            <p>XDC Wallet is a free, client-side interface helping you interact with the XinFin blockchain.</p>
+                            <div class="info-button">
+                                <a class="btn more-btn-transparent" href="https://play.google.com/store/apps/details?id=com.xdcwallet" target="_blank">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Open Source Software Development Kit Ends -->
+        
+
+        <!-- Supported Blockchains Starts -->
+        <section class="about-us-area special section-padding-50-50 ico-about-bg relative clearfix">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.2s">Supported Blockchains</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.3s">Currently MyContract supports for the following blockchains.</p>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="services-block-four v3 wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="inner-box">
+                                <div class="icon-img-box">
+                                    <img src="img/icons/etherscan.png" />
+                                </div>
+                                <h3>
+                                    Ethereum<br />
+                                    <span class="text-success">(Livenet)</span>
+                                </h3>
+                                <div class="text bg">0x...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="services-block-four v3 wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="inner-box">
+                                <div class="icon-img-box">
+                                    <img src="img/icons/xdc.png" />
+                                </div>
+                                <h3>
+                                    XDC Network<br />
+                                    <span class="text-success">(Livenet)</span>
+                                </h3>
+                                <div class="text bg">xdc...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="services-block-four v3 wow fadeInUp" data-wow-delay="0.6s">
+                            <div class="inner-box">
+                                <div class="icon-img-box">
+                                    <img src="img/icons/etherscan.png" />
+                                </div>
+                                <h3>
+                                    Ethereum<br />
+                                    <span class="text-warning">(Ropsten Testnet)</span>
+                                </h3>
+                                <div class="text bg">0x...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="services-block-four v3 wow fadeInUp" data-wow-delay="0.7s">
+                            <div class="inner-box">
+                                <div class="icon-img-box">
+                                    <img src="img/icons/xdc.png" />
+                                </div>
+                                <h3>
+                                    Apothem Network<br />
+                                    <span class="text-warning">(XDC Testnet)</span>
+                                </h3>
+                                <div class="text bg">xdc...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Supported Blockchains Ends -->
+
+        
+        <!-- Still Have Questions? Starts -->
+        <section class="have-questions-area section-padding-70-50 special clearfix" style="background-color: #f2f7ff;">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <h2 class="wow fadeInUp" data-wow-delay="0.2s">Still Have Questions?</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.3s">Join us</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="middle">
+                            <a class="social-btn twitter wow fadeInUp" data-wow-delay="0.4s" href="https://twitter.com/MyContractCo" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="social-btn linkedin wow fadeInUp" data-wow-delay="0.5s" href="https://www.linkedin.com/company/xinfin/" target="_blank">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                            <a class="social-btn fb wow fadeInUp" data-wow-delay="0.6s" href="https://www.facebook.com/XinFinHybridBlockchain/" target="_blank">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                            <a class="social-btn telegram wow fadeInUp" data-wow-delay="0.7s" href="https://t.me/xinfintalk" target="_blank">
+                                <i class="fa fa-telegram"></i>
+                            </a>
+                            <a class="social-btn github wow fadeInUp" data-wow-delay="0.8s" href="https://github.com/XinFinOrg/MyContract" target="_blank">
+                                <i class="fa fa-github"></i>
+                            </a>
+                            <a class="social-btn reddit wow fadeInUp" data-wow-delay="0.9s" href="https://www.reddit.com/r/xinfin/" target="_blank">
+                                <i class="fa fa-reddit"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="dream-btn-group wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                    	<a href="#" class="btn more-btn ml-1 mr-1"><i class="fa fa-question-circle"></i> FAQs</a>
+                        <a href="https://github.com/XinFinOrg/MyContract" target="_blank" class="btn more-btn ml-1 mr-1"><i class="fa fa-github"></i> View on GitHub</a>
+                        <a href="#" class="btn more-btn ml-1 mr-1"><i class="fa"><img src="img/icons/integration-guide.png"></i> Integration Guide</a>
+                        <a href="https://xinfin.org/setup-masternode" target="_blank" class="btn more-btn ml-1 mr-1"><i class="fa"><img src="img/icons/masternode.png"></i> How to Run a Node</a>
+                    </div>
+                </div>
+            </div>-->
+            </div>
+        </section>
+        <!-- Still Have Questions? Ends -->
+        
+
+        <!-- Footer Area Start -->
+        <div class="footer-content-area mt-0">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-12 col-lg-2 col-md-12">
+                        <div class="footer-copywrite-info">
+                            <div class="copywrite_text mt-s wow fadeInUp" data-wow-delay="0.2s">
+                                <div class="footer-logo">
+                                    <img src="img/mycontract-logo-footer.png" alt="logo" />
+                                </div>
+                                <p>Secure, Scalable Blockchain-Agnostic Decentralized Oracle.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-2 col-md-6 col-sm-6">
+                        <div class="contact_info_area d-sm-flex justify-content-between">
+                            <div class="contact_info mt-s text-center wow fadeInUp" data-wow-delay="0.3s">
+                                <h5>Build with Blockchain</h5>
+                                <ul>
+                                    <li><a href="https://github.com/XinFinOrg/MyContract" target="_blank">View on Github</a></li>
+                                    <li><a href="https://howto.xinfin.org/" target="_blank">Developer Portal</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/" target="_blank">Node HTTP API</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-2 col-md-6 col-sm-6">
+                        <div class="contact_info_area d-sm-flex justify-content-between">
+                            <div class="contact_info mt-s text-center wow fadeInUp" data-wow-delay="0.4s">
+                                <h5>SDK for Developers</h5>
+                                <ul>
+                                    <li><a href="https://explorer.xinfin.network/" target="_blank">XDC Network Explorer</a></li>
+                                    <li><a href="https://master.xinfin.network/" target="_blank">Master Node/Validator</a></li>
+                                    <li><a href="https://xinfin.org/setup-masternode" target="_blank">One-Click Node Installer</a></li>
+                                    <li><a href="https://remix.xinfin.network/" target="_blank">XinFin Remix</a></li>
+                                    <li><a href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" target="_blank">XinPay</a></li>
+                                    <li><a href="https://play.google.com/store/apps/details?id=com.xdcwallet" target="_blank">Opensource Wallet</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-2 col-md-6 col-sm-6">
+                        <div class="contact_info_area d-sm-flex justify-content-between">
+                            <div class="contact_info mt-s text-center wow fadeInUp" data-wow-delay="0.5s">
+                                <h5>SDK Frontend APIs</h5>
+                                <ul>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?javascript#sha3request">JavaScript</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?python#sha3request">Python</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?go#sha3request">Go</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?java#sha3request">Java</a></li>
+                                    <li><a href="https://apidocs.xinfin.network/docs/?ruby#sha3request">Ruby</a></li>
+                                </ul>
+                                <!--<h5>Follow Us On</h5>
+                                <ul>
+                                    <li><a href="https://twitter.com/MyContractCo" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+                                    <li><a href="https://www.linkedin.com/company/xinfin/" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+                                    <li><a href="https://www.facebook.com/XinFinHybridBlockchain/" target="_blank"><i class="fa fa-facebook"></i> Facebook</a></li>
+                                    <li><a href="https://t.me/xinfintalk" target="_blank"><i class="fa fa-telegram"></i> Telegram</a></li>
+                                    <li><a href="https://github.com/XinFinOrg/MyContract" target="_blank"><i class="fa fa-github"></i> Github</a></li>
+                                    <li><a href="https://www.reddit.com/r/xinfin/" target="_blank"><i class="fa fa-reddit"></i> Reddit</a></li>
+                                </ul>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-2 col-md-6 col-sm-6">
+                        <div class="contact_info_area d-sm-flex justify-content-between">
+                            <div class="contact_info mt-s text-center wow fadeInUp" data-wow-delay="0.6s">
+                                <h5>SandBox Environment</h5>
+                                <ul>
+                                    <li><a href="http://apothem.network/" target="_blank">SandBox/TestNet</a></li>
+                                    <li><a href="https://faucet.apothem.network/" target="_blank">XDC Faucet</a></li>
+                                    <li><a href="contact">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="opacity-md" />
+
+                <div class="row mt-4 contact_info_area">
+                    <div class="col-md-12 mb-md-0 contact_info wow fadeInUp" data-wow-delay="0.7s">
+                        <p class="text-center mb-0">Copyright © 2020 MyContract. All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="gaps size-4x"></div>
-        <div class="gaps size-2x d-none d-sm-block"></div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-sm-12 col-lg-3 res-m-bttm-sm">
-                    <a class="footer-brand animated" data-animate="fadeInUp" data-delay=".2"><img
-                            class="logo logo-light" alt="logo" src="landingPageAssets/images/logo-full-white.png"></a>
-                </div>
-                <!-- .col  -->
-                <div class="col-sm-3 col-lg-2 res-l-bttm-lg">
-                    <ul class="link-widget one-column animated" data-animate="fadeInUp" data-delay=".3">
-                        <li><a class="menu-link" href="https://docs.mycontract.co/Media/Articles/">Media</a></li>
-                        <li><a href="#about" class="menu-link">About Us</a></li>
-                        <li><a href="#features" class="menu-link">Features</a></li>
-                    </ul>
-                </div>
-                <!-- .col  -->
-                <div class="col-sm-3 col-lg-2 res-l-bttm-lg">
-                    <ul class="link-widget one-column animated" data-animate="fadeInUp" data-delay=".4">
-                         <li><a class="menu-link" href="https://docs.mycontract.co/faq/faq/">FAQs</a></li>
-                        <li><a href="#contact" class="menu-link">Contact</a></li>
-                        <li><a class="menu-link"
-                            href="https://apidocs.xinfin.network/docs/#xinfin-apis">API's</a></li>
-                    </ul>
-                </div>
-                <!-- .col  -->
-                <div class="col-sm-6 col-lg-5">
-                    <p class="text-white mb-1">Keep in touch with the latest news</p>
-                    <form action="javascript:void(0);" name="subscribeForm" class="subscription-form inline-form-s2">
-                        <input type="text" name="subscriberEmail" id="subscriberEmail"
-                            class="input-round-s2 required email" placeholder="Email address" />
-                        <button type="submit" class="btn btn-plane">Subscribe</button>
-                    </form>
-                </div>
-                <!-- .col  -->
-            </div>
-            <!-- .row  -->
-        </div>
-        <!-- .container  -->
-        <hr class="hr-line">
-        <!-- .hr-line  -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7"><span class="copyright-text">Copyright © 2018, MyContract. All Rights
-                        Reserved.</span></div>
-                <!-- .col  -->
-                <div class="col-md-5 text-right mobile-left">
-                    <ul class="footer-links">
-                        <li><a href="/privacyPolicy">Privacy Policy</a></li>
-                        <li><a href="/termsConditions">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <!-- .col  -->
-            </div>
-            <!-- .row  -->
-        </div>
-        <!-- .container  -->
-        <div class="gaps size-2x"></div>
-    </div>
+        <!-- Footer Area End -->
 
+        <!-- jQuery js -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Popper js -->
+        <script src="js/popper.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- All Plugins js -->
+        <script src="js/plugins.js"></script>
+        <!-- Parallax js -->
+        <script src="js/dzsparallaxer.js"></script>
 
+        <script src="js/jquery.syotimer.min.js"></script>
 
-    <!-- Preloader !remove please if you do not want -->
-    <div id="preloader">
-        <div id="loader"></div>
-        <div class="loader-section loader-top"></div>
-        <div class="loader-section loader-bottom"></div>
-    </div>
-    <!-- Preloader End -->
-
-
-
-    <!-- JavaScript (include all script here) -->
-    <script src="landingPageAssets/js/jquery.bundle.js"></script>
-    <script src="landingPageAssets/js/script.js"></script>
-    <script src="landingPageAssets/js/toastr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
-     
-    <script>
-         $(function () {
-            $("form[name='contactForm']").validate({
-                rules: {
-                    contactName: {
-                        required: true,
-                        minlength: 3
-                    },
-                    contactEmail: {
-                        required: true,
-                        email: true
-                    },
-                    contactMessage: {
-                        required: true,
-                        minlength: 10
-                    }
-                },
-                messages: {
-                    contactName: {
-                        required: "Please provide your full name",
-                        minlength: "Your name must be at least 3 characters long"
-                    },
-                    contactEmail: "Please enter a valid email address",
-                    contactMessage: "Message must be at least 10 characters long"
-                },
-                submitHandler: function (form) {
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    toastr.info('Your Message Successfully sent to Administrator.')
-                    var formData = new FormData(form);
-                    console.log(formData)
-                    $.ajax({
-                        url: '/contactUs',
-                        type: 'POST',
-                        data: formData,
-                        success: function (data) {
-                        },
-                        cache: false,
-                        contentType: false,
-                        processData: false
-                    });
-                    $("#contactUsForm")[0].reset()
-                }
-            });
-        });
-        $(function () {
-            $("form[name='subscribeForm']").validate({
-                rules: {
-                    subscriberEmail: {
-                        required: true,
-                        email: true
-                    },
-                },
-                invalidHandler: function (form, validator) {
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    toastr.error("not a valid email !", "Email")
-
-                },
-                submitHandler: function (form) {
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    var formData = new FormData(form[0]);
-                    console.log(formData)
-                    $.ajax({
-                        url: '/subscribe',
-                        type: 'POST',
-                        data: formData,
-                        success: function (data) {
-                            toastr.info('Thank you.')
-                        },
-                        cache: false,
-                        contentType: false,
-                        processData: false
-                    });
-                    $("form[name='subscribeForm']")[0].reset()
-                }
-            });
-        });
-    </script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-    <%- req.toastr.render() %>  
-</body>
-
+        <!-- script js -->
+        <script src="js/script.js"></script>
+    </body>
 </html>

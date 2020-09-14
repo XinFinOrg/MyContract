@@ -14,7 +14,7 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Create Contract</h4>
+            <h4 class="card-title">Create Stable Coin</h4>
             <div class="row">
               <div class="col-md-8">
                 <% if (message2.length >0) { %>
@@ -22,7 +22,7 @@
                     <%= message2 %>
                   </div>
                   <% } %>
-                    <form class="form-horizontal m-t-20" id="createContract" action="/createERC20Contract" method="post">
+                    <form class="form-horizontal m-t-20" id="createContract" action="/createUSDCToken" method="post">
                       <div class="form-group">
                         <label for="tokenName">Token Name</label>
                         <div class="input-group mb-3">
@@ -65,19 +65,73 @@
                       <hr>
 
                       <div class="form-group">
-                        <label for="totalSupply">Total Supply</label>
+                        <label for="currency">Currency</label>
                         <div class="input-group mb-3">
-                          <input type="text" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply">
+                          <input type="text" class="form-control" name="currency" id="currency" placeholder="Enter Currency Name">
                           <div class="input-group-append">
-                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Total Supply (eg. 1000000000000)"><i
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Currency"><i
                                 class="ti-help-alt"></i></button>
 
                           </div>
                         </div>
-                        <span class="alert-danger" id="token_supply_error"></span>
+                        <span class="alert-danger" id="currency_error"></span>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="master_minter">Master Minter Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="master_minter" id="master_minter" placeholder="Enter Master Minter Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Master Minter Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="master_minter_error"></span>
                       </div>
 
                       <div class="form-group">
+                        <label for="owner">Owner Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="owner" id="owner" placeholder="Enter Owner Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Owner Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="owner_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="pauser">Pauser Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="pauser" id="pauser" placeholder="Enter Pauser Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Pauser Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="pauser_error"></span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="blacklister">Blacklister Address</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="blacklister" id="blacklister" placeholder="Enter Blacklister Address">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Blacklister Address"><i
+                                class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="blacklister_error"></span>
+                      </div>
+
+
+                      <!-- <div class="form-group">
                         <label for="1ETHTokens">1 ETH = ? <span id="tokenname"></span></label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens"><br>
@@ -88,8 +142,8 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="eth_tokens_error"></span>
-                      </div>
-                      <div class="form-group">
+                      </div> -->
+                      <!-- <div class="form-group">
                         <label for="bonus_rate">Bonus Percentage</label>
                         <div class="input-group mb-3">
 
@@ -136,7 +190,7 @@
                               class="ti-help-alt"></i></button>
                         </div>
                       </div>
-                      <hr>
+                      <hr> -->
 
                       <div class="form-actions mb-3">
                         <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
@@ -237,23 +291,23 @@
 <script>
   document.getElementById("submitButton").disabled = "disabled";
  
-  var myInput2 = document.getElementById("eth_tokens");
-  myInput2.onkeyup = function () {
-    if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
-      document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
-      document.getElementById("submitButton").disabled = "disabled";
-    } else {
-      document.getElementById("eth_tokens_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
-    }
-  }
-  var myInput3 = document.getElementById("token_supply");
+  // var myInput2 = document.getElementById("eth_tokens");
+  // myInput2.onkeyup = function () {
+  //   if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
+  //     document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("eth_tokens_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
+  var myInput3 = document.getElementById("currency");
   myInput3.onkeyup = function () {
-    if (myInput3.value % 1 != 0 || myInput3.value < 1 || myInput3.value.indexOf(" ") == 0) {
-      document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+    if (myInput3.value.contains(" ") || myInput3.value.trim()==="" ) {
+      document.getElementById("currency_error").innerHTML = 'Please enter valid currency name';
       document.getElementById("submitButton").disabled = "disabled";
     } else {
-      document.getElementById("token_supply_error").innerHTML = '';
+      document.getElementById("currency_error").innerHTML = '';
       document.getElementById("submitButton").disabled = "";
     }
   }
@@ -267,17 +321,17 @@
       document.getElementById("submitButton").disabled = "";
     }
   }
-  var myInput5 = document.getElementById("bonus_rate");
-  str = myInput5.value.toString();
-  myInput5.onkeyup = function () {
-    if (myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
-      document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
-      document.getElementById("submitButton").disabled = "disabled";
-    } else {
-      document.getElementById("bonus_rate_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
-    }
-  }
+  // var myInput5 = document.getElementById("bonus_rate");
+  // str = myInput5.value.toString();
+  // myInput5.onkeyup = function () {
+  //   if (myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+  //     document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("bonus_rate_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
   var myInput6 = document.getElementById("token_symbol");
   myInput6.onkeyup = function () {
     if (myInput6.value.indexOf(" ") == 0) {
@@ -299,16 +353,16 @@
       document.getElementById("submitButton").disabled = "";
     }
   }
-  var myInput8 = document.getElementById("minimum_contribution");
-  myInput8.onkeyup = function () {
-    if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
-      document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
-      document.getElementById("submitButton").disabled = "disabled";
-    } else {
-      document.getElementById("minimum_contribution_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
-    }
-  }
+  // var myInput8 = document.getElementById("minimum_contribution");
+  // myInput8.onkeyup = function () {
+  //   if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+  //     document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
+  //     document.getElementById("submitButton").disabled = "disabled";
+  //   } else {
+  //     document.getElementById("minimum_contribution_error").innerHTML = '';
+  //     document.getElementById("submitButton").disabled = "";
+  //   }
+  // }
 </script>
 
 </html>

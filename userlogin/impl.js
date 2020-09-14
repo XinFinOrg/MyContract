@@ -36,6 +36,23 @@ module.exports = {
     });
   },
 
+  getpricedatafeed: function (req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('get-price-data-feed.ejs', {
+    });
+  },
+
+  providers: function (req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('providers.ejs', {
+    });
+  },
+  contact: function (req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('contact.ejs', {
+    });
+  },
+
   postSignup: passport.authenticate('local-signup', {
     successRedirect: '/login', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error

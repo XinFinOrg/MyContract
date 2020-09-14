@@ -7,6 +7,11 @@ module.exports = function (app) {
   app.get('/login', impl.getLogin);
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
+  app.get('/getpricedatafeed',impl.getpricedatafeed)
+  app.get('/providers',impl.providers)
+  app.get('/contact',impl.contact)
+
+
   app.post('/signup', impl.postSignup);
   app.get('/dashboard', isLoggedIn, impl.getDashboard);
   app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
