@@ -1,0 +1,27 @@
+{
+  "name": "chainlink-oracle-stub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rudreshsolanki97/chainlink-oracle-stub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rudreshsolanki97/chainlink-oracle-stub/issues"
+  },
+  "homepage": "https://github.com/rudreshsolanki97/chainlink-oracle-stub#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "truffle": "^5.1.42"
+  }
+}
