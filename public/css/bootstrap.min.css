@@ -4241,6 +4241,10 @@ input[type=submit].btn-block {
         padding-right: 0;
         padding-left: 0
     }
+	.navbar-brand {
+    	padding-top: 0rem;
+    	padding-bottom: 0rem;
+	}
 }
 
 @media (min-width:576px) {
