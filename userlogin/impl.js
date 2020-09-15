@@ -291,6 +291,7 @@ module.exports = {
     console.log(req.body)
     try {
       mailer.contactUs(req);
+      res.redirect("/")
     } catch (err) {
       console.log(err);
     }
