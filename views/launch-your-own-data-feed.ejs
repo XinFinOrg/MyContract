@@ -116,84 +116,110 @@
     	</header>
     	<!-- Header Area Ends -->
 
-        <!-- Monetize Your Data Feeds Starts -->
+        <!-- Data/Feed Blockchain Integration Framework Starts -->
         <section class="about-us-area provider special section-padding-200-50 clearfix">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
+                    <div class="col-lg-10 offset-lg-1">
                         <div class="section-heading text-center">
-                            <h2 class="wow fadeInUp" data-wow-delay="0.2s">Monetize your data feeds and existing APIs by selling them directly to smart contracts</h2>
-                            <p class="mt-50 wow fadeInUp" data-wow-delay="0.3s">
-                                Offer an API directly to millions of smart contracts. Blockchain-based applications and smart contracts are a rapidly growing market. Many of the best smart contracts actively looking for reliable data feeds
-                                and various APIs.
-                            </p>
+                            <h2 class="wow fadeInUp" data-wow-delay="0.2s">Data/Feed Blockchain Integration Framework (Using Chainlink framework)</h2>
+                            <p class="mt-20 wow fadeInUp" data-wow-delay="0.3s">Overview to give the necessary guidance to integrate the Chainlink protocol on XDC Blockchain.</p>
                         </div>
                     </div>
                 </div>
-                <!--<div class="row align-items-center">
-                    <div class="col-12 col-lg-10 offset-lg-1">
-                        <div class="welcome-meter wow fadeInUp" data-wow-delay="0.4s">
-                            <img src="img/provider.png" alt="">
+                
+            	<div class="row align-items-center">
+                    <div class="col-12 col-lg-12">
+                        
+                        <div class="content-inner-page linkbreak">
+                        	<h4>Consumer Contract and Chainlink client</h4>
+                            <p>These contracts implement the interface which allows to send Chainlink requests for a node operator to process them.</p>
+                            <p><a href="https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.4/tests/Consumer.sol" target="_blank">https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.4/tests/Consumer.sol</a></p>
+                            
+                            <hr class="mt-4 mb-4">
+                            
+                            <h4>Chainlink Node</h4>
+							<h6 class="mb-4">Chainlink Adapter</h6>
+                            <p>The Chainlink adapter will allow the node directly write answers on-chain</p>
+                            <p>Example implementation: <a href="https://github.com/smartcontractkit/substrate-adapter" target="_blank">https://github.com/smartcontractkit/substrate-adapter</a></p>
+                            <p>Here is the Various links for the tools and API <a href="https://mycontract.co/index.html#sdkfordevelopers" target="_blank">XDC Network SDK for Developers</a></p>
+                            
+                            <hr class="mt-4 mb-4">
+                            
+                            <h4>Chainlink Initiator</h4>
+                            <p>The Chainlink initiator allows the node to monitor the on-chain event logs. When a Chainlink request is detected on the blockchain, the external initiator will call the Chainlink node for the job that was requested.<br>
+                            <a href="https://github.com/smartcontractkit/external-initiator" target="_blank">https://github.com/smartcontractkit/external-initiator</a></p>
+                            <p><strong>Example implementation</strong></p>
+                            <p><a href="https://github.com/smartcontractkit/external-initiator/blob/master/blockchain/substrate.go" target="_blank">https://github.com/smartcontractkit/external-initiator/blob/master/blockchain/substrate.go</a></p>
+                            <p><a href="https://github.com/smartcontractkit/external-initiator/wiki/Mock-Blockchain-Client" target="_blank">https://github.com/smartcontractkit/external-initiator/wiki/Mock-Blockchain-Client</a></p>
+                            
+                            <hr class="mt-4 mb-4">
+                            
+                            <h4>Workflow Diagram</h4>
+                            <p><a href="https://www.figma.com/proto/of57fOiE51yoE65nphfayH/Chainlink-Sample-Request-Diagram?node-id=3%3A3&scaling=min-zoom" target="_blank">https://www.figma.com/proto/of57fOiE51yoE65nphfayH/Chainlink-Sample-Request-Diagram?node-id=3%3A3&scaling=min-zoom</a></p>
+                            <p><strong>ChainlinkExample (client):</strong></p>
+                            <p><a href="https://gist.github.com/samsondav/4a0ca9a20afcd2d3e670eeb87780f23a" target="_blank">https://gist.github.com/samsondav/4a0ca9a20afcd2d3e670eeb87780f23a</a></p>
+                            <p><strong>Deployed at:</strong></p>
+                            <p><a href="https://ropsten.etherscan.io/address/0x905e88949b43e1a453d6d5755436ffb243792e89" target="_blank">https://ropsten.etherscan.io/address/0x905e88949b43e1a453d6d5755436ffb243792e89</a></p>
+                            
+                            <hr class="mt-4 mb-4">
+                            
+                            <h4>Oracle (node)</h4>
+                            <p><a href="https://gist.github.com/samsondav/4cc6c6a54c341daf3f9a50957a241a9e" target="_blank">https://gist.github.com/samsondav/4cc6c6a54c341daf3f9a50957a241a9e</a></p>
+                            <p>Deployed at:</p>
+                            <p><a href="https://ropsten.etherscan.io/address/0x6c7141735dad1031a0a0417d521d0c0d195284aa" target="_blank">https://ropsten.etherscan.io/address/0x6c7141735dad1031a0a0417d521d0c0d195284aa</a></p>
+                            
+                            <p class="mt-4">Please <a href="contact">Contact us</a> if you like to Start Data Feed/Price Feed using XDC Blockchain Network.</p>
+                            
+                        </div>
                         </div>
                     </div>
-            	</div>
-            	<div class="row align-items-center">
-                    <div class="col-12 col-lg-10 offset-lg-1">
+                    
+                    <div class="row mt-5 align-items-center">
+                    <div class="col-12 col-lg-12">
                         <div class="description wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="icon-img align-self-center">
-                                <img src="img/icons/agnostic-blockchain-platform.png" alt="">
-                            </div>
-                            <div class="text">
-                                <h5><strong>MyContract is Blockchain Agnostic. Sell Directly to Every Network.</strong></h5>  
-                                <p>Ethereum, XDC Network, Apothem Network (XDC Testnet), Ethereum (Ropsten Testnet) blockchains are supported.</p>
+                            <div class="text pl-0 linkbreak">
+                                <h5><strong>Example of Smart Contract deploy on XDC testNet Blockchain link</strong></h5>
+                                <p><a href="https://apothem.network/" target="_blank">https://apothem.network/</a></p>
+                                
+                                <p class="mt-4"><strong>1. Oracle Address -</strong> xdc5ee4ba477eb7a034426de7daea41410880c84d69</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/xdc5ee4ba477eb7a034426de7daea41410880c84d69" target="_blank">https://explorer.apothem.network/addr/xdc5ee4ba477eb7a034426de7daea41410880c84d69</a>)</p>
+                                
+                                <p class="mt-4"><strong>2. Link Token Address -</strong> xdc8d2e1dff891a93e342de290f0c8196570c3931fd</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/xdc8d2e1dff891a93e342de290f0c8196570c3931fd" target="_blank">https://explorer.apothem.network/addr/xdc8d2e1dff891a93e342de290f0c8196570c3931fd</a>)</p>
+                                
+                                <p class="mt-4"><strong>3. Owner address -</strong> xdc7d831bc9b77d1d5f60e68dcc174f313f575ca1c4</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/xdc7d831bc9b77d1d5f60e68dcc174f313f575ca1c4" target="_blank">https://explorer.apothem.network/addr/xdc7d831bc9b77d1d5f60e68dcc174f313f575ca1c4</a>)</p>
+                                
+                                <p class="mt-4"><strong>4. Node Operator Address ( Simple ) -</strong> 0xe98f83692FDbD667c348f17AfBb1357E6D281B17</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/0xe98f83692fdbd667c348f17afbb1357e6d281b17" target="_blank">https://explorer.apothem.network/addr/0xe98f83692fdbd667c348f17afbb1357e6d281b17</a>)</p>
+                                
+                                <p class="mt-4"><strong>5. Pointer Address -</strong> xdc6ed3cdeea5849c534fda3c7a1dfef817204c11e2</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/xdc6ed3cdeea5849c534fda3c7a1dfef817204c11e2" target="_blank">https://explorer.apothem.network/addr/xdc6ed3cdeea5849c534fda3c7a1dfef817204c11e2</a>)</p>
+                                
+                                <p class="mt-4"><strong>6. TestClient -</strong> xdcefd88962be8a0451e07d44b9eb36d6116cc20c2e</p>
+                                <p>(<a href="https://explorer.apothem.network/addr/xdcefd88962be8a0451e07d44b9eb36d6116cc20c2e" target="_blank">https://explorer.apothem.network/addr/xdcefd88962be8a0451e07d44b9eb36d6116cc20c2e</a>)</p>
                             </h5>
                         </div>
                         </div>
+                        
+                        <p class="mt-5">Please <a href="contact">Contact us</a> if you like to Start Data Feed/Price Feed using XDC Blockchain Network.</p>
+                        
                     </div>
-        		</div>-->
-
-                <!--<div class="row">
-                    <div class="col-lg-8 offset-lg-2">
+        		</div>
+                    
+                    <!--<div class="row mt-40">
+                    <div class="col-12 col-lg-8 offset-lg-2">
                         <div class="section-heading text-center">
-                            <h2 class="wow fadeInUp" data-wow-delay="0.2s">Setup is quick and easy for  individual developers and enterprises.</h2>
-                            <p class="mt-40 mb-50 wow fadeInUp" data-wow-delay="0.3s">By operating a XDC node, you're able to offer any API for direct purchase by smart contracts. Once your XDC node receives a request from a smart contract, it fulfills that request using your existing APIs, allowing you to sell your services to the large & growing blockchain economy.</p>
+                            <h2 class="wow fadeInUp" data-wow-delay="0.2s">Use the Detailed Documentation for this Chainlink</h2>
+                            <p class="mt-20 wow fadeInUp" data-wow-delay="0.3s">See the <a href="#">CoinMarketCap XinFin Network XDC (Testnet)</a> for documentation on how to use this XDC Network. It is strongly suggested that you develop your smart contracts in a testing environment first, before deploying to main net.</p>
                         </div>
                     </div>
-            	</div>-->
-
-                <div class="row opensource-toolkit">
-                    <div class="col-12 col-md-6 col-lg-4 offset-lg-2 mb-4">
-                        <!-- Content -->
-                        <div class="service_single_content text-center wow fadeInUp" data-wow-delay="0.4s">
-                            <!-- Icon -->
-                            <div class="service_icon">
-                                <img src="img/icons/decentralized-web3-apis.png" />
-                            </div>
-                            <h5>Any developer can quickly build and launch their own Chainlink to sell any API to smart contracts</h5>
-                            <p>By creating a new Chainlink as a developer, you'll be paid by making something thousands of smart contracts will rely on.</p>
-                            <div class="info-button">
-                                <a class="btn more-btn" href="launchyourowndatafeed">Launch your own Data/Feed</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 mb-4">
-                        <!-- Content -->
-                        <div class="service_single_content text-center wow fadeInUp" data-wow-delay="0.5s">
-                            <!-- Icon -->
-                            <div class="service_icon">
-                                <img src="img/icons/masternode-validator.png" />
-                            </div>
-                            <h5>Larger enterprises can partner with us to offer any existing APIs for purchase by smart contracts</h5>
-                            <p>Quickly and easily sell your company's data and any of your other APIs using MyContract. Provide millions of smart contracts the ability to purchase your services directly.</p>
-                            <div class="info-button">
-                                <a class="btn more-btn" href="contact">Partner with Data/Feed Provider</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            	</div>  -->                  
+        		</div>
             </div>
         </section>
-        <!-- Monetize Your Data Feeds Ends -->
+        <!-- Data/Feed Blockchain Integration Framework Ends -->
         
         
         <!-- Still Have Questions? Starts -->
