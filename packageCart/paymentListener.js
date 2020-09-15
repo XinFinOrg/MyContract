@@ -7,6 +7,7 @@ var ws_provider = config.ws_provider;
 var provider = new Web3.providers.WebsocketProvider(ws_provider);
 var web3 = new Web3(provider);
 let Promise = require('bluebird');
+const { default: Axios } = require('axios');
 provider.on('connect', () => console.log('WS Connected'))
 
 let inReconn = false;
@@ -73,20 +74,33 @@ module.exports = {
     contractInstance.once('Transfer', {
       filter: {
         from: address,
-        value: '1200000000000000000000000'
+        // value: '1200000000000000000000000'
       },
       fromBlock: 'pending',
       toBlock: 'latest'
-    }, (err, res) => {
+    }, async (err, res) => {
+      try{
       console.log(err, res.returnValues);
-      client.find({
-        where: {
-          uniqueId: userHash
-        }
-      }).then(async client => {
-        client.package1 += 1;
-        await client.save();
-      });
+      let val = res.returnValues.value;
+
+      const cmcData = await Axios.get("https://blockdegree.org/api/wrapCoinMarketCap");
+      const valUsd = val/cmcData.data.data;
+
+      if (50*1.2 >= valUsd && valUsd >= 50*0.8){
+
+        client.find({
+          where: {
+            uniqueId: userHash
+          }
+        }).then(async client => {
+          client.package1 += 1;
+          await client.save();
+        });
+      }
+
+    }catch(e){
+      console.log(e);
+    }
     });
   },
 

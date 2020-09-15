@@ -13,7 +13,9 @@ paypal.configure(auth.paypal);
 
 module.exports = {
   buyPackage: async function (req, res) {
+    try{
     var projectArray = await getProjectArray(req.user.email);
+    const cmcPrice = 50/(await axios.get("https://blockdegree.org/api/wrapCoinMarketCap")).data.data;
     var address = req.cookies['address'];
     var otpExist = false;
     if (req.user.paymentOTP) {
@@ -27,8 +29,11 @@ module.exports = {
         balance: balance,
         ProjectConfiguration: projectArray,
         otpField: otpExist,
+        sufficientBalance: parseFloat(cmcPrice)<=parseFloat(balance),
+        priceXDCe:Math.floor(cmcPrice)
       });
     });
+  }catch(e){console.log(e);}
   },
 
   payment: function (req, res) {
@@ -60,8 +65,12 @@ module.exports = {
             }
           }).then(address => {
             console.log(address, "address");
-            Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
-              if (balance >= 1200000) {
+            Promise.all([paymentListener.checkBalance(address.address)]).then(async ([balance]) => {
+              try{
+              const cmcData = await axios.get("https://blockdegree.org/api/wrapCoinMarketCap");
+              const valUsd = 50/cmcData.data.data;
+
+              if (balance >= valUsd*0.8 && balance <= valUsd*1.2) {
                 var receipt = paymentListener.sendToParent(address.address, address.privateKey);
                 paymentListener.attachListener(address.address);
                 req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
@@ -69,6 +78,9 @@ module.exports = {
                 req.flash('package_flash', 'Insufficient funds to buy Package');
               }
               res.redirect('/dashboard');
+            }catch(e){
+              console.log(e);
+            }
             });
           })
         }

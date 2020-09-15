@@ -37,9 +37,9 @@
                         </div>
                         <div class="bottom">
                           <div class="cl-footer">
-                            <div class="dolar">1200000 <img src="assets/images/icons/xdce.png" width="25" height="25">
+                            <div class="dolar"><%= priceXDCe %> <img src="assets/images/icons/xdce.png" width="25" height="25">
                             </div>
-                            <% if(balance<1200000) { %>
+                            <% if(sufficientBalance!==true) { %>
                             <h5> Your balance is insufficient. Please recharge your address with XDCE </h5>
                             <% } else { %>
                             <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap"
@@ -214,13 +214,15 @@
     });
   }
 
-  function sendTransaction() {
+  async function sendTransaction() {
     var contractInstance = new window.web3.eth.Contract(xdce_abi, xdce_address);
+    const priceUsd = (await $.get("https://blockdegree.org/api/wrapCoinMarketCap")).data;
+    const priceXdc = Math.floor(50/priceUsd)
     var transaction = {
       "from": window.web3.currentProvider.publicConfigStore.getState().selectedAddress,
       "to": "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
       "value": "0x0",
-      "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", "1200000000000000000000000").encodeABI()
+      "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", `${priceXdc}`).encodeABI()
     };
     window.web3.eth.sendTransaction(transaction, (err, data) => {
       if (err) {
