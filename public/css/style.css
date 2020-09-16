@@ -7,11 +7,11 @@
 - Css Imports
 - General Css Styles
 - Header Area style
-- Welcome Area Styles 
-- About us area style 
-- services-block-four style 
-- services area style 
-- Footer area style 
+- Welcome Area Styles
+- About us area style
+- services-block-four style
+- services area style
+- Footer area style
 
 ***/
 
@@ -35,16 +35,8 @@
 
 @import 'bootstrap.min.css';
 @import 'animate.css';
-@import 'about-sonar.css';
 @import 'classy-nav.min.css';
-@import 'dzsparallaxer.css';
-@import 'owl.carousel.min.css';
-@import 'magnific-popup.css';
-@import 'animated-headline.css';
 @import 'font-awesome.min.css';
-@import 'font-icons.css';
-@import 'cryptocoins.css';
-@import 'themify-icons.css';
 
 /*** 
 
