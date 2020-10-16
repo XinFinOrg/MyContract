@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "mycontract",
-    "password": "mycontract",
-    "database": "mycontract",
+    "username": "postgres",
+    "password": "123",
+    "database": "autoCoin",
     "host": "localhost",
     "logging": false,
     "freezeTableName": true,
