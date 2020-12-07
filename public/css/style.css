@@ -5826,8 +5826,8 @@ body.light-version {
 	font-size: 18px;
 }
 @media only screen and (max-width: 991px) {
-	.built-for-developers-block {margin-right: 35px;}
-	.built-for-developers-block:after {right: 25px;}
+	.built-for-developers-block {margin-right: 25px;}
+	.built-for-developers-block:after {right: 15px;}
 	.built-for-developers-block h1 {font-size: 28px;line-height: 30px;}
 }
 @media only screen and (max-width: 767px) {

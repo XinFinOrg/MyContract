@@ -170,14 +170,6 @@
         $(".timelineBody").niceScroll();
     }
 
-    $('.simple_timer').syotimer({
-        year: 2019,
-        month: 11,
-        day: 9,
-        hour: 20,
-        minute: 30
-    })
-
 })(jQuery);
 
 
