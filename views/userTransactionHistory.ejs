@@ -82,7 +82,7 @@
   function getTransactions() {
     $.get('./api/getTransactions', function(result) {
       var trHTML = '';
-      console.log("<%= tokenTransferLogs %>");
+      // console.log("<%= tokenTransferLogs %>");
       $.each(result, function(i, item) {
         trHTML += '<tr><td>' + item.hash + '</td>';
         trHTML += '<td>' + item.value/(10 **18) + " Ether"+'</td>';

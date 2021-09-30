@@ -24,14 +24,14 @@ var signMsgCtrl = function($scope, $sce, walletService) {
             var thisMessage = $scope.signMsg.message
             var hwType = $scope.wallet.getHWType()
 
-            // Sign via MetaMask
+            // Sign via XDCPay
             if ((typeof hwType != "undefined") && (hwType == "web3")) {
 
                 var msg = ethUtil.bufferToHex(new Buffer(thisMessage, 'utf8'))
                 var signingAddr = web3.eth.accounts[0]
                 var params = [msg, signingAddr]
                 var method = 'personal_sign'
-                $scope.notifier.info("Sent message for signing via MetaMask / Mist.")
+                $scope.notifier.info("Sent message for signing via XDCPay.")
 
                 web3.currentProvider.sendAsync({
                     method,

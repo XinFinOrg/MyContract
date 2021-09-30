@@ -5,7 +5,7 @@ ja.code = 'ja';
 ja.data = {
 
 GEN_Help_0                      :  'お財布をお持ちですか？', /*Already have a wallet somewhere?*/
-GEN_Help_MetaMask               :  'とっても簡単です！キーはフィッシングサイトではなく、メタマスク(Metamask)に残っています。すぐ試してください！', /*So easy! Keys stay in MetaMask, not on a phishing site! Try it today.*/
+GEN_Help_MetaMask               :  'とっても簡単です！キーはフィッシングサイトではなく、メタマスク(Metamask)に残っています。すぐ試してください！', /*So easy! Keys stay in XDCPay, not on a phishing site! Try it today.*/
 
 GEN_Warning_1                   :  '**絶対に忘れないようにしてください！**　失くしてしまうと、回復できません。', /***Do not lose it!** It cannot be recovered if you lose it.*/
 GEN_Warning_2                   :  '**他人と共有しないでください**　悪意のあるサイトでこのファイルを使うと、あなたのお金が盗まれます。', /***Do not share it!** Your funds will be stolen if you use this file on a malicious/phishing site.*/
@@ -142,7 +142,7 @@ ONBOARD_blockchain_title        :  'ちょっと待って、一体ブロック�
 ONBOARD_blockchain_content__1   :  'ブロックチェーンは、世界共通の巨大な分散型のスプレッドシートのようなものです。', /*The blockchain is like a huge, global, decentralized spreadsheet.*/
 ONBOARD_blockchain_content__2   :  '誰が誰にコインをいくら送ったとか、どの口座にいくら、などの履歴を全て持っています。', /*It keeps track of who sent how many coins to whom, and what the balance of every account is.*/
 ONBOARD_blockchain_content__3   :  '何千もいる特殊なコンピューターを持った人（発掘者）によって記録と管理が行われます。', /*It is stored and maintained by thousands of people (miners) across the globe who have special computers.*/
-ONBOARD_blockchain_content__4   :  'ブロックチェーンのなかのブロックはMyEtherWallet, MetaMask, Exodus, Mist, Geth, Parityなど至る所で行われている個々の処理や取引で作られています。', /*The blocks in the blockchain are made up of all the individual transactions sent from MyEtherWallet, MetaMask, Exodus, Mist, Geth, Parity, and everywhere else.*/
+ONBOARD_blockchain_content__4   :  'ブロックチェーンのなかのブロックはMyEtherWallet, XDCPay, Exodus, Mist, Geth, Parityなど至る所で行われている個々の処理や取引で作られています。', /*The blocks in the blockchain are made up of all the individual transactions sent from MyEtherWallet, XDCPay, Exodus, Mist, Geth, Parity, and everywhere else.*/
 ONBOARD_blockchain_content__5   :  'MyEtherWalletや[etherscan.io](https://etherscan.io)で残高や処理を見た時、見えるのは私たちのシステムの中ではなく、ブロックチェーンにあるデータです。', /*When you see your balance on MyEtherWallet.com or view your transactions on [etherscan.io](https://etherscan.io), you are seeing data on the blockchain, not in our personal systems.*/
 ONBOARD_blockchain_content__6   :  'もう一度： **私たちは金融機関ではありません。**', /*Again: **we are not a bank**.*/
 ONBOARD_interface_title__alt    :  'ＭＥＷは共用の利用者窓口　', /*MEW is an Interface*/
@@ -171,7 +171,7 @@ ONBOARD_why_title__alt          :  'でも...どうして？', /*But...why?*/
 ONBOARD_secure_title            :  '自分自身とその資産の守り方　', /*How To Protect Yourself & Your Funds*/
 ONBOARD_secure_1_title          :  'オンライン詐欺から自分自身を守る方法　', /*How To Protect Yourself from Phishers*/
 ONBOARD_secure_1_content__1     :  'オンライン詐欺師は、MyEtherWallet、EtherDelta、Paypalやあなたの金融機関のリンクが含まれた個人メッセージを送りつけてきますが、これは偽のサイトです。あなたの情報を盗み、そして資産を盗みます。', /*Phishers send you a message with a link to a website that looks just like MyEtherWallet, EtherDelta, Paypal, or your bank, but is not the real website. They steal your information and then steal your money.*/
-ONBOARD_secure_1_content__2     :  '[EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn)または[MetaMask](https://myetherwallet.github.io/knowledge-base/migration/moving-from-private-key-to-metamask.html) or [Cryptonite by Metacert](https://chrome.google.com/webstore/detail/cryptonite-by-metacert/keghdcpemohlojlglbiegihkljkgnige). のクローム拡張を使って、これらの悪意のサイトを遮断してください。', /*Install [EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn) or [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) or  or the [MyEtherWallet Chrome Extension](https://chrome.google.com/webstore/detail/myetherwallet-cx/nlbmnnijcnlegkjjpcfjclmcfggfefdm) to block malicious websites.*/
+ONBOARD_secure_1_content__2     :  '[EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn)または[XDCPay](https://myetherwallet.github.io/knowledge-base/migration/moving-from-private-key-to-metamask.html) or [Cryptonite by Metacert](https://chrome.google.com/webstore/detail/cryptonite-by-metacert/keghdcpemohlojlglbiegihkljkgnige). のクローム拡張を使って、これらの悪意のサイトを遮断してください。', /*Install [EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn) or [XDCPay](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) or  or the [MyEtherWallet Chrome Extension](https://chrome.google.com/webstore/detail/myetherwallet-cx/nlbmnnijcnlegkjjpcfjclmcfggfefdm) to block malicious websites.*/
 ONBOARD_secure_1_content__3     :  'いつも、必ず、ＵＲＬ：「https://www.myetherwallet.com」を確認してください。', /*Always check the URL: `https://www.myetherwallet.com`.*/
 ONBOARD_secure_1_content__4     :  'ＵＲＬバーに、 `MYETHERWALLET INC`と緑色で表示されていることを必ず確認してください。', /**/
 ONBOARD_secure_1_content__5     :  'ｅメール、Slack、Reddit、Twitterやその他から送られてくるメッセージやリンクを信用しないでください。', /*Do not trust messages or links sent to you randomly via email, Slack, Reddit, Twitter, etc.*/
@@ -198,11 +198,11 @@ ONBOARD_final_title             :  'オーライ！講義終了！', /*Alright, 
 ONBOARD_final_subtitle          :  'こんな風で申し訳ありません。次はこれです！', /*Sorry for being like this. Onwards!*/
 ONBOARD_final_content__1        :  'お財布を作る', /**/
 ONBOARD_final_content__2        :  'ハードウェア・ワレットを手に入れる', /*Get a hardware wallet*/
-ONBOARD_final_content__3        :  'ＭＥＷとＭｅｔａｍａｓｋの設定方法', /*How to Set up MEW + MetaMask*/
+ONBOARD_final_content__3        :  'ＭＥＷとＭｅｔａｍａｓｋの設定方法', /*How to Set up MEW + XDCPay*/
 ONBOARD_final_content__4        :  'オフライン/手元でのＭＥＷの使い方', /*How to Run MEW Offline / Locally*/
 ONBOARD_final_content__5        :  'Ledgerハードウェア・ワレットでの送出方法', /*How to Send via Ledger hardware wallet*/
 ONBOARD_final_content__6        :  'TREZORハードウェア・ワレットでの送出方法', /*How to Send via TREZOR hardware wallet*/
-ONBOARD_final_content__7        :  'MetaMaskでの送出方法', /*How to Send via MetaMask*/
+ONBOARD_final_content__7        :  'MetaMaskでの送出方法', /*How to Send via XDCPay*/
 ONBOARD_final_content__8        :  'もっと教えて、連絡したい', /*Learn More or Contact Us*/
 ONBOARD_final_content__9        :  'もう勘弁、お願い、早く使わせて。', /*OMG, please just let me send FFS.*/
 ONBOARD_resume                  :  '前回スライドを最後までお読みになっていないようです。プロのアドバイス：スライドを全部読みましょう😉',/*It looks like you didn\'t finish reading through these slides last time. ProTip: Finish reading through the slides 😉*/
@@ -232,7 +232,7 @@ ADD_Ledger_2_Ubq            : 'Ubiqアプリケーション（または契約ア
 ADD_Ledger_3                : '設定中で、ブラウザサポートが有効にされていることを確認してください。 ',
 ADD_Ledger_4                : '設定にブラウザサポートが見つからなければ、[Firmware >1.2]を確認してください。(https://www.ledgerwallet.com/apps/manager) ',
 ADD_Ledger_scan             : 'Ledger Wallet に接続 ',
-ADD_MetaMask                : 'MetaMask に接続 ',
+ADD_MetaMask                : 'XDCPay に接続 ',
 ADD_Radio_1                 : 'お財布の新規作成 ',
 ADD_Radio_2                 : 'お財布ファイルの選択 (Keystore / JSON) ',
 ADD_Radio_2_alt             : 'お財布ファイルの選択： ',
@@ -594,7 +594,7 @@ x_Keystore                  : 'Keystore ファイル (UTC / JSON · 推奨 · �
 x_Keystore2                 : 'Keystore ファイル (UTC / JSON) ',
 x_KeystoreDesc              : 'この Keystore / JSON ファイルは、後で容易にインポートするため、Mistで使われているフォーマットと一致させる必要があります。ダウンロードしてバックアップを取ることをおすすめします。 ',
 x_Ledger                    : 'Ledger Wallet ',
-x_MetaMask                  : 'MetaMask / Mist ',
+x_MetaMask                  : 'XDCPay ',
 x_Mnemonic                  : 'ニーモニック文節 ',
 x_ParityPhrase              : 'パリティ文節 ',
 x_Password                  : 'パスワード ',

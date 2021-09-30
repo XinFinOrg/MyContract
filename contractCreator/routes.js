@@ -10,10 +10,10 @@ module.exports = function (app) {
   app.get('/ERC223Contract', isLoggedIn, impl.getERC223ContractForm);
   app.get('/erc721Contract', isLoggedIn, impl.getERC721ContractForm);
   app.get('/generatedContract', isLoggedIn, impl.getGeneratedContract);
-  app.post("/createERC721", isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
+  app.post('/createERC721', isLoggedIn, coinNameExist, hasPackage1, impl.createERC721Contract);
   app.post('/createERC20Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC20Contract);
   app.post('/createERC223Contract', isLoggedIn, coinNameExist, hasPackage1, impl.createERC223Contract);
-  app.post('/createUSDCToken', impl.createUSDCToken);
+  app.post('/createUSDCToken', isLoggedIn, hasPackage1, impl.createUSDCToken);
 }
 
 // route middleware to make sure a user is logged in
@@ -51,7 +51,7 @@ async function coinNameExist(req, res, next) {
 
 // route middleware to check package 1
 function hasPackage1(req, res, next) {
-  console.log("Here");
+  
   client.find({
     where: {
       'email': req.user.email
@@ -62,8 +62,11 @@ function hasPackage1(req, res, next) {
     if (result.package1 > 0) {
       return next();
     } else {
-      req.flash('package_flash', "You need to buy Package 1 by contributing 50 USD worth of XDCe");
+      req.flash('package_flash', "You need to buy Package 1 by contributing 1 XDC");
+      delete req.session.contract
+      delete req.session.coinName
       res.redirect('/generatedContract');
+      // return next();
     }
   });
 }

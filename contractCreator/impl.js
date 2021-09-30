@@ -31,7 +31,7 @@ module.exports = {
   getStablecoinForm: async (req, res) => {
     var projectArray = await getProjectArray(req.user.email);
     var address = req.cookies['address'];
-    res.render('stableCoin', {
+    res.render('StableCoin', {
       user: req.user,
       message: req.flash('package_flash'),
       message2: req.flash('project_flash'),
@@ -63,8 +63,6 @@ module.exports = {
     });
   },
   createERC20Contract: async (req, res) => {
-    console.log("exist 3");
-    // console.log(req.body);
     var Roles = await fileReader.readEjsFile(__dirname + '/ERC20contracts/Roles.sol');
     var ERC20 = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20.sol');
     var ERC20Detailed = await fileReader.readEjsFile(__dirname + '/ERC20contracts/ERC20Detailed.sol');
@@ -165,6 +163,7 @@ module.exports = {
         clientdata.package1 -= 1;
         clientdata.save();
       })
+      // global.reqObj = {reqData: req, count: 1}
       res.redirect('/generatedContract');
     });
   },
@@ -406,8 +405,17 @@ module.exports = {
 
   getGeneratedContract: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    const userClient = await client.findOne({where:{email:req.user.email}})
     var address = req.cookies['address'];
     console.log(req.session.coinName, req.session.coinSymbol);
+    if(!!!req.session.coinName && !!!req.session.coinSymbol){
+      res.render('profileDetails', {
+        user: req.user,
+        address: address,
+        ProjectConfiguration: projectArray,
+        socialClient:userClient.password===null
+      });
+    }
     res.render('deployedContract', {
       message1: "This is your token contract and this will hold all your tokens. Please do not close this tab.",
       user: req.user,

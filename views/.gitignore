@@ -1,0 +1,8 @@
+node_modules/
+kycdump/
+database/config
+database/migrations
+icoDashboardCreator/etherwallet/node_modules
+logs/
+config/
+package-lock.json

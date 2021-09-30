@@ -1994,7 +1994,7 @@ const darklist = function() {
 		{
 			address: "0xF2dcFa51F83e41c0e988477f939c7A5e5b9a6905",
 			comment:
-				"Fake Docai crowdsale site - see https://github.com/MetaMask/eth-phishing-detect/issues/1078",
+				"Fake Docai crowdsale site - see https://github.com/XDCPay/eth-phishing-detect/issues/1078",
 			date: "2018-03-12"
 		},
 		{

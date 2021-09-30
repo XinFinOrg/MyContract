@@ -3,9 +3,12 @@ var nodemailer = require('nodemailer');
 var ejs = require("ejs");
 var fs = require('fs');
 var transporter = nodemailer.createTransport({
-  host: 'mail-b01.cloudmailbox.in',
-  port: 25,
-  auth: nodemailerAuth
+  host: 'smtp.gmail.com',
+  port: 587,
+  auth: {
+    user: "mycontract@leewayhertz.com",
+    pass: "spicyjump25",
+  },
 });
 
 module.exports = {
@@ -46,7 +49,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@mycontract.co",
+        from: "mycontract@leewayhertz.com",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -63,7 +66,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@mycontract.co",
+        from: "mycontract@leewayhertz.com",
         to: recipientmail,
         subject: "Email Verification",
         html: data

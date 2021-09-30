@@ -340,13 +340,13 @@ module.exports = {
     passport.authenticate('user-signup', {
       session: false
     }, async (err, user, info) => {
-      console.log(user);
+      console.log(user,"userrrrrrrrr");
       try {
         if (err || !user) {
           req.flash('error','Some error occurred during Signup,please try again after sometime.')
           return res.redirect('./userSignup');
         }
-        req.flash('success','Please check your email address and verified your email address to activate your account.')
+        // req.flash('success','Please check your email address and verified your email address to activate your account.')
         return res.redirect('./userLogin');
       } catch (error) {
         req.flash('error','Something went wrong please try again later.')
