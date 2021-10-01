@@ -1,8 +1,8 @@
 module.exports = {
 
   'githubAuth': {
-    'clientID': 'c455ac87f1a99c52cde0',
-    'clientSecret': 'dd91931ce6cebad79d6a035ace4a7fe2d595bc85',
+    'clientID': '7d8406dcfbee5d29ffd2', //'c455ac87f1a99c52cde0' for live
+    'clientSecret': '73555b565affe9b84954abeb1326997014ef5930', //'dd91931ce6cebad79d6a035ace4a7fe2d595bc85' for live
     'callbackURL': '/auth/github/callback'
   },
 
@@ -18,10 +18,10 @@ module.exports = {
     'callbackURL'   : '/auth/facebook/callback'
 },
 
-  'nodemailerAuth': {
-    'user': 'contract@mail-b01.cloudmailbox.in',
-    'pass': 'Hak-ess@2018**',
-  },
+'nodemailerAuth': {
+  'user': 'mycontract@leewayhertz.com',
+  'pass': 'spicyjump25',
+},
 
   'jwtAuthKey': {
     'secret': "heyitsmeakshayhere",

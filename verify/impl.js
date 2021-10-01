@@ -1,7 +1,8 @@
 const axios = require("axios");
 const Web3 = require("web3");
 const web3 = new Web3(
-  new Web3.providers.HttpProvider("https://rpc.xinfin.network")
+  // new Web3.providers.HttpProvider("https://rpc.xinfin.network")
+  new Web3.providers.HttpProvider("https://rpc.apothem.network")
 );
 
 const ejs = require("ejs");

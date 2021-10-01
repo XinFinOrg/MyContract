@@ -14,6 +14,8 @@ var fs = require('fs');
 const _ = require('lodash');
 const userAddressDB = db.userCurrencyAddress;
 const { Op } = require("sequelize");
+console.log("in 111111111111")
+
 module.exports = {
 
   getLogin: function (req, res) {
@@ -80,7 +82,7 @@ module.exports = {
         res.render('profile.ejs', {
           req:req,
           user: req.user, // get the user out of session and pass to template
-          ProjectConfiguration: projectArray,
+          ProjectConfiguration: projectArray.reverse(),
           message: req.flash('package_flash'),
           contractMessage: req.flash('contract_flash'),
           address: address,
@@ -96,7 +98,7 @@ module.exports = {
         res.render('profile.ejs', {
           req:req,
           user: req.user, // get the user out of session and pass to template
-          ProjectConfiguration: projectArray,
+          ProjectConfiguration: projectArray.reverse(),
           message: req.flash('package_flash'),
           contractMessage: req.flash('contract_flash'),
           address: address,
@@ -119,7 +121,7 @@ module.exports = {
   }),
 
   facebookLogin: passport.authenticate("facebook", {
-    scope: ["public_profile ", "email"]
+    scope: [ "email"]
   }),
 
   facebookLoginCallback: passport.authenticate("facebook", {

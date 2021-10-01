@@ -14,12 +14,12 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Generated Contract</h4>
+            <h4 class="card-title ml-1">Generated Contract</h4>
             <div class="row">
               <% if(message1.length == 0) { %>
-                <h4>This contract will be used to handle your crowdsale! Please do not close this tab.</h4>
+                <h4 class="ml-3">This contract will be used to handle your crowdsale! Please do not close this tab.</h4>
                 <% } else { %>
-                  <h4>
+                  <h4 class="ml-3">
                     <%- message1 %>
                   </h4>
                   <% } %>
@@ -85,8 +85,8 @@
                                         <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,1)>Ethereum main network</button>
                                       <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,2)>Ropsten
                                         test network</button>
-                                        <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,3)>XinFin Main Network </button>
-                                        <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,4)>XinFin Apothem Network </button>
+                                        <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,3)>XDC Main Network </button>
+                                        <button type="button" class="btn btn-rounded btn-info" onclick=autoDeploy("<%=coinName %>",true,4)>XDC Apothem Network </button>
                                     </div>
                                     <div class="modal-footer text-center">
                                       <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
@@ -185,6 +185,6 @@ contract ERC20Detailed is ERC20 {
         </div>
       </div>
   </body>
-  <script>sessionStorage.clear();</script>
+  <!-- <script>sessionStorage.clear();</script> -->
 
   </html>

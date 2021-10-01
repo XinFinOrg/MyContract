@@ -125,11 +125,26 @@ module.exports = {
   },
 
   sendPaymentInfo: (req, res) => {
+    console.log(req.user.email, '<<<<<<<<<<< sendPaymentInfo')
     // console.log(req.cookies['paymentToken']);
-    jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
-      console.log(decoded);
-      paymentListener.attachListenerWithUserHash(decoded.userHash, decoded.address);
-    });
+    // jwt.verify(req.cookies['paymentToken'], configAuth.jwtAuthKey.secret, function (err, decoded) {
+    //   console.log(decoded);
+    //   paymentListener.attachListenerWithUserHash(decoded.userHash, decoded.address);
+    // });
+    client.find({
+      where: {
+        email: req.user.email 
+      }
+    }).then(async client => {
+      console.log(client,'<<<<<<client data')
+      client.package1 += 1;
+      await client.save().then((result, error) => {
+        if(error) console.error('Error in saving value',error)
+        console.log('Result')
+        res.send(result)
+      });
+    })
+    // res.send({success: true})
   },
   getPaypalPayment: (req, res) => {
     let message = (req.query.errors == "false" || req.query.errors == undefined) ? "" : "Somthing went wrong please try again later"

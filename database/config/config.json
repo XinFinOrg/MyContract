@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "postgres",
-    "password": "123",
-    "database": "autoCoin",
+    "password": "testPassword",
+    "database": "autocoin",
     "host": "localhost",
     "logging": false,
     "freezeTableName": true,
@@ -13,14 +13,14 @@
   "test": {
     "username": "postgres",
     "password": 1234,
-    "database": "autoCoin",
+    "database": "autocoin",
     "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "123",
-    "database": "postgres",
+    "database": "autocoin",
     "host": "localhost",
     "dialect": "postgres"
   }

@@ -3,8 +3,12 @@ var config = require('../config/paymentListener');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
-var apothemweb3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
+// var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
+// var apothemweb3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
+var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
+// var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
+
+
 var axios = require("axios");
 
 
@@ -66,7 +70,9 @@ module.exports = {
           console.log("SignedTransaction",result);
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              url: 'https://rpc.apothem.network',
+
+              // url: 'https://rpc.xinfin.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -85,7 +91,8 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    url: 'https://rpc.apothem.network',
+                    // url: 'https://rpc.xinfin.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -144,7 +151,8 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              // url: 'https://rpc.xinfin.network',
+              url: 'https://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -163,7 +171,8 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    // url: 'https://rpc.xinfin.network',
+                    url: 'https://rpc.apothem.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -222,7 +231,8 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              // url: 'https://rpc.xinfin.network',
+              url: 'https://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -265,7 +275,8 @@ module.exports = {
         web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
           axios({
               method: 'post',
-              url: 'https://rpc.xinfin.network',
+              // url: 'https://rpc.xinfin.network',
+              url: 'https://rpc.apothem.network',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -284,7 +295,8 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.xinfin.network',
+                    // url: 'https://rpc.xinfin.network',
+                    url: 'https://rpc.apothem.network',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",

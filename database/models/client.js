@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc1:
     {
-      type:DataTypes.STRING
+      type:DataTypes.STRING(10485760),
     },
     kycDocName2:
     {
@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc2:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.STRING(10485760),
     },
     kycDocName3:
     {
@@ -98,7 +98,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc3:
     {
-      type:DataTypes.STRING
+      type:DataTypes.STRING(10485760),
     },
     paymentOTP:
     {

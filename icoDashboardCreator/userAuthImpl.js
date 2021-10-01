@@ -163,7 +163,6 @@ module.exports = {
   },
 
   getCompletedKYCPage: (req, res) => {
-    console.log("Hello");
     res.render('kycComplete', {
       user: req.user,
       projectConfiguration: req.user.projectConfiguration

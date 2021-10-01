@@ -176,7 +176,7 @@
                   It is stored and maintained by thousands of people (miners) across the globe who have special computers.
                 </li>
                 <li translate="ONBOARD_blockchain_content__4">
-                  It is made up of all the individual transactions sent from MyEtherWallet, MetaMask, Exodus, Mist, Geth, Parity, and everywhere else.
+                  It is made up of all the individual transactions sent from MyEtherWallet, XDCPay, Exodus, Mist, Geth, Parity, and everywhere else.
                 </li>
                 <li translate="ONBOARD_blockchain_content__5">
                   When you see your balance on MyEtherWallet.com or view your transactions on [etherscan.io](https://etherscan.io), you are seeing data on the blockchain, not in our personal systems.
@@ -322,7 +322,7 @@
             <div class="col-xs-12 col-sm-8 onboarding__content">
               <ul>
                 <li translate="ONBOARD_secure_1_content__2">
-                  Install [EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn) or [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) or [Cryptonite by Metacert](https://chrome.google.com/webstore/detail/cryptonite-by-metacert/keghdcpemohlojlglbiegihkljkgnige) or the [MyEtherWallet Chrome Extension](https://chrome.google.com/webstore/detail/myetherwallet-cx/nlbmnnijcnlegkjjpcfjclmcfggfefdm) to block malicious websites.
+                  Install [EAL](https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn) or [XDCPay](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) or [Cryptonite by Metacert](https://chrome.google.com/webstore/detail/cryptonite-by-metacert/keghdcpemohlojlglbiegihkljkgnige) or the [MyEtherWallet Chrome Extension](https://chrome.google.com/webstore/detail/myetherwallet-cx/nlbmnnijcnlegkjjpcfjclmcfggfefdm) to block malicious websites.
                 </li>
                 <li translate="ONBOARD_secure_1_content__3">
                   Always check the URL: `https://www.myetherwallet.com`.
@@ -478,7 +478,7 @@
                 <li>
                   <a href="https://myetherwallet.github.io/knowledge-base/migration/moving-from-private-key-to-metamask.html"
                      target="_blank" rel="noopener noreferrer" class="strong" translate="ONBOARD_final_content__3">
-                    How to Set up MEW + MetaMask
+                    How to Set up MEW + XDCPay
                   </a>
                 </li>
                 <li>
@@ -502,7 +502,7 @@
                 <li>
                   <a href="https://myetherwallet.github.io/knowledge-base/migration/moving-from-private-key-to-metamask.html"
                      target="_blank" rel="noopener noreferrer" class="strong" translate="ONBOARD_final_content__7">
-                       How to Send via MetaMask
+                       How to Send via XDCPay
                   </a>
                 </li>
                 <li>

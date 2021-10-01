@@ -58,7 +58,6 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, email, password, done) {
-      // console.log(req.body);
       process.nextTick(function () {
         // find a user whose email is the same as the forms email
         User.find({
@@ -103,7 +102,6 @@ module.exports = function (passport) {
     async function (req, email, password, done) {
       // callback with email and password from our form
       // find a user whose email is the same as the forms email
-      console.log(email);
       User.find({
         where: {
           'email': email,
@@ -141,7 +139,6 @@ module.exports = function (passport) {
           'email': email
         }
       }).then(client => {
-        // console.log(client);
 
         // if no user is found, return the message
         if (!client)
@@ -183,7 +180,7 @@ module.exports = function (passport) {
             newUser.email = email;
             newUser.password = generateHash(password);
             newUser.status = false;
-            newUser.package1 = 1 ;
+            newUser.package1 = 0 ;
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
@@ -227,7 +224,7 @@ module.exports = function (passport) {
             newUser.name = profile.displayName;
             newUser.email = profile.emails[0].value; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 0 ;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -256,7 +253,6 @@ module.exports = function (passport) {
   function (token,refreshToken,profile,done) {
     // asynchronous
     process.nextTick(function () {
-      console.log("inside facebook",profile);
       // try to find the user based on their google id
       client.find({
         where: {
@@ -276,7 +272,7 @@ module.exports = function (passport) {
           newUser.name = profile.displayName;
           newUser.email = profile.emails[0].value; // pull the first email
           newUser.status = true;
-          newUser.package1 = 1 ;
+          newUser.package1 = 0 ;
           Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
             var createdClient = await client.create(newUser);
             createdClient.addUserCurrencyAddress(createdEthAddress);
@@ -291,7 +287,7 @@ module.exports = function (passport) {
   passport.use(new GitHubStrategy({
     clientID: configAuth.githubAuth.clientID,
     clientSecret: configAuth.githubAuth.clientSecret,
-    callbackURL: configAuth.githubAuth.callbackURL,
+    callbackURL: 'http://localhost:4000/auth/github/callback', //for live -->  configAuth.githubAuth.callbackURL
     scope: 'user:email'
   },
     function (token, refreshToken, profile, done) {
@@ -303,7 +299,7 @@ module.exports = function (passport) {
         // try to find the user based on their google id
         client.find({
           where: {
-            'email': profile.emails[0].value
+            'github_id': profile.id
           }
         }).then(async result => {
           if (result) {
@@ -317,9 +313,9 @@ module.exports = function (passport) {
             // set all of the relevant information
             newUser.github_id = profile.id;
             newUser.name = profile.displayName;
-            newUser.email = profile.emails[0].value; // pull the first email
+            newUser.email = profile._json.email; // pull the first email
             newUser.status = true;
-            newUser.package1 = 1 ;
+            newUser.package1 = 0 ;
             Promise.all([generateEthAddress()]).then(async ([createdEthAddress]) => {
               var createdClient = await client.create(newUser);
               createdClient.addUserCurrencyAddress(createdEthAddress);

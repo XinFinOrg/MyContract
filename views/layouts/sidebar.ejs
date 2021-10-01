@@ -82,7 +82,7 @@
           <ul class="navbar-nav float-left mr-auto pl-2">
             <li class="">
               <div class="header-price-box">
-                <img src="assets/images/icons/xdce.png"> XDCE Balance: <span id="xdce">0000</span>
+                <img src="assets/images/icons/xdc.png"> XDC Balance: <span id="xdce">0000</span>
               </div>
             </li>
             <li class="">
@@ -92,7 +92,7 @@
             </li>
             <li class="">
               <div class="header-buy-tokens">
-                <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal"
+                <button type="button" class="btn btn-rounded btn-info mt-0" data-toggle="modal" data-target="#exampleModal"
                   data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
               </div>
             </li>
@@ -139,8 +139,8 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
           <ul id="sidebarnav">
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/dashboard"
-                aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu"><%= user.email %>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" style="overflow-x: auto" href="/dashboard"
+                aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu ml-2"><%= user.email %>
                 </span></a></li>
 
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
@@ -245,7 +245,7 @@
           </div>
           <div class="modal-body">
             <div class="text-center">
-              <h5> Please send XDCE to the following address:</h5>
+              <h5> Please send XDC to the following address:</h5>
               <div class="download-QRcode">
                 <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=<%= address %>">
               </div>
