@@ -37,9 +37,11 @@ module.exports = {
       "value": amount, // "0x06f05b59d3b200000"
     }
     return new Promise(async function(resolve, reject) {
-      web3.eth.estimateGas(txData).then(gasLimit => {
-        txData["gasLimit"] = gasLimit;
-        txData["gasPrice"] = gasLimit;
+      let gasPrice = await web3.eth.getGasPrice();
+      web3.eth.estimateGas({from : address}).then(gasLimit => {
+        
+        txData["gas"] = gasLimit;
+        txData["gasPrice"] = gasPrice;
         console.log("txData",txData);
         
         web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
@@ -53,7 +55,7 @@ module.exports = {
           console.log("SignedTransaction",result);
           axios({
               method: 'post',
-              url: 'https://rpc.apothem.network',
+              url: 'https://rpc.apothem.network/sendRawTransaction',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -72,7 +74,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.apothem.network',
+                    url: 'https://rpc.apothem.network/getTransactionReceipt',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -131,7 +133,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.apothem.network',
+              url: 'https://rpc.apothem.network/sendRawTransaction',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -150,7 +152,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.apothem.network',
+                    url: 'https://rpc.apothem.network/getTransactionReceipt',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
@@ -209,7 +211,7 @@ module.exports = {
           //   })
           axios({
               method: 'post',
-              url: 'https://rpc.apothem.network',
+              url: 'https://rpc.apothem.network/sendRawTransaction',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -252,7 +254,7 @@ module.exports = {
         web3.eth.accounts.signTransaction(txData, privateKey).then(result => {
           axios({
               method: 'post',
-              url: 'https://rpc.apothem.network',
+              url: 'https://rpc.apothem.network/sendRawTransaction',
               data: {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
@@ -271,7 +273,7 @@ module.exports = {
               setTimeout(function() {
                 axios({
                     method: 'post',
-                    url: 'https://rpc.apothem.network',
+                    url: 'https://rpc.apothem.network/getTransactionReceipt',
                     data: {
                       "jsonrpc": "2.0",
                       "method": "eth_getTransactionReceipt",
