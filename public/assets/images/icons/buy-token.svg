@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="Buy_Tokens" data-name="Buy Tokens" transform="translate(524 -384)">
+    <rect id="Rectangle_766" data-name="Rectangle 766" width="20" height="20" transform="translate(-524 384)" fill="none"/>
+    <g id="Icon_ionic-ios-wallet" data-name="Icon ionic-ios-wallet" transform="translate(-527.375 380.501)">
+      <path id="Path_180" data-name="Path 180" d="M20.49,11.25H6.26a2.887,2.887,0,0,0-2.885,2.885v8.077A2.887,2.887,0,0,0,6.26,25.1H20.49a2.887,2.887,0,0,0,2.885-2.885V14.135A2.887,2.887,0,0,0,20.49,11.25Z" transform="translate(0 -2.135)" fill="#fff"/>
+      <path id="Path_181" data-name="Path 181" d="M17.909,4.548,6.615,6.755C5.75,6.947,4.5,7.817,4.5,8.875a3.029,3.029,0,0,1,2.356-.913h13.8V6.976a2.761,2.761,0,0,0-.668-1.808h0A2.274,2.274,0,0,0,17.909,4.548Z" transform="translate(-0.356)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

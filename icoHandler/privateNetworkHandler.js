@@ -54,9 +54,11 @@ module.exports = {
       "value": amount, // "0x06f05b59d3b200000"
     }
     return new Promise(async function(resolve, reject) {
+      let gasPrice = await web3.eth.getGasPrice();
+
       web3.eth.estimateGas(txData).then(gasLimit => {
         txData["gasLimit"] = gasLimit;
-        txData["gasPrice"] = gasLimit;
+        txData["gasPrice"] = gasPrice;
         console.log("txData",txData);
         
         web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {

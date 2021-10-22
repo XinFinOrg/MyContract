@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "123",
+    "password": "123456789ww",
     "database": "autoCoin",
-    "host": "localhost",
+    "host": "autocoin.cscjrof24gyr.us-east-1.rds.amazonaws.com",
     "logging": false,
     "freezeTableName": true,
     "operatorsAliases": false,
@@ -11,17 +11,17 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": 1234,
+   "username": "postgres",
+    "password": "123456789ww",
     "database": "autoCoin",
-    "host": "localhost",
+    "host": "autocoin.cscjrof24gyr.us-east-1.rds.amazonaws.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "123",
+   "username": "postgres",
+    "password": "123456789ww",
     "database": "autoCoin",
-    "host": "localhost",
+    "host": "autocoin.cscjrof24gyr.us-east-1.rds.amazonaws.com",
     "dialect": "postgres"
   }
 }

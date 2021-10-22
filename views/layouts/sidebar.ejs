@@ -1,55 +1,60 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900"
+      rel="stylesheet"
+    />
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/images/favicon.png"
+    />
+    <title>MyContract</title>
+    <!-- Custom CSS -->
+    <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="assets/css/style.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- All Jquery -->
+    <script src="assets/libs/jquery/jquery.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/xdce_abi.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="assets/js/app.min.js"></script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
-  <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-  <title>MyContract</title>
-  <!-- Custom CSS -->
-  <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <link href="assets/css/style.min.css" rel="stylesheet">
-  <link href="assets/css/custom.css" rel="stylesheet">
-  <!-- All Jquery -->
-  <script src="assets/libs/jquery/jquery.min.js"></script>
-  <script src="js/web3.min.js"></script>
-  <script src="js/xdce_abi.js"></script>
-  <!-- Bootstrap tether Core JavaScript -->
-  <script src="assets/libs/popper.js/popper.min.js"></script>
-  <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
-  <!-- apps -->
-  <script src="assets/js/app.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-</head>
-
-<body>
-
-  <!-- Main wrapper -->
-  <div id="main-wrapper">
-
-    <!-- Topbar header -->
-    <header class="topbar">
+  <body>
+    <!-- Main wrapper -->
+    <div id="main-wrapper">
+      <!-- Topbar header -->
+    <header class="topbar remove-shadow">
       <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <div class="navbar-header">
+        <div class="navbar-header d-flex nav-head">
           <!-- This is for the sidebar toggle which is visible on mobile only -->
           <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
               class="ti-menu ti-close"></i></a>
 
           <!-- Logo -->
-          <a class="navbar-brand" href="/dashboard">
+          <a class="navbar-brand justify-content-center" href="/dashboard">
             <!-- Logo icon -->
             <b class="logo-icon">
               <!-- Dark Logo icon -->
@@ -68,7 +73,6 @@
           </a>
           <!-- End Logo -->
 
-
           <!-- Toggle which is visible on mobile only -->
           <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
             data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -76,24 +80,24 @@
         </div>
         <!-- End Logo -->
 
-        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse fix-height" id="navbarSupportedContent">
 
           <!-- toggle and nav items -->
-          <ul class="navbar-nav float-left mr-auto pl-2">
+          <ul class="navbar-nav float-left mr-auto pl-2 align-items-center">
             <li class="">
-              <div class="header-price-box">
+              <div class="header-price-box header-price">
                 <img src="assets/images/icons/xdc.png"> XDC Balance: <span id="xdce">0000</span>
               </div>
             </li>
             <li class="">
-              <div class="header-price-box ethBalance">
+              <div class="header-price-box header-price ethBalance">
                 <img src="assets/images/icons/eth.png"> ETH Balance: <span id="eth">0000</span>
               </div>
             </li>
             <li class="">
               <div class="header-buy-tokens">
-                <button type="button" class="btn btn-rounded btn-info mt-0" data-toggle="modal" data-target="#exampleModal"
-                  data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
+                <button type="button" class="btn head-btn mt-0" data-toggle="modal" data-target="#exampleModal"
+                  data-whatever="@getbootstrap"><strong>Buy</strong></button>
               </div>
             </li>
             <!-- Balance -->
@@ -116,265 +120,437 @@
                       <%= user.email %>
                     </p>
                   </div>
+                  <a class="dropdown-item" href="/profileDetails"
+                    ><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a
+                  >
+                  <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a> -->
+                  <a class="dropdown-item" href="/logout"
+                    ><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a
+                  >
                 </div>
-                <a class="dropdown-item" href="/profileDetails"><i class="mdi mdi-account m-r-5 m-l-5"></i> My
-                  Profile</a>
-                <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a> -->
-                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Log Out</a>
-              </div>
-            </li>
-            <!-- User profile and search -->
-
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <!-- End Topbar header -->
-
-
-    <!-- Left Sidebar -->
-    <aside class="left-sidebar">
-      <!-- Sidebar scroll-->
-      <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-          <ul id="sidebarnav">
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" style="overflow-x: auto" href="/dashboard"
-                aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu ml-2"><%= user.email %>
-                </span></a></li>
-
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
-                href="javascript:void(0)" aria-expanded="false"><i class="fa fa-plus-circle"></i><span
-                  class="hide-menu">Create Contract </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item"><a href="/customContract" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu"> Tokenization(ERC 20)</span></a></li>
-                <li class="sidebar-item"><a href="/ERC223Contract" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu"> Tokenization(ERC 223)</span></a></li>
-                <li class="sidebar-item"><a href="/Stablecoin" class="sidebar-link"><i
-                  class="mdi mdi-adjust"></i><span class="hide-menu"> Stablecoin</span></a></li>
-                <!-- <li class="sidebar-item"><a href="/erc721Contract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"> Asset Tokenization (NFT)</span></a></li> -->
-              </ul>
-            </li>
-            <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-                href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy
-                  Pending Contracts </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <% if(ProjectConfiguration.networkType != "mainnet") {%>
-                <!-- <li class="sidebar-item"><a href="/generatedContract"
-                        class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
-                <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
-                  class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
-                </li>
-                <% }else{%>
-                <% } %>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet </span></a></li>
-                <% } %>
-              </ul>
-            </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-creation"></i><span
-                  class="hide-menu">Contract Interaction </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <% if (ProjectConfiguration.crowdsaleContractAddress>0) { %>
-                <li class="sidebar-item"><a href="/contractInteraction/project/<%= ProjectConfiguration.coinName %>"
-                    class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% } else { %>
-                <!-- <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                              class="hide-menu"> <%= ProjectConfiguration.coinName %> (Not Deployed Yet) </span></a></li> -->
-                <% } %>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
-                <% } %>
-              </ul>
-            </li>
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"><i
-                  class="mdi mdi-creation"></i><span class="hide-menu">Tokenization Platform</span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <li class="sidebar-item"><a
-                    href="/icoDashboard/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>"
-                    class="sidebar-link"><i class="mdi mdi-adjust"></i><span
-                      class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet</span></a></li>
-                <% } %>
-              </ul>
-            </li>
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal"
-                data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span
-                  class="hide-menu">Buy Tokens </span></a></li>
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="https://articles.xinfin.org/mycontract" target="_blank"
-                aria-expanded="false"><i class="fa fa-question-circle"></i><span class="hide-menu">FAQ</span></a></li>
-            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout"
-                aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
-          </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-      </div>
-      <!-- End Sidebar scroll-->
-    </aside>
-    <!-- End Left Sidebar -->
-    <%-body -%>
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title buy-tokens" id="exampleModalLabel1"><i class="ti-wallet"></i> Buy Tokens</h4>
-
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+              </li>
+              <!-- User profile and search -->
+            </ul>
           </div>
-          <div class="modal-body">
-            <div class="text-center">
-              <h5> Please send XDC to the following address:</h5>
-              <div class="download-QRcode">
-                <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=<%= address %>">
-              </div>
+      </nav>
+      </header>
+      <!-- End Topbar header -->
+
+      <!-- Left Sidebar -->
+      <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  style="overflow-x: auto"
+                  href="/dashboard"
+                  aria-expanded="false"
+                  ><i class="fa fa-user-circle"></i
+                  ><span class="hide-menu ml-2"><%= user.email %> </span></a
+                >
+              </li>
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="fa fa-plus-circle"></i
+                  ><span class="hide-menu">Create Contract </span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="/customContract" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"> Tokenization(ERC 20)</span></a
+                    >
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="/ERC223Contract" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"> Tokenization(ERC 223)</span></a
+                    >
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="/Stablecoin" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"> Stablecoin</span></a
+                    >
+                  </li>
+                  <!-- <li class="sidebar-item"><a href="/erc721Contract" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
+                      class="hide-menu"> Asset Tokenization (NFT)</span></a></li> -->
+                </ul>
+              </li>
+              <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
+              <li class="sidebar-item">
+                <a
+                  class="
+                    sidebar-link
+                    has-arrow
+                    waves-effect waves-dark
+                    sidebar-link
+                  "
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="fa fa-cog"></i
+                  ><span class="hide-menu">Deploy Pending Contracts </span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <% if (ProjectConfiguration.length>0) { %> <%
+                  ProjectConfiguration.forEach(function(ProjectConfiguration){
+                  %> <% if(ProjectConfiguration.networkType != "mainnet") {%>
+                  <!-- <li class="sidebar-item"><a href="/generatedContract"
+                        class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
+                  <li
+                    id="deployment"
+                    onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
+                    class="sidebar-item"
+                  >
+                    <a href="javascript:void(0)" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"
+                        ><%- ProjectConfiguration.coinName %></span
+                      ></a
+                    >
+                  </li>
+                  <% }else{%> <% } %> <% }) %> <% } else { %>
+                  <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu">No Projects Yet </span></a
+                    >
+                  </li>
+                  <% } %>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="
+                    sidebar-link
+                    has-arrow
+                    waves-effect waves-dark
+                    sidebar-link
+                  "
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                >
+                  <img src="assets/images/icons/contract-int.svg"  class="img-wid" /><span
+                    class="hide-menu margin-left-8"
+                    >Contract Interaction
+                  </span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <% if (ProjectConfiguration.length>0) { %> <%
+                  ProjectConfiguration.forEach(function(ProjectConfiguration){
+                  %> <% if (ProjectConfiguration.crowdsaleContractAddress>0) {
+                  %>
+                  <li class="sidebar-item">
+                    <a
+                      href="/contractInteraction/project/<%= ProjectConfiguration.coinName %>"
+                      class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"
+                        ><%= ProjectConfiguration.coinName %></span
+                      ></a
+                    >
+                  </li>
+                  <% } else { %>
+                  <!-- <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i class="mdi mdi-adjust"></i><span
+                              class="hide-menu"> <%= ProjectConfiguration.coinName %> (Not Deployed Yet) </span></a></li> -->
+                  <% } %> <% }) %> <% } else { %>
+                  <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu">No Projects Yet</span></a
+                    >
+                  </li>
+                  <% } %>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="
+                    sidebar-link
+                    has-arrow
+                    waves-effect waves-dark
+                    sidebar-link
+                  "
+                >
+                  <img src="assets/images/icons/token-platform.svg" class="img-wid"/><span
+                    class="hide-menu margin-left-8"
+                    >Tokenization Platform</span
+                  ></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <% if (ProjectConfiguration.length>0) { %> <%
+                  ProjectConfiguration.forEach(function(ProjectConfiguration){
+                  %>
+                  <li class="sidebar-item">
+                    <a
+                      href="/icoDashboard/icoDashboardSetup/project/<%= ProjectConfiguration.coinName %>"
+                      class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu"
+                        ><%= ProjectConfiguration.coinName %></span
+                      ></a
+                    >
+                  </li>
+                  <% }) %> <% } else { %>
+                  <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link"
+                      ><i class="mdi mdi-adjust"></i
+                      ><span class="hide-menu">No Projects Yet</span></a
+                    >
+                  </li>
+                  <% } %>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  data-whatever="@getbootstrap"
+                >
+                  <img src="assets/images/icons/buy-token.svg" class="img-wid"/><span
+                    class="hide-menu margin-left-8"
+                    >Buy Tokens
+                  </span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="https://articles.xinfin.org/mycontract"
+                  target="_blank"
+                  aria-expanded="false"
+                  ><i class="fa fa-question-circle"></i
+                  ><span class="hide-menu">FAQ</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/logout"
+                  aria-expanded="false"
+                  ><i class="fa fa-power-off"></i
+                  ><span class="hide-menu">Log Out </span></a
+                >
+              </li>
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+      </aside>
+      <!-- End Left Sidebar -->
+      <%-body -%>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel1"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title buy-tokens" id="exampleModalLabel1">
+               Buy Tokens
+              </h4>
+
+               <button
+                type="button"
+                class="qr-close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button> 
+             
             </div>
-            <form>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control text-center" placeholder="" disabled="disabled" aria-label=""
-                  id="tokenAddress" value="<%= address %>" />
-                <!-- <div class="input-group-append">
+            <div class="modal-body">
+              <div class="text-center">
+                <h5 class="qr-text">Please send XDC to the following address:</h5>
+                <div class="download-QRcode">
+                  <img
+                    src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=<%= address %>"
+                  />
+                </div>
+              </div>
+              <form>
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    placeholder=""
+                    disabled="disabled"
+                    aria-label=""
+                    id="tokenAddress"
+                    value="<%= address %>"
+                  />
+                  <!-- <div class="input-group-append">
                     <button data-copytarget="#tokenAddress" class="btn btn-success" type="button">Copy</button>
                   </div> -->
-              </div>
-            </form>
-            <form method="GET" action="/paypal/direct">
-              <div class="input-group mb-3">
-                <h5 class="form-control text-center">If you have Paypal account then buy using
-                  paypal</h5>
-                <div class="input-group-append">
-                    <input type="submit" class="btn btn-success" value="Paypal">
+                </div>
+              </form>
+              <form method="GET" action="/paypal/direct">
+                <div class="input-group mb-3">
+                  <h5 class="form-control pay-text text-center">
+                    If you have Paypal account then buy using paypal
+                  </h5>
+                  <div class="input-group-append">
+                    <input
+                      type="submit"
+                      class="btn btn-success"
+                      value="Paypal"
+                    />
                   </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer text-center">
-            <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.modal -->
-
-
-    <!-- / ICO Plarform Coming Soon modal -->
-    <div class="modal fade" id="comingSoonModal" tabindex="-1" role="dialog" aria-labelledby="comingSoonModalLabel1">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-            <h1 class="text-center mx-2 mb-3"><span>Coming Soon!</span></h1>
-          </div>
-          <div class="modal-footer text-center">
-            <button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                </div>
+              </form>
+            </div>
+            <!-- <div class="modal-footer text-center">
+              <button
+                type="button"
+                class="btn btn-rounded btn-info"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div> -->
           </div>
         </div>
       </div>
-    </div>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-<% if (typeof req != 'undefined') { %>
-  <%- req.toastr.render() %>
-  <% } %>
-    <!-- footer -->
-    <footer class="footer text-center">Copyright © 2020 MyContract. All rights reserved.</footer>
-    <!-- End footer -->
-    <!-- / ICO Plarform Coming Soon modal -->
+      <!-- /.modal -->
 
+      <!-- / ICO Plarform Coming Soon modal -->
+      <div
+        class="modal fade"
+        id="comingSoonModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="comingSoonModalLabel1"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h1 class="text-center mx-2 mb-3"><span>Coming Soon!</span></h1>
+            </div>
+            <div class="modal-footer text-center">
+              <button
+                type="button"
+                class="btn btn-rounded btn-info"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <link
+        rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css"
+      />
+      <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+      <% if (typeof req != 'undefined') { %> <%- req.toastr.render() %> <% } %>
+      <!-- footer -->
+      <footer class="footer text-center">
+        Copyright © 2020 MyContract. All rights reserved.
+      </footer>
+      <!-- End footer -->
+      <!-- / ICO Plarform Coming Soon modal -->
 
-    <script>
-      $(function () {
-        "use strict";
-        $("#main-wrapper").AdminSettings({
-          Theme: false,
-          Layout: 'vertical',
-          LogoBg: 'skin1',
-          NavbarBg: 'skin6',
-          SidebarType: 'full',
-          SidebarColor: 'skin1',
-          SidebarPosition: true,
-          HeaderPosition: true,
-          BoxedLayout: false,
+      <script>
+        $(function () {
+          "use strict";
+          $("#main-wrapper").AdminSettings({
+            Theme: false,
+            Layout: "vertical",
+            LogoBg: "skin1",
+            NavbarBg: "skin6",
+            SidebarType: "full",
+            SidebarColor: "skin1",
+            SidebarPosition: true,
+            HeaderPosition: true,
+            BoxedLayout: false,
+          });
         });
-      });
-    </script>
+      </script>
 
-
-    <!-- Toastr alert -->
-    <script>
-      var globalEthBalance;
-      function checkBalances() {
-        $.get('/getBalances', function (result) {
-          balance = result["XDCE"];
-          ethBalance = result["ETH"];
-          $("#xdce").text(balance);
-          $("#eth").text(ethBalance);
-          globalEthBalance = result["ETH"];
-        });
-      }
-      window.onload = checkBalances;
-      window.setInterval(function () {
-        checkBalances();
-      }, 30000);
-      function deploy(coinName, istoken) {
-        console.log(coinName, "here")
-        window.sessionStorage.setItem("deploymentName", coinName);
-        if (!istoken) { window.location.href = "/deployer"; }
-        else { window.location.href = "/deployer?coinName=" + coinName; }
-      }
-      function autoDeploy(coinName, istoken, isMainnet) {
-        console.log(istoken, "is here", isMainnet)
-        window.sessionStorage.setItem("deploymentName", coinName);
-        if (!istoken) { window.location.href = "/deployer"; }
-        else {
-          console.log('in here ')
-          if (isMainnet == '1') {
-            console.log('in here 1')
-            if (globalEthBalance == 0.5) {
-              window.location.href = "/api/automaticDeployment?network=ethereum&coinName=" + coinName;
-            } else {
-              $('#networkModal').modal('hide');
-              $('#mainnetBalanceError').modal('show');
-            }
-          } else if (isMainnet == '2') {
-            console.log('in here 2')
-            window.location.href = "/api/automaticDeployment?network=testnet&coinName=" + coinName;
-          }
-          else if(isMainnet =='3') {
-            console.log('in here 3')
-            window.location.href = "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
-          }
-          else{
-            console.log('in here 4')
-            window.location.href = "/api/automaticDeployment?network=apothem&coinName=" + coinName;
+      <!-- Toastr alert -->
+      <script>
+        var globalEthBalance;
+        function checkBalances() {
+          $.get("/getBalances", function (result) {
+            balance = result["XDCE"];
+            ethBalance = result["ETH"];
+            $("#xdce").text(balance);
+            $("#eth").text(ethBalance);
+            globalEthBalance = result["ETH"];
+          });
+        }
+        window.onload = checkBalances;
+        window.setInterval(function () {
+          checkBalances();
+        }, 30000);
+        function deploy(coinName, istoken) {
+          console.log(coinName, "here");
+          window.sessionStorage.setItem("deploymentName", coinName);
+          if (!istoken) {
+            window.location.href = "/deployer";
+          } else {
+            window.location.href = "/deployer?coinName=" + coinName;
           }
         }
-      }
+        function autoDeploy(coinName, istoken, isMainnet) {
+          console.log(istoken, "is here", isMainnet);
+          window.sessionStorage.setItem("deploymentName", coinName);
+          if (!istoken) {
+            window.location.href = "/deployer";
+          } else {
+            console.log("in here ");
+            if (isMainnet == "1") {
+              console.log("in here 1");
+              if (globalEthBalance == 0.5) {
+                window.location.href =
+                  "/api/automaticDeployment?network=ethereum&coinName=" +
+                  coinName;
+              } else {
+                $("#networkModal").modal("hide");
+                $("#mainnetBalanceError").modal("show");
+              }
+            } else if (isMainnet == "2") {
+              console.log("in here 2");
+              window.location.href =
+                "/api/automaticDeployment?network=testnet&coinName=" + coinName;
+            } else if (isMainnet == "3") {
+              console.log("in here 3");
+              window.location.href =
+                "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
+            } else {
+              console.log("in here 4");
+              window.location.href =
+                "/api/automaticDeployment?network=apothem&coinName=" + coinName;
+            }
+          }
+        }
         // function getProjectArray(){
         //   $.get('/getProjectArray', function(result){
         //       if(result){
@@ -383,38 +559,43 @@
         //       }
         //     });
         // }
+      </script>
 
-    </script>
+      <!-- slimscrollbar JavaScript -->
+      <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
 
-    <!-- slimscrollbar JavaScript -->
-    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
-
-    <!--Menu sidebar -->
-    <script src="assets/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="assets/libs/toastr/toastr.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="assets/js/custom.min.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>   
-    <script>
+      <!--Menu sidebar -->
+      <script src="assets/js/sidebarmenu.js"></script>
+      <!--Custom JavaScript -->
+      <script src="assets/libs/toastr/toastr.min.js"></script>
+      <!--Custom JavaScript -->
+      <script src="assets/js/custom.min.js"></script>
+      <script src="assets/js/custom.js"></script>
+      <link
+        rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css"
+      />
+      <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+      <script>
         toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
-   </script>
+          closeButton: false,
+          debug: false,
+          newestOnTop: false,
+          progressBar: false,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: false,
+          onclick: null,
+          showDuration: "300",
+          hideDuration: "1000",
+          timeOut: "5000",
+          extendedTimeOut: "1000",
+          showEasing: "swing",
+          hideEasing: "linear",
+          showMethod: "fadeIn",
+          hideMethod: "fadeOut",
+        };
+      </script>
+    </div>
+  </body>
+</html>
