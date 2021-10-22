@@ -15,12 +15,16 @@ module.exports = {
   buyPackage: async function (req, res) {
     try{
     var projectArray = await getProjectArray(req.user.email);
+      console.log("")
     const cmcPrice = 50/(await axios.get("https://blockdegree.org/api/wrapCoinMarketCap")).data.data;
+      console.log("")
     var address = req.cookies['address'];
+    console.log("")
     var otpExist = false;
     if (req.user.paymentOTP) {
        otpExist = true 
       }
+      console.log("")
     Promise.all([paymentListener.checkBalance(address)]).then(([balance]) => {
       res.render('buyPackage', {
         user: req.user,

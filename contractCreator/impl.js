@@ -137,7 +137,9 @@ module.exports = {
       req.session.contract = data;
       req.session.coinName = req.body.token_name;
       req.session.coinSymbol = req.body.token_symbol;
-      nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
+      if(req.body.token_name){
+        nodemailerservice.sendContractEmail(req.user.email, data, req.body.token_name, "Token Contract");
+      }
       var clientdata = await client.find({
         where: {
           'email': req.user.email

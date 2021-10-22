@@ -787,3 +787,7 @@ margin-bottom: 1rem;
 .contract-btn {background: #3763DD !important; height: 50px; width: 171px; font-size: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;}
 
 /* =========================== contract without code style ends ====================== */
+
+.example {
+  width: min-content; min-width: 100%;
+}

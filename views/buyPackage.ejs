@@ -176,6 +176,9 @@
   function checkMetamask() {
     if (typeof web3 !== 'undefined') {
       window.web3 = new Web3(web3.currentProvider)
+      // window.web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR-PROJECT-ID'))
+
+      console.log("web3.currentProvider ==============>>>>>>>>", web3.currentProvider)
       $("#metamaskButton").get(0).style.display = '';
       $('#bancor-wc-id-1').hide();
     } else {
@@ -183,18 +186,13 @@
     }
   }
   function buyMetamask() {
-    // console.log('buyMetamask called')
     window.web3.eth.net.getNetworkType().then(networkType => {
       window.ethereum.enable().then(add => {
         window.web3.currentProvider.selectedAddress = add[0]
         if (networkType != 'main') {
-          console.log('buyMetamask called first ', networkType)
-
-          console.log('wallet address is ', add)
 
           getPaymentToken(window.web3.currentProvider.selectedAddress, networkType);
         } else {
-          console.log('buyMetamask called second ', networkType)
           getPaymentToken(window.web3.currentProvider.selectedAddress);
         }
       });
@@ -202,12 +200,10 @@
   }
 
   function sendPaymentInfo() {
-    console.log('In sendPaymentInfo>>>')
     $.ajax({
       type: 'POST',
       url: '/api/sendPaymentInfo',
       success: function (data) {
-        console.log("Success In sendPaymentInfo>>>");
         var values = {}
         if (window.sessionStorage.getItem("tokenName")) {
           values = {
@@ -220,13 +216,11 @@
             additional: 'sometext'
           }
         }
-        console.log('values>>>>', values)
         $.ajax({
           type: 'POST',
           url: '/createERC20Contract',
           data: values,
           success: function (data) {
-            console.log('createERC20Contract POST Success>>>>')
             window.setTimeout(function () {
               document.location.href = '/generatedContract'
               window.sessionStorage.clear()
@@ -237,7 +231,6 @@
         // document.location.href = '/generatedContract'
       },
       error: function (data) {
-        console.log("Error In sendPaymentInfo>>>");
       },
       contentType: "application/json",
       dataType: 'json'
@@ -245,13 +238,12 @@
   }
 
   function getPaymentToken(address) {
-    console.log('in getPaymentToken>>>>', address)
     $.ajax({
       type: 'POST',
       url: '/api/getPaymentToken',
       data: JSON.stringify({ "address": address }),
       success: function (data) {
-        console.log('in getPaymentToken Success>>>>')
+        // console.log('in getPaymentToken Success>>>>')
         sendTransaction();
       },
       contentType: "application/json",
@@ -260,7 +252,7 @@
   }
 
   async function sendTransaction() {
-    console.log('in sendTransaction>>>>')
+    // console.log('in sendTransaction>>>>')
     var contractInstance = new window.web3.eth.Contract(xdce_abi, xdce_address);
     // const priceUsd = (await $.get("https://blockdegree.org/api/wrapCoinMarketCap")).data;
     // const priceXdc = Math.floor(50/priceUsd)
@@ -276,7 +268,7 @@
       "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", `${priceXdc}`).encodeABI()
     };
     window.web3.eth.sendTransaction(transaction, (err, data) => {
-      console.log('in sendTransaction web3>>>>', window.web3.currentProvider.selectedAddress, contractInstance)
+      // console.log('in sendTransaction web3>>>>', window.web3.currentProvider.selectedAddress, contractInstance)
       if (err) {
         console.log("Failed");
       } else {
@@ -324,6 +316,7 @@
     // Legacy dapp browsers...
     else if (window.web3) {
       window.web3 = new Web3(web3.currentProvider);
+      console.log("web3.currentProvider=================>>>>>>> 328", web3.currentProvider)
       // Acccounts always exposed
       web3.eth.sendTransaction({/* ... */ });
     }

@@ -916,6 +916,7 @@
         // Legacy dapp browsers...
         else if (window.web3) {
           window.web3 = new Web3(web3.currentProvider);
+          // console.log("web3.currentProvider=================>>>>>>> 919", web3.currentProvider)
           // Acccounts always exposed
           web3.eth.sendTransaction({/* ... */ });
         }

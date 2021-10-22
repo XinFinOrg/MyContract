@@ -1,10 +1,8 @@
 module.exports = {
 
   'githubAuth': {
-    // 'clientID': '7d8406dcfbee5d29ffd2', //'c455ac87f1a99c52cde0' for live
-    // 'clientSecret': '73555b565affe9b84954abeb1326997014ef5930', //'dd91931ce6cebad79d6a035ace4a7fe2d595bc85' for live
-    'clientID': 'c455ac87f1a99c52cde0',
-    'clientSecret': 'dd91931ce6cebad79d6a035ace4a7fe2d595bc85',
+    'clientID': 'c455ac87f1a99c52cde0', //'7d8406dcfbee5d29ffd2' for local
+    'clientSecret': 'dd91931ce6cebad79d6a035ace4a7fe2d595bc85', //'73555b565affe9b84954abeb1326997014ef5930' for local
     'callbackURL': '/auth/github/callback'
   },
 
@@ -14,16 +12,16 @@ module.exports = {
     'callbackURL': '/auth/google/callback'
   },
 
-  'facebookAuth': {
-    'clientID': '257057545245950', // your App ID
-    'clientSecret': '0134a4bf8842cca0f616bee3b30f8803', // your App Secret
-    'callbackURL': '/auth/facebook/callback'
-  },
+  'facebookAuth' : {
+    'clientID'      : '257057545245950', // your App ID
+    'clientSecret'  : '0134a4bf8842cca0f616bee3b30f8803', // your App Secret
+    'callbackURL'   : '/auth/facebook/callback'
+},
 
-  'nodemailerAuth': {
-    'user': 'mycontract@leewayhertz.com',
-    'pass': 'spicyjump25',
-  },
+'nodemailerAuth': {
+  'user': 'mycontract@leewayhertz.com',
+  'pass': 'spicyjump25',
+},
 
   'jwtAuthKey': {
     'secret': "heyitsmeakshayhere",
