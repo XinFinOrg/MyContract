@@ -64,6 +64,9 @@ module.exports = {
   getDashboard: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
     // console.log(projectArray);
+    projectArray.sort((a, b) => {
+      return a.addedOn > b.addedOn;
+    });
     var address;
     address = req.cookies['address'];
     // console.log("cookie is ", address);
@@ -424,10 +427,11 @@ function getProjectArray(email) {
       },
       include: [{
         model: ProjectConfiguration,
-        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash']
+        attributes: ['coinName', 'tokenContractAddress', 'tokenContractHash', 'networkType', 'networkURL', 'crowdsaleContractAddress', 'crowdsaleContractHash', 'createdAt']
       }],
     }).then(client => {
       client.projectConfigurations.forEach(element => {
+        element.dataValues.addedOn = element.dataValues.createdAt.getTime();
         projectArray.push(element.dataValues);
       });
       // res.send({'projectArray': projectArray});

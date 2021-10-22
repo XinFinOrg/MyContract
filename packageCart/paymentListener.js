@@ -153,6 +153,7 @@ module.exports = {
       }).catch(error => {
         console.log("Web3 error status", error);
         provider = new Web3.providers.WebsocketProvider(ws_provider);
+        console.log("provider===================", provider);
         web3.setProvider(provider);
         reject(error);
       });
@@ -162,7 +163,7 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       var provider = new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws/v3/02804fed8a0244ab9cf60f13abebd0a7');
       var web3 = new Web3(provider);
-      console.log("Ether receipt generated");
+      // console.log("Ether receipt generated");
       var transaction = {
         "from": "0x14649976AEB09419343A54ea130b6a21Ec337772",
         "gasPrice": web3.utils.toHex(gasPriceGwei * 1e9),
