@@ -33,7 +33,7 @@
     "express-session": "^1.15.6",
     "express-toastr": "^2.0.2",
     "express-validator": "5.3.0",
-    "file-type": "10.1.0",
+    "file-type": "16.5.4",
     "force": "0.0.3",
     "fs": "0.0.1-security",
     "helmet": "3.14.0",
